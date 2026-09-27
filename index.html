@@ -287,7 +287,7 @@
               </div>
               <div class="mt-3 flex items-baseline gap-1">
                 <span id="kpi-f1" class="text-3xl font-black text-blue-400">--</span>
-                <span class="text-xs text-slate-500 font-bold">/ 40 pts</span>
+                <span class="text-xs text-slate-500 font-bold">/ 35 pts</span>
               </div>
               <p class="text-[11px] text-slate-400 mt-1">Capa arable superficial determinante en nutrición.</p>
             </div>
@@ -305,7 +305,7 @@
               </div>
               <div class="mt-3 flex items-baseline gap-1">
                 <span id="kpi-f2" class="text-3xl font-black text-teal-400">--</span>
-                <span class="text-xs text-slate-500 font-bold">/ 40 pts</span>
+                <span class="text-xs text-slate-500 font-bold">/ 35 pts</span>
               </div>
               <p class="text-[11px] text-slate-400 mt-1">Subsuelo y zona de exploración radicular profunda.</p>
             </div>
@@ -1186,7 +1186,7 @@
               </div>
               <div class="flex justify-between text-slate-300">
                 <span>Clasificación IGAC (CIC):</span>
-                <span id="adv-clasif-igac" class="font-bold text-emerald-400">Media (5–10)</span>
+                <span id="adv-clasif-igac" class="font-bold text-emerald-400">Baja (5.1–10)</span>
               </div>
               <div class="flex justify-between text-slate-300">
                 <span>Relación Ca / Mg:</span>
@@ -1346,7 +1346,7 @@
             </div>
             <div class="grid grid-cols-2 gap-3 pt-1">
               <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
-                <span class="text-slate-400 block text-[10px] font-bold uppercase">Mineral Secundario Neofomado:</span>
+                <span class="text-slate-400 block text-[10px] font-bold uppercase">Mineral Secundario Neoformado:</span>
                 <span id="a2-mineral-neo" class="text-emerald-400 font-bold block mt-0.5">Caolinita 1:1 y Gibbsita Al(OH)₃</span>
               </div>
               <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
@@ -1640,8 +1640,13 @@
             <h3 class="font-bold text-amber-400 uppercase tracking-wider text-[11px]">Resultados de Laboratorio</h3>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="text-slate-400 block mb-0.5">Fósforo Bray II (mg/kg):</label>
+                <label class="text-slate-400 block mb-0.5">Nitrato N-NO₃ (mg/kg):</label>
+                <input type="number" id="a7-n" value="12" oninput="evaluarNutrientesDetalle()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Fósforo Bray II (P):</label>
                 <input type="number" id="a7-p" value="14" oninput="evaluarNutrientesDetalle()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+                <span class="text-[9px] text-slate-500">mg/kg</span>
               </div>
               <div>
                 <label class="text-slate-400 block mb-0.5">Potasio K (cmol/kg):</label>
@@ -1662,6 +1667,22 @@
               <div>
                 <label class="text-slate-400 block mb-0.5">Boro B (mg/kg):</label>
                 <input type="number" step="0.05" id="a7-b" value="0.30" oninput="evaluarNutrientesDetalle()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Hierro Fe-DTPA (mg/kg):</label>
+                <input type="number" step="0.1" id="a7-fe" value="" placeholder="Sin dato" oninput="evaluarNutrientesDetalle()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Manganeso Mn-DTPA (mg/kg):</label>
+                <input type="number" step="0.1" id="a7-mn" value="" placeholder="Sin dato" oninput="evaluarNutrientesDetalle()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Zinc Zn-DTPA (mg/kg):</label>
+                <input type="number" step="0.01" id="a7-zn" value="" placeholder="Sin dato" oninput="evaluarNutrientesDetalle()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Cobre Cu-DTPA (mg/kg):</label>
+                <input type="number" step="0.01" id="a7-cu" value="" placeholder="Sin dato" oninput="evaluarNutrientesDetalle()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
               </div>
             </div>
           </div>
@@ -1873,6 +1894,10 @@
               <input type="number" step="0.1" id="a11-mo" value="4.5" oninput="calcularMineralizacionN()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
             </div>
             <div>
+              <label class="text-slate-400 block mb-0.5">Densidad Aparente ρb (g/cm³):</label>
+              <input type="number" step="0.01" id="a11-rho" value="1.25" oninput="calcularMineralizacionN()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+            </div>
+            <div>
               <label class="text-slate-400 block mb-0.5">Piso Térmico / Tasa Anual de Mineralización:</label>
               <select id="a11-tasa" onchange="calcularMineralizacionN()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
                 <option value="1.5">Clima Frío / Páramo (1.5% al año - Mineralización lenta)</option>
@@ -1893,8 +1918,8 @@
           <div class="lg:col-span-7 bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
             <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">
               <span class="text-slate-400 block uppercase font-bold text-[10px]">Aporte de Nitrógeno por Mineralización</span>
-              <span id="a11-res-n" class="text-4xl font-black text-emerald-400 mt-1 block">56 kg N / ha / año</span>
-              <span class="text-[10px] text-slate-500 font-semibold">Equivale a ~120 kg de Urea ahorrados</span>
+              <span id="a11-res-n" class="text-4xl font-black text-emerald-400 mt-1 block">11 kg N / ha / año</span>
+              <span id="a11-res-urea" class="text-[10px] text-slate-500 font-semibold">Equivale a ~25 kg de Urea ahorrados (46% N)</span>
             </div>
             <p class="text-slate-300 leading-relaxed p-3 bg-slate-900/50 rounded-xl border border-slate-800">
               Este aporte natural de nitrógeno biodisponible ($NH_4^+$ y $NO_3^-$) debe descontarse de la dosis total de fertilización para evitar pérdidas por lixiviación y contaminación de acuíferos según Decreto 1076.
@@ -2106,6 +2131,7 @@
                 <option value="agricola_limpia">Agricultura limpia intensiva (Papas, hortalizas, maíz continuo)</option>
                 <option value="agroforestal" selected>Sistema Agroforestal (Café con sombrío / Frutales)</option>
                 <option value="ganaderia_extensiva">Ganadería extensiva de pastoreo continuo</option>
+                <option value="sin_uso">Enmonte / Tierra sin uso productivo</option>
                 <option value="bosque_protector">Bosque natural / Vegetación de páramo protectora</option>
               </select>
             </div>
@@ -2183,7 +2209,7 @@
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-5">
         <div class="border-b border-slate-800 pb-4">
           <div class="flex items-center gap-2">
-            <span class="badge-norma badge-ica">ICA Protocolo Oficial de Muestreo de Suelos</span>
+            <span class="badge-norma badge-ica">IGAC Protocolo Oficial de Muestreo de Suelos</span>
             <span class="badge-norma badge-igac">IGAC Toma y Envío de Muestras</span>
           </div>
           <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2 mt-1">
@@ -2211,7 +2237,7 @@
             </div>
             <div>
               <label class="text-slate-400 block mb-0.5">Tipo de Cultivo a Establecer:</label>
-              <select id="b17-cultivo" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              <select id="b17-cultivo" onchange="calcularMuestreoSuelos()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
                 <option value="anual">Cultivos transitorios / pastos (Muestreo 0–20 cm)</option>
                 <option value="perenne" selected>Perennes / Café / Frutales (Muestreo 0–25 y 25–50 cm)</option>
               </select>
@@ -2223,7 +2249,7 @@
               <div class="p-4 bg-slate-900 rounded-xl border border-slate-800">
                 <span class="text-slate-400 block uppercase font-bold text-[10px]">Submuestras Recomendadas</span>
                 <span id="b17-res-subm" class="text-3xl font-black text-emerald-400 mt-1 block">20 submuestras</span>
-                <span class="text-[10px] text-slate-500">Forman 1 muestra compuesta (1 kg)</span>
+                <span id="b17-res-prof" class="text-[10px] text-slate-500">Profundidad: 0–25 y 25–50 cm (cultivo perenne) · 1 muestra compuesta por horizonte (≈1 kg)</span>
               </div>
               <div class="p-4 bg-slate-900 rounded-xl border border-slate-800">
                 <span class="text-slate-400 block uppercase font-bold text-[10px]">Patrón de Recorrido</span>
@@ -2232,7 +2258,7 @@
               </div>
             </div>
             <div class="p-4 bg-slate-900/60 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-1">
-              <strong class="text-amber-400 block">Protocolo de Empaque & Remisión (ICA):</strong>
+              <strong class="text-amber-400 block">Protocolo de Empaque & Remisión (IGAC):</strong>
               <p>Mezclar las 20 submuestras en un balde plástico limpio. Tomar 1 kg en bolsa de polietileno transparente de primer uso. Rotular con fecha, municipio, finca, lote y profundidad de muestreo. Enviar al laboratorio en menos de 48 horas sin exposición solar directa.</p>
             </div>
           </div>
@@ -2245,7 +2271,7 @@
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-5">
         <div class="border-b border-slate-800 pb-4">
           <div class="flex items-center gap-2">
-            <span class="badge-norma badge-ideam">IDEAM-MADS (2015) Protocolo Nacional de Monitoreo de Degradación</span>
+            <span class="badge-norma badge-ideam">Enfoque alineado con BASEL (FAO) y metodología de evaluación de tierras del IDEAM</span>
           </div>
           <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2 mt-1">
             <span>📉</span> B18. Matriz Diagnóstica de Degradación del Suelo en Campo
@@ -2296,77 +2322,311 @@
 
     <!-- B19: EROSIÓN DE SUELOS (USLE / RUSLE) -->
     <div id="tab-b19" class="tab-content hidden space-y-6">
+
+      <!-- ================= B19 PRO: MOTOR RUSLE POR FACTORES ================= -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-5">
+
         <div class="border-b border-slate-800 pb-4">
-          <div class="flex items-center gap-2">
-            <span class="badge-norma badge-ideam">IDEAM / Cenicafé Factores de Erosión para Colombia</span>
-            <span class="badge-norma badge-igac">USLE: A = R · K · LS · C · P</span>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="badge-norma badge-ideam">Red CAR / SICLICA + IDEAM · Lluvias mensuales 1932–2021</span>
+            <span class="badge-norma badge-igac">RUSLE (SI): A = R·K·LS·C·P · IFM (Foster &amp; Hathaway)</span>
+            <span class="badge-norma badge-minambiente">Susceptibilidad Se con ponderación AHP (Protocolo CAR)</span>
           </div>
           <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2 mt-1">
-            <span>🌧️</span> B19. Erosión Hídrica de Suelos (Ecuación Universal USLE / RUSLE)
+            <span>🌧️</span> B19. Erosión Hídrica — Cálculo de Factores desde Datos Originales
           </h2>
           <p class="text-xs text-slate-400 mt-0.5">
-            Estimación cuantitativa de pérdida de suelo por hectárea y año con factores calibrados para vertientes andinas de Colombia.
+            No necesitas traer los factores de antemano: el módulo deriva <strong>R</strong> desde las estaciones de lluvia más cercanas a la vereda (IFM → erosividad),
+            <strong>K</strong> desde perfiles IGAC con la ecuación de Williams, y <strong>LS</strong> desde la geometría de la ladera (Foster/McCool).
+            Reporta erosión <strong>potencial (AP)</strong>, <strong>efectiva (Ae)</strong>, índice de erosión <strong>IE = C·P</strong>, tolerancia <strong>T</strong> y <strong>susceptibilidad Se</strong>, cada factor reclasificado en 5 niveles.
           </p>
+          <div class="mt-3 flex gap-2 flex-wrap">
+            <button onclick="b19PresetSanJose()" class="px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold transition cursor-pointer">⚡ Precargar: Vda. San José del Triunfo (La Calera)</button>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- PASO 1: UBICACIÓN -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
           <div class="lg:col-span-6 bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 text-xs">
-            <h3 class="font-bold text-blue-400 uppercase tracking-wider text-[11px]">Factores de la Ecuación</h3>
+            <h3 class="font-bold text-emerald-400 uppercase tracking-wider text-[11px]">1. Ubicación de estudio (vereda / predio)</h3>
             <div>
-              <label class="text-slate-400 block mb-0.5">Factor R (Erosividad de lluvia MJ·mm/ha·h·año):</label>
-              <input type="number" id="usle-r" value="8500" oninput="calcularUSLE()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
-              <span class="text-[10px] text-slate-500">Andina cafetera: 6000–12000; Caribe seco: 2500–5000; Chocó: >15000.</span>
-            </div>
-            <div>
-              <label class="text-slate-400 block mb-0.5">Factor K (Erodabilidad del suelo t·ha·h/ha·MJ·mm):</label>
-              <input type="number" step="0.01" id="usle-k" value="0.025" oninput="calcularUSLE()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
-              <span class="text-[10px] text-slate-500">Suelos ándicos: 0.015-0.025; Limosos erosionables: 0.04-0.06.</span>
-            </div>
-            <div>
-              <label class="text-slate-400 block mb-0.5">Factor LS (Topográfico: longitud y grado de pendiente):</label>
-              <input type="number" step="0.1" id="usle-ls" value="4.2" oninput="calcularUSLE()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
-            </div>
-            <div>
-              <label class="text-slate-400 block mb-0.5">Factor C (Cobertura vegetal y manejo):</label>
-              <select id="usle-c" onchange="calcularUSLE()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
-                <option value="0.005">Bosque denso protector / Cobertura permanente (0.005)</option>
-                <option value="0.05" selected>Café con sombrío y cobertura noble (0.05)</option>
-                <option value="0.25">Pastura con sobrepastoreo moderado (0.25)</option>
-                <option value="0.60">Cultivo limpio en surcos (0.60)</option>
-                <option value="1.00">Suelo desnudo sin vegetación (1.00)</option>
+              <label class="text-slate-400 block mb-0.5">Punto de referencia:</label>
+              <select id="b19-centro" onchange="b19CentroChange()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+                <option value="-1">— Ingresar coordenadas manualmente —</option>
               </select>
             </div>
-            <div>
-              <label class="text-slate-400 block mb-0.5">Factor P (Prácticas de soporte mecánico):</label>
-              <select id="usle-p" onchange="calcularUSLE()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
-                <option value="1.00" selected>Sin prácticas de conservación (1.00)</option>
-                <option value="0.50">Siembra al contorno / Curvas a nivel (0.50)</option>
-                <option value="0.25">Cultivos en fajas alternadas con barreras vivas (0.25)</option>
-                <option value="0.10">Terrazas de banco con zanjas de drenaje (0.10)</option>
-              </select>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-slate-400 block mb-0.5">Latitud (°):</label>
+                <input type="number" step="0.00001" id="b19-lat" value="4.76271" oninput="b19ListarEstaciones()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Longitud (°W negativo):</label>
+                <input type="number" step="0.00001" id="b19-lon" value="-73.98749" oninput="b19ListarEstaciones()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <label class="text-slate-400 block mb-0.5">Radio búsqueda (km):</label>
+                <input type="number" id="b19-radio" value="15" oninput="b19ListarEstaciones()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Área vereda (ha):</label>
+                <input type="number" id="b19-area" value="700" oninput="b19ListarEstaciones()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Nº mínimo estaciones:</label>
+                <input type="number" id="b19-nest" value="5" oninput="b19ListarEstaciones()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+            </div>
+            <p id="b19-radio-nota" class="text-[10px] text-slate-500"></p>
+            <div class="flex flex-wrap gap-1.5 items-center border-t border-slate-800 pt-2">
+              <span class="text-[10px] text-slate-400 font-bold uppercase">Categorías SICLIA:</span>
+              <label class="flex items-center gap-1 text-[11px] text-slate-300 cursor-pointer"><input type="checkbox" class="b19-cat-f" value="CP" checked onchange="b19ListarEstaciones()"> CP</label>
+              <label class="flex items-center gap-1 text-[11px] text-slate-300 cursor-pointer"><input type="checkbox" class="b19-cat-f" value="PM" checked onchange="b19ListarEstaciones()"> PM</label>
+              <label class="flex items-center gap-1 text-[11px] text-slate-300 cursor-pointer"><input type="checkbox" class="b19-cat-f" value="PG" checked onchange="b19ListarEstaciones()"> PG</label>
+              <label class="flex items-center gap-1 text-[11px] text-slate-300 cursor-pointer"><input type="checkbox" class="b19-cat-f" value="CO" checked onchange="b19ListarEstaciones()"> CO</label>
+              <label class="flex items-center gap-1 text-[11px] text-slate-300 cursor-pointer"><input type="checkbox" class="b19-cat-f" value="" checked onchange="b19ListarEstaciones()"> IDEAM</label>
+              <label class="flex items-center gap-1 text-[11px] text-amber-300 cursor-pointer ml-2"><input type="checkbox" id="b19-solo-lluvia" checked onchange="b19ListarEstaciones()"> Solo con registro de precipitación</label>
             </div>
           </div>
 
-          <div class="lg:col-span-6 bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
-            <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">
-              <span class="text-slate-400 block uppercase font-bold text-[10px]">Pérdida de Suelo Esperada (A)</span>
-              <span id="usle-res-a" class="text-4xl font-black text-amber-400 mt-1 block">44.6 t / ha / año</span>
-              <span class="text-[10px] text-slate-500 font-semibold">Tasa de tolerancia máxima T = 10 t/ha/año</span>
+          <!-- PASO 2: ESTACIONES -->
+          <div class="lg:col-span-6 bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2 text-xs overflow-hidden">
+            <h3 class="font-bold text-emerald-400 uppercase tracking-wider text-[11px]">2. Estaciones más cercanas (marca las que deseas incluir)</h3>
+            <div class="overflow-x-auto max-h-72 overflow-y-auto rounded-lg border border-slate-800">
+              <table class="w-full text-[11px] text-left border-collapse" id="b19-est-tabla">
+                <thead class="sticky top-0 bg-slate-900 text-slate-400 uppercase">
+                  <tr><th class="p-1.5">✓</th><th class="p-1.5">Código</th><th class="p-1.5">Estación</th><th class="p-1.5">Cat.</th><th class="p-1.5">Municipio</th><th class="p-1.5">Dist (km)</th><th class="p-1.5">Años OK</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
             </div>
-            <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-white uppercase text-[11px]">Nivel de Pérdida de Suelo:</span>
-                <span id="usle-res-badge" class="badge-norma badge-ica">Pérdida Moderada a Alta</span>
-              </div>
-              <p id="usle-res-desc" class="text-slate-300 leading-relaxed">
-                La tasa de pérdida excede la tolerancia permisible. Si se adoptan siembras en curvas de nivel (Factor P = 0.50), la pérdida se reduce a la mitad (22.3 t/ha/año).
-              </p>
+            <p class="text-[10px] text-slate-500">CP/PM/PG/CO = categorías de la red CAR-SICLIA; "Años OK" = años calendario con los 12 meses completos de precipitación.</p>
+          </div>
+        </div>
+
+        <!-- PASO 3: FACTOR R -->
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 text-xs">
+          <h3 class="font-bold text-blue-400 uppercase tracking-wider text-[11px]">3. Factor R — Erosividad (IFM modificado → regresión Foster &amp; Hathaway aplicada por la CAR)</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div>
+              <label class="text-slate-400 block mb-0.5">Régimen de cálculo:</label>
+              <select id="b19-anio-modo" onchange="b19PoblarAnios(); b19CalcularR()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+                <option value="todos" selected>Promedio de todos los años completos</option>
+                <option value="año">Año específico de mi preferencia</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-slate-400 block mb-0.5">Año:</label>
+              <select id="b19-anio" onchange="b19CalcularR()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold disabled:opacity-40" disabled></select>
+            </div>
+            <div>
+              <label class="text-slate-400 block mb-0.5">Exponente IDW (interpolación):</label>
+              <select id="b19-idw-p" onchange="b19CalcularR()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+                <option value="2" selected>IDW² (potencia 2)</option>
+                <option value="3">IDW³ (potencia 3)</option>
+              </select>
             </div>
           </div>
+          <div class="overflow-x-auto rounded-lg border border-slate-800">
+            <table class="w-full text-[11px] border-collapse" id="b19-r-tabla">
+              <thead class="bg-slate-900 text-slate-400 uppercase">
+                <tr><th class="p-1.5 text-left">Estación</th><th class="p-1.5">Dist (km)</th><th class="p-1.5">N años</th><th class="p-1.5">IFM</th><th class="p-1.5">Clase IFM</th><th class="p-1.5">R (MJ·mm/ha·h·año)</th><th class="p-1.5">Peso IDW</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-1">
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">R interpolada (IDW)</span>
+              <span id="b19-r-punto" class="text-2xl font-black text-blue-400">—</span>
+            </div>
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">Rango de estaciones</span>
+              <span id="b19-r-rango" class="text-sm font-black text-slate-200 mt-2 block">—</span>
+            </div>
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">Clase IFM promedio</span>
+              <span id="b19-ifm-chip" class="badge-norma badge-ica mt-1.5 inline-block">—</span>
+            </div>
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">Clase R (IGAC 5 niveles)</span>
+              <span id="b19-r-chip" class="badge-norma badge-igac mt-1.5 inline-block">—</span>
+            </div>
+          </div>
+          <p id="b19-r-nota" class="text-[10px] text-slate-500"></p>
+        </div>
+
+        <!-- PASO 4: FACTOR K -->
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 text-xs">
+          <h3 class="font-bold text-amber-400 uppercase tracking-wider text-[11px]">4. Factor K — Erodabilidad (Ecuación de Williams, versión SI, con perfiles IGAC)</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div>
+              <label class="text-slate-400 block mb-0.5">Cargar UCS de la vereda (IGAC):</label>
+              <select id="b19-ucs" onchange="b19CargarUcs()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+                <option value="">— Tabla vacía (captura manual) —</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2 flex items-end gap-2">
+              <button onclick="b19AgregarFilaK()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold border border-slate-700 cursor-pointer text-[11px]">＋ Añadir perfil</button>
+              <span class="text-[10px] text-slate-500">K<sub>perfil</sub> = 0,1317 · f_csand · f_cl-si · f_org · f_hiSand — el índice UCS es Σ(K·participación).</span>
+            </div>
+          </div>
+          <div class="overflow-x-auto rounded-lg border border-slate-800">
+            <table class="w-full text-[11px] border-collapse" id="b19-k-tabla">
+              <thead class="bg-slate-900 text-slate-400 uppercase">
+                <tr><th class="p-1.5 text-left">Perfil IGAC</th><th class="p-1.5">Part. (%)</th><th class="p-1.5">Arena (%)</th><th class="p-1.5">Limo (%)</th><th class="p-1.5">Arcilla (%)</th><th class="p-1.5">C.O. (%)</th><th class="p-1.5">Σ textura</th><th class="p-1.5">K perfil</th><th class="p-1.5">Aporte</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">K (índice UCS)</span>
+              <span id="b19-k-valor" class="text-2xl font-black text-amber-400">—</span>
+            </div>
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">Clase K (5 niveles)</span>
+              <span id="b19-k-chip" class="badge-norma badge-ica mt-1.5 inline-block">—</span>
+            </div>
+            <div id="b19-k-warn" class="text-[10px] text-red-400 self-center"></div>
+          </div>
+        </div>
+
+        <!-- PASO 5: LS -->
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 text-xs">
+          <h3 class="font-bold text-purple-400 uppercase tracking-wider text-[11px]">5. Factor LS — Topográfico (longitud de rampa × gradiente; m de Foster, S de McCool)</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+            <div>
+              <label class="text-slate-400 block mb-0.5">Longitud de pendiente λ (m):</label>
+              <input type="number" id="b19-ls-largo" value="80" oninput="b19CalcularLS()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+            </div>
+            <div>
+              <label class="text-slate-400 block mb-0.5">Pendiente:</label>
+              <input type="number" step="0.1" id="b19-ls-pend" value="18" oninput="b19CalcularLS()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+            </div>
+            <div>
+              <label class="text-slate-400 block mb-0.5">Unidad:</label>
+              <select id="b19-ls-unidad" onchange="b19CalcularLS()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+                <option value="pct" selected>Grados % (% de pendiente)</option>
+                <option value="grados">Grados ° (ángulo)</option>
+              </select>
+            </div>
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center flex flex-col justify-center">
+              <div><span class="text-[10px] text-slate-400 uppercase font-bold block">LS</span>
+              <span id="b19-ls-valor" class="text-2xl font-black text-purple-400">—</span></div>
+              <span id="b19-ls-chip" class="badge-norma badge-minambiente mt-1 inline-block text-[9px]">—</span>
+            </div>
+          </div>
+          <p id="b19-ls-nota" class="text-[10px] text-slate-500"></p>
+        </div>
+
+        <!-- PASO 6: C y P -->
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 text-xs">
+          <h3 class="font-bold text-teal-400 uppercase tracking-wider text-[11px]">6. Factores C (cobertura) y P (prácticas de conservación)</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="text-slate-400 block mb-0.5">Cobertura / uso actual (valores Wischmeier &amp; Smith 1978, Tabla CAR):</label>
+              <select id="b19-c" onchange="b19Resultados()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+                <option value="0.002">Bosque denso natural (0,001–0,003)</option>
+                <option value="0.017">Bosque secundario / Aforesteral denso (0,017)</option>
+                <option value="0.01">Pradera establecida bien manejada (0,001–0,01)</option>
+                <option value="0.25">Pradera con sobrepastoreo (0,10–0,70)</option>
+                <option value="0.10" selected>Café con sombrío y coberturas nobles (0,10)</option>
+                <option value="0.18">Café al sol / sin cobertura (0,18)</option>
+                <option value="0.08">Banano / plátano (0,04–0,13)</option>
+                <option value="0.20">Caña panelera semimecanizada (0,18–0,25)</option>
+                <option value="0.40">Maíz / fríjol limpio (0,24–0,61)</option>
+                <option value="0.48">Papa (0,32–0,64)</option>
+                <option value="0.10">Arroz en riego (0,07–0,12)</option>
+                <option value="0.25">Arroz secano (0,11–0,39)</option>
+                <option value="0.70">Barbecho / erial (0,60–0,80)</option>
+                <option value="1.00">Suelo desnudo, minería o obra civil (1,00)</option>
+              </select>
+              <span id="b19-c-chip" class="badge-norma badge-ica mt-1.5 inline-block text-[9px]">—</span>
+            </div>
+            <div>
+              <label class="text-slate-400 block mb-0.5">Prácticas de soporte (P):</label>
+              <select id="b19-p" onchange="b19Resultados()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+                <option value="1.00" selected>Sin prácticas (laboreo a favor de pendiente) (1,00)</option>
+                <option value="0.75">Laboreo manual / mínimo (0,75)</option>
+                <option value="0.50">Siembra al contorno / curvas de nivel (0,50)</option>
+                <option value="0.40">Barreras vivas (vetiver, cortaderia) en surcos (0,35–0,45)</option>
+                <option value="0.25">Cultivo en fajas alternadas con barreras (0,25)</option>
+                <option value="0.15">Terrazas simples de formación lenta (0,15)</option>
+                <option value="0.10">Terrazas de banco con zanjas de drenaje (0,10)</option>
+              </select>
+              <span id="b19-p-chip" class="badge-norma badge-igac mt-1.5 inline-block text-[9px]">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PASO 7: RESULTADOS -->
+        <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-emerald-500/30 rounded-2xl p-5 space-y-4 text-xs shadow-2xl">
+          <h3 class="font-bold text-white uppercase tracking-wider text-[12px] flex items-center gap-2"><span>📊</span> 7. Resultados integrados — Erosión y Susceptibilidad</h3>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">Erosión Potencial AP=R·K·LS</span>
+              <span id="b19-res-ap" class="text-xl md:text-2xl font-black text-red-400">—</span>
+              <span class="text-[9px] text-slate-500 block">t/ha/año (sin cobertura)</span>
+            </div>
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">Erosión Efectiva Ae=AP·C·P</span>
+              <span id="b19-res-ae" class="text-xl md:text-2xl font-black text-amber-400">—</span>
+              <span id="b19-res-ae-fao" class="text-[9px] text-slate-500 block">Intensidad FAO</span>
+            </div>
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">Índice de Erosión IE=C·P</span>
+              <span id="b19-res-ie" class="text-xl md:text-2xl font-black text-teal-300">—</span>
+              <span id="b19-res-ie-clase" class="text-[9px] text-slate-500 block">Clase IE (protocolo CAR)</span>
+            </div>
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 text-center">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">Susceptibilidad Se (AHP)</span>
+              <span id="b19-se-valor" class="text-xl md:text-2xl font-black text-purple-300">—</span>
+              <span id="b19-se-chip" class="badge-norma badge-minambiente mt-1 inline-block text-[9px]">—</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400 font-bold uppercase text-[10px]">Tolerancia T (pérdida permisible)</span>
+                <select id="b19-t" onchange="b19Resultados()" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-white font-bold text-[11px]">
+                  <option value="4">Prof. efectiva &lt; 50 cm → T = 4 t/ha/año</option>
+                  <option value="5">Prof. efectiva 50–100 cm → T = 5</option>
+                  <option value="8">Prof. efectiva 100–150 cm → T = 8</option>
+                  <option value="11" selected>Prof. efectiva &gt; 150 cm → T = 11</option>
+                </select>
+              </div>
+              <p id="b19-res-t" class="text-slate-300 leading-relaxed">—</p>
+            </div>
+            <div class="bg-slate-900 rounded-xl p-3 border border-slate-800">
+              <span class="text-slate-400 font-bold uppercase text-[10px] block mb-1">Desglose de susceptibilidad (factores reclasificados 1–5)</span>
+              <div id="b19-se-det" class="grid grid-cols-5 gap-1 text-center text-[10px]"></div>
+              <p class="text-[9px] text-slate-500 mt-1">Se = 0,20·R + 0,21·K + 0,17·LS + 0,23·C + 0,19·P (pesos AHP, Protocolo CAR 2022; RC AHP &lt; 0,10).</p>
+            </div>
+          </div>
+
+          <div class="p-4 bg-slate-900 rounded-xl border border-slate-800">
+            <div class="font-bold text-white mb-1 flex items-center gap-2"><span>📋</span> Dictamen técnico y recomendaciones:</div>
+            <p id="b19-res-desc" class="text-slate-300 leading-relaxed">Configura la ubicación para generar el diagnóstico.</p>
+          </div>
+        </div>
+
+        <!-- MARCO METODOLÓGICO -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 text-[11px] text-slate-400 space-y-1.5">
+          <h3 class="font-bold text-slate-300 uppercase tracking-wider text-[11px]">📚 Marco metodológico de este módulo</h3>
+          <p><strong class="text-slate-300">R:</strong> IFM = Σ pᵢ² / Pₐₙᵤₐₗ (mm, versión modificada usada por la CAR) de la red CAR/SICLICA–IDEAM; conversión a R (MJ·mm·ha⁻¹·h⁻¹·año⁻¹) con R = −0,4380 + 0,8291·IFM + 0,0015·IFM³ (Foster &amp; Hathaway 1982, aplicada en metodología CAR por Lince Salazar 2016). Solo se usan años con los 12 meses completos; interpolación IDW al punto de estudio. Clasificación IFM en 5 niveles según Echeverri &amp; Obando (2010) y rangos de R para Colombia.</p>
+          <p><strong class="text-slate-300">K:</strong> Ecuación de Williams (SI): K = 0,1317·f_csand·f_cl-si·f_org·f_hiSand con arena/limo/arcilla (%) y M.O. = C.O.×1,724 (fracción decimal). Índice por UCS = Σ(K<sub>perfil</sub>·participación). Rangos IGAC/CAR: &lt;0,008 muy baja; 0,008–0,02 baja; 0,02–0,035 moderada; 0,035–0,05 alta; &gt;0,05 muy alta.</p>
+          <p><strong class="text-slate-400">LS:</strong> L = (λ/22,13)<sup>m</sup> con m = F/(1+F), F = (sinβ/0,0896)³/(sinβ⁰·⁸+0,56) (Foster 1977); S de McCool et al. (1987): 10,8·sinβ+0,03 si sinβ&lt;0,09, 16,8·sinβ−0,5 si sinβ≥0,09.</p>
+          <p><strong class="text-slate-300">AP, Ae, IE, T y Se:</strong> AP = R·K·LS (potencial, sin cobertura), Ae = R·K·LS·C·P (efectiva), IE = Ae/AP = C·P. Tolerancia T = 4–11 t/ha/año según profundidad efectiva, textura y pedregosidad (método de la tolerancia de pérdida de suelo). Susceptibilidad Se = 0,20R+0,21K+0,17LS+0,23C+0,19P sobre cada factor reclasificado 1–5. Intensidad de erosión según FAO: &lt;10 ligera; 10–50 moderada; 50–200 alta; &gt;200 muy alta (t/ha/año).</p>
+          <p class="text-amber-300/80">⚠️ Herramienta educativa: el IFM aproxima la erosividad cuando no se dispone de registros de intensidad de lluvia (30-min) exigidos por RUSLE 2015; los valores de C/P son referenciales y deben ajustarse al cultivo, densidad y ciclo del predio.</p>
         </div>
       </div>
     </div>
+
 
     <!-- B20: PRÁCTICAS DE CONSERVACIÓN DE SUELOS -->
     <div id="tab-b20" class="tab-content hidden space-y-6">
@@ -2455,13 +2715,13 @@
           <div class="lg:col-span-6 bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
             <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">
               <span class="text-slate-400 block uppercase font-bold text-[10px]">Relación C:N de la Mezcla</span>
-              <span id="cn-res-val" class="text-4xl font-black text-emerald-400 mt-1 block">34.0 : 1</span>
-              <span id="cn-res-badge" class="mt-2 inline-block px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/20 text-yellow-300">Aceptable para Compost</span>
+              <span id="cn-res-val" class="text-4xl font-black text-emerald-400 mt-1 block">26.5 : 1</span>
+              <span id="cn-res-badge" class="mt-2 inline-block px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300">Rango Óptimo para Compostaje (25–35:1)</span>
             </div>
             <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-slate-300 space-y-1">
               <strong class="text-white block text-[11px]">Comportamiento Microbiológico:</strong>
               <p id="cn-res-desc">
-                Rango ideal de compostaje: 25 a 30. Con 34:1, la descomposición es adecuada pero ligeramente más lenta; no genera emanaciones fuertes de amoníaco.
+                Rango ideal de compostaje: 25 a 35. Con 26,5:1 la mezcla alcanza rápidamente la fase termófila sin riesgo de inmovilización de nitrógeno.
               </p>
             </div>
           </div>
@@ -2515,6 +2775,53 @@
             <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-slate-300 space-y-1">
               <strong class="text-white block text-[11px]">Instrucción Agronómica de Aplicación:</strong>
               <p>Aplicar al voleo e incorporar de 15 a 25 cm al menos 30 días antes de la siembra o fertilización fosfórica, para permitir la reacción de neutralización sin bloquear el fósforo disponible.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-4 border-t border-slate-800">
+          <div class="lg:col-span-6 bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 text-xs">
+            <h3 class="font-bold text-teal-400 uppercase tracking-wider text-[11px]">2. Requerimiento de Yeso Agrícola (Suelos Sódicos / Dispersión)</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-slate-400 block mb-0.5">PSI Actual (%):</label>
+                <input type="number" step="0.1" id="yso-psi" value="22" oninput="calcularEnmiendas()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">PSI Meta (&lt;10%):</label>
+                <input type="number" step="0.1" id="yso-psi-meta" value="8" oninput="calcularEnmiendas()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">CIC Total (cmol/kg):</label>
+                <input type="number" step="0.1" id="yso-cic" value="14" oninput="calcularEnmiendas()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Densidad Aparente ρb (g/cm³):</label>
+                <input type="number" step="0.01" id="yso-rho" value="1.30" oninput="calcularEnmiendas()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Profundidad a corregir Z (cm):</label>
+                <input type="number" id="yso-z" value="20" oninput="calcularEnmiendas()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+              <div>
+                <label class="text-slate-400 block mb-0.5">Pureza del Yeso (%):</label>
+                <input type="number" id="yso-pur" value="85" oninput="calcularEnmiendas()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold">
+              </div>
+            </div>
+            <div class="formula-math text-[11px]">
+              Na⁺ a desalojar n = (PSI − PSI_meta)/100 × CIC [cmol/kg]<br>
+              Yeso (t/ha) = n × 0,086 × ρb × Z × 100 / pureza
+            </div>
+          </div>
+          <div class="lg:col-span-6 bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-4 text-xs">
+            <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">
+              <span class="text-slate-400 block uppercase font-bold text-[10px]">Dosis de Yeso Agrícola (CaSO₄·2H₂O):</span>
+              <span id="enm-res-yeso" class="text-4xl font-black text-teal-300 mt-1 block">—</span>
+              <span id="enm-res-yeso-det" class="text-[10px] text-slate-500 font-semibold block">Ajustado por pureza comercial del 85%</span>
+            </div>
+            <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-slate-300 space-y-1">
+              <strong class="text-white block text-[11px]">Condimento indispensable del lavado:</strong>
+              <p>El yeso solo funciona si existe drenaje: el Ca²⁺ desplaza al Na⁺ del complejo de cambio y el sulfato de sodio resultante debe lavarse con láminas de agua hacia el dren. En suelos con yeso natural libre o CaCO₃, primero verificar que el problema no sea alcalinidad por carbonatos (allí el yeso no corrige).</p>
             </div>
           </div>
         </div>
@@ -2682,7 +2989,7 @@
           <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
             <span class="badge-norma badge-minambiente">Decreto 1076 de 2015</span>
             <h4 class="font-bold text-white text-sm">Decreto Único Reglamentario del Sector Ambiente</h4>
-            <p class="text-slate-400">Regula la conservación de rondas hídricas (mínimo 30 m), manejo de residuos peligrosos en suelos y áreas de protección ambiental municipal.</p>
+            <p class="text-slate-400">Compila la reglamentación ambiental (concesión de aguas, vertimientos, residuos peligrosos, aprovechamientos forestales). Las rondas hídricas y sus anchuras las concretan las CAR con sus planes de ordenación y manejo (POMCA) y los POT.</p>
           </div>
           <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
             <span class="badge-norma badge-igac">Ley 388 de 1997 & Decreto 3600 de 2007</span>
@@ -2690,14 +2997,24 @@
             <p class="text-slate-400">Define las determinantes ambientales que obligatoriamente deben incorporar los Planes de Ordenamiento Territorial (POT, PBOT, EOT) para el suelo rural.</p>
           </div>
           <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
-            <span class="badge-norma badge-minambiente">Ley 1930 de 2018 (Ley de Páramos)</span>
-            <h4 class="font-bold text-white text-sm">Gestión Integral de Ecosistemas de Páramo</h4>
-            <p class="text-slate-400">Prohíbe de manera tajante la minería, el laboreo agrícola intensivo y el pastoreo en suelos de páramo delimitados por MinAmbiente / Instituto Humboldt.</p>
+            <span class="badge-norma badge-minambiente">Ley 99 de 1993</span>
+            <h4 class="font-bold text-white text-sm">Sistema Nacional Ambiental y Autoridades CAR</h4>
+            <p class="text-slate-400">Crea el Ministerio de Ambiente (hoy MinAmbiente) y las Corporaciones Autónomas Regionales, autoridades ambientales competentes para otorgar permisos, controlar la degradación de suelos y ordenar el manejo de cuencas en su jurisdicción.</p>
           </div>
           <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
-            <span class="badge-norma badge-igac">Resolución UPRA 170 de 2021</span>
-            <h4 class="font-bold text-white text-sm">Lineamientos de Ordenamiento Productivo Rural</h4>
-            <p class="text-slate-400">Criterios técnicos para zonificar la aptitud de las tierras rurales con el fin de evitar conflictos de uso y garantizar la seguridad alimentaria.</p>
+            <span class="badge-norma badge-minambiente">Ley 1930 de 2018 (Ley de Páramos)</span>
+            <h4 class="font-bold text-white text-sm">Gestión Integral de Ecosistemas de Páramo</h4>
+            <p class="text-slate-400">Delimita los páramos y, una vez delimitados, prohíbe nuevas actividades de minería a gran escala y la expansión de la frontera agrícola e intensa ganadería en su interior; las actividades preexistentes quedan sujeto a reglas de transición y reconversión definidas por la autoridad ambiental.</p>
+          </div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+            <span class="badge-norma badge-igac">Decreto 2041 de 2014 & UPRA</span>
+            <h4 class="font-bold text-white text-sm">Ordenamiento Productivo del Territorio Rural</h4>
+            <p class="text-slate-400">Coordina a la UPRA (Unidad de Planificación de Territorio Rural) con el IGAC y MinAmbiente en la elaboración de las Zonas de Reserva e Interestratégicas para la Conservación y Protección de Tierras y las Zonificaciones a Escala de Detalle (ZAED), insumo obligatorio de los POT.</p>
+          </div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+            <span class="badge-norma badge-ideam">CONPES 3659 de 2010</span>
+            <h4 class="font-bold text-white text-sm">Política de Manejo Sostenible de Suelos y Sostenibilidad Ambiental Rural</h4>
+            <p class="text-slate-400">Documento del Consejo Nacional de Política Económica y Social que establece la línea base de prevención y recuperación de suelos degradados (erosión, acidificación, salinización) y su articulación con la planificación territorial.</p>
           </div>
         </div>
       </div>
@@ -2784,7 +3101,7 @@
               <span class="badge-norma badge-ideam">Fluventes / Vertisoles</span>
             </div>
             <p class="text-slate-300 leading-relaxed">
-              Valles de inundación del Magdalena, Cauca y Sinú. Régimen de humedad ácuico con colores de gleyzación (gris verdoso o moteados rojizos por reducción de hierro). Amortiguadores naturales de crecientes fluviales.
+              Valles de inundación del Magdalena, Cauca y Sinú. Régimen de humedad ácuico con colores de gleyzación (grises verdosos/azulados por reducción de hierro Fe²⁺ y moteados rojizos por oxidación de Fe³⁺ en zonas mejor aireadas). Amortiguadores naturales de crecientes fluviales.
             </p>
           </div>
 
@@ -2818,11 +3135,11 @@
   <div id="print-area" class="print-only p-8 bg-white text-black font-sans text-xs">
     <div class="border-b-2 border-black pb-3 mb-4 flex justify-between items-center">
       <div>
-        <h2 class="text-base font-bold uppercase">Instituto Geográfico Agustín Codazzi - IGAC</h2>
-        <h3 class="text-xs font-semibold">Informe Oficial de Evaluación de Fertilidad Natural de Suelos</h3>
+        <h2 class="text-base font-bold uppercase">AGRO-SUELOS · Informe de Evaluación de Fertilidad Natural de Suelos</h2>
+        <h3 class="text-xs font-semibold">Simulación educativa basada en la metodología IGAC (Instituto Geográfico Agustín Codazzi) — No constituye documento ni concepto oficial del IGAC</h3>
       </div>
       <div class="text-right text-[10px]">
-        <div>Código: IN-GAG-PC05-02</div>
+        <div>Metodología de referencia: IN-GAG-PC05-02</div>
         <div>Fecha: <span id="print-fecha"></span></div>
       </div>
     </div>
@@ -2870,6 +3187,7 @@
   </div>
 
   <!-- JAVASCRIPT GLOBAL ENGINE -->
+  <script src="datos_erosion.js"></script>
   <script>
     // =========================================================================
     // 1. GESTIÓN DE PESTAÑAS Y BUSCADOR PREDICTIVO
@@ -2947,9 +3265,9 @@
       { id: "tab-b14", num: "B14", tit: "Capacidad de Uso de la Tierra (Clases I a VIII)", bloq: "Bloque B: Manejo", norm: "IGAC Capacidad de Tierras 2012", desc: "Calculadora de clases I-VIII y subclases limitantes (e, s, w, c)." },
       { id: "tab-b15", num: "B15", tit: "Conflictos de Uso del Suelo", bloq: "Bloque B: Manejo", norm: "IGAC Conflictos Territoriales 2012", desc: "Cruce de Capacidad vs Uso Actual (Sobreutilización / Subutilización)." },
       { id: "tab-b16", num: "B16", tit: "Oferta Ambiental / Oferta Edáfica", bloq: "Bloque B: Manejo", norm: "UPRA / IGAC Zonificación Aptitud", desc: "Síntesis multivariable de aptitud territorial y soporte ecosistémico." },
-      { id: "tab-b17", num: "B17", tit: "Muestreo de Suelos e Interpretación", bloq: "Bloque B: Manejo", norm: "ICA / IGAC Protocolo de Muestreo", desc: "Diseño en zigzag, profundidades y calculadora de submuestras." },
+      { id: "tab-b17", num: "B17", tit: "Muestreo de Suelos e Interpretación", bloq: "Bloque B: Manejo", norm: "IGAC Protocolo de Muestreo", desc: "Diseño en zigzag, profundidades y calculadora de submuestras." },
       { id: "tab-b18", num: "B18", tit: "Degradación del Suelo", bloq: "Bloque B: Manejo", norm: "IDEAM-MADS Protocolo Degradación", desc: "Matriz diagnóstica de síntomas visibles y gravedad en campo." },
-      { id: "tab-b19", num: "B19", tit: "Erosión Hídrica (USLE / RUSLE)", bloq: "Bloque B: Manejo", norm: "IDEAM / Cenicafé / IGAC Erosión", desc: "Calculadora A = R·K·LS·C·P con factores calibrados para Colombia." },
+      { id: "tab-b19", num: "B19", tit: "Erosión Hídrica — Factores RUSLE", bloq: "Bloque B: Manejo", norm: "CAR/SICLICA · IDEAM · Foster & Hathaway · Williams · McCool", desc: "Motor completo: R calculado con IFM de estaciones cercanas (IDW), K por ecuación de Williams con UCS/perfiles IGAC, LS por pendiente, erosión potencial AP, efectiva Ae, índice IE=C·P, tolerancia T y susceptibilidad Se (AHP)." },
       { id: "tab-b20", num: "B20", tit: "Prácticas de Conservación de Suelos", bloq: "Bloque B: Manejo", norm: "IGAC / Federación Cafeteros / FAO", desc: "Curvas a nivel, terrazas, barreras vivas y mulching según pendiente." },
       { id: "tab-b21", num: "B21", tit: "Materia Orgánica & Relación C:N", bloq: "Bloque B: Manejo", norm: "ICA Insumos Orgánicos", desc: "Calculadora de C:N en mezclas de compostaje y residuos de cosecha." },
       { id: "tab-b22", num: "B22", tit: "Fertilización y Enmiendas (Cal y Yeso)", bloq: "Bloque B: Manejo", norm: "IGAC Cochrane/Kamprath", desc: "Calculadora de Requerimiento de Cal (t/ha) y Yeso agrícola." },
@@ -3283,7 +3601,8 @@
       if (needle) needle.style.transform = `rotate(${angle}deg)`;
 
       let limitantes = [];
-      if (sc_ph0 <= 2) limitantes.push(`Fuerte acidez (pH ${ph0})`);
+      if (ph0 !== null && ph0 <= 5.0) limitantes.push(`Fuerte acidez (pH ${ph0})`);
+      if (ph0 !== null && ph0 > 7.8) limitantes.push(`pH alcalino (pH ${ph0}): menor disponibilidad de fósforo, hierro y micronutrientes`);
       if (sc_sal0 <= 2) limitantes.push(`Toxicidad severa de aluminio (${sal0}%)`);
       if (sc_p0 <= 2) limitantes.push(`Fósforo disponible muy deficiente (${p0} mg/kg)`);
       if (sc_k0 <= 2) limitantes.push(`Potasio limitante (${k0} cmol/kg)`);
@@ -3292,8 +3611,10 @@
       let diag = `Suelo con Fertilidad Natural [ ${cat} ] (Índice FT: ${FT.toFixed(2)}). `;
       if (limitantes.length > 0) {
         diag += `Principales factores limitantes según la Ley del Mínimo: ${limitantes.join("; ")}. `;
-        if (sc_sal0 <= 2 || sc_ph0 <= 2) {
+        if ((sc_sal0 <= 2 || (ph0 !== null && ph0 <= 5.0))) {
           diag += `Se requiere encalado correctivo para neutralizar el aluminio tóxico y elevar el pH.`;
+        } else if (ph0 !== null && ph0 > 7.8) {
+          diag += `En suelo alcalino NO se recomienda encalado: prefiera fertilizantes acidificantes (p. ej. fosfato monoamónico, azufre elemental) y fuentes de hierro quelatado.`;
         }
       } else {
         diag += `Excelente equilibrio nutrimental sin restricciones químicas ni salinas.`;
@@ -3705,22 +4026,40 @@
     }
 
     function determinarClaseTextural(sand, silt, clay) {
+      const CLASES = {
+        ArL:  { nombre: "Arcillo Limosa (ArL)", fam: "Fina / Muy fina", dren: "Lento a Imperfecto", hum: "180 - 220 mm/m", man: "Pesado / Difícil", recom: "Drenaje subsuperficial asistido; no laborear con alta humedad." },
+        ArA:  { nombre: "Arcillo Arenosa (ArA)", fam: "Fina", dren: "Moderado a Lento", hum: "140 - 180 mm/m", man: "Moderado", recom: "Susceptible a sellamiento; incorporar materia orgánica." },
+        Ar:   { nombre: "Arcillosa (Ar)", fam: "Fina / Muy fina (>60%)", dren: "Lento a Muy Pobre", hum: "190 - 240 mm/m", man: "Pesado / Compactable", recom: "Alto riesgo de compactación; laboreo en punto de sazón." },
+        FArA: { nombre: "Franco Arcillo Arenosa (FArA)", fam: "Francosa fina", dren: "Bueno", hum: "130 - 170 mm/m", man: "Fácil laboreo", recom: "Buena permeabilidad; sensible a erosión hídrica en pendiente." },
+        FArL: { nombre: "Franco Arcillo Limosa (FArL)", fam: "Francosa fina / Limosa fina", dren: "Moderado", hum: "170 - 210 mm/m", man: "Favorable", recom: "Alta capacidad de campo; evitar pisoteo excesivo de ganado." },
+        FAr:  { nombre: "Franco Arcillosa (FAr)", fam: "Francosa fina", dren: "Bueno a Moderado", hum: "160 - 200 mm/m", man: "Favorable", recom: "Excelente retención de humedad y fertilidad natural." },
+        A:    { nombre: "Arenosa (A)", fam: "Arenosa gruesa", dren: "Excesivo", hum: "40 - 70 mm/m", man: "Muy suelto", recom: "Lixiviación crítica de fertilizantes; riego frecuente y mulch." },
+        AF:   { nombre: "Arenosa Franca (AF)", fam: "Arenosa", dren: "Rápido", hum: "70 - 110 mm/m", man: "Fácil", recom: "Baja retención de nutrientes; fraccionar abonamiento químico." },
+        FA:   { nombre: "Franco Arenosa (FA)", fam: "Francosa gruesa", dren: "Bueno a Algo Excesivo", hum: "100 - 140 mm/m", man: "Excelente laboreo", recom: "Buen régimen térmico radicular; óptimo para tubérculos y frutales." },
+        L:    { nombre: "Limosa (L)", fam: "Limosa gruesa", dren: "Moderado a Lento", hum: "190 - 230 mm/m", man: "Suave / Erosionable", recom: "Muy susceptible a formación de costras y erosión hídrica (Factor K alto)." },
+        FL:   { nombre: "Franco Limosa (FL)", fam: "Francosa fina / Limosa", dren: "Bueno a Moderado", hum: "180 - 220 mm/m", man: "Óptimo", recom: "Suelos de alta productividad; cobertura vegetal permanente." },
+        F:    { nombre: "Franca (F)", fam: "Francosa media", dren: "Bien drenado", hum: "140 - 180 mm/m", man: "Ideal agrícola", recom: "Textura ideal de equilibrio agronómico y físico." }
+      };
+      // Árbol de decisión USDA (12 clases) — límites enteros del triángulo oficial
+      let code;
       if (clay >= 40) {
-        if (silt >= 40) return { nombre: "Arcillo Limosa (ArL)", fam: "Fina / Muy fina", dren: "Lento a Imperfecto", hum: "180 - 220 mm/m", man: "Pesado / Difícil", recom: "Drenaje subsuperficial asistido; no laborear con alta humedad." };
-        if (sand >= 45) return { nombre: "Arcillo Arenosa (ArA)", fam: "Fina", dren: "Moderado a Lento", hum: "140 - 180 mm/m", man: "Moderado", recom: "Susceptible a sellamiento; incorporar materia orgánica." };
-        return { nombre: "Arcillosa (Ar)", fam: "Fina / Muy fina (>60%)", dren: "Lento a Muy Pobre", hum: "190 - 240 mm/m", man: "Pesado / Compactable", recom: "Alto riesgo de compactación; laboreo en punto de sazón." };
-      } else if (clay >= 27 && clay < 40) {
-        if (sand >= 20 && sand <= 45) return { nombre: "Franco Arcillosa (FAr)", fam: "Francosa fina", dren: "Bueno a Moderado", hum: "160 - 200 mm/m", man: "Favorable", recom: "Excelente retención de humedad y fertilidad natural." };
-        if (sand > 45) return { nombre: "Franco Arcillo Arenosa (FArA)", fam: "Francosa fina", dren: "Bueno", hum: "130 - 170 mm/m", man: "Fácil laboreo", recom: "Buena permeabilidad; sensible a erosión hídrica en pendiente." };
-        return { nombre: "Franco Arcillo Limosa (FArL)", fam: "Francosa fina / Limosa fina", dren: "Moderado", hum: "170 - 210 mm/m", man: "Favorable", recom: "Alta capacidad de campo; evitar pisoteo excesivo de ganado." };
+        if (silt >= 40) code = "ArL";
+        else if (sand >= 45) code = "ArA";
+        else code = "Ar";
+      } else if (clay >= 27) {
+        if (sand > 45) code = "FArA";
+        else if (silt >= 40) code = "FArL";
+        else code = "FAr";
       } else {
-        if (silt >= 80 && clay < 12) return { nombre: "Limosa (L)", fam: "Limosa gruesa", dren: "Moderado a Lento", hum: "190 - 230 mm/m", man: "Suave / Erosionable", recom: "Muy susceptible a formación de costras y erosión hídrica (Factor K alto)." };
-        if (silt >= 50 && (clay >= 12 && clay < 27 || (silt >= 50 && silt < 80 && clay < 12))) return { nombre: "Franco Limosa (FL)", fam: "Francosa fina / Limosa", dren: "Bueno a Moderado", hum: "180 - 220 mm/m", man: "Óptimo", recom: "Suelos de alta productividad; cobertura vegetal permanente." };
-        if (sand >= 85 && (silt + 1.5 * clay) < 15) return { nombre: "Arenosa (A)", fam: "Arenosa gruesa", dren: "Excesivo", hum: "40 - 70 mm/m", man: "Muy suelto", recom: "Lixiviación crítica de fertilizantes; riego frecuente y mulch." };
-        if (sand >= 70 && sand < 85 && (silt + 1.5 * clay) >= 15) return { nombre: "Arenosa Franca (AF)", fam: "Arenosa", dren: "Rápido", hum: "70 - 110 mm/m", man: "Fácil", recom: "Baja retención de nutrientes; fraccionar abonamiento químico." };
-        if (sand >= 43 && sand <= 85 && clay < 20 && silt < 50) return { nombre: "Franco Arenosa (FA)", fam: "Francosa gruesa", dren: "Bueno a Algo Excesivo", hum: "100 - 140 mm/m", man: "Excelente laboreo", recom: "Buen régimen térmico radicular; óptimo para tubérculos y frutales." };
-        return { nombre: "Franca (F)", fam: "Francosa media", dren: "Bien drenado", hum: "140 - 180 mm/m", man: "Ideal agrícola", recom: "Textura ideal de equilibrio agronómico y físico." };
+        if (silt + 1.5 * clay < 15) code = "A";
+        else if (silt >= 80 && clay < 12) code = "L";
+        else if (silt >= 50) code = "FL";
+        else if (clay >= 20 && sand >= 45) code = "FArA";
+        else if (sand >= 70) code = "AF";
+        else if (sand >= 43 && clay < 20 && !(clay >= 7 && sand <= 52)) code = "FA";
+        else code = "F";
       }
+      return CLASES[code];
     }
 
     function actualizarTexturaInfo() {
@@ -3731,6 +4070,16 @@
       document.getElementById("humedad-textura").innerText = info.hum;
       document.getElementById("manejo-textura").innerText = info.man;
       document.getElementById("textura-recom-ambiental").innerText = info.recom;
+
+      const suma = currentSand + currentSilt + currentClay;
+      const badge = document.getElementById("textura-suma-badge");
+      if (badge) {
+        badge.innerText = suma + "%";
+        badge.className = "px-3 py-1 rounded-full text-xs font-black border " +
+          (suma === 100
+            ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+            : "bg-red-500/20 text-red-300 border-red-500/40");
+      }
     }
 
     function dibujarTrianguloTextural() {
@@ -3801,6 +4150,52 @@
       ctx.stroke();
     }
 
+    // Actualiza sliders, textos y resultados desde una terna arena/limo/arcilla
+    function refrescarTextura(sand, silt, clay) {
+      currentSand = Math.max(0, Math.min(100, sand));
+      currentSilt = Math.max(0, Math.min(100, silt));
+      currentClay = Math.max(0, Math.min(100, clay));
+      const norm = currentSand + currentSilt + currentClay;
+      if (norm > 0 && norm !== 100) {
+        currentSand = Math.round(currentSand * 100 / norm);
+        currentClay = Math.round(currentClay * 100 / norm);
+        currentSilt = 100 - currentSand - currentClay;
+      }
+      const sA = document.getElementById("slider-arena"), sL = document.getElementById("slider-limo"), sC = document.getElementById("slider-arcilla");
+      if (sA) sA.value = currentSand;
+      if (sL) sL.value = currentSilt;
+      if (sC) sC.value = currentClay;
+      const tA = document.getElementById("val-arena-txt"), tL = document.getElementById("val-limo-txt"), tC = document.getElementById("val-arcilla-txt");
+      if (tA) tA.innerText = `${currentSand}%`;
+      if (tL) tL.innerText = `${currentSilt}%`;
+      if (tC) tC.innerText = `${currentClay}%`;
+      actualizarTexturaInfo();
+      dibujarTrianguloTextural();
+    }
+
+    // Clic sobre el triángulo: pixel → (arena, limo, arcilla) por coordenadas baricéntricas
+    (function vincularClicTriangulo() {
+      const canvas = document.getElementById("trianguloCanvas");
+      if (!canvas) return;
+      canvas.addEventListener("click", (ev) => {
+        const rect = canvas.getBoundingClientRect();
+        if (!rect.width) return;
+        const x = (ev.clientX - rect.left) * (canvas.width / rect.width);
+        const y = (ev.clientY - rect.top) * (canvas.height / rect.height);
+        const w = canvas.width, h = canvas.height;
+        const pTop = { x: w / 2, y: 35 };        // 100% arcilla
+        const pLeft = { x: 45, y: h - 45 };      // 100% arena
+        const pRight = { x: w - 45, y: h - 45 }; // 100% limo
+        const d = (pLeft.y - pRight.y) * (pTop.x - pRight.x) + (pRight.x - pLeft.x) * (pTop.y - pRight.y);
+        if (!d) return;
+        const wClay = ((pLeft.y - pRight.y) * (x - pRight.x) + (pRight.x - pLeft.x) * (y - pRight.y)) / d;
+        const wSand = ((pRight.y - pTop.y) * (x - pRight.x) + (pTop.x - pRight.x) * (y - pRight.y)) / d;
+        const wSilt = 1 - wClay - wSand;
+        if (wClay < -0.02 || wSand < -0.02 || wSilt < -0.02) return; // clic fuera del triángulo
+        refrescarTextura(Math.round(wSand * 100), Math.round(wSilt * 100), Math.round(wClay * 100));
+      });
+    })();
+
     // =========================================================================
     // 7. PESTAÑA 4: LOS 12 ÓRDENES DE SUELO DE COLOMBIA (SOIL TAXONOMY USDA - IGAC)
     // =========================================================================
@@ -3809,14 +4204,14 @@
       { id: "oxisoles", nombre: "Oxisoles", sub: "Suelos rojos ferralíticos hipermeteorizados", col: true, reg: "colombia", cub: "22.5% en Colombia", fert: "Baja a Muy Baja (Alta acidez)", epipedon: "Ócrico / Endopedón Óxico (Bo)", desc: "Dominan la altillanura de la Orinoquía (Meta, Vichada) y Amazonía. Ricos en caolinita y sesquióxidos de Fe/Al. Fuerte fijación de fósforo y requerimiento masivo de cal para agricultura intensiva." },
       { id: "ultisoles", nombre: "Ultisoles", sub: "Suelos ácidos con acumulación iluvial de arcilla", col: true, reg: "colombia", cub: "10.4% en Colombia", fert: "Baja (Saturación de bases <35%)", epipedon: "Ócrico / Endopedón Argílico o Kándico (Bt)", desc: "Abundantes en la región Pacífica (Chocó), piedemonte amazónico y valles cálidos húmedos. Lixiviación intensa con toxicidad de aluminio intercambiable. Aptitud forestal y agroforestería sostenible." },
       { id: "andisoles", nombre: "Andisoles", sub: "Suelos derivados de cenizas volcánicas recientes", col: true, reg: "andina", cub: "9.3% en Colombia", fert: "Alta a Media (Fijan fósforo)", epipedon: "Melánico u Ócrico / Propiedades ándicas (Alófana)", desc: "Típicos del Eje Cafetero, Nariño, Cauca, Tolima y Cundinamarca. Baja densidad aparente (<0.9 g/cm³), alta porosidad y retención hídrica extraordinaria. Muy susceptibles a erosión si pierden la cobertura." },
-      { id: "entisoles", nombre: "Entisoles", sub: "Suelos incipientes sin horizontes diagnósticos", col: true, reg: "colombia", cub: "4.8% en Colombia", fert: "Baja a Muy Alta (Aluviales)", epipedon: "Ócrico / Sin endopedón genético", desc: "Se ubican en las planicies aluviales activas de los ríos Magdalena, Cauca, Sinú y Atrato (Fluventes fértiles), o en pendientes muy escarpadas erodadas (Ortentes). Clave en agricultura de vegas." },
+      { id: "entisoles", nombre: "Entisoles", sub: "Suelos incipientes sin horizontes diagnósticos", col: true, reg: "colombia", cub: "4.8% en Colombia", fert: "Baja a Muy Alta (Aluviales)", epipedon: "Ócrico / Sin endopedón genético", desc: "Se ubican en las planicies aluviales activas de los ríos Magdalena, Cauca, Sinú y Atrato (los fluvisoles fértiles de las vegas), o en pendientes muy escarpadas erodadas (Ortentes). Clave en agricultura de vegas." },
       { id: "alfisoles", nombre: "Alfisoles", sub: "Suelos fértiles con horizonte argílico enriquecido", col: true, reg: "colombia", cub: "3.5% en Colombia", fert: "Media a Alta (SBT > 35%)", epipedon: "Ócrico / Endopedón Argílico (Bt)", desc: "Presentes en la Región Caribe (Cesar, Magdalena, Bolívar) y en valles interandinos secos. Tienen buen contenido de calcio, magnesio y potasio. Aptos para agricultura comercial y ganadería doble propósito." },
       { id: "aridisoles", nombre: "Aridisoles", sub: "Suelos de zonas secas y desérticas", col: true, reg: "colombia", cub: "3.1% en Colombia", fert: "Moderada a Baja (Déficit de agua)", epipedon: "Ócrico / Horizontes Cálcico, Gypsico o Sálico", desc: "La Guajira, Desierto de la Tatacoa (Huila) y Cañón del Chicamocha. Régimen de humedad arídico con acumulación de sales o carbonatos. Requieren riego presurizado con drenaje para evitar sodificación." },
       { id: "molisoles", nombre: "Molisoles", sub: "Suelos de pradera con epipedón oscuro rico en bases", col: true, reg: "andina", cub: "2.1% en Colombia", fert: "Muy Alta (La más alta)", epipedon: "Mólico (Espeso, oscuro, SBT > 50%)", desc: "Valles geográficos del río Cauca, Sabana de Bogotá y terrazas aluviales estables. Tierras de mayor vocación agrícola del país para caña de azúcar, hortalizas, flores y cereales." },
       { id: "vertisoles", nombre: "Vertisoles", sub: "Suelos arcillosos pesados con esmectitas 2:1", col: true, reg: "colombia", cub: "1.8% en Colombia", fert: "Alta química / Compleja física", epipedon: "Mólico u Ócrico / Gilgai y slickensides", desc: "Valle del Cauca, Valle del Sinú y Tolima. Se agrietan profundamente en época seca y se expanden en lluvias. Requieren labranza especializada y manejo de drenaje para arroz y caña." },
       { id: "histosoles", nombre: "Histosoles", sub: "Suelos puramente orgánicos de turbera", col: true, reg: "andina", cub: "1.2% en Colombia", fert: "Protección Estricta (Agua)", epipedon: "Hístico (>20-30% de carbono orgánico)", desc: "Páramos (Sumapaz, Chingaza, Los Nevados) y ciénagas permanentes. Esponjas hídricas y grandes reservorios de carbono bajo anoxia. Prohibida su explotación agrícola por Ley 1930 de 2018." },
       { id: "espodosoles", nombre: "Espodosoles", sub: "Suelos con acumulación iluvial de MO y Al", col: true, reg: "colombia", cub: "0.8% en Colombia", fert: "Muy Baja (Arenas cuarzosas)", epipedon: "Álbico sobre Espódico (Bhs)", desc: "Localizados en arenales de la Amazonía (Guainía, Vaupés) y algunos páramos pluviales. pH muy ácido (<4.2) y lavado extremo de nutrientes. Ecosistemas de extrema fragilidad biológica." },
-      { id: "gelisoles", nombre: "Gelisoles", sub: "Suelos con permafrost o hielo permanente", col: false, reg: "global", cub: "<0.01% en Colombia", epipedon: "Hístico u Ócrico / Crioturbación", desc: "Propios de la tundra ártica y antártica. En Colombia solo existen microsectores en las cumbres periglaciares del Cocuy, Ruiz y Huila por encima de 4.800 msnm." }
+      { id: "gelisoles", nombre: "Gelisoles", sub: "Suelos con permafrost o hielo permanente", col: true, reg: "andina", cub: "<0.01% en Colombia", fert: "N/A (no aptitud agrícola) / Protección íntegra (crioturbados)", epipedon: "Hístico u Ócrico / Crioturbación", desc: "Propios de la tundra ártica y antártica. En Colombia solo existen microsectores en las cumbres periglaciares del Cocuy, Ruiz y Huila por encima de 4.800 msnm." }
     ];
 
     function renderizarOrdenesSuelo(filtro) {
@@ -4155,7 +4550,7 @@
         suelo = "Oxisoles y Ultisoles de llanuras y piedemontes";
       } else if (amb === "paramo_nival") {
         tipo = "Gelifracción / Crioclastia (Meteorización Física Dominante)";
-        desc = "Ciclos diarios de congelamiento y deshielo del agua en microfisuras generan presiones expansivas de hasta 200 MPa, disgregando la roca mecánicamente.";
+        desc = "Ciclos diarios de congelamiento y deshielo del agua en microfisuras generan presiones expansivas de hasta ~21 MPa (≈210 atm), disgregando la roca mecánicamente.";
         mineral = "Minerales primarios inalterados heredados (Cuarzo, feldespatos angulosos)";
         suelo = "Entisoles líticos y Cryorthents de crestas periglaciares";
       } else if (amb === "semidesierto") {
@@ -4196,7 +4591,8 @@
       const h4_nom = document.getElementById("h4-nom")?.value || "C";
 
       const totalProf = h1_esp + h2_esp + h3_esp + h4_esp;
-      const profRadicular = h1_esp + h2_esp;
+      // Profundidad efectiva = horizontes genéticos explorables por raíces (Ap + B + BC); el C es material no activo
+      const profRadicular = h1_esp + h2_esp + h3_esp;
 
       const txtProf = document.getElementById("txt-prof-efectiva");
       if (txtProf) {
@@ -4299,7 +4695,16 @@
       const elTxt = document.getElementById("a4-diag-txt");
 
       if (elDa) elDa.innerText = `${da.toFixed(2)} g/cm³`;
-      if (elPor) elPor.innerText = `${por.toFixed(1)}%`;
+      if (elPor) elPor.innerText = por > 0 ? `${por.toFixed(1)}%` : "⚠ inválida";
+
+      if (da >= dp) {
+        if (elBadge) {
+          elBadge.className = "badge-norma badge-minambiente";
+          elBadge.innerText = "Datos Incompatibles";
+        }
+        if (elTxt) elTxt.innerText = `La densidad aparente (${da.toFixed(2)} g/cm³) no puede ser mayor o igual a la densidad de partículas (${dp.toFixed(2)} g/cm³): implicaría porosidad negativa. Revise la masa seca (g) o el volumen del cilindro (cm³) tomados en campo.`;
+        return;
+      }
 
       let diag = "Condición Favorable";
       let badgeClass = "badge-igac";
@@ -4318,10 +4723,10 @@
           desc = `Densidad elevada (${da.toFixed(2)} g/cm³) para textura franca (umbral crítico: 1.50 g/cm³). Se sugiere descompactación mecánica o cultivos de cobertura pivotantes.`;
         }
       } else if (tex === "arena") {
-        if (da > 1.65) {
+        if (da > 1.80) {
           diag = "Suelo Compactado";
           badgeClass = "badge-ica";
-          desc = `Densidad excesiva (${da.toFixed(2)} g/cm³) incluso para textura arenosa, indicando pérdida de estructura y empaquetamiento granular denso.`;
+          desc = `Densidad excesiva (${da.toFixed(2)} g/cm³) incluso para textura arenosa (umbral crítico: 1,80 g/cm³), indicando pérdida de estructura y empaquetamiento granular denso.`;
         }
       }
 
@@ -4409,57 +4814,66 @@
     }
 
     // A7: MACRO Y MICRONUTRIENTES
-    function evaluarNutrientesDetalle() {
-      const p = parseFloat(document.getElementById("a7-p")?.value) || 0;
-      const k = parseFloat(document.getElementById("a7-k")?.value) || 0;
-      const ca = parseFloat(document.getElementById("a7-ca")?.value) || 0;
-      const mg = parseFloat(document.getElementById("a7-mg")?.value) || 0;
-      const s = parseFloat(document.getElementById("a7-s")?.value) || 0;
-      const b = parseFloat(document.getElementById("a7-b")?.value) || 0;
+    function a7Leer(id) {
+      const el = document.getElementById(id);
+      if (!el || el.value.trim() === "") return null;
+      const v = parseFloat(el.value);
+      return isFinite(v) ? v : null;
+    }
 
+    function a7Nivel(v, umbralBajo, umbralAlto, dec, unidad, sintBajo, sintOk, sintAlto) {
+      if (v === null) return { estado: "Sin dato", color: "text-slate-500", val: "—", sintoma: "Campo vacío: ingrese el resultado de laboratorio para evaluar este elemento." };
+      const txt = `${v.toFixed(dec)} ${unidad}`;
+      if (v < umbralBajo) return { estado: "Deficiente / Bajo", color: "text-red-400", val: txt, sintoma: sintBajo };
+      if (umbralAlto !== null && v > umbralAlto) return { estado: "Alto / Excesivo", color: "text-blue-400", val: txt, sintoma: sintAlto || "Nivel alto: revisar dosis de fertilización para evitar desbalances iónicos o toxicidad." };
+      return { estado: "Adecuado", color: "text-emerald-400", val: txt, sintoma: sintOk };
+    }
+
+    function evaluarNutrientesDetalle() {
       const evalList = [
-        {
-          elem: "Fósforo Bray II (P)",
-          val: `${p.toFixed(1)} mg/kg`,
-          estado: p < 15 ? "Deficiente" : (p <= 30 ? "Adecuado" : "Alto / Excesivo"),
-          color: p < 15 ? "text-red-400" : (p <= 30 ? "text-emerald-400" : "text-blue-400"),
-          sintoma: p < 15 ? "Coloraciones púrpuras/violáceas en nervaduras y tallos viejos; escaso desarrollo radicular." : "Nivel óptimo para floración y enraizamiento."
-        },
-        {
-          elem: "Potasio Intercambiable (K)",
-          val: `${k.toFixed(2)} cmol/kg`,
-          estado: k < 0.20 ? "Deficiente" : (k <= 0.40 ? "Adecuado" : "Alto"),
-          color: k < 0.20 ? "text-red-400" : (k <= 0.40 ? "text-emerald-400" : "text-blue-400"),
-          sintoma: k < 0.20 ? "Clorosis y posterior quemado marginal necrótico en las hojas viejas; tallos quebradizos." : "Adecuada osmorregulación y llenado de frutos/granos."
-        },
-        {
-          elem: "Calcio Intercambiable (Ca)",
-          val: `${ca.toFixed(2)} cmol/kg`,
-          estado: ca < 2.0 ? "Bajo" : (ca <= 6.0 ? "Adecuado" : "Alto"),
-          color: ca < 2.0 ? "text-red-400" : (ca <= 6.0 ? "text-emerald-400" : "text-blue-400"),
-          sintoma: ca < 2.0 ? "Deformación y muerte de ápices de crecimiento; pudrición apical de frutos (blossom-end rot)." : "Pared celular firme y estructura del suelo floculada."
-        },
-        {
-          elem: "Magnesio Intercambiable (Mg)",
-          val: `${mg.toFixed(2)} cmol/kg`,
-          estado: mg < 0.8 ? "Bajo" : (mg <= 2.0 ? "Adecuado" : "Alto"),
-          color: mg < 0.8 ? "text-red-400" : (mg <= 2.0 ? "text-emerald-400" : "text-blue-400"),
-          sintoma: mg < 0.8 ? "Clorosis intervenal en forma de espiga de pescado en hojas viejas (núcleo de la clorofila)." : "Fotosíntesis activa y transporte de asimilados sin restricción."
-        },
-        {
-          elem: "Azufre Asimilable (S)",
-          val: `${s.toFixed(1)} mg/kg`,
-          estado: s < 10 ? "Deficiente" : "Suficiente",
-          color: s < 10 ? "text-amber-400" : "text-emerald-400",
-          sintoma: s < 10 ? "Clorosis general uniforme en hojas jóvenes (a diferencia del N que inicia en hojas viejas)." : "Síntesis proteica balanceada."
-        },
-        {
-          elem: "Boro Disponible (B)",
-          val: `${b.toFixed(2)} mg/kg`,
-          estado: b < 0.3 ? "Deficiente" : (b <= 0.8 ? "Adecuado" : "Excesivo / Tóxico"),
-          color: b < 0.3 ? "text-red-400" : (b <= 0.8 ? "text-emerald-400" : "text-purple-400"),
-          sintoma: b < 0.3 ? "Caída masiva de flores, frutos malformados o acorchados y muerte de meristemos apicales." : "Adecuada germinación del grano de polen."
-        }
+        { elem: "Nitrato (N-NO₃)", ...a7Nivel(a7Leer("a7-n"), 10, 20, 0, "mg/kg",
+            "Clorosis general gradual que inicia en hojas viejas; plantas achaparradas y tallos delgados. Fraccionar la fertilización nitrogenada y usar coberturas leguminosas.",
+            "Disponibilidad media de N para crecimiento vegetativo y síntesis proteica.",
+            "Exceso de N: riesgo de lixiviación de nitratos y vuelco en cereales; equilibrar con K y Ca.") },
+        { elem: "Fósforo Bray II (P)", ...a7Nivel(a7Leer("a7-p"), 15, 60, 1, "mg/kg",
+            "Coloraciones púrpuras/violáceas en nervaduras y tallos viejos; escaso desarrollo radicular.",
+            "Nivel óptimo para floración y enraizamiento.",
+            "Nivel alto: posible retrogradación con Fe/Al en suelos ácidos; espacie las aplicaciones de fósforo.") },
+        { elem: "Potasio Intercambiable (K)", ...a7Nivel(a7Leer("a7-k"), 0.20, 0.60, 2, "cmol/kg",
+            "Clorosis y posterior quemado marginal necrótico en las hojas viejas; tallos quebradizos.",
+            "Adecuada osmorregulación y llenado de frutos/granos.",
+            "Alto: puede inducir deficiencia de Mg por antagonismo iónico.") },
+        { elem: "Calcio Intercambiable (Ca)", ...a7Nivel(a7Leer("a7-ca"), 2.0, 10.0, 2, "cmol/kg",
+            "Deformación y muerte de ápices de crecimiento; pudrición apical de frutos (blossom-end rot).",
+            "Pared celular firme y estructura del suelo floculada.",
+            "Alto: típico de suelos encalados o calcáreos; vigilar disponibilidad de P, Fe y Zn.") },
+        { elem: "Magnesio Intercambiable (Mg)", ...a7Nivel(a7Leer("a7-mg"), 0.8, 4.0, 2, "cmol/kg",
+            "Clorosis intervenal en forma de espiga de pescado en hojas viejas (núcleo de la clorofila).",
+            "Fotosíntesis activa y transporte de asimilados sin restricción.",
+            "Alto: posible desbalance con Ca/K; ajustar relación de bases.") },
+        { elem: "Azufre Asimilable (S)", ...a7Nivel(a7Leer("a7-s"), 10, null, 1, "mg/kg",
+            "Clorosis general uniforme en hojas jóvenes (a diferencia del N que inicia en hojas viejas).",
+            "Síntesis proteica balanceada.", null) },
+        { elem: "Boro Disponible (B)", ...a7Nivel(a7Leer("a7-b"), 0.3, 0.8, 2, "mg/kg",
+            "Caída masiva de flores, frutos malformados o acorchados y muerte de meristemos apicales.",
+            "Adecuada germinación del grano de polen y transporte de azúcares.",
+            "Riesgo de toxicidad (puntas de hojas viejas necrosadas): el margen entre deficiencia y toxicidad es estrecho.") },
+        { elem: "Hierro Fe-DTPA (Fe)", ...a7Nivel(a7Leer("a7-fe"), 4.0, 20.0, 1, "mg/kg",
+            "Clorosis intervenal intensa en hojas JÓVENES con nervaduras verdes; típica en suelos calizos o mal drenados. Usar Fe-EDDHA (quelato orfológico), no Fe-EDTA.",
+            "Disponibilidad suficiente de Fe para la síntesis de clorofila.",
+            "Alto: típico de suelos muy ácidos o anegados; vigilar toxicidad por Mn simultáneo.") },
+        { elem: "Manganeso Mn-DTPA (Mn)", ...a7Nivel(a7Leer("a7-mn"), 1.0, 20.0, 1, "mg/kg",
+            "Clorosis intervenal con punteados necróticos en hojas jóvenes; común en suelos alcalinos y encalados.",
+            "Actividad enzimática fotosintética normal.",
+            "Riesgo de toxicidad en suelos ácidos (pH < 5,2): puntos café en hojas viejas; encalar para deprimir disponibilidad.") },
+        { elem: "Zinc Zn-DTPA (Zn)", ...a7Nivel(a7Leer("a7-zn"), 0.6, 3.0, 2, "mg/kg",
+            "Hojas pequeñas con entrenudos cortos (roseta/llanet), clorosis intervenal en hojas jóvenes; común en suelos alto pH o con exceso de P.",
+            "Metabolismo hormonal (AIA) y crecimiento internodal normal.",
+            "Alto: antagonismo con Fe y Cu; revisar aplicaciones de fertilizantes micros.") },
+        { elem: "Cobre Cu-DTPA (Cu)", ...a7Nivel(a7Leer("a7-cu"), 0.2, 2.0, 2, "mg/kg",
+            "Puntas blanquecinas/grisáceas en hojas jóvenes, enrollamiento y sequedad de bordes; frecuente en turberas y suelos orgánicos.",
+            "Funcionación normal de enzimas de oxidación-reducción.",
+            "Alto: toxicidad posible en suelos ácidos con enmiendas cupríricas repetidas.") },
       ];
 
       const cont = document.getElementById("a7-resultado-nutrientes");
@@ -4483,6 +4897,8 @@
     function evaluarSalinidadSodicidad() {
       const ce = parseFloat(document.getElementById("a8-ce")?.value) || 0;
       const psi = parseFloat(document.getElementById("a8-psi")?.value) || 0;
+      const phEl = document.getElementById("a8-ph");
+      const ph = (phEl && phEl.value.trim() !== "" && isFinite(parseFloat(phEl.value))) ? parseFloat(phEl.value) : null;
 
       const badge = document.getElementById("a8-tipo-badge");
       const tit = document.getElementById("a8-tipo-titulo");
@@ -4491,35 +4907,46 @@
 
       if (!badge || !tit || !desc || !recom) return;
 
+      // Concordancia diagnóstico-química según pH en pasta saturada (USDA Handbook 60)
+      let phNota = "";
+      if (ph !== null) {
+        if (psi >= 15 && ph >= 8.5) phNota = ` pH en pasta saturada = ${ph.toFixed(1)} ≥ 8,5: confirma hidrólisis del Na⁺ adsorbido (sodicidad activa).`;
+        else if (psi >= 15) phNota = ` pH en pasta saturada = ${ph.toFixed(1)} (< 8,5): sodicidad enmascarada; es típico en suelos salino-sódicos recién lavados o con alto contenido de yeso.`;
+        else if (ph >= 8.5 && ce >= 4) phNota = ` pH = ${ph.toFixed(1)}: alcalinidad residual asociada a sales; vigilar PSI antes del lavado para descartar sodicidad latente.`;
+        else if (ph >= 8.5) phNota = ` pH = ${ph.toFixed(1)} ≥ 8,5 sin sodicidad: posible presencia de Ca/Mg-carbonatos (cal libre); no es suelo sódico.`;
+        else phNota = ` pH en pasta saturada = ${ph.toFixed(1)}: dentro de rango normal para este diagnóstico.`;
+      }
+
       if (ce < 4.0 && psi < 15.0) {
         badge.className = "badge-norma badge-igac";
         badge.innerText = "SUELO NORMAL";
         tit.className = "text-xl font-black text-emerald-400";
         tit.innerText = "Suelo Normal (Sin Problemas Salinos ni Sódicos)";
-        desc.innerText = "CE < 4.0 dS/m y PSI < 15%. No existe estrés osmótico para las raíces ni dispersión de coloides arcillosos. La estructura física y la conductividad hidráulica se mantienen óptimas.";
+        desc.baseTxt = "CE < 4.0 dS/m y PSI < 15%. No existe estrés osmótico para las raíces ni dispersión de coloides arcillosos. La estructura física y la conductividad hidráulica se mantienen óptimas.";
         recom.innerText = "Manejo agronómico estándar. Monitoreo semestral de la calidad del agua de riego para prevenir salinización inducida en distritos de riego.";
       } else if (ce >= 4.0 && psi < 15.0) {
         badge.className = "badge-norma badge-ica";
         badge.innerText = "SUELO SALINO";
         tit.className = "text-xl font-black text-amber-400";
         tit.innerText = "Suelo Salino (Estrés Osmótico Elevado)";
-        desc.innerText = "CE ≥ 4.0 dS/m y PSI < 15% (pH generalmente < 8.5). El exceso de sales solubles (sulfatos y cloruros de Ca y Mg) reduce drásticamente el potencial osmótico del agua, provocando sequía fisiológica en las plantas.";
+        desc.baseTxt = "CE ≥ 4.0 dS/m y PSI < 15% (pH generalmente < 8.5). El exceso de sales solubles (sulfatos y cloruros de Ca y Mg) reduce drásticamente el potencial osmótico del agua, provocando sequía fisiológica en las plantas.";
         recom.innerText = "Lavado fraccionado de sales con agua de buena calidad y drenaje parcelario eficiente. Selección temporal de cultivos tolerantes a salinidad (cebada, pasto bermuda). No requiere yeso agrícola.";
       } else if (ce < 4.0 && psi >= 15.0) {
         badge.className = "badge-norma badge-minambiente";
         badge.innerText = "SUELO SÓDICO";
         tit.className = "text-xl font-black text-red-400";
         tit.innerText = "Suelo Sódico (Dispersión Coloidal & Toxicidad de Na)";
-        desc.innerText = "CE < 4.0 dS/m y PSI ≥ 15% (pH frecuentemente > 8.5). El exceso de sodio intercambiable destruye la estructura del suelo por dispersión de coloides arcillosos y materia orgánica, sellando poros y bloqueando la infiltración.";
+        desc.baseTxt = "CE < 4.0 dS/m y PSI ≥ 15% (pH frecuentemente > 8.5). El exceso de sodio intercambiable destruye la estructura del suelo por dispersión de coloides arcillosos y materia orgánica, sellando poros y bloqueando la infiltración.";
         recom.innerText = "Aplicación indispensable de enmienda de Yeso Agrícola (CaSO₄·2H₂O) o azufre elemental para desplazar el Na⁺ adsorbido por Ca²⁺ antes de aplicar láminas de lavado. ¡NUNCA lavar con agua sola!";
       } else {
         badge.className = "badge-norma badge-minambiente";
         badge.innerText = "SUELO SALINO-SÓDICO";
         tit.className = "text-xl font-black text-purple-400";
         tit.innerText = "Suelo Salino-Sódico (Doble Problemática Química y Física)";
-        desc.innerText = "CE ≥ 4.0 dS/m y PSI ≥ 15%. Coexisten concentraciones tóxicas de sales solubles y alto sodio de intercambio. Mientras la salinidad sea alta, el suelo se mantiene floculado, pero si se lava con agua dulce sin agregar calcio, se transformará en un suelo sódico impermeable.";
+        desc.baseTxt = "CE ≥ 4.0 dS/m y PSI ≥ 15%. Coexisten concentraciones tóxicas de sales solubles y alto sodio de intercambio. Mientras la salinidad sea alta, el suelo se mantiene floculado, pero si se lava con agua dulce sin agregar calcio, se transformará en un suelo sódico impermeable.";
         recom.innerText = "Tratamiento combinado: 1) Incorporar yeso agrícola para desplazar el sodio; 2) Lavar con láminas controladas de agua para remover tanto las sales solubles como el sulfato de sodio resultante; 3) Mantener drenaje activo.";
       }
+      desc.innerText = desc.baseTxt + phNota;
     }
 
     // A9: PROPIEDADES BIOLÓGICAS DEL SUELO
@@ -4609,12 +5036,15 @@
       const mo = parseFloat(document.getElementById("a11-mo")?.value) || 4.5;
       const tasa = parseFloat(document.getElementById("a11-tasa")?.value) || 2.0;
       const prof = parseFloat(document.getElementById("a11-prof")?.value) || 20;
+      const rho = parseFloat(document.getElementById("a11-rho")?.value) || 1.25;
 
-      const nTotal = mo * 0.05 * 1.25 * prof * 100;
+      const nTotal = mo * 0.05 * rho * prof * 100;
       const nMin = nTotal * (tasa / 100);
 
       const elRes = document.getElementById("a11-res-n");
       if (elRes) elRes.innerText = `${Math.round(nMin)} kg N / ha / año`;
+      const elUrea = document.getElementById("a11-res-urea");
+      if (elUrea) elUrea.innerText = `Equivale a ~${Math.round(nMin / 0.46)} kg de Urea ahorrados (46% N)`;
     }
 
     // A13: LEVANTAMIENTOS Y CARTOGRAFÍA EDÁFICA
@@ -4657,6 +5087,9 @@
       const ero = document.getElementById("b14-erosion")?.value || "moderada";
       const dren = document.getElementById("b14-drenaje")?.value || "bueno";
 
+      // Subclase IGAC: w (exceso de agua) > e (erosión/pendiente) > s (limitación por suelo/profundidad)
+      const sub = dren !== "bueno" ? "w" : (pend > 7 || ero !== "ninguna" ? "e" : (prof < 50 ? "s" : ""));
+
       let tit = "Clase IV - Subclase e (Limitación por Pendiente y Erosión)";
       let badge = "CLASE IVe";
       let desc = "Tierras con limitaciones severas que restringen la elección de plantas o requieren prácticas muy cuidadosas de conservación. Aptas para cultivos permanentes (café, cacao, frutales), pastos y bosques.";
@@ -4667,31 +5100,40 @@
         tit = "Clase VIII - Tierras de Conservación y Protección Estricta";
         desc = "Tierras sin aptitud agropecuaria ni forestal de producción. Pendientes extremadamente escarpadas o perfiles esqueléticos con altísimo riesgo de remoción en masa.";
         voc = "Preservación estricta de la vegetación natural, recarga de acuíferos y protección de cuencas hidrográficas. Prohibida toda actividad extractiva o agrícola.";
-      } else if (pend > 25 || prof < 40) {
-        badge = "CLASE VIe";
+      } else if (pend > 35 || (prof < 40 && ero === "moderada")) {
+        badge = `CLASE VII${sub}`;
+        tit = "Clase VII - Subclase e (Limitaciones Muy Severas, Uso Forestal Permanente)";
+        desc = "Tierras muy escarpadas o moderadamente erosionadas que hacen inviable cualquier cultivo anual. Solo admiten uso forestal protector-productor o silvopastoril con obras intensas de conservación.";
+        voc = "Bosques protectores, sistemas agrosilvopastoriles establecidos, cercas vivas y control estricto del fuego y del pisoteo.";
+      } else if (pend > 25) {
+        badge = `CLASE VI${sub}`;
         tit = "Clase VI - Subclase e (Sistemas Silvopastoriles y Forestales)";
         desc = "Tierras no aptas para cultivos limpios mecanizados. Pendientes fuertes con moderado a alto riesgo de degradación.";
         voc = "Sistemas silvopastoriles densos, plantaciones forestales protectoras-productoras y pastoreo rotacional controlado con cercas vivas.";
       } else if (pend > 12) {
-        badge = "CLASE IVe";
+        badge = `CLASE IV${sub}`;
         tit = "Clase IV - Subclase e (Cultivos Permanentes / Agroforestería)";
         desc = "Tierras de ladera moderada a fuerte con riesgo de erosión hídrica si se expone el suelo desnudo. Excelente aptitud para cultivos perennes densos.";
         voc = "Caficultura sostenible con sombrío, cacao, frutales andinos y barreras vivas perpendiculares a la pendiente.";
       } else if (pend > 7 || dren === "imperfecto") {
-        const sub = dren === "imperfecto" ? "w" : "e";
         badge = `CLASE III${sub}`;
-        tit = `Clase III - Subclase ${sub} (Agricultura Moderada con Prácticas)`;
+        tit = "Clase III - Subclase " + sub + " (Agricultura Moderada con Prácticas)";
         desc = "Tierras con limitaciones moderadas que reducen la gama de cultivos o requieren prácticas especiales de conservación y drenaje superficial.";
         voc = "Cultivos semianuales y transitorios con labranza conservacionista y rotación con leguminosas.";
-      } else if (pend > 3 || prof < 80) {
-        badge = "CLASE IIs";
+      } else if (dren === "pobre") {
+        badge = "CLASE Vw";
+        tit = "Clase V - Subclase w (Plana pero Inundable / Encharcada)";
+        desc = "Tierras casi planas pero con exceso de agua permanente o recurrente que impide el laboreo oportuno; solo mejorables con obras costosas de drenaje profundo.";
+        voc = "Pasturas tolerantes al encharcamiento, arrozales controlados, franjas de amortiguación riparia y áreas de recarga hídrica.";
+      } else if (pend > 3 || prof < 80 || ero === "moderada") {
+        badge = `CLASE II${sub || "s"}`;
         tit = "Clase II - Subclase s (Tierras Arables de Alta Calidad)";
         desc = "Tierras con ligeras limitaciones que demandan prácticas sencillas de manejo. Suelos profundos, fértiles y de relieve suave.";
         voc = "Agricultura intensiva y mecanizada diversificada con monitoreo de materia orgánica.";
-      } else if (dren === "bueno" && prof >= 80 && ero === "ninguna") {
+      } else {
         badge = "CLASE I";
         tit = "Clase I (Tierras Arables de Máxima Calidad sin Limitaciones)";
-        desc = "Tierras planas (<3%), muy profundas, bien drenadas, con fertilidad natural y sin riesgo de erosión ni inundación.";
+        desc = "Tierras planas (<3%), muy profundas (≥80 cm), bien drenadas, sin erosión actual ni riesgo de inundación. Máxima flexibilidad de uso.";
         voc = "Cualquier cultivo transitorio o permanente con máxima productividad agrícola. Suelo estratégico para seguridad alimentaria.";
       }
 
@@ -4730,7 +5172,7 @@
         tit = "Sobreutilización Severa (Conflicto Crítico)";
         desc = "Se desarrollan cultivos limpios intensivos en tierras con vocación silvopastoril o de conservación estricta (ej. papa o cebolla en páramos o laderas escarpadas).";
         cons = "Erosión severa acelerada, desprendimientos en masa, colmatación de acueductos y pérdida irreversible de suelo superficial.";
-      } else if (capRank === 4 && uso !== "bosque_protector") {
+      } else if (capRank === 4 && uso !== "bosque_protector" && uso !== "sin_uso") {
         badge = "SOBREUTILIZACIÓN SEVERA";
         tit = "Invasión de Suelos de Protección Estricta";
         desc = "Uso agropecuario activo en tierras Clase VIII o áreas protegidas que legalmente deben permanecer bajo cobertura boscosa o de páramo.";
@@ -4740,6 +5182,11 @@
         tit = "Sobreutilización Moderada";
         desc = "Cultivos transitorios en laderas de vocación agroforestal sin obras mecánicas completas de conservación.";
         cons = "Pérdida paulatina de fertilidad por lavado de nutrientes y erosión laminar constante.";
+      } else if (capRank === 1 && (uso === "bosque_protector" || uso === "sin_uso")) {
+        badge = "SUBUTILIZACIÓN SEVERA";
+        tit = "Subutilización Severa (Conflicto por Infrautilización)";
+        desc = "Tierras Clase I-II de vocación agrícola estratégica mantenidas bajo cobertura protectora espontánea, enmontada o completamente sin uso productivo.";
+        cons = "Pérdida de capacidad productiva para la seguridad alimentaria territorial; en POT y Esquemas de Ordenamiento este conflicto se corrige mediante unidades productivas asociadas o restitución del uso agrológico.";
       } else if (capRank === 1 && uso === "ganaderia_extensiva") {
         badge = "SUBUTILIZACIÓN MODERADA";
         tit = "Subutilización de la Tierra";
@@ -4765,6 +5212,7 @@
     function calcularMuestreoSuelos() {
       const area = parseFloat(document.getElementById("b17-area")?.value) || 5;
       const varTerreno = document.getElementById("b17-variabilidad")?.value || "media";
+      const cultivo = document.getElementById("b17-cultivo")?.value || "perenne";
 
       let baseSubm = 15;
       if (varTerreno === "baja") baseSubm = 12;
@@ -4776,6 +5224,11 @@
 
       const elSubm = document.getElementById("b17-res-subm");
       if (elSubm) elSubm.innerText = `${totalSubm} submuestras`;
+
+      const elProf = document.getElementById("b17-res-prof");
+      if (elProf) elProf.innerText = cultivo === "anual"
+        ? "Profundidad: 0–20 cm (un solo compuesto de 1 kg por lote)"
+        : "Profundidad: 0–25 y 25–50 cm (dos compuestos independientes, uno por horizonte)";
     }
 
     // B18: DEGRADACIÓN DEL SUELO
@@ -4821,37 +5274,345 @@
       if (elPlan) elPlan.innerText = plan;
     }
 
-    // B19: EROSIÓN HÍDRICA (USLE / RUSLE)
-    function calcularUSLE() {
-      const r = parseFloat(document.getElementById("usle-r")?.value) || 8500;
-      const k = parseFloat(document.getElementById("usle-k")?.value) || 0.025;
-      const ls = parseFloat(document.getElementById("usle-ls")?.value) || 4.2;
-      const c = parseFloat(document.getElementById("usle-c")?.value) || 0.05;
-      const p = parseFloat(document.getElementById("usle-p")?.value) || 1.00;
+// B19 PRO: MOTOR DE FACTORES DE EROSIÓN
+    // R desde estaciones CAR/SICLICA+IDEAM (IFM→Foster&Hathaway, IDW),
+    // K Williams con perfiles IGAC, LS Foster/McCool, C, P, AP/Ae/IE/T/Se.
+    // ==========================================================================
+    const B19 = { sel: new Set(), cercanas: [], rPunto: 0, kIndice: 0, ls: 0, filasK: [], ucsSel: "" };
 
-      const a = r * k * ls * c * p;
+    function b19Data() { return window.DATOS_EROSION || null; }
 
-      const elA = document.getElementById("usle-res-a");
-      const elBadge = document.getElementById("usle-res-badge");
-      const elDesc = document.getElementById("usle-res-desc");
-
-      if (elA) elA.innerText = `${a.toFixed(1)} t / ha / año`;
-
-      if (elBadge && elDesc) {
-        if (a <= 10) {
-          elBadge.className = "badge-norma badge-igac";
-          elBadge.innerText = "Pérdida Tolerable (A ≤ 10 t/ha)";
-          elDesc.innerText = `La tasa calculada (${a.toFixed(1)} t/ha/año) es inferior a la tasa de formación natural del suelo (Tolerancia T ≈ 10 t/ha/año). El manejo actual garantiza la sostenibilidad edáfica.`;
-        } else if (a <= 30) {
-          elBadge.className = "badge-norma badge-ica";
-          elBadge.innerText = "Pérdida Moderada (Excede Tolerancia)";
-          elDesc.innerText = `La tasa (${a.toFixed(1)} t/ha/año) triplica la tolerancia permisible. Se recomienda adoptar siembras al contorno (P = 0.50) o coberturas permanentes para reducir la erodabilidad.`;
-        } else {
-          elBadge.className = "badge-norma badge-minambiente";
-          elBadge.innerText = "Erosión Crítica / No Sostenible";
-          elDesc.innerText = `Pérdida alarmante (${a.toFixed(1)} t/ha/año). A este ritmo se perderá 1 cm de horizonte arable fértil cada 8 años. Urge reconversión a sistemas agroforestales o terrazas de banco.`;
-        }
+    function b19Init() {
+      const d = b19Data();
+      const nota = document.getElementById("b19-radio-nota");
+      if (!d) { if (nota) nota.innerText = "⚠️ Falta el archivo datos_erosion.js junto al index.html: sin él no hay estaciones ni UCS."; return; }
+      const cSel = document.getElementById("b19-centro");
+      if (cSel && cSel.options.length <= 1) {
+        d.centros.forEach((c, i) => {
+          const o = document.createElement("option"); o.value = i; o.innerText = c.nombre; cSel.appendChild(o);
+        });
       }
+      const uSel = document.getElementById("b19-ucs");
+      if (uSel && uSel.options.length <= 1) {
+        d.ucs.forEach(u => {
+          const o = document.createElement("option"); o.value = u.nombre;
+          o.innerText = `${u.nombre} — ${u.clima} (K=${u.factor_K.toFixed(4)})`; uSel.appendChild(o);
+        });
+      }
+      b19PoblarAnios();
+      b19ListarEstaciones();
+    }
+
+    function b19CentroChange() {
+      const d = b19Data(); if (!d) return;
+      const i = parseInt(document.getElementById("b19-centro")?.value ?? "-1", 10);
+      if (i >= 0 && d.centros[i]) {
+        document.getElementById("b19-lat").value = d.centros[i].lat;
+        document.getElementById("b19-lon").value = d.centros[i].lon;
+      }
+      b19ListarEstaciones();
+    }
+
+    function b19HaversineKm(a, b, c, e) {
+      const R = 6371, t = Math.PI / 180;
+      const dLa = (c - a) * t, dLo = (e - b) * t;
+      const h = Math.sin(dLa / 2) ** 2 + Math.cos(a * t) * Math.cos(c * t) * Math.sin(dLo / 2) ** 2;
+      return 2 * R * Math.asin(Math.sqrt(h));
+    }
+
+    // -------- ESTACIONES CERCANAS --------
+    function b19ListarEstaciones() {
+      const d = b19Data(); if (!d) return;
+      const lat = parseFloat(document.getElementById("b19-lat")?.value);
+      const lon = parseFloat(document.getElementById("b19-lon")?.value);
+      const radio = parseFloat(document.getElementById("b19-radio")?.value) || 15;
+      const areaHa = parseFloat(document.getElementById("b19-area")?.value) || 0;
+      const nMin = parseInt(document.getElementById("b19-nest")?.value || "5", 10);
+      const soloLluvia = document.getElementById("b19-solo-lluvia")?.checked;
+      if (isNaN(lat) || isNaN(lon)) return;
+      // El radio efectivo crece con el tamaño de la vereda (radio equivalente de un círculo de esa área)
+      const rEq = Math.sqrt((areaHa * 10000) / Math.PI) / 1000; // km
+      const rEff = Math.max(radio, rEq);
+      const nota = document.getElementById("b19-radio-nota");
+      if (nota) nota.innerText = `Área ${areaHa} ha ≈ radio equivalente ${rEq.toFixed(2)} km → radio de búsqueda efectivo ${rEff.toFixed(2)} km. La IDW final devuelve un R de punto y el rango min–max de las estaciones incluidas, útil como banda de incertidumbre para toda la vereda.`;
+
+      const cats = new Set(Array.from(document.querySelectorAll(".b19-cat-f:checked")).map(x => x.value));
+      const conocidas = ["CP", "PM", "PG", "CO"];
+      B19.cercanas = d.estaciones
+        .filter(e => e.lat != null && e.lon != null)
+        .filter(e => (cats.has(e.cat) || (!conocidas.includes(e.cat) && cats.has(""))))
+        .filter(e => (!soloLluvia || d.lluvias[e.codigo]))
+        .map(e => ({ ...e, dist: b19HaversineKm(lat, lon, e.lat, e.lon), nA: d.lluvias[e.codigo] ? Object.keys(d.lluvias[e.codigo]).length : 0 }))
+        .filter(e => e.dist <= rEff)
+        .sort((a, b) => a.dist - b.dist)
+        .slice(0, 40);
+
+      // Auto-selección: las nMin más cercanas con serie; conservar decisiones previas si siguen en lista
+      const visibles = new Set(B19.cercanas.map(e => e.codigo));
+      Array.from(B19.sel).forEach(c => { if (!visibles.has(c)) B19.sel.delete(c); });
+      const conDatos = B19.cercanas.filter(e => d.lluvias[e.codigo]);
+      if (B19.sel.size < Math.min(nMin, conDatos.length)) {
+        conDatos.slice(0, nMin).forEach(e => B19.sel.add(e.codigo));
+      }
+      b19RenderTablaEstaciones();
+      b19CalcularR();
+    }
+
+    function b19RenderTablaEstaciones() {
+      const d = b19Data(); const tb = document.querySelector("#b19-est-tabla tbody");
+      if (!tb) return;
+      tb.innerHTML = B19.cercanas.map(e => `
+        <tr class="border-b border-slate-800/60 ${B19.sel.has(e.codigo) ? "bg-emerald-500/5" : ""}">
+          <td class="p-1.5 text-center"><input type="checkbox" ${B19.sel.has(e.codigo) ? "checked" : ""} ${!d.lluvias[e.codigo] ? "disabled title='Sin registro de lluvia en SICLIA'" : ""} onchange="b19ToggleEst('${e.codigo}',this.checked)" class="accent-emerald-500 cursor-pointer"></td>
+          <td class="p-1.5 text-slate-300">${e.codigo}</td>
+          <td class="p-1.5 text-white font-bold">${e.nombre} <span class="text-[9px] text-slate-500">(${e.red})</span></td>
+          <td class="p-1.5 text-center text-slate-300">${e.cat || "—"}</td>
+          <td class="p-1.5 text-slate-400">${e.mun || "—"}</td>
+          <td class="p-1.5 text-center text-emerald-300 font-bold">${e.dist.toFixed(1)}</td>
+          <td class="p-1.5 text-center ${e.nA ? "text-slate-200" : "text-red-400"}">${e.nA || "0"}</td>
+        </tr>`).join("");
+    }
+
+    function b19ToggleEst(c, on) { on ? B19.sel.add(c) : B19.sel.delete(c); b19RenderTablaEstaciones(); b19CalcularR(); }
+
+    // -------- IFM / R --------
+    function b19PoblarAnios() {
+      const d = b19Data(); const sel = document.getElementById("b19-anio");
+      if (!d || !sel || sel.options.length > 1) return;
+      const años = new Set();
+      Object.values(d.lluvias).forEach(s => Object.keys(s).forEach(y => años.add(+y)));
+      Array.from(años).sort((a, b) => b - a).forEach(y => {
+        const o = document.createElement("option"); o.value = y; o.innerText = y; sel.appendChild(o);
+      });
+      sel.value = "2021";
+    }
+
+    function b19IfmDeAnio(meses) {
+      if (!meses || meses.length !== 12 || meses.some(x => x == null)) return null;
+      const P = meses.reduce((a, b) => a + b, 0);
+      if (P <= 0) return null;
+      return meses.reduce((a, b) => a + b * b, 0) / P;  // IFM modificado en mm (Σpᵢ²/P), convención CAR/Echeverri & Obando usada en el Excel fuente
+    }
+
+    function b19IfmEstacion(codigo) {
+      const d = b19Data(); const serie = d.lluvias[codigo];
+      if (!serie) return { ifm: null, n: 0, aviso: "sin serie" };
+      const modo = document.getElementById("b19-anio-modo")?.value || "todos";
+      if (modo === "año") {
+        const y = document.getElementById("b19-anio")?.value;
+        const v = b19IfmDeAnio(serie[y]);
+        return { ifm: v, n: v != null ? 1 : 0, aviso: v == null ? `año ${y} incompleto` : "" };
+      }
+      let sum = 0, n = 0;
+      Object.keys(serie).forEach(y => { const v = b19IfmDeAnio(serie[y]); if (v != null) { sum += v; n++; } });
+      return { ifm: n ? sum / n : null, n, aviso: n ? "" : "ningún año completo" };
+    }
+
+    const b19RFromIfm = f => f == null ? 0 : Math.max(0, -0.4380 + 0.8291 * f + 0.0015 * Math.pow(f, 3));
+    const b19ClaseIFM = f => f == null ? ["—", 0] : f < 60 ? ["Muy baja", 1] : f < 90 ? ["Baja", 2] : f < 120 ? ["Moderada", 3] : f < 160 ? ["Alta", 4] : ["Muy alta", 5];
+    const b19ClaseR = r => r < 1000 ? ["Muy baja", 1] : r < 2500 ? ["Baja", 2] : r < 5000 ? ["Moderada", 3] : r < 7500 ? ["Alta", 4] : ["Muy alta", 5];
+    const b19ClaseK = k => k <= 0 ? ["—", 0] : k < 0.008 ? ["Muy baja", 1] : k < 0.02 ? ["Baja", 2] : k < 0.035 ? ["Moderada", 3] : k < 0.05 ? ["Alta", 4] : ["Muy alta", 5];
+    const b19ClaseLS = s => s < 1 ? ["Muy baja", 1] : s < 5 ? ["Baja", 2] : s < 10 ? ["Moderada", 3] : s < 15 ? ["Alta", 4] : ["Muy alta", 5];
+    const b19ClaseC = c => c < 0.01 ? ["Muy baja", 1] : c < 0.1 ? ["Baja", 2] : c < 0.3 ? ["Moderada", 3] : c < 0.8 ? ["Alta", 4] : ["Muy alta", 5];
+    const b19ClaseP = p => p < 0.15 ? ["Muy baja", 1] : p < 0.25 ? ["Baja", 2] : p < 0.35 ? ["Moderada", 3] : p < 0.45 ? ["Alta", 4] : ["Muy alta", 5];
+    const b19Chip = lvl => ["", "bg-emerald-500/15 text-emerald-400", "bg-lime-500/15 text-lime-400", "bg-yellow-500/15 text-yellow-400", "bg-orange-500/15 text-orange-400", "bg-red-500/15 text-red-400"][lvl] || "bg-slate-800 text-slate-400";
+    const b19SetChip = (id, txt, lvl) => { const el = document.getElementById(id); if (el) { el.className = `px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wide ${b19Chip(lvl)}`; el.innerText = txt; } };
+
+    function b19CalcularR() {
+      const d = b19Data(); if (!d) return;
+      const tb = document.querySelector("#b19-r-tabla tbody");
+      const sel = [...B19.sel].filter(c => d.lluvias[c]);
+      const p = parseFloat(document.getElementById("b19-idw-p")?.value || "2");
+      let ws = 0, wsum = 0, min = Infinity, max = -Infinity, avisos = [];
+      const rows = sel.map(c => {
+        const e = B19.cercanas.find(x => x.codigo === c) || d.estaciones.find(x => x.codigo === c);
+        const r = b19IfmEstacion(c);
+        const R = b19RFromIfm(r.ifm);
+        if (r.aviso) avisos.push(`${e.nombre}: ${r.aviso}`);
+        const w = 1 / Math.pow(Math.max(e.dist || 0.1, 0.15), p);
+        if (r.ifm != null) { ws += w; wsum += w * R; min = Math.min(min, R); max = Math.max(max, R); }
+        const [cl, lv] = b19ClaseIFM(r.ifm);
+        return `<tr class="border-b border-slate-800/60">
+          <td class="p-1.5 text-left text-white font-bold">${e.nombre} <span class="text-slate-500">(${e.codigo})</span></td>
+          <td class="p-1.5 text-center text-slate-300">${(e.dist ?? 0).toFixed(1)}</td>
+          <td class="p-1.5 text-center text-slate-300">${r.n}</td>
+          <td class="p-1.5 text-center text-blue-300 font-bold">${r.ifm != null ? r.ifm.toFixed(1) : "—"}</td>
+          <td class="p-1.5 text-center"><span class="px-2 py-0.5 rounded-full text-[9px] font-black ${b19Chip(lv)}">${cl}</span></td>
+          <td class="p-1.5 text-center text-blue-200 font-black">${R ? R.toFixed(0) : "—"}</td>
+          <td class="p-1.5 text-center text-slate-400">${ws ? (w / ws).toFixed(3) : "—"}</td>
+        </tr>`;
+      });
+      if (tb) tb.innerHTML = rows.join("");
+      B19.rPunto = ws ? wsum / ws : 0;
+      const elP = document.getElementById("b19-r-punto");
+      if (elP) elP.innerText = B19.rPunto ? B19.rPunto.toFixed(0) : "—";
+      const elR = document.getElementById("b19-r-rango");
+      if (elR) elR.innerText = isFinite(min) ? `${min.toFixed(0)} – ${max.toFixed(0)}` : "—";
+      const ifmProm = sel.length ? sel.reduce((a, c) => a + (b19IfmEstacion(c).ifm || 0), 0) / sel.length : null;
+      const [clI, lvI] = b19ClaseIFM(ifmProm); b19SetChip("b19-ifm-chip", ifmProm ? `IFM ${ifmProm.toFixed(1)} · ${clI}` : "—", lvI);
+      const [clR, lvR] = b19ClaseR(B19.rPunto); b19SetChip("b19-r-chip", B19.rPunto ? `R ${clR}` : "—", lvR);
+      const nota = document.getElementById("b19-r-nota");
+      if (nota) nota.innerText = avisos.length ? `⚠️ ${sel.length} estaciones incluidas · ${avisos.join(" · ")}` : `${sel.length} estaciones incluidas · media IFM ${ifmProm ? ifmProm.toFixed(1) : "—"} · R por Foster & Hathaway (1982)`;
+      b19Resultados();
+    }
+
+    // -------- K (Williams) --------
+    function kWilliams(arena, limo, arcilla, coPct) {
+      if ([arena, limo, arcilla, coPct].some(v => v == null || isNaN(v))) return null;
+      const mo = (coPct * 1.724) / 100;               // fracción decimal de M.O.
+      const fcsand = 0.2 + 0.3 * Math.exp(-0.0256 * arena * (1 - limo / 100));
+      const den = limo + arcilla; if (den <= 0) return null;
+      const fclsi = Math.pow(limo / den, 0.3);
+      const forg = 1 - (0.25 * mo) / (mo + Math.exp(3.72 - 2.95 * mo));
+      const qs = 1 - arena / 100;
+      const fhisand = 1 - (0.7 * qs) / (qs + Math.exp(-5.51 + 22.9 * qs));
+      return 0.1317 * fcsand * fclsi * forg * fhisand;
+    }
+
+    function b19CargarUcs() {
+      const d = b19Data(); if (!d) return;
+      const nom = document.getElementById("b19-ucs")?.value || "";
+      B19.ucsSel = nom;
+      if (!nom) { B19.filasK = [{ nombre: "P-1", pct: 100, arena: 30, limo: 40, arcilla: 30, co: 3 }]; }
+      else B19.filasK = d.perfiles.filter(p => p.ucs === nom).map(p => ({ nombre: p.perfil, pct: p.pct * 100, arena: p.arena, limo: p.limo, arcilla: p.arcilla, co: p.co_pct }));
+      b19RenderK();
+    }
+
+    function b19AgregarFilaK() {
+      B19.filasK.push({ nombre: `P-${B19.filasK.length + 1}`, pct: 100 / (B19.filasK.length + 1), arena: null, limo: null, arcilla: null, co: null });
+      b19RenderK();
+    }
+    function b19QuitarFilaK(i) { B19.filasK.splice(i, 1); b19RenderK(); }
+    function b19FilaK(i, campo, val) { B19.filasK[i][campo] = campo === "nombre" ? val : (val === "" ? null : parseFloat(val)); b19ActualizarK(); }
+
+    function b19RenderK() {
+      const tb = document.querySelector("#b19-k-tabla tbody"); if (!tb) return;
+      tb.innerHTML = B19.filasK.map((f, i) => `<tr class="border-b border-slate-800/60">
+          <td class="p-1 text-left"><input value="${f.nombre}" oninput="b19FilaK(${i},'nombre',this.value)" class="bg-slate-900 border border-slate-700 rounded px-1.5 py-0.5 w-24 text-white"></td>
+          <td class="p-1"><input type="number" value="${f.pct ?? ""}" oninput="b19FilaK(${i},'pct',this.value)" class="bg-slate-900 border border-slate-700 rounded px-1.5 py-0.5 w-16 text-center text-white"></td>
+          <td class="p-1"><input type="number" step="0.01" value="${f.arena ?? ""}" oninput="b19FilaK(${i},'arena',this.value)" class="bg-slate-900 border border-slate-700 rounded px-1.5 py-0.5 w-16 text-center text-white"></td>
+          <td class="p-1"><input type="number" step="0.01" value="${f.limo ?? ""}" oninput="b19FilaK(${i},'limo',this.value)" class="bg-slate-900 border border-slate-700 rounded px-1.5 py-0.5 w-16 text-center text-white"></td>
+          <td class="p-1"><input type="number" step="0.01" value="${f.arcilla ?? ""}" oninput="b19FilaK(${i},'arcilla',this.value)" class="bg-slate-900 border border-slate-700 rounded px-1.5 py-0.5 w-16 text-center text-white"></td>
+          <td class="p-1"><input type="number" step="0.01" value="${f.co ?? ""}" oninput="b19FilaK(${i},'co',this.value)" class="bg-slate-900 border border-slate-700 rounded px-1.5 py-0.5 w-16 text-center text-white"></td>
+          <td class="p-1 text-center" id="b19-kc-${i}-st">—</td>
+          <td class="p-1 text-center text-amber-300 font-black" id="b19-kc-${i}-k">—</td>
+          <td class="p-1 text-center text-slate-300"><span id="b19-kc-${i}-ap">—</span> <button onclick="b19QuitarFilaK(${i})" class="text-red-400/70 hover:text-red-400 ml-1 cursor-pointer">✕</button></td>
+        </tr>`).join("");
+      b19ActualizarK();
+    }
+
+    function b19ActualizarK() {
+      let idx = 0, sumaPct = 0, warn = [];
+      B19.filasK.forEach((f, i) => {
+        const K = kWilliams(f.arena, f.limo, f.arcilla, f.co);
+        const st = [f.arena, f.limo, f.arcilla].every(v => v != null) ? (f.arena + f.limo + f.arcilla) : null;
+        const p = (f.pct || 0);
+        if (K != null) { idx += K * p / 100; sumaPct += p; }
+        if (st != null && Math.abs(st - 100) > 1.5) warn.push(`${f.nombre}: Σtextura ${st.toFixed(1)}%`);
+        const setTxt = (id, t, cls) => { const el = document.getElementById(id); if (el) { el.innerText = t; if (cls) el.className = cls; } };
+        setTxt(`b19-kc-${i}-st`, st != null ? st.toFixed(1) : "—", `p-1 text-center ${st != null && Math.abs(st - 100) > 1.5 ? "text-red-400 font-black" : "text-slate-400"}`);
+        setTxt(`b19-kc-${i}-k`, K != null ? K.toFixed(4) : "—");
+        setTxt(`b19-kc-${i}-ap`, K != null ? (K * p / 100).toFixed(4) : "—");
+      });
+      if (Math.abs(sumaPct - 100) > 0.5 && B19.filasK.some(f => f.pct)) warn.push(`Σ participación ${sumaPct.toFixed(1)}% (debe sumar 100)`);
+      B19.kIndice = idx;
+      const elK = document.getElementById("b19-k-valor");
+      if (elK) elK.innerText = idx ? idx.toFixed(4) : "—";
+      const [cl, lv] = b19ClaseK(idx); b19SetChip("b19-k-chip", idx ? cl : "—", lv);
+      const w = document.getElementById("b19-k-warn");
+      if (w) w.innerText = warn.length ? "⚠️ " + warn.join(" · ") : "";
+      b19Resultados();
+    }
+
+    // -------- LS --------
+    function b19CalcularLS() {
+      const L = parseFloat(document.getElementById("b19-ls-largo")?.value) || 0;
+      const v = parseFloat(document.getElementById("b19-ls-pend")?.value) || 0;
+      const unidad = document.getElementById("b19-ls-unidad")?.value || "pct";
+      const beta = unidad === "grados" ? v * Math.PI / 180 : Math.atan(v / 100);
+      const s = Math.sin(beta);
+      if (!L || !s) { B19.ls = 0; document.getElementById("b19-ls-valor").innerText = "—"; b19Resultados(); return; }
+      const F = Math.pow(s / 0.0896, 3) / (Math.pow(s, 0.8) + 0.56);
+      const m = F / (1 + F);
+      const Lf = Math.pow(L / 22.13, m);
+      const Sf = s < 0.09 ? 10.8 * s + 0.03 : 16.8 * s - 0.5;
+      B19.ls = Math.max(0.01, Lf * Sf);
+      document.getElementById("b19-ls-valor").innerText = B19.ls.toFixed(2);
+      const [cl, lv] = b19ClaseLS(B19.ls); b19SetChip("b19-ls-chip", cl, lv);
+      const n = document.getElementById("b19-ls-nota");
+      if (n) n.innerText = `β = ${(beta * 180 / Math.PI).toFixed(1)}° · sinβ = ${s.toFixed(4)} · m = ${m.toFixed(3)} · L = ${Lf.toFixed(3)} · S = ${Sf.toFixed(3)} (m por Foster 1977, S por McCool et al. 1987)`;
+      b19Resultados();
+    }
+
+    // -------- RESULTADOS --------
+    function b19Resultados() {
+      const R = B19.rPunto, K = B19.kIndice, LS = B19.ls;
+      const C = parseFloat(document.getElementById("b19-c")?.value) || 0;
+      const P = parseFloat(document.getElementById("b19-p")?.value) || 0;
+      const T = parseFloat(document.getElementById("b19-t")?.value) || 11;
+      const [clC, lvC] = b19ClaseC(C); b19SetChip("b19-c-chip", clC, lvC);
+      const [clP, lvP] = b19ClaseP(P); b19SetChip("b19-p-chip", clP, lvP);
+      const set = (id, t) => { const el = document.getElementById(id); if (el) el.innerText = t; };
+      if (!R || !K || !LS) {
+        ["b19-res-ap", "b19-res-ae", "b19-res-ie"].forEach(i => set(i, "—"));
+        set("b19-res-ae-fao", "Completa R, K y LS"); set("b19-res-ie-clase", ""); set("b19-se-valor", "—");
+        b19SetChip("b19-se-chip", "—", 0); set("b19-res-t", "—");
+        document.getElementById("b19-se-det").innerHTML = "";
+        return;
+      }
+      const AP = R * K * LS, Ae = AP * C * P, IE = C * P;
+      set("b19-res-ap", `${AP.toFixed(1)} t/ha·año`);
+      set("b19-res-ae", `${Ae.toFixed(1)} t/ha·año`);
+      const fao = Ae < 10 ? "FAO: ligera (≤10)" : Ae < 50 ? "FAO: moderada (10–50)" : Ae < 200 ? "FAO: alta (50–200)" : "FAO: muy alta (>200)";
+      set("b19-res-ae-fao", fao);
+      set("b19-res-ie", IE.toFixed(3));
+      const ieCl = IE < 0.05 ? "Muy bajo (<0,05)" : IE < 0.2 ? "Bajo (0,05–0,2)" : IE < 0.4 ? "Moderado (0,2–0,4)" : IE < 0.6 ? "Alto (0,4–0,6)" : IE < 0.8 ? "Muy alto (0,6–0,8)" : "Severo (0,8–1)";
+      set("b19-res-ie-clase", `Clase IE: ${ieCl}`);
+      // Susceptibilidad ponderada (protocolo CAR)
+      const scores = { R: b19ClaseR(R)[1], K: b19ClaseK(K)[1], LS: b19ClaseLS(LS)[1], C: lvC, P: lvP };
+      const Se = 0.20 * scores.R + 0.21 * scores.K + 0.17 * scores.LS + 0.23 * scores.C + 0.19 * scores.P;
+      set("b19-se-valor", Se.toFixed(2));
+      const seCl = Se < 1 ? ["Muy baja", 1] : Se < 2.5 ? ["Baja", 2] : Se < 3.5 ? ["Moderada", 3] : Se < 4.5 ? ["Alta", 4] : ["Muy alta", 5];
+      b19SetChip("b19-se-chip", `Se ${seCl[0]}`, seCl[1]);
+      const det = document.getElementById("b19-se-det");
+      if (det) det.innerHTML = Object.entries({ "R": scores.R, "K": scores.K, "LS": scores.LS, "C": scores.C, "P": scores.P })
+        .map(([k, v]) => `<div class="bg-slate-950 rounded-lg p-1.5 border border-slate-800"><span class="text-slate-400 font-bold block">${k}</span><span class="px-2 py-0.5 rounded-full text-[10px] font-black inline-block ${b19Chip(v)}">${v}</span></div>`).join("");
+      // T y dictamen
+      const ratio = Ae / T;
+      set("b19-res-t", ratio <= 1
+        ? `Ae (${Ae.toFixed(1)}) ≤ T (${T}) ⇒ relación ${(ratio * 100).toFixed(0)}%: el uso actual es sostenible frente a la tasa de formación del suelo.`
+        : `Ae (${Ae.toFixed(1)}) > T (${T}) ⇒ relación ${(ratio * 100).toFixed(0)}%: pérdida NO sostenible; con AP = ${AP.toFixed(1)} la cobertura+prácticas actuales retienen el ${(100 * (1 - IE)).toFixed(1)}% de la erosión potencial.`);
+      const d = document.getElementById("b19-res-desc");
+      if (d) {
+        const partes = [`R (IDW de ${B19.sel.size} estaciones) = ${R.toFixed(0)} · K = ${K.toFixed(4)} · LS = ${LS.toFixed(2)} · C·P = ${IE.toFixed(3)} · T = ${T}.`];
+        if (ratio > 1) {
+          const pNec = T / (R * K * LS); const cpAct = IE;
+          partes.push(`Para traer la erosión dentro de la tolerancia se necesita C·P ≤ ${pNec.toFixed(3)} (hoy ${cpAct.toFixed(3)}).`);
+          if (pNec < cpAct * 0.5) partes.push("➤ Prioridad: combines de práctica fuertes — terrazas de banco (P≈0,10–0,15) o barreras vivas + coberturas permanentes; el solo ajuste de C no basta.");
+          else if (pNec < cpAct) partes.push("➤ Basta con mejorar la cobertura (C) o adicionar una práctica al contorno (P 0,25–0,50): curva de nivel, fajas o barreras vivas de vetiver/cortaderia.");
+        } else partes.push("➤ Manejo actual dentro de tolerancia: sostener cobertura permanente y monitorear cada 2–3 años con la misma red de estaciones.");
+        if (seCl[1] >= 4) partes.push("➤ Suelo con susceptibilidad intrínseca ALTA por factores no manejables (R, K, LS): restringir laboreo, priorizar sistemas agroforestales y zanjas de infiltración.");
+        else if (seCl[1] <= 2 && ratio > 1) partes.push("➤ El riesgo no es del suelo sino del manejo: la erosión la están generando C y P (uso actual inadecuado para la capacidad de la ladera).");
+        d.innerText = partes.join(" ");
+      }
+    }
+
+    // -------- PRESETS / COMPAT --------
+    function b19PresetSanJose() {
+      const cSel = document.getElementById("b19-centro");
+      if (cSel) { cSel.value = "0"; b19CentroChange(); }
+      const u = document.getElementById("b19-ucs");
+      if (u) { u.value = "RMOa"; b19CargarUcs(); }
+      document.getElementById("b19-anio-modo").value = "todos"; b19PoblarAnios(); b19CalcularR();
+      b19CalcularLS();
+    }
+
+    // Función legacy conservada: el hook de pestañas y entradas antiguas la invocan
+    function calcularUSLE() {
+      if (!b19Data()) return;
+      b19ListarEstaciones();
+      b19CalcularLS();
+      b19Resultados();
     }
 
     // B20: PRÁCTICAS DE CONSERVACIÓN
@@ -4955,6 +5716,28 @@
 
       const elCal = document.getElementById("enm-res-cal");
       if (elCal) elCal.innerText = `${dosisCal.toFixed(2)} t / ha`;
+
+      // Yeso agrícola: n (cmol/kg de Na a desplazar) × 0,086 × ρb × Z, corregido por pureza
+      const psi = parseFloat(document.getElementById("yso-psi")?.value);
+      const psiMeta = parseFloat(document.getElementById("yso-psi-meta")?.value) || 8;
+      const cicY = parseFloat(document.getElementById("yso-cic")?.value);
+      const rhoY = parseFloat(document.getElementById("yso-rho")?.value) || 1.3;
+      const zY = parseFloat(document.getElementById("yso-z")?.value) || 20;
+      const pur = parseFloat(document.getElementById("yso-pur")?.value) || 85;
+
+      const elYeso = document.getElementById("enm-res-yeso");
+      const elYesoDet = document.getElementById("enm-res-yeso-det");
+      if (elYeso && elYesoDet) {
+        if (isFinite(psi) && isFinite(cicY)) {
+          const n = Math.max(0, ((psi - psiMeta) / 100) * cicY);
+          const dosisYeso = n * 0.086 * rhoY * zY * (100 / Math.max(10, pur));
+          elYeso.innerText = `${dosisYeso.toFixed(2)} t / ha`;
+          elYesoDet.innerText = `Na⁺ a desalojar: ${n.toFixed(2)} cmol/kg · Equivalente puro: ${(dosisYeso * pur / 100).toFixed(2)} t/ha · Corrección parcial en 2 lavados si dosis > 8 t/ha`;
+        } else {
+          elYeso.innerText = "—";
+          elYesoDet.innerText = "Ingrese PSI actual y CIC total para calcular la dosis.";
+        }
+      }
     }
 
     // B24: STOCK DE CARBONO ORGÁNICO (SOC)
@@ -5003,9 +5786,10 @@
     }
 
     // =========================================================================
-    // 12. INICIALIZACIÃ“N AL CARGAR LA PÃGINA
+    // 12. INICIALIZACIÓN AL CARGAR LA PÁGINA
     // =========================================================================
     window.addEventListener("DOMContentLoaded", () => {
+      b19Init();
       cargarEjemploCaparrapi();
       actualizarTexturaInfo();
       dibujarTrianguloTextural();
@@ -5014,7 +5798,7 @@
       calcularModeloContaminacion();
       renderizarHub();
 
-      // InicializaciÃ³n de Bloques A y B
+      // Inicialización de Bloques A y B
       evaluarFormacionSuelo();
       evaluarMeteorizacion();
       dibujarPerfilConstructor();
