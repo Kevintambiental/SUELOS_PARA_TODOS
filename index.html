@@ -92,10 +92,80 @@
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; scroll-behavior: auto !important; } }
     .quiz-fb.ok { color: #6ee7b7; }
     .quiz-fb.bad { color: #fca5a5; }
+
+    /* ==================== PORTADA DE ÁREAS + TEMA PROPIO POR ÁREA ==================== */
+    /* El color de acento lo fija el cuerpo según el área activa; todo lo demás lo hereda. */
+    body { --ac: #94a3b8; --ac-soft: rgba(148,163,184,.14); --ac-line: rgba(148,163,184,.32); }
+    body.area-todas  { --ac: #94a3b8; --ac-soft: rgba(148,163,184,.14); --ac-line: rgba(148,163,184,.30); }
+    body.area-suelo  { --ac: #10b981; --ac-soft: rgba(16,185,129,.14);  --ac-line: rgba(16,185,129,.42); }
+    body.area-agua   { --ac: #38bdf8; --ac-soft: rgba(56,189,248,.14);  --ac-line: rgba(56,189,248,.42); }
+    body.area-aire   { --ac: #a78bfa; --ac-soft: rgba(167,139,250,.15); --ac-line: rgba(167,139,250,.42); }
+    body.area-biodiv { --ac: #f472b6; --ac-soft: rgba(244,114,182,.15); --ac-line: rgba(244,114,182,.42); }
+    body.area-legal  { --ac: #fbbf24; --ac-soft: rgba(251,191,36,.14);  --ac-line: rgba(251,191,36,.42); }
+
+    /* Capa de fondo: cada área pinta un patrón distinto, siempre tenue para no comer contraste */
+    #area-fondo { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .6;
+      transition: background .5s ease; background: transparent; }
+    #area-fondo.tema-suelo {
+      background: repeating-linear-gradient(178deg, rgba(16,185,129,.055) 0 20px, rgba(0,0,0,0) 20px 58px),
+                  linear-gradient(180deg, rgba(4,44,34,.40), rgba(0,0,0,0) 55%); }
+    #area-fondo.tema-agua {
+      background: repeating-linear-gradient(116deg, rgba(56,189,248,.07) 0 2px, rgba(0,0,0,0) 2px 26px),
+                  radial-gradient(120% 55% at 50% 108%, rgba(2,132,199,.34), rgba(0,0,0,0) 62%); }
+    #area-fondo.tema-aire {
+      background: radial-gradient(58% 44% at 10% 2%, rgba(139,92,246,.30), rgba(0,0,0,0) 70%),
+                  radial-gradient(46% 38% at 88% 6%, rgba(167,139,250,.17), rgba(0,0,0,0) 70%),
+                  repeating-linear-gradient(90deg, rgba(167,139,250,.05) 0 1px, rgba(0,0,0,0) 1px 40px); }
+    #area-fondo.tema-biodiv {
+      background: radial-gradient(rgba(244,114,182,.15) 1.6px, rgba(0,0,0,0) 1.7px) 0 0 / 34px 34px,
+                  radial-gradient(rgba(74,222,128,.11) 1.6px, rgba(0,0,0,0) 1.7px) 17px 17px / 34px 34px,
+                  linear-gradient(180deg, rgba(7,76,53,.28), rgba(0,0,0,0) 52%); }
+    #area-fondo.tema-legal {
+      background: repeating-linear-gradient(90deg, rgba(251,191,36,.065) 0 1px, rgba(0,0,0,0) 1px 46px),
+                  repeating-linear-gradient(0deg, rgba(251,191,36,.05) 0 1px, rgba(0,0,0,0) 1px 46px),
+                  linear-gradient(180deg, rgba(120,53,15,.26), rgba(0,0,0,0) 55%); }
+
+    /* En la portada no se muestran la barra de pestañas ni el conmutador: se entra desde las tarjetas */
+    body.modo-portada .no-portada { display: none !important; }
+
+    /* Tarjetas-ventana del selector de áreas */
+    .port-card { position: relative; overflow: hidden; cursor: pointer; text-align: left; width: 100%;
+      border: 1px solid var(--pc, #334155); border-radius: 18px;
+      background: linear-gradient(180deg, rgba(15,23,42,.97), rgba(2,6,23,.97));
+      box-shadow: 0 18px 38px -26px rgba(0,0,0,.95);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+    .port-card:hover, .port-card:focus-visible { transform: translateY(-5px); border-color: var(--pc);
+      box-shadow: 0 28px 54px -22px rgba(0,0,0,.98); }
+    .port-card::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--pc); opacity: .85; }
+    .port-marca { position: absolute; right: -6px; bottom: -14px; font-size: 74px; line-height: 1; opacity: .10; pointer-events: none; }
+    .port-chrome { display: flex; align-items: center; gap: 5px; padding: 8px 10px; border-bottom: 1px solid rgba(148,163,184,.14);
+      background: rgba(2,6,23,.75); }
+    .port-chrome i { width: 7px; height: 7px; border-radius: 9999px; background: var(--pc); opacity: .6; }
+    @media (prefers-reduced-motion: reduce) { .port-card, .port-card:hover { transform: none; } }
+
+    /* Panel del área (directorio): caparazón y tarjetas con forma distinta en cada área */
+    body.area-suelo  #hub-caja { border-radius: 6px; border-left: 6px solid var(--ac); }
+    body.area-agua   #hub-caja { border-radius: 34px 34px 14px 14px; }
+    body.area-aire   #hub-caja { border-radius: 46px; }
+    body.area-biodiv #hub-caja { border-radius: 18px 46px 18px 46px; }
+    body.area-legal  #hub-caja { border-radius: 0; box-shadow: inset 0 0 0 1px var(--ac-line), 0 0 0 4px rgba(251,191,36,.08); }
+    #hub-caja { border-color: var(--ac-line) !important; transition: border-radius .3s ease, border-color .3s ease; }
+    .hub-card { transition: border-color .18s ease, transform .18s ease, background .18s ease; }
+    .hub-card:hover { transform: translateY(-2px); border-color: var(--ac) !important; }
+    body.area-suelo  .hub-card { border-radius: 3px 16px 3px 16px; border-left: 3px solid var(--ac); }
+    body.area-agua   .hub-card { border-radius: 20px 20px 6px 20px; border-top: 3px solid var(--ac); }
+    body.area-aire   .hub-card { border-radius: 28px; background-image: linear-gradient(180deg, var(--ac-soft), rgba(0,0,0,0) 46%); }
+    body.area-biodiv .hub-card { border-radius: 14px 28px 14px 28px; border-style: dashed; }
+    body.area-legal  .hub-card { border-radius: 0; border-left: 3px double var(--ac); }
+    /* La banda del área toma el color propio */
+    #hub-area > div { border-color: var(--ac-line) !important; background: var(--ac-soft) !important; }
+    body:not(.area-todas) .hub-entra { color: var(--ac); }
+    body.modo-portada #btn-portada { display: none; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col selection:bg-emerald-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col selection:bg-emerald-500 selection:text-white area-todas modo-portada">
   <a class="skip-link" href="#main">Saltar al contenido principal</a>
+  <div id="area-fondo" class="no-print" aria-hidden="true"></div>
 
   <!-- TOP APP BAR -->
   <header class="bg-slate-900/95 border-b border-slate-800 sticky top-0 z-40 backdrop-blur-md">
@@ -118,6 +188,9 @@
 
       <!-- BUSCADOR RÁPIDO & ACCIONES -->
       <div class="flex items-center gap-2 no-print flex-wrap">
+        <button onclick="Portada.ver()" id="btn-portada" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border text-xs font-bold cursor-pointer whitespace-nowrap transition flex items-center gap-1" title="Volver al selector de áreas temáticas" style="border-color:var(--ac-line);color:var(--ac)">
+          🧭 Elegir área
+        </button>
         <div class="relative w-44 sm:w-56">
           <input type="text" id="buscador-modulos" placeholder="🔍 Buscar tema o cálculo..." oninput="filtrarModulos(this.value)" class="w-full bg-slate-950 border border-slate-700 focus:border-emerald-500 rounded-xl px-2.5 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none transition">
           <div id="buscador-resultados" class="absolute top-full left-0 right-0 mt-1 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-64 overflow-y-auto z-50 hidden text-xs"></div>
@@ -140,7 +213,7 @@
     </div>
 
     <!-- CONMUTADOR DE ÁREAS TEMÁTICAS: solo filtra la barra y el directorio, no cambia ningún id -->
-    <div id="area-bar" role="group" aria-label="Conmutador de áreas temáticas" class="no-print max-w-7xl mx-auto px-4 pt-2 flex flex-wrap items-center gap-1.5 text-xs">
+    <div id="area-bar" role="group" aria-label="Conmutador de áreas temáticas" class="no-print no-portada max-w-7xl mx-auto px-4 pt-2 flex flex-wrap items-center gap-1.5 text-xs">
       <span class="text-[10px] font-black uppercase tracking-wider text-slate-500 whitespace-nowrap">Áreas</span>
       <button type="button" onclick="Area.cambiar('todas')" id="chip-todas" aria-pressed="true" class="area-chip px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 font-bold border border-slate-700 cursor-pointer transition whitespace-nowrap flex items-center gap-1.5">🗂️ Todas <span id="area-n-todas" class="text-[10px] font-mono"></span></button>
       <button type="button" onclick="Area.cambiar('suelo')" id="chip-suelo" aria-pressed="false" class="area-chip px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 font-bold border border-slate-700 cursor-pointer transition whitespace-nowrap flex items-center gap-1.5">🟤 Suelos <span id="area-n-suelo" class="text-[10px] font-mono"></span></button>
@@ -152,7 +225,7 @@
     </div>
 
     <!-- NAVEGACIÓN AGRUPADA DE ALTO RENDIMIENTO -->
-    <nav aria-label="Navegación de módulos del portal" class="max-w-7xl mx-auto px-4 flex space-x-1.5 overflow-x-auto no-scrollbar border-t border-slate-800/80 pt-1 text-xs">
+    <nav aria-label="Navegación de módulos del portal" class="no-portada max-w-7xl mx-auto px-4 flex space-x-1.5 overflow-x-auto no-scrollbar border-t border-slate-800/80 pt-1 text-xs">
       <button onclick="cambiarPestana('tab-fertilidad')" id="btn-tab-fertilidad" class="tab-btn px-3 py-2 font-bold border-b-2 border-emerald-500 text-emerald-400 flex items-center gap-1 whitespace-nowrap transition cursor-pointer">
         <span>🧪</span> 1. Fertilidad IGAC
       </button>
@@ -240,6 +313,16 @@
         </select>
       </div>
 
+      <div class="relative inline-block text-left">
+        <select id="select-bloque-bi" aria-label="Ir a una calculadora del Bloque BI: Biodiversidad" onchange="seleccionarModuloBI(this.value)" class="bg-slate-900 border border-slate-700 text-pink-300 hover:text-pink-200 rounded-lg px-2.5 py-1.5 text-xs font-bold focus:outline-none cursor-pointer">
+          <option value="" disabled selected>🦋 Bloque BI: Biodiversidad (BI1-BI4) ▼</option>
+          <option value="tab-bi1">BI1. Shannon, Simpson, Pielou y Margalef</option>
+          <option value="tab-bi2">BI2. Jaccard, Sørensen y recambio</option>
+          <option value="tab-bi3">BI3. Chao1: ¿te falta muestrear?</option>
+          <option value="tab-bi4">BI4. Paisaje: fragmentos y conectancia</option>
+        </select>
+      </div>
+
       <button onclick="cambiarPestana('tab-hub')" id="btn-tab-hub" class="tab-btn px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold flex items-center gap-1 cursor-pointer whitespace-nowrap">
         <span>📌</span> Directorio General
       </button>
@@ -259,14 +342,34 @@
   <main id="main" tabindex="-1" class="max-w-7xl mx-auto p-4 md:p-6 flex-1 w-full space-y-6">
 
     <!-- =================================================================== -->
+    <!-- PORTADA: SELECTOR DE ÁREAS (ventanas flotantes, una por área) -->
+    <!-- =================================================================== -->
+    <div id="tab-portada" class="tab-content no-print space-y-5">
+      <div class="text-center pt-1">
+        <h2 class="text-xl md:text-3xl font-black text-white leading-tight">Elige el área con la que vas a trabajar</h2>
+        <p class="text-[12px] text-slate-400 mt-2 max-w-3xl mx-auto leading-relaxed">Cada área abre su propio tablero y su propio fondo. Dentro del área la barra de pestañas muestra <strong class="text-slate-300">solo los módulos de esa área</strong>, y el botón <strong class="text-slate-300">🧭 Elegir área</strong> de arriba te devuelve aquí en un clic. Los enlaces directos que ya compartiste (con <strong class="text-slate-300">#tab-b19</strong>, <strong class="text-slate-300">#tab-w1</strong>, <strong class="text-slate-300">#tab-ar2</strong>) siguen abriendo ese módulo y cambiando solos al área que le toca.</p>
+      </div>
+      <div id="portada-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3 flex flex-col sm:flex-row sm:items-center gap-2 text-[11px]">
+        <label class="flex items-center gap-2 cursor-pointer whitespace-nowrap text-slate-300 font-bold">
+          <input type="checkbox" id="portada-directo" onchange="Portada.guardarDirecto(this.checked)" class="accent-emerald-500">
+          Al abrir el portal, entrar directo al área que elegí
+        </label>
+        <span id="portada-directo-nota" class="text-slate-500 leading-relaxed"></span>
+      </div>
+      <p class="text-[10px] text-slate-500 leading-relaxed text-center">Todo funciona sin conexión salvo el mapa de la Ficha, que necesita las teselas de OpenStreetMap.</p>
+    </div>
+
+    <!-- =================================================================== -->
     <!-- PESTAÑA HUB: DIRECTORIO GENERAL INTERACTIVO (TODOS LOS TEMAS) -->
     <!-- =================================================================== -->
     <div id="tab-hub" class="tab-content hidden space-y-6">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+      <div id="hub-caja" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-4">
           <div>
             <span class="badge-norma badge-igac mb-1">Malla Curricular Ingeniería Ambiental Colombia</span>
-            <h2 class="text-xl md:text-2xl font-black text-white">Directorio Agrológico Integral de Suelos</h2>
+            <h2 id="hub-titulo" class="text-xl md:text-2xl font-black text-white">Directorio Agrológico Integral de Suelos</h2>
+            <p id="hub-sub" class="text-[11px] text-slate-400 italic mt-0.5"></p>
             <p class="text-xs text-slate-400">Accede directamente a los <strong class="text-emerald-400" id="hub-total-n">35</strong> módulos con sus calculadoras, sustentos normativos y diagnósticos oficiales.</p>
           </div>
           <div class="flex items-center gap-2">
@@ -377,7 +480,7 @@
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
         <div class="border-b border-slate-800 pb-3">
           <h2 class="text-lg font-black text-white flex items-center gap-2"><span>🎓</span> Modo práctica y autoevaluación</h2>
-          <p class="text-xs text-slate-400 mt-1"><strong class="text-slate-300" id="pr-nc">5</strong> casos de trabajo real, con el orden exacto en que se resuelven en campo y en oficina, y un cuestionario de <strong class="text-slate-300" id="pr-nq1">27</strong> preguntas para comprobar si dominas los módulos. Marca cada paso al completarlo: el progreso se guarda en tu navegador.</p>
+          <p class="text-xs text-slate-400 mt-1"><strong class="text-slate-300" id="pr-nc">6</strong> casos de trabajo real, con el orden exacto en que se resuelven en campo y en oficina, y un cuestionario de <strong class="text-slate-300" id="pr-nq1">36</strong> preguntas para comprobar si dominas los módulos. Marca cada paso al completarlo: el progreso se guarda en tu navegador.</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]" id="pr-resumen"></div>
       </div>
@@ -871,7 +974,7 @@
             <span class="badge-norma badge-minambiente">Pasquill (1961) · Gifford (1976) · Turner (1970)</span>
           </div>
           <h2 class="text-lg font-black text-white flex items-center gap-2 mt-1"><span>🏭</span> AR2 · Pluma gaussiana: a cuánto contamina tu chimenea</h2>
-          <p class="text-xs text-slate-400 mt-1">Modelo gaussiano de fuente puntual con reflexión total en el suelo: <strong class="text-slate-300">C(x,y,z) = Q/(2π·σy·σz·u) · exp(−y²/2σy²) · [exp(−(z−H)²/2σz²) + exp(−(z+H)²/2σz²)]</strong>. Las dispersiones σy y σz salen de las curvas de Briggs para terreno rural (open-country), y la altura efectiva H incluye el ascenso térmico de la pluma. Te dice la concentración en tu receptor, la distancia del máximo a ras de suelo y qué porcentaje del estándar colombiano representa.</p>
+          <p class="text-xs text-slate-400 mt-1">Modelo gaussiano de fuente puntual con reflexión total en el suelo: <strong class="text-slate-300">C(x,y,z) = Q/(2π·σy·σz·u) · exp(−y²/2σy²) · [exp(−(z−H)²/2σz²) + exp(−(z+H)²/2σz²)]</strong>. Las dispersiones σy y σz salen de las curvas de Briggs (1973), las de terreno rural (open-country) y las urbanas del ensayo McElroy-Pooler, y la altura efectiva H incluye el ascenso térmico de la pluma. Te dice la concentración en tu receptor, la distancia del máximo a ras de suelo y qué porcentaje del estándar colombiano representa.</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
           <div><label class="text-slate-400 font-bold block mb-1">Emisión másica Q (g/s)</label>
@@ -1091,9 +1194,213 @@
     </div>
 
     <!-- =================================================================== -->
+    <!-- BLOQUE BI · BIODIVERSIDAD (BI1-BI4)                                  -->
+    <!-- =================================================================== -->
+    <div id="tab-bi1" class="tab-content hidden space-y-5">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="border-b border-slate-800 pb-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge-norma badge-minambiente">Shannon 1948 · Simpson 1949 · Pielou 1966 · Margalef 1958</span>
+            <span class="badge-norma badge-ideam">McIntosh 1967 · Magurran &amp; McGill 2011</span>
+          </div>
+          <h2 class="text-lg font-black text-white flex items-center gap-2 mt-1"><span>🦋</span> BI1 · Diversidad alfa de tu inventario</h2>
+          <p class="text-xs text-slate-400 mt-1">Pega tu lista de especies con el número de individuos de cada una (una por línea, <strong class="text-slate-300">nombre y abundancia separados por tabulador, punto y coma o coma</strong> — tal como sale de Excel) y el portal calcula riqueza, abundancia total, <strong class="text-slate-300">Shannon (H′)</strong>, <strong class="text-slate-300">equitabilidad de Pielou (J′)</strong>, <strong class="text-slate-300">Simpson (λ, 1−λ, 1/λ)</strong>, <strong class="text-slate-300">Margalef</strong>, <strong class="text-slate-300">McIntosh</strong>, <strong class="text-slate-300">Berger-Parker</strong> y el <strong class="text-slate-300">número efectivo de especies</strong>. Nada viene prellenado: los índices salen solo de lo que tú digits, y te muestra qué especie aporta cada punto de H′.</p>
+        </div>
+        <div><label class="text-slate-400 font-bold block mb-1 text-xs" for="bi1-txt">Lista de especies e individuos (una por línea)</label>
+          <textarea id="bi1-txt" rows="9" spellcheck="false" placeholder="Manglito rojo; 14&#10;Cocotier; 3&#10;Guayacán; 27&#10;…pega desde Excel con Ctrl+V" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono text-[11px] leading-relaxed focus:border-pink-500 focus:outline-none"></textarea>
+          <p class="text-[10px] text-slate-500 mt-1">Abundancia = individuos, coberturas o visitas por especie, pero <strong>una sola unidad en toda la lista</strong>. Mezclar "14 individuos" con "35 % de cobertura" da un índice sin significado.</p></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+          <div><label class="text-slate-400 font-bold block mb-1">Base del logaritmo para H′</label>
+            <select id="bi1-base" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none">
+              <option value="">¿Con qué base calculo H′…?</option>
+              <option value="ln">ln · base e (nats) — la que usan Magurran y los papers</option>
+              <option value="log2">log₂ · base 2 (bits) — la de Shannon original</option>
+              <option value="log10">log₁₀ · base 10</option></select>
+            <p class="text-[10px] text-slate-500 mt-1">La base cambia el valor de H′ y el número efectivo de especies, <strong>pero no J′</strong>: es la misma diversidad en otra unidad.</p></div>
+          <div class="flex items-end"><button onclick="biAlfa()" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">🦋 Calcular indices</button></div>
+          <div class="lg:col-span-2 text-[11px] text-slate-400 leading-relaxed sm:pl-2">
+            <p class="font-bold text-slate-300 mb-1">Riqueza no es diversidad</p>
+            Dos predios con 30 especies pueden dar H′ muy distinto: en uno 28 especies son rareísimas y 2 concentran el 90 % de los individuos. Por eso acá se reportan <strong>riqueza (S)</strong>, <strong>equitabilidad (J′)</strong> y el <strong>número efectivo de especies (1/λ y e<sup>H′</sup>)</strong>, que es la forma honesta de decir "equivale a X especies igualmente abundantes".
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="biAlfa()" class="bg-pink-600 hover:bg-pink-500 text-white font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">🦋 Calcular índices</button>
+          <button onclick="cambiarPestana('tab-bi2')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Comparar dos inventarios (BI2)</button>
+          <button onclick="cambiarPestana('tab-bi3')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">¿Me faltan especies? Chao1 (BI3)</button>
+          <button onclick="cambiarPestana('tab-a9')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Biología del suelo (A9)</button>
+        </div>
+        <div id="bi1-res" class="text-xs"></div>
+        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed">
+          <strong class="text-red-300">Límites que hay que decir en voz alta:</strong> estos índices dependen del <strong>esfuerzo de muestreo</strong>: con menos individuos, S baja y H′ baja, así que dos predios muestreados distinto <strong>no son comparables</strong> por H′ crudo (eso se arregla con rarefacción en BI3). Tampoco miden todo: <strong>no distinguen especies</strong> (un escarabajo y un jaguar valen lo mismo por individuo), no tienen en cuenta la abundancia relativa de las raras si usas solo S, y son sensibles a cómo definiste "especie" y "individuo" (un clonal de gramínea mal contado infla N). Reporta siempre S, N y el método de muestreo junto al índice.
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-bi2" class="tab-content hidden space-y-5">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="border-b border-slate-800 pb-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge-norma badge-minambiente">Jaccard (1912) · Sørensen (1948) · Whittaker (1960)</span>
+            <span class="badge-norma badge-ideam">Bray &amp; Curtis (1957) · Baselga (2010)</span>
+          </div>
+          <h2 class="text-lg font-black text-white flex items-center gap-2 mt-1"><span>🔀</span> BI2 · Similaridad, recambio y pérdida entre dos inventarios</h2>
+          <p class="text-xs text-slate-400 mt-1">Pega las dos listas (predio A y predio B, o antes/después de una restauración) y calcula <strong class="text-slate-300">Jaccard</strong>, <strong class="text-slate-300">Sørensen</strong>, la <strong class="text-slate-300">β de Whittaker</strong>, la <strong class="text-slate-300">distancia de Bray-Curtis</strong> si digitaste abundancias, y la <strong class="text-slate-300">descomposición de Baselga</strong> que separa si la diferencia viene de <strong>especies que se reemplazan</strong> o de <strong>especies que se pierden</strong>. Los nombres se comparan normalizados (sin tildes, sin mayúsculas, espacios sobrantes): "Guayacán" y "guayacan " cuentan como la misma especie.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div><label class="text-slate-400 font-bold block mb-1 text-xs" for="bi2-a">Inventario A (una especie por línea; abundancia opcional)</label>
+            <textarea id="bi2-a" rows="8" spellcheck="false" placeholder="Inga edulis; 12&#10;Cecropia peltata; 7&#10;… o solo el nombre, una por línea" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono text-[11px] leading-relaxed focus:border-pink-500 focus:outline-none"></textarea></div>
+          <div><label class="text-slate-400 font-bold block mb-1 text-xs" for="bi2-b">Inventario B (una especie por línea; abundancia opcional)</label>
+            <textarea id="bi2-b" rows="8" spellcheck="false" placeholder="Inga edulis; 30&#10;Vismia far Esc; 4&#10;… o solo el nombre, una por línea" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono text-[11px] leading-relaxed focus:border-pink-500 focus:outline-none"></textarea></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div><label class="text-slate-400 font-bold block mb-1">Unidad de comparación</label>
+            <select id="bi2-unidad" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none">
+              <option value="">¿Qué comparo…?</option>
+              <option value="sitios">Dos sitios o dos predios al mismo tiempo</option>
+              <option value="tiempo">El mismo sitio en dos fechas (antes / después)</option>
+              <option value="tratamientos">Dos tratamientos o coberturas (purista vs. potrero, por ejemplo)</option></select>
+            <p class="text-[10px] text-slate-500 mt-1">No cambia la matemática, cambia la lectura: "perdí especies" y "el potrero tiene otras" no son la misma conclusión.</p></div>
+          <div><label class="text-slate-400 font-bold block mb-1">Nombre del inventario A</label>
+            <input type="text" id="bi2-nom-a" placeholder="Ej. Purí" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none"></div>
+          <div><label class="text-slate-400 font-bold block mb-1">Nombre del inventario B</label>
+            <input type="text" id="bi2-nom-b" placeholder="Ej. Restauración 2020" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none"></div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="biBeta()" class="bg-pink-600 hover:bg-pink-500 text-white font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">🔀 Calcular similaridad</button>
+          <button onclick="cambiarPestana('tab-bi1')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Diversidad de cada lista (BI1)</button>
+          <button onclick="cambiarPestana('tab-b23')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Restauración prioritaria (B23)</button>
+        </div>
+        <div id="bi2-res" class="text-xs"></div>
+        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed">
+          <strong class="text-red-300">Límites:</strong> Jaccard y Sørensen son de <strong>presencia/ausencia</strong>: una especie con 1 individuo vale lo mismo que una con 500. Bray-Curtis sí usa abundancias, pero <strong>depende del esfuerzo</strong> de cada lista (si el inventario B se muestreó la mitad, parece más pobre y más distinto). Ninguno de los tres distingue <strong>parentesco ni funcionamiento</strong>: perder 10 especies de pastos y perder 10 de polinizadores dan el mismo número. Para eso hacen falta diversidad filogenética o funcional, que no está implementada acá.
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-bi3" class="tab-content hidden space-y-5">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="border-b border-slate-800 pb-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge-norma badge-minambiente">Chao 1984 · Chao &amp; Jost 2012</span>
+            <span class="badge-norma badge-ideam">Hurlbert 1971 (rarefacción) · Chao &amp; Jost 2012 (cobertura)</span>
+          </div>
+          <h2 class="text-lg font-black text-white flex items-center gap-2 mt-1"><span>🔎</span> BI3 · ¿Ya muestreaste suficiente? Cobertura, riqueza no observada y rarefacción</h2>
+          <p class="text-xs text-slate-400 mt-1">Con la misma lista de BI1 (especie e individuos) calcula las <strong class="text-slate-300">especies rareísimas</strong> que delatan el esfuerzo (f₁ singulares, f₂ duplicadas), el estimador <strong class="text-slate-300">Chao1</strong> de riqueza total, la <strong class="text-slate-300">cobertura de la muestra (Ĉ)</strong>, qué <strong class="text-slate-300">% de la riqueza estimada llevas atrapada</strong> y la <strong class="text-slate-300">curva de rarefacción</strong> exacta: ¿cuántas especies esperarías en una submuestra de n individuos? Eso último es <strong>interpolación dentro de tu propia muestra</strong> (valor esperado sobre todas las submuestras posibles), no un sorteo ni un ajuste. El portal <strong>no extrapol</strong>a más allá de tu N: el modelo asintótico no paramétrico de Chao et al. (2014) pide la matriz completa y un ajuste que acá no se hace, y dar un número proyectado sin él sería una conjetura con cara de cálculo.</p>
+        </div>
+        <div><label class="text-slate-400 font-bold block mb-1 text-xs" for="bi3-txt">Lista de especies e individuos (formato igual que BI1)</label>
+          <textarea id="bi3-txt" rows="8" spellcheck="false" placeholder="Zamia roezlii; 1&#10;Cecropia peltata; 42&#10;…pega la columna de conteos" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono text-[11px] leading-relaxed focus:border-pink-500 focus:outline-none"></textarea></div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div><label class="text-slate-400 font-bold block mb-1">¿Qué quiero saber?</label>
+            <select id="bi3-modo" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none">
+              <option value="">Elige una pregunta…</option>
+              <option value="rare">Rarefacción: cuántas especies salen en una submuestra de n individuos (para comparar effort distinto)</option>
+              <option value="chao">Brecha de Chao1: cuánto me falta por muestrear y a qué ritmo van saliendo especies</option></select>
+            <p class="text-[10px] text-slate-500 mt-1">Rarefacción <strong>interpola</strong> dentro de tu muestra (es matemática exacta, no invento). Proyectar más allá de tus N individuos sí sería un modelo, y el portal no lo hace: te da el <strong>límite inferior</strong> de Chao1 y la pendiente real de tu curva.</p></div>
+          <div><label class="text-slate-400 font-bold block mb-1" for="bi3-n">n · individuos de la submuestra</label>
+            <input type="number" step="1" id="bi3-n" placeholder="Ej. 60 · n ≤ tu N total" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none">
+            <p class="text-[10px] text-slate-500 mt-1">Pon el N del inventario con el que te comparas (el menor de los dos). Si pides n mayor que tu muestra, el portal te lo dice en vez de inventar.</p></div>
+          <div class="flex items-end"><button onclick="biMuestreo()" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">🔎 Calcular curva</button></div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="biMuestreo()" class="bg-pink-600 hover:bg-pink-500 text-white font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">🔎 Calcular curva</button>
+          <button onclick="cambiarPestana('tab-b17')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Muestreo de suelos (B17), para comparar esfuerzo</button>
+          <button onclick="cambiarPestana('tab-bi4')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Paisaje y fragmentos (BI4)</button>
+        </div>
+        <div id="bi3-res" class="text-xs"></div>
+        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed">
+          <strong class="text-red-300">Límites:</strong> Chao1 es un <strong>límite inferior</strong> de la riqueza: dice "al menos estas especies faltan", no "esta es la riqueza". Asume que las especies nuevas que aparecen son de la misma cola de rareza que f₁ y f₂; si tu muestreo fue parcheado (una parcela muy bien vista y otras apenas), f₁ se dispara y el número deja de servir. La rarefacción <strong>no sirve entre tipos de individuo distintos</strong> (arbóreos en tallos vs. aves en cantos): cada unidad tiene su curva. Y el portal <strong>no calcula intervalos de confianza</strong>: esos piden bootstrap sobre la matriz de abundancias, que acá no se hace.
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-bi4" class="tab-content hidden space-y-5">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="border-b border-slate-800 pb-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge-norma badge-minambiente">McGarigal &amp; Marks 1995 (FRAGSTATS)</span>
+            <span class="badge-norma badge-ideam">Saura &amp; Pascual-Hortal 2007 (PC / dPC) · Arrhenius 1921 · Rosenzweig 1995</span>
+          </div>
+          <h2 class="text-lg font-black text-white flex items-center gap-2 mt-1"><span>🗺️</span> BI4 · Paisaje: mezcla de coberturas, forma de los fragmentos y conectancia</h2>
+          <p class="text-xs text-slate-400 mt-1">Cuatro cálculos espaciales con tus propios digitados, cada uno independiente: <strong class="text-slate-300">1)</strong> composición del mosaico con <strong>SHDI</strong> (diversidad de Shannon del paisaje), equitabilidad y dominancia; <strong class="text-slate-300">2)</strong> forma y tamaño de los fragmentos (compacidad isoperimétrica 4πA/P², densidad de parches, % del parche más grande); <strong class="text-slate-300">3)</strong> <strong>conectividad funcional</strong> con el índice de probabilidad de conectancia <strong>PC</strong> y el <strong>dPC</strong> de cada fragmento, para saber cuál quitas primero sin romper el flujo de individuos; y <strong class="text-slate-300">4)</strong> <strong>relación especie-área</strong> S = c·A<sup>z</sup> para estimar cuántas especies se esperan tras perder hábitat.</p>
+        </div>
+
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2">
+          <h4 class="text-[11px] font-black uppercase tracking-wider text-pink-400">1 · Coberturas del paisaje (clase; hectáreas)</h4>
+          <textarea id="bi4-cob" rows="6" spellcheck="false" placeholder="Bosque secundario; 24&#10;Potrero; 41&#10;Ronda hídrica; 6&#10;…una clase por línea" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono text-[11px] leading-relaxed focus:border-pink-500 focus:outline-none"></textarea>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div><label class="text-slate-400 font-bold block mb-1">Hectáreas que siguen siendo cobertura natural</label>
+              <input type="number" step="0.1" id="bi4-natural" placeholder="Ej. 30 · súmalas tú, el portal no decide qué es natural" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none">
+              <p class="text-[10px] text-slate-500 mt-1">Qué cuenta como natural (bosque, páramo, humedal) depende de la tipología que uses: IGAC, DANE, MapBiomas o la de tu CAR. Por eso el número lo digitas tú.</p></div>
+            <div class="text-[11px] text-slate-400 leading-relaxed sm:pl-2">
+              <p class="font-bold text-slate-300 mb-1">SHDI no es "biodiversidad"</p>
+              El índice de diversidad de paisaje sube cuando repartes el área entre <strong>más clases y más parecidas</strong>. Un mosaico de potrero + cultivo + casa puede dar SHDI alto y biodiversidad baja: mide <strong>heterogeneidad de cobertura</strong>, no especies. Úsalo para describir el paisaje, no para decir que es bueno.
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2">
+          <h4 class="text-[11px] font-black uppercase tracking-wider text-pink-400">2 · Forma de los fragmentos (nombre; área ha; perímetro m)</h4>
+          <textarea id="bi4-frag" rows="5" spellcheck="false" placeholder="F1 norte; 8,4; 1240&#10;F2 quebrada; 3,1; 980&#10;…un fragmento por línea" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono text-[11px] leading-relaxed focus:border-pink-500 focus:outline-none"></textarea>
+          <p class="text-[10px] text-slate-500">Compacidad = 4πA/P² con A en m²: vale <strong>1 en un círculo perfecto</strong> y baja hacia 0 en formas alargadas o muy dentadas. El perímetro te lo da el mismo shape del que sacaste el área (QGIS: <em>$perimeter</em>, ArcGIS: <em>Shape_Length</em>).</p>
+        </div>
+
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2">
+          <h4 class="text-[11px] font-black uppercase tracking-wider text-pink-400">3 · Conectancia: qué fragmento sostiene el flujo (nombre; área ha; x m; y m)</h4>
+          <textarea id="bi4-loc" rows="5" spellcheck="false" placeholder="F1; 8,4; 0; 0&#10;F2; 3,1; 420; 160&#10;…coordenadas planas (metros), en el CRS de tu mapa" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono text-[11px] leading-relaxed focus:border-pink-500 focus:outline-none"></textarea>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div><label class="text-slate-400 font-bold block mb-1">Núcleo de conectancia (cómo decae p con la distancia)</label>
+              <select id="bi4-k" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none">
+                <option value="">¿Qué decaimiento uso…?</option>
+                <option value="gauss">Gaussiano: p = exp(−d²/L²) — el que usa la mayoría de trabajos con PC</option>
+                <option value="exp">Exponencial: p = exp(−α·d) con α = 1/(2L) — decaimiento directo</option></select>
+              <p class="text-[10px] text-slate-500 mt-1">Saura &amp; Pascual-Hortal (2007) permiten ambos; hay que <strong>declarar cuál usaste</strong> porque cambian el número.</p></div>
+            <div><label class="text-slate-400 font-bold block mb-1">L · distancia media de dispersión (m)</label>
+              <input type="number" step="10" id="bi4-L" placeholder="Ej. 500 · el paso de tu especie foco" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none">
+              <p class="text-[10px] text-slate-500 mt-1">L es de la <strong>especia foco</strong> (un ave forestal, una rana, una semilla pesada), no del paisaje. Ponla tú: no la puedo sacar de la lista de especies.</p></div>
+            <div><label class="text-slate-400 font-bold block mb-1">Especie o grupo foco</label>
+              <input type="text" id="bi4-foco" placeholder="Ej. Abeja sin aguijón · con su L al lado" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none"></div>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-3">
+          <h4 class="text-[11px] font-black uppercase tracking-wider text-pink-400 mb-2">4 · Relación especie-área: S = c · A<sup>z</sup></h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+            <div><label class="text-slate-400 font-bold block mb-1">Especies presentes hoy (S₁)</label>
+              <input type="number" step="1" id="bi4-s1" placeholder="Ej. 84 · del inventario o de BI1" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none"></div>
+            <div><label class="text-slate-400 font-bold block mb-1">Área de hábitat hoy (ha)</label>
+              <input type="number" step="0.1" id="bi4-a1" placeholder="Ej. 24 · la cobertura que sostiene esas especies" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none"></div>
+            <div><label class="text-slate-400 font-bold block mb-1">¿Cuánto hábitat se pierde o se conserva? (%)</label>
+              <input type="number" step="1" id="bi4-perd" placeholder="Ej. 40 · positivo pierde, negativo gana" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none"></div>
+            <div><label class="text-slate-400 font-bold block mb-1">z · pendiente de la curva</label>
+              <select id="bi4-z" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-pink-500 focus:outline-none">
+                <option value="">¿Qué z uso…?</option>
+                <option value="0.15">0,15 · islas de hábitat dentro de una misma región (extremo bajo de Preston 1962)</option>
+                <option value="0.20">0,20 · valor medio reportado para "islas de hábitat" terrestres</option>
+                <option value="0.25">0,25 · límite superior de los estudios de fragmentos insulares</option>
+                <option value="0.30">0,30 · islas oceánicas y taxa poco móviles</option>
+                <option value="custom">Otro: lo digito (con su fuente)</option></select>
+              <input type="number" step="0.01" id="bi4-z2" placeholder="z propia, ej. 0,22" class="w-full mt-1 bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-slate-300 focus:border-pink-500 focus:outline-none">
+              <p class="text-[10px] text-slate-500 mt-1">z típica: 0,10–0,20 en hábitat contiguo, 0,25–0,35 en islas oceánicas (Preston 1962; Rosenzweig 1995). Si tienes tu propia regresión log S = log c + z log A, usa tu z.</p></div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <button onclick="biPaisaje()" class="bg-pink-600 hover:bg-pink-500 text-white font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">🗺️ Calcular paisaje</button>
+          <button onclick="cambiarPestana('tab-b28')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Ecosistemas estratégicos (B28)</button>
+          <button onclick="cambiarPestana('tab-b27')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Flujo SIG (B27)</button>
+          <button onclick="cambiarPestana('tab-c33')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">PSE por biodiversidad (C33)</button>
+        </div>
+        <div id="bi4-res" class="text-xs"></div>
+        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed">
+          <strong class="text-red-300">Límites:</strong> las métricas de paisaje salen de <strong>la tipología y la escala del mapa</strong>: cambia el tamaño de celda o agrupa clases y cambia SHDI, y el perímetro de un fragmento depende de la resolución con que lo digitalizaste (efecto/coastline). PC y dPC suponen que <strong>todos los fragmentos son iguales para la especie</strong> y que la probabilidad de cruce decae solo con la distancia: no hay matriz, ni barreras, ni ríos. Y la relación especie-área <strong>no es una ley</strong>: da un orden de magnitud del efecto de perder hábitat asumiendo equilibrio, y históricamente ha sobrestimado extinciones (la "deuda de especies" tarda en pagarse) o las ha subestimado cuando la pérdida se concentra en los hábitats más ricos. Úsalo para argumentar orden de magnitud, no como predicción puntual.
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
     <!-- PESTAÑA 1: FERTILIDAD DEL SUELO IGAC (INTACTA - NO MODIFICAR) -->
     <!-- =================================================================== -->
-    <div id="tab-fertilidad" class="tab-content space-y-6">
+    <div id="tab-fertilidad" class="tab-content hidden space-y-6">
       
       <!-- METADATOS DEL LOTE -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
@@ -4143,6 +4450,7 @@
     // =========================================================================
     function cambiarPestana(tabId) {
       if (window.Area) Area.seguir(tabId);
+      if (window.Portada) Portada.alPestana(tabId);
       document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
       document.querySelectorAll(".tab-btn").forEach(btn => {
         btn.classList.remove("border-emerald-500", "text-emerald-400", "font-bold");
@@ -4224,10 +4532,18 @@
       }
     }
 
+    function seleccionarModuloBI(tabId) {
+      if (tabId) {
+        cambiarPestana(tabId);
+        const s = document.getElementById("select-bloque-bi");
+        if (s) s.value = "";
+      }
+    }
+
     const catalogoModulos = [
       { id: "tab-ficha", num: "★", tit: "Mi Ficha de Suelo", bloq: "Transversal", norm: "localStorage (sin servidores)", desc: "Varias fichas a la vez (un predio por ficha), con mapa de clic para geolocalizar (Leaflet/OpenStreetMap) y comparación de indicadores entre predios. Identificación y datos que viajan entre módulos: textural, fertilidad, capacidad de uso y erosión. Guardada en tu navegador, exportable en JSON y CSV." },
       { id: "tab-metodo", num: "★", tit: "Metodología y Fuentes", bloq: "Transversal", norm: "IGAC · IDEAM · USDA · FAO · IPCC", desc: "Fórmula, autor, rango de validez y enlace de cada cálculo del portal: RUSLE (R, K, LS, C, P, T, Se), fertilidad IGAC, CIC, textural, encalado, yeso y carbono." },
-      { id: "tab-practica", num: "★", tit: "Modo Práctica y Autoevaluación", bloq: "Transversal", norm: "Casos integradores · 27 preguntas", desc: "Cinco casos reales paso a paso (erosión en lote cafetero, riego y costos, fosa y acuífero, el agua del predio de punta a punta y el aire: índice, pluma y GEI) que te llevan por los módulos en orden, más una autoevaluación con retroalimentación y módulos de repaso." },
+      { id: "tab-practica", num: "★", tit: "Modo Práctica y Autoevaluación", bloq: "Transversal", norm: "Casos integradores · 36 preguntas", desc: "Seis casos reales paso a paso (erosión en lote cafetero, riego y costos, fosa y acuífero, el agua del predio de punta a punta, el aire: índice, pluma y GEI, y la biodiversidad del predio: alfa, beta, esfuerzo de muestreo y paisaje) que te llevan por los módulos en orden, más una autoevaluación con retroalimentación y módulos de repaso." },
       { id: "tab-fertilidad", num: "1", tit: "Fertilidad del Suelo IGAC", bloq: "Principal", norm: "IGAC IN-GAG-PC05-02", desc: "Cálculo en 2 profundidades (0-25 y 25-50 cm), radar nutricional y diagnóstico oficial." },
       { id: "tab-contaminantes", num: "2", tit: "Dispersión & Contaminación", bloq: "Principal", norm: "Decreto 1076/2015 MinAmbiente", desc: "Transporte de solutos, advección, dispersión, bioindicadores y biomarcadores." },
       { id: "tab-textura", num: "3", tit: "Triángulo Textural USDA/IGAC", bloq: "Principal", norm: "IGAC Tablas 16 y 17", desc: "12 clases texturales, retención de agua disponible, conductividad y laboreo." },
@@ -4272,7 +4588,11 @@
       { id: "tab-w4", num: "W4", tit: "Oxígeno disuelto: mezcla y curva de sag", bloq: "Bloque W: Agua", norm: "Streeter & Phelps (1925) · Decreto 1076/2015", desc: "Mezcla río + vertimiento, corrige el oxígeno de saturación por altitud y temperatura, calcula el punto crítico (tiempo, distancia y déficit), grafica la curva de sag y te dice cuánta DBO puedes descargar sin bajar de la meta." },
       { id: "tab-ar1", num: "AR1", tit: "ICA de Colombia y AQI de US EPA", bloq: "Bloque AR: Aire", norm: "Res. 2254/2017 (MinAmbiente) · US EPA AQI 2024", desc: "Con las concentraciones que tú digitas interpola el sub-índice de cada contaminante en las dos escalas (PM2,5, PM10, O₃, NO₂, SO₂, CO), convierte ppm ↔ µg/m³ con la temperatura y la altitud reales, y reporta el índice general por el peor contaminante con su categoría y recomendación sanitaria." },
       { id: "tab-ar2", num: "AR2", tit: "Pluma gaussiana de una fuente puntual", bloq: "Bloque AR: Aire", norm: "Briggs 1973 rural/urbano · Pasquill (Turner 3-1 / Gifford 1976) · ascenso ISC3", desc: "Modelo gaussiano con reflexión en el suelo: ascenso térmico por flujo de momento y de flotabilidad, downwash de la propia chimenea, altura efectiva iterada con el viento a la altura de la pluma, σy y σz de Briggs (rural o urbano McElroy-Pooler) según la clase de estabilidad, concentración en tu receptor (x, y, z), distancia de máxima concentración a ras de suelo y comparación con el estándar colombiano. Incluye el clasificador de Pasquill con las dos tablas impresas y sus diferencias." },
-      { id: "tab-ar3", num: "AR3", tit: "Inventario de GEI del predio en CO₂eq", bloq: "Bloque AR: Aire", norm: "IPCC 2006 Vol. 2/4 Tier 1 · GWP AR4/AR5/AR6", desc: "Actividad × factor de emisión por fuente (combustión de maquinaria, quema de pastos y residuos, fertilización nitrogenada, encalado, fermentación entérica y estiércol): devuelve t CO₂eq por fuente y por gas, total anual del predio, intensidad por hectárea o por cabeza, el peso relativo de cada fuente y la sensibilidad al GWP que elijas." }
+      { id: "tab-ar3", num: "AR3", tit: "Inventario de GEI del predio en CO₂eq", bloq: "Bloque AR: Aire", norm: "IPCC 2006 Vol. 2/4 Tier 1 · GWP AR4/AR5/AR6", desc: "Actividad × factor de emisión por fuente (combustión de maquinaria, quema de pastos y residuos, fertilización nitrogenada, encalado, fermentación entérica y estiércol): devuelve t CO₂eq por fuente y por gas, total anual del predio, intensidad por hectárea o por cabeza, el peso relativo de cada fuente y la sensibilidad al GWP que elijas." },
+      { id: "tab-bi1", num: "BI1", tit: "Diversidad alfa de tu inventario", bloq: "Bloque BI: Biodiversidad", norm: "Shannon 1948 · Simpson 1949 · Pielou 1966 · Magurran 2011", desc: "Pegas la lista de especie e individuos (o la traes desde Excel con tabulador) y calcula riqueza S, abundancia N, Shannon H′ en la base que declares (ln, log₂ o log₁₀), equitabilidad J′, Simpson λ / 1−λ / 1/λ, número efectivo de especies, Margalef, McIntosh y Berger-Parker. Además te muestra qué especie aporta cada punto de H′, para que el índice no sea una caja negra." },
+      { id: "tab-bi2", num: "BI2", tit: "Similaridad y recambio entre dos inventarios", bloq: "Bloque BI: Biodiversidad", norm: "Jaccard 1912 · Sørensen 1948 · Whittaker 1960 · Bray-Curtis 1957 · Baselga 2010", desc: "Compara dos listas (dos predios, dos fechas o dos coberturas) con Jaccard, Sørensen y Bray-Curtis cuando hay abundancias, la β de Whittaker, y la descomposición de Baselga que separa cuánta diferencia es recambio de especies (βSIM) y cuánta es pérdida neta (βSNE), con el chequeo de aditividad. Los nombres se normalizan sin tildes ni mayúsculas." },
+      { id: "tab-bi3", num: "BI3", tit: "¿Ya muestreaste suficiente? Chao1 y rarefacción", bloq: "Bloque BI: Biodiversidad", norm: "Chao 1984 · Chao & Jost 2012 · Hurlbert 1971", desc: "Con f₁ y f₂ estima la riqueza no observada (Chao1 corregido por sesgo), la cobertura de tu muestra Ĉ = 1 − f₁/N, el % de riqueza atrapada y la curva de rarefacción exacta E[S_n] sobre todas las submuestras posibles, dibujada en SVG. Sirve para comparar predios con esfuerzo distinto sin tener que extrapolar: el portal no proyecta más allá de tu N y te lo dice." },
+      { id: "tab-bi4", num: "BI4", tit: "Paisaje: mosaico, fragmentos y conectancia", bloq: "Bloque BI: Biodiversidad", norm: "FRAGSTATS (McGarigal & Marks 1995) · Saura & Pascual-Hortal 2007 · Arrhenius 1921", desc: "Cuatro cálculos espaciales independientes con tus propios digitados: composición del mosaico (SHDI, EQUIT, dominancia y % natural que tú declaras), forma de los fragmentos (compacidad 4πA/P², SHAPE, densidad y parche mayor), conectancia PC con núcleo gaussiano o exponencial y dPC de cada parche para saber cuál sostiene el flujo, y relación especie-área S = c·A^z. En PC, p* es la ruta de mayor probabilidad (admite saltos por otros parches) y el denominador A_L es el del paisaje completo, fijo: es la idea de Saura &amp; Pascual-Hortal simplificada, no el cálculo formal de Conefor con matriz de resistencia." }
     ];
 
     // =========================================================================
@@ -4327,34 +4647,45 @@
       "tab-w4": ["agua"],
       "tab-ar1": ["aire"],
       "tab-ar2": ["aire"],
-      "tab-ar3": ["aire", "suelo"]
+      "tab-ar3": ["aire", "suelo"],
+      "tab-bi1": ["biodiv"],
+      "tab-bi2": ["biodiv"],
+      "tab-bi3": ["biodiv"],
+      "tab-bi4": ["biodiv", "suelo"]
     };
 
     const AREAS = [
       { k: "todas", nom: "Todas", ico: "🗂️", hex: "#94a3b8",
+        sub: "los 5 áreas en una sola lista, sin filtro",
         ya: "Todo el portal sin filtro: cada tarjeta muestra además las áreas que de verdad trabaja.",
         faltan: [] },
       { k: "suelo", nom: "Suelos", ico: "🟤", hex: "#10b981",
+        sub: "edafología, manejo y conservación de suelos",
         ya: "Área base del portal: edafología completa (A1–A13), manejo y conservación (B14–B28), RUSLE con motor real, ficha multi-predio con mapa y las herramientas C29–C33.",
         faltan: [] },
       { k: "agua", nom: "Agua", ico: "💧", hex: "#38bdf8",
+        sub: "calidad del agua: estable, para clorar, para regar y para el río",
         ya: "Balance hídrico Thornthwaite-Mather (C29), vulnerabilidad de acuíferos DRASTIC (C31), transporte de solutos y lixiviación (módulo 2), agua disponible y lámina de riego (A5), salinidad (A8) y PSE hídrico (C33). El bloque W trae cuatro calculadoras propias: estabilidad de Langelier/Ryznar con dosis de ácido (W1), cloración con CT y decloración (W2), calidad de agua de riego RAS/CSR/boro/yeso (W3) y oxígeno disuelto con Streeter-Phelps corregido por altitud (W4).",
         faltan: ["Carga contaminante en DQO y sólidos suspendidos comparada con los límites de vertimiento a cuerpo receptor (Resolución 631 de 2015): W4 trabaja oxígeno y DBO, no DQO ni SST",
                  "Consumo de agua y plan de uso eficiente (Ley 373 de 2002): balance entre captación, usos y retorno del predio",
                  "Caudal ecológico y rondas hídricas para ocupación de cauces"] },
       { k: "aire", nom: "Aire", ico: "🌫️", hex: "#a78bfa",
+        sub: "lo que se respira, lo que sale de la chimenea y lo que pesa el GEI",
         ya: "El bloque AR trae tres calculadoras propias: índice de calidad del aire en las dos escalas (ICA de la Resolución 2254 de 2017 y AQI de US EPA) con conversión ppm ↔ µg/m³ usando tu temperatura y tu altitud (AR1); dispersión de una fuente puntual con pluma gaussiana, σ de Briggs rural o urbano, ascenso térmico ISC3, downwash, máximo a ras de suelo y clasificación de estabilidad Pasquill en sus dos tablas impresas (AR2); inventario de GEI del predio Tier 1 IPCC 2006 con GWP AR4, AR5 y AR6 (AR3). Completan el área: ciclos biogeoquímicos con gases (A11), stock de carbono y CO₂eq (B24) y el servicio de carbono dentro de los PSE (C33).",
         faltan: ["Modelos de próxima generación (AERMOD, CALPUFF) con meteorología horaria, terreno complejo y línea base de monitoreo: la gaussiana con σ de Briggs solo es válida entre 100 m y 10 km sobre terreno abierto, y AR2 lo advierte",
                  "Ozono fotoquímico y smog (modelos ODE/CAMx) o el componente de NOx y COV de un plan de manejo de calidad del aire",
                  "Inventario reportable ante autoridad (RES/ICAF, reporte de GEI a MinAmbiente, ISO 14064-1): AR3 usa factores por defecto de IPCC 2006 Tier 1, no los del inventario nacional ni los de la RES",
                  "Fuentes difusas y de interior: quema de biomasa residencial, cocina, emisiones de rellenos y manejo de olores o ruido"] },
       { k: "biodiv", nom: "Biodiversidad", ico: "🦋", hex: "#f472b6",
-        ya: "Biología del suelo y mesofauna (A9), restauración de suelos degradados (B23), ecosistemas estratégicos (B28) y el servicio de biodiversidad pagado en PSE (C33).",
-        faltan: ["Índices de diversidad y similaridad: Shannon-Wiener, Simpson, Pielou (equitabilidad), Margalef e índice de Jaccard entre dos inventarios",
-                 "Dato espacial: especies registradas por departamento, hectáreas por ecosistema y cobertura (SinAC / Instituto Alexander von Humboldt)",
-                 "Mapa de parques nacionales naturales y áreas protegidas, con su extensión por departamento",
-                 "Especies exóticas invasoras reportadas en Colombia y su distribución"] },
+        sub: "índices de diversidad, similaridad, esfuerzo de muestreo y paisaje",
+        ya: "El bloque BI trae cuatro calculadoras propias: diversidad alfa de tu inventario con Shannon, Pielou, Simpson, Margalef, McIntosh, Berger-Parker y el número efectivo de especies, además del desglose de qué especie aporta cada punto de H′ (BI1); similaridad y recambio entre dos listas con Jaccard, Sørensen, Bray-Curtis, la β de Whittaker y la descomposición de Baselga entre recambio y pérdida (BI2); Chao1, cobertura de la muestra Ĉ y curva de rarefacción exacta para saber si te faltan especies y para comparar predios con esfuerzo distinto (BI3); y métricas de paisaje: SHDI, compacidad de fragmentos, conectancia PC/dPC por fragmento y relación especie-área (BI4). Completan el área: biología del suelo y mesofauna (A9), restauración de suelos degradados (B23), ecosistemas estratégicos (B28) y el servicio de biodiversidad pagado en PSE (C33).",
+        faltan: ["Dato espacial de referencia: especies registradas por departamento, hectáreas por ecosistema y cobertura (SinAC / Instituto Alexander von Humboldt) — el portal calcula con TU lista, no trae inventarios precargados",
+                 "Mapa de parques nacionales naturales y áreas protegidas con su extensión por departamento, y verificación de si tu predio cae dentro",
+                 "Especies exóticas invasoras reportadas en Colombia y su distribución",
+                 "Diversidad filogenética y funcional (Faith, Rao, RaoQ): BI1-BI4 tratan a todas las especies como equivalentes, que es justo lo que hay que decir al reportarlas",
+                 "Modelos de distribución de especies y curva de área-especie calibrada con datos propios: la z de BI4 la declaras tú, el portal no la ajusta por regresión"] },
       { k: "legal", nom: "Legal", ico: "⚖️", hex: "#fbbf24",
+        sub: "normativa ambiental colombiana y ordenamiento del territorio",
         ya: "Buscador de normativa ambiental (B26) con su texto oficial, conflictos de uso frente al ordenamiento (B15), ecosistemas con protección expresa (B28) y el marco de PSE (C33, CONPES 4053).",
         faltan: ["Árbol de trámite: responder qué vas a hacer (vertimiento, concesión de agua, ocupación de cauces, aprovechamiento forestal, licencia ambiental, POMCA) y salir con la CAR competente, requisitos, plazos y enlaces al formulario",
                  "Chequeo de un predio contra normas de restricción: páramo delimitado, humedal Ramsar, ronda hídrica, área protegida, suelo no urbanizable",
@@ -4373,7 +4704,7 @@
       },
       trans(id) {
         if (!this._trans) {
-          this._trans = { "tab-hub": true };
+          this._trans = { "tab-hub": true, "tab-portada": true };
           catalogoModulos.forEach(m => { if (m.num === "★") this._trans[m.id] = true; });
         }
         return !!this._trans[id];
@@ -4407,6 +4738,7 @@
 
       arrancar() {
         this.leer();
+        this.aplicarTema();
         this.pintarChips();
         this.pintarBarra();
         this.pintarNota();
@@ -4415,11 +4747,23 @@
         if (!this.info(k) || this.info(k).k !== k) k = "todas";
         this.clave = k;
         this.guardar();
+        this.aplicarTema();
         this.pintarChips();
         this.pintarBarra();
         this.pintarNota();
         const hub = document.getElementById("tab-hub");
         if (hub && !hub.classList.contains("hidden")) renderizarHub();
+      },
+      // Tema visual propio: color de acento, fondo y caparazón del panel cambian por área
+      aplicarTema() {
+        const k = this.info(this.clave).k;
+        const cl = document.body.classList;
+        AREAS.forEach(a => { if (cl.contains("area-" + a.k)) cl.remove("area-" + a.k); });
+        cl.add("area-" + k);
+        const fondo = document.getElementById("area-fondo");
+        if (fondo) fondo.className = "no-print tema-" + k;
+        const btn = document.getElementById("btn-portada");
+        if (btn) btn.title = "Volver al selector de áreas · ahora estás en " + this.info(k).nom;
       },
       // Enlace directo o búsqueda llevó a un módulo de otra área: el conmutador lo sigue.
       seguir(tabId) {
@@ -4445,7 +4789,7 @@
       _opciones() {
         if (!this._ops) {
           this._ops = {};
-          ["select-bloque-a", "select-bloque-b", "select-bloque-c", "select-bloque-w", "select-bloque-ar"].forEach(id => {
+          ["select-bloque-a", "select-bloque-b", "select-bloque-c", "select-bloque-w", "select-bloque-ar", "select-bloque-bi"].forEach(id => {
             const s = document.getElementById(id);
             if (!s || !s.options) return;
             this._ops[id] = Array.prototype.slice.call(s.options).map(o => ({ v: o.value || "", t: o.text }));
@@ -4491,29 +4835,170 @@
         if (this.clave === "todas") { caja.innerHTML = ""; caja.classList.add("hidden"); return; }
         caja.classList.remove("hidden");
         const mods = this.lista().filter(m => m.num !== "★");
-        const nombres = mods.length <= 12
-          ? '<div class="flex flex-wrap gap-1.5 mt-2">' + mods.map(m =>
-              '<button type="button" onclick="cambiarPestana(\'' + m.id + '\')" class="px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:text-white text-[10px] font-bold cursor-pointer whitespace-nowrap">' +
-              m.num + " · " + m.tit + "</button>").join("") + "</div>"
-          : '<p class="text-[11px] text-slate-400 mt-2 leading-relaxed">Son ' + mods.length +
-            ' módulos, así que la barra de arriba ya los muestra casi todos: usa el grupo de Bloque A, B, C o W para entrar a cada uno.</p>';
-        const pendiente = a.faltan.length
-          ? '<div class="mt-3 pt-3 border-t border-slate-800"><div class="flex items-center gap-2 mb-1.5">' +
+        const pendientes = a.faltan.length
+          ? '<div class="mt-3 pt-3 border-t" style="border-color:' + a.hex + '3d"><div class="flex items-center gap-2 mb-1.5">' +
             '<span class="badge-norma badge-minambiente">En construcción</span>' +
             '<span class="text-[11px] font-black text-amber-400 uppercase tracking-wider">Esto todavía NO funciona en el portal</span></div>' +
             a.faltan.map(x => '<p class="text-[11px] text-slate-400 leading-relaxed"><span class="text-amber-400">·</span> ' + x + "</p>").join("") +
             '<p class="text-[10px] text-slate-500 mt-2 leading-relaxed">Está listado para que sepas con precisión qué no puedes usar aún: no hay cálculos ocultos detrás de estos nombres.</p></div>'
-          : '<div class="mt-3 pt-3 border-t border-slate-800 text-[11px] text-emerald-400 font-bold">✓ Sin herramientas pendientes: todo lo que esta área promete ya calcula.</div>';
+          : '<div class="mt-3 pt-3 border-t text-[11px] text-emerald-400 font-bold" style="border-color:' + a.hex + '3d">✓ Sin herramientas pendientes: todo lo que esta área promete ya calcula.</div>';
         caja.innerHTML =
-          '<div class="bg-slate-950 border border-slate-800 rounded-xl p-4">' +
-          '<div class="flex flex-wrap items-center gap-2"><span class="text-lg">' + a.ico + "</span>" +
-          '<h3 class="text-sm font-black text-white">Área ' + a.nom + "</h3>" +
-          '<span class="text-[10px] font-mono text-slate-400">' + mods.length + " de " + this.modulos("todas").length + "</span></div>" +
+          '<div class="border rounded-xl p-4" style="border-color:' + a.hex + '59;background:' + a.hex + '12">' +
+          '<div class="flex items-center justify-between gap-2 pb-2 mb-2 border-b" style="border-color:' + a.hex + '33">' +
+          '<span class="text-base font-black uppercase tracking-[0.2em]" style="color:' + a.hex + '">' + a.nom + "</span>" +
+          '<span class="text-[10px] font-mono text-slate-400 whitespace-nowrap">' + mods.length + " módulos de " + this.modulos("todas").length + "</span></div>" +
+          '<div class="flex flex-wrap items-center gap-2"><span class="text-xl">' + a.ico + "</span>" +
+          '<h3 class="text-sm font-black text-white">Panel de ' + a.nom + "</h3></div>" +
+          (a.sub ? '<p class="text-[10px] font-bold uppercase tracking-wider mt-1" style="color:' + a.hex + '">' + a.sub + "</p>" : "") +
           '<p class="text-[11px] text-slate-300 mt-1.5 leading-relaxed">' + a.ya + "</p>" +
-          nombres + pendiente + "</div>";
+          this.bandaMods(a, mods) + pendientes + "</div>";
+      },
+      // Cada área despliega su listado de módulos con una forma distinta: capas, frascos,
+      // isolíneas, mosaico o expediente. Los datos son los mismos; el lenguaje visual no.
+      bandaMods(a, mods) {
+        if (!mods.length) return "";
+        const tope = 14;
+        const corta = mods.length > tope ? mods.slice(0, tope) : mods;
+        const colade = mods.length > tope
+          ? '<p class="text-[10px] text-slate-500 mt-1.5 leading-relaxed">…y ' + (mods.length - tope) +
+            ' más: están en la barra de pestañas de arriba y en las tarjetas de abajo.</p>'
+          : "";
+        const ir = m => " onclick=\"cambiarPestana('" + m.id + "')\"";
+        if (a.k === "suelo") {
+          return '<div class="mt-3 space-y-1">' + corta.map(m =>
+            '<button type="button"' + ir(m) + ' class="w-full text-left flex items-center gap-2.5 rounded-r-lg bg-slate-950/70 hover:bg-slate-900 border-l-4 pl-2.5 pr-2 py-1.5 cursor-pointer transition" style="border-color:' + a.hex + '">' +
+            '<span class="text-[10px] font-mono w-8 shrink-0" style="color:' + a.hex + '">' + m.num + "</span>" +
+            '<span class="text-[11px] font-bold text-slate-200 truncate">' + m.tit + "</span></button>").join("") + colade + "</div>";
+        }
+        if (a.k === "agua") {
+          return '<div class="mt-3 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2">' + corta.map(m =>
+            '<button type="button"' + ir(m) + ' class="text-left bg-slate-950/70 hover:bg-slate-900 border border-slate-800 cursor-pointer transition p-2.5" style="border-radius:16px 16px 4px 16px;border-top:3px solid ' + a.hex + '">' +
+            '<span class="block text-[9px] font-mono" style="color:' + a.hex + '">' + m.num + "</span>" +
+            '<span class="block text-[11px] font-bold text-slate-200 leading-snug mt-0.5">' + m.tit + "</span></button>").join("") + colade + "</div>";
+        }
+        if (a.k === "aire") {
+          return '<div class="mt-3 border-t" style="border-color:' + a.hex + '2e">' + corta.map(m =>
+            '<button type="button"' + ir(m) + ' class="w-full text-left flex items-baseline justify-between gap-3 border-b cursor-pointer hover:bg-slate-950/60 transition px-2 py-1.5" style="border-color:' + a.hex + '22">' +
+            '<span class="text-[11px] font-bold text-slate-200">' + m.tit + '</span><span class="text-[10px] font-mono shrink-0" style="color:' + a.hex + '">' + m.num + " · abrir →</span></button>").join("") + colade + "</div>";
+        }
+        if (a.k === "biodiv") {
+          return '<div class="mt-3 flex flex-wrap gap-2">' + corta.map(m =>
+            '<button type="button"' + ir(m) + ' class="bg-slate-950/70 hover:bg-slate-900 border border-dashed cursor-pointer transition px-3 py-2 text-left" style="border-color:' + a.hex + '59;border-radius:14px 28px 14px 28px">' +
+            '<span class="block text-[9px] font-mono" style="color:' + a.hex + '">' + m.num + "</span>" +
+            '<span class="block text-[11px] font-bold text-slate-200">' + m.tit + "</span></button>").join("") + colade + "</div>";
+        }
+        if (a.k === "legal") {
+          return '<div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-1.5 font-mono">' + corta.map((m, i) =>
+            '<button type="button"' + ir(m) + ' class="flex items-center gap-2 bg-slate-950/70 hover:bg-slate-900 border border-slate-800 cursor-pointer transition px-2 py-1.5 text-left" style="border-left:3px double ' + a.hex + '">' +
+            '<span class="text-[9px] shrink-0" style="color:' + a.hex + '">' + String(i + 1).padStart(2, "0") + "</span>" +
+            '<span class="text-[11px] font-bold text-slate-200 truncate uppercase tracking-wide">' + m.tit + "</span></button>").join("") + colade + "</div>";
+        }
+        return '<div class="flex flex-wrap gap-1.5 mt-3">' + mods.map(m =>
+          '<button type="button"' + ir(m) + ' class="px-2 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:text-white text-[10px] font-bold cursor-pointer whitespace-nowrap">' +
+          m.num + " · " + m.tit + "</button>").join("") + "</div>";
       }
     };
     window.Area = Area;
+
+    // =========================================================================
+    // 1c. PORTADA: LANZADOR DE ÁREAS (ventanas flotantes) y arranque del sitio
+    // =========================================================================
+    // El portal abre AQUI, no en un módulo: el usuario escoge el área. La preferencia
+    // "entrar directo" es opt-in y vive en localStorage; un enlace #tab-x manda siempre.
+    const Portada = {
+      KEY: "spt_arranque_v1",
+      directo: false,
+      area: "",
+
+      leer() {
+        try {
+          const raw = localStorage.getItem(this.KEY);
+          if (!raw) return;
+          const o = JSON.parse(raw);
+          if (!o || typeof o !== "object") return;
+          this.directo = o.directo === true;
+          this.area = (o.area && Area.info(o.area).k === o.area) ? o.area : "";
+        } catch (e) { /* sin almacenamiento o dato corrupto: siempre abre el selector */ }
+      },
+      sincronizar() {
+        this.area = Area.clave;
+        try { localStorage.setItem(this.KEY, JSON.stringify({ directo: this.directo, area: this.area })); } catch (e) {}
+      },
+      guardarDirecto(v) {
+        this.directo = !!v;
+        this.sincronizar();
+        this.pintarNota();
+      },
+      pintarNota() {
+        const el = document.getElementById("portada-directo-nota");
+        if (!el) return;
+        el.textContent = this.directo
+          ? "Marcado: la próxima abrirá «" + Area.info(this.area || Area.clave).nom + "» directo. El botón 🧭 de arriba devuelve siempre a este selector."
+          : "Sin marcar: el portal siempre abre este selector. Márcalo si sueles trabajar en una sola área.";
+      },
+      resumen(txt) {
+        const t = String(txt).replace(/\s+/g, " ").trim();
+        if (t.length <= 190) return t;
+        const corte = t.lastIndexOf(" ", 190);
+        return t.slice(0, corte > 60 ? corte : 190) + "…";
+      },
+      tarjeta(a) {
+        const mods = Area.modulos(a.k).filter(m => m.num !== "★");
+        const vista = mods.slice(0, 4).map(m => m.num + " " + m.tit.split(":")[0].split("·")[0].trim()).join(" · ");
+        const mas = mods.length > 4 ? " · y " + (mods.length - 4) + " más" : "";
+        const estado = a.faltan.length
+          ? '<span class="badge-norma badge-ica">en construcción · ' + a.faltan.length + "</span>"
+          : '<span class="badge-norma badge-igac">sin herramientas pendientes</span>';
+        return '<button type="button" class="port-card" style="--pc:' + a.hex + '" onclick="Portada.entrar(\'' + a.k + '\')" ' +
+          'aria-label="Entrar al área ' + a.nom + ', ' + mods.length + ' módulos">' +
+          '<span class="port-marca" aria-hidden="true">' + a.ico + "</span>" +
+          '<span class="port-chrome block"><i></i><i></i><i></i>' +
+          '<span class="text-[9px] font-mono uppercase tracking-wider ml-1" style="color:' + a.hex + '">área · ' + mods.length + " módulos</span></span>" +
+          '<span class="block p-4">' +
+          '<span class="flex items-center gap-2"><span class="text-2xl">' + a.ico + "</span>" +
+          '<span class="text-base font-black text-white">' + a.nom + "</span></span>" +
+          '<span class="block text-[10px] font-bold uppercase tracking-wider mt-1" style="color:' + a.hex + '">' + (a.sub || "") + "</span>" +
+          '<span class="block text-[11px] text-slate-400 mt-2 leading-relaxed">' + this.resumen(a.ya) + "</span>" +
+          '<span class="block text-[10px] font-mono mt-2 leading-relaxed" style="color:' + a.hex + '">' + vista + mas + "</span>" +
+          '<span class="block mt-3 pt-2 border-t flex items-center justify-between gap-2" style="border-color:' + a.hex + '33">' + estado +
+          '<span class="text-[11px] font-black whitespace-nowrap" style="color:' + a.hex + '">Entrar →</span></span></span>' +
+          "</span></button>";
+      },
+      render() {
+        const grid = document.getElementById("portada-grid");
+        if (!grid) return;
+        grid.innerHTML = ["suelo", "agua", "aire", "biodiv", "legal", "todas"]
+          .map(k => this.tarjeta(Area.info(k))).join("");
+      },
+      entrar(k) {
+        const clave = (Area.info(k) && Area.info(k).k === k) ? k : "todas";
+        Area.cambiar(clave);
+        this.sincronizar();
+        cambiarPestana("tab-hub");
+      },
+      ver() { cambiarPestana("tab-portada"); },
+      // Llamado desde cambiarPestana: en la portada se ocultan la barra de pestañas y el conmutador
+      alPestana(tabId) {
+        const enPortada = tabId === "tab-portada";
+        const cl = document.body.classList;
+        if (enPortada) {
+          if (!cl.contains("modo-portada")) cl.add("modo-portada");
+          this.render();
+          this.pintarNota();
+        } else if (cl.contains("modo-portada")) cl.remove("modo-portada");
+      },
+      arrancar() {
+        this.leer();
+        // El HTML ya trae la clase puesta, pero el estado lo manda el JavaScript: así
+        // la portada se oculta igual cuando el arranque entra directo a un área.
+        if (!document.body.classList.contains("modo-portada")) document.body.classList.add("modo-portada");
+        const chk = document.getElementById("portada-directo");
+        if (chk) chk.checked = this.directo;
+        this.render();
+        this.pintarNota();
+      }
+    };
+    window.Portada = Portada;
 
     // METODOLOGÍA: fórmula exacta del código + autor + rango de validez + fuente
     const METODO = [
@@ -4544,6 +5029,10 @@
       { mod: "AR1 · ICA de Colombia y AQI de US EPA", f: ["Interpolación lineal por pedazos dentro de la corta: I = I_lo + (I_hi − I_lo)/(C_hi − C_lo) · (C − C_lo)", "Índice general = el MAYOR de los índices por contaminante (regla del peor, no un promedio)", "De ppm a µg/m³: C = ppm · MW / 24,45 · 298,15/(273,15+t) · p/760 — 24,45 L/mol es el volumen molar a 25 °C y 1 atm; la masa por volumen sube con la presión y baja con la temperatura, así que a 2.600 msnm el mismo ppm vale ~27 % menos µg/m³", "Presión por altitud (atmósfera estándar): p = 760·(1 − 2,25577·10⁻⁵·h)^5,25588", "El dato se trunca a la cifra significativa del contaminante antes de interpolar, como lo hacen las redes de monitoreo"], autor: "Resolución 2254 de 2017 (Minambiente): Tabla 1 = estándares de concentración, Tabla 6 = índice de la calidad del aire. Columna AQI: US EPA, Air Quality Index, tabla de breakpoints vigente (PM2,5 endurecida en 2024 a 9,1–35,4 µg/m³)", validez: "TODAS las cortas del ICA colombiano están en µg/m³, incluidas las de los gases (CO 0–5094 µg/m³, SO₂ 0–93 µg/m³): si reportas ppb sin convertir, el índice sale mal y no en una cifra, en un orden de magnitud. Cada contaminante lleva su propio tiempo de promediación; mezclar un valor horario con un promedio de 24 h no es válido. La escala NO es lineal con el daño: 150 no es «el doble de malo» que 75. Y la Tabla 6 quedó calibrada sobre los estándares de la Resolución 610 de 2010, que la 2254 apretó: puedes tener aire por encima del límite legal con ICA «Aceptable». El índice tampoco cubre plomo, benceno, PAH, partículas menores de 1 µm ni olores.", fuente: { t: "Minambiente — Res. 2254 de 2017", u: "https://www.minambiente.gov.co/normativa/" } },
       { mod: "AR2 · Gaussiana con σ de Briggs y ascenso ISC3", f: ["C(x,y,z) = Q/(2π·σy·σz·ū) · exp(−y²/2σy²) · [exp(−(z−H)²/2σz²) + exp(−(z+H)²/2σz²)]  (Q en g/s → C en g/m³, reflejo de suelo incluido)", "σ = a·x·(1+b·x)^c · rural: σy con a = 0,22/0,16/0,11/0,08/0,06/0,04 para A–F y b = 0,0001, c = −½; σz: A = 0,20x · B = 0,12x · C = 0,08x(1+0,0002x)^−½ · D = 0,06x(1+0,0015x)^−½ · E = 0,03x(1+0,0003x)^−1 · F = 0,016x(1+0,0003x)^−1", "urbano: A-B σy = 0,32x(1+0,0004x)^−½ y σz = 0,24x(1+0,001x)^−½ · C 0,22x(1+0,0004x)^−½ y 0,20x · D 0,16x(1+0,0004x)^−½ y 0,16x(1+0,0003x)^−½ · E-F 0,11x(1+0,0004x)^−½ y 0,08x(1+0,0015x)^−½", "Viento en la altura de la pluma: ūs = u·(H/10)^p con p = 0,11 (A-C), 0,14 (D), 0,21 (E-F); se itera porque H depende de ūs y ūs de H", "Fm = Vs²·D²·Ta/(4·Ts) y Fb = g·Vs·D²(Ts−Ta)/(4·Ts); manda el momento si Fb < 0,05·Fm²ᐟ³, si no manda la flotabilidad", "Flotabilidad, inestable/neutral: Δh = 21,425·Fb^0,75/ū (Fb < 0,5) o 38,71·Fb^0,6/ū · stable: Δh = 2,6·(Fb/(ū·s))¹ᐟ³ con tope 16·Fb^0,4/ū, siendo s = (g/Ta)·(Δθ/Δz) ≈ 1,2·10⁻³ s⁻² en clase F", "Ascenso parcial si x < xf: Δh(x) = 1,60·Fb¹ᐟ³·x²ᐟ³/ū · Downwash si Vs < 1,5·ū: hs′ = hs − 2D·(1,5 − Vs/ū), es decir se RESTA altura", "H = hs + Δh − downwash; el máximo a ras de suelo se busca por barrido logarítmico de 100 m a 10 km (401 puntos)"], autor: "σ: Briggs (1973), Diffusion Estimation for Small Emissions, ATDL Contribution File No. 79. Clase de estabilidad: Pasquill (1961) con la versión modificada de Gifford (1976). Ascenso de penacho: Briggs (1965, 1968) en la forma de la ISC3 (US EPA User's Guide Vol. II, EPA-454/B-95-003b, Ecs. 1-8 a 1-24) y del Handbook de Hanna, Briggs & Hosker (1982), Ecs. 2.15-2.30", validez: "Punto único, terreno plano, viento y estabilidad constantes, sin obstáculos ni brisas, sin deposición ni reacción química. Briggs solo está ajustado de 100 m a 10 km: afuera el número deja de ser de libro. No vale con calma (u < 1 m/s) ni sobre ~15 m/s, ni con H efectiva > 100 m (las curvas no se trazaron tan alto), ni para fuentes de área o lineales (tráfico, cultivos), ni junto a una chimenea más alta. σz(A) = 0,20x es una recta sin techo: no extrapolar la clase A más allá de ~2,5 km. Entre 100 m y 1 km Gifford (1975) documentó la mayor discrepancia entre observadores, y las σ de Briggs difieren de las curvas PG originales hasta ~20 % en σz(D) a 1–3 km. Las σ urbanas vienen de liberaciones en superficie en St. Louis: no son para una chimenea alta y caliente, y el coeficiente de σz(E-F) urbano está ilegible en la tabla de BARC (se usa 0,0015 y queda declarado).", fuente: { t: "US EPA — ISC3 User's Guide Vol. II", u: "https://www.epa.gov/scram/air-quality-dispersion-modeling" } },
       { mod: "AR3 · Inventario de GEI Tier 1 (IPCC 2006)", f: ["Emisión = actividad × factor de emisión por defecto (Tier 1)", "CO₂ de combustión = consumo (Gg) × NCV (TJ/Gg) × EF (kg CO₂/TJ) / 1000 → t CO₂/año; NCV diésel 43 y gasolina 44,3; EF CO₂ 74.100 y 69.300 kg/TJ", "CH₄ y N₂O de combustión dependen de la tecnología: diésel agrícola off-road CH₄ 4,15 y N₂O 28,6 kg/TJ, frente a 3,9 kg N₂O/TJ en un camión de carretera", "Entérico: t CH₄ = cabezas × EF (kg CH₄/cabeza/año) / 1000", "Manejo de estiércol (Ec. 10.23): VS (kg/d) × 365 × Bo (m³ CH₄/kg VS) × 0,67 kg CH₄/m³ × MCF", "N₂O de suelos y estiércol: kg N₂O = kg N₂O-N × 44,0128/28,0134, con EF₁ 0,01 · EF₃PRP/CPP 0,02 · EF₄ 0,010 · EF₅ 0,0075 y FracGASF 0,10 / FracLEACH 0,30", "Encalado: t CO₂ = t carbonato × 44,01/MW (CaCO₃ 0,4397 · CaO 0,7850 · Ca(OH)₂ 0,5938 · dolomita 0,4775)", "Quema de biomasa: el CO₂ es biogénico y NO suma al total; sí entran CH₄ 2,3 y N₂O 0,21 kg por tonelada de materia seca (quema de sabana)", "CO₂eq = t CO₂ + t CH₄ × GWP_CH₄ + t N₂O × GWP_N₂O, con CH₄ fósil y biogénico en GWP separado (AR5 30/28/265 · AR6 29,8/27/273,5 · AR4 25/25/298)"], autor: "IPCC (2006), Directrices para los Inventarios Nacionales de Emisiones y Absorciones de GEI: Vol. 2 Cap. 3 Tablas 3.2.2 y 3.3.1 (combustión), Vol. 4 Cap. 10 Tablas 10.2/10.3, 10.17, 10.19 y Ecuación 10.23 (fermentación entérica y estiércol), Vol. 4 Cap. 11 Sec. 11.3.1 y Tabla 11.3 (nitrógeno y encalado), Vol. 4 Cap. 2 Tabla 2.5 (quema de biomasa). GWP: AR5 (2013) Apéndice 8.A, AR6 (2021) Tabla 7.15, AR4 (2007) Tabla 2.1", validez: "Tier 1 = factores por defecto globales: sirve para PRIORIZAR de dónde sale tu huella, no para reportar ni para vender bonos. Un inventario reportable pide datos del país (el NIR de Colombia usa 72 kg CH₄/cabeza/año para vaca lechera, cifra que NO aparece en la Tabla 10.3), factores locales de N₂O (el propio IPCC reconoce que su EF₁ subestima zonas húmedas tropicales) y medición de la biomasa realmente quemada. Quedan fuera: el N₂O inducido por el encalado (documentado, sin EF por defecto), el NOATM de la fijación industrial de nitrógeno, el arroz inundado y las emisiones del suelo, el carbono orgánico del suelo, la maquinaria en horas de fábrica y las fugas de refrigerantes. La MCF de 2 % supone depósito en pastoreo al aire libre: bodega cubierta, compostaje o laguna cambian por completo el número.", fuente: { t: "IPCC NGGIP — Directrices 2006", u: "https://www.ipcc-nggip.iges.or.jp/public/2006gl/" } },
+      { mod: "BI1 · Diversidad alfa", f: ["H′ = −Σ pᵢ log pᵢ, con pᵢ = nᵢ/N (Shannon-Wiener)", "H′máx = log S · J′ = H′/H′máx (Pielou)", "λ = Σ pᵢ² · diversidad 1−λ · 1/λ = Simpson inverso (número efectivo por MacArthur)", "Número efectivo por Shannon = b^H′ (b = base del logaritmo elegida)", "Margalef D_Mg = (S−1)/ln N · McIntosh D = (N−U)/(N−√N) con U = √(Σnᵢ²) · Berger-Parker d = Nmax/N"], autor: "Shannon (1948) con la corrección de Fisher, Wynter-Edwards & Graham (1943) y la forma de MacArthur (1965); Pielou (1966); Simpson (1949); Margalef (1958); McIntosh (1967); Berger & Parker (1970). Síntesis en Magurran & McGill (2011)", validez: "Son índices <strong>sin dimensión y dependientes del esfuerzo</strong>: dos listas con N distinto no se comparan por H′ crudo (hay que rarefactuar, BI3). No distinguen parentesco ni funcionamiento —un escarabajo y un jaguar valen lo mismo por individuo—, así que no miden «biodiversidad» a secas sino la distribución de individuos entre las unidades taxonómicas que tú definiste. Sensibles a la definición de «individuo» (un clon de gramínea mal contado infla N) y a la de «especie». La base del logaritmo cambia el valor de H′ y el número efectivo, no J′. Margalef y McIntosh son los más inestables frente al esfuerzo: repórtalos con S y N siempre al lado.", fuente: { t: "Jost (2006) Entropy and diversity, Oikos 113:363-375", u: "https://doi.org/10.1111/j.2006.0030-1299.14714.x" } },
+      { mod: "BI2 · Similaridad y β de Whittaker", f: ["Jaccard = |A∩B|/|A∪B| · Sørensen = 2|A∩B|/(|A|+|B|)", "β de Whittaker = γ/ᾱ − 1, con γ = riqueza de la unión y ᾱ = (S_A+S_B)/2", "Bray-Curtis BC = Σ|x_Ai − x_Bi| / Σ(x_Ai + x_Bi), sobre la unión y con 0 donde falta", "Baselga: βSOR = (b+c)/(2a+b+c) = βSIM + βSNE, con βSIM = min(b,c)/(a+min(b,c)) y βSNE = βSOR − βSIM", "Equivalencia de escalas: βJAC = (b+c)/(a+b+c) y βILN = βJAC − βSIM"], autor: "Jaccard (1908/1912); Sørensen (1948); Whittaker (1960); Bray & Curtis (1957); Baselga (2010), separación de componentes de recambio y anidamiento en la β-degacidad multipar", validez: "Jaccard y Sørensen son de presencia/ausencia: una especie con 1 individuo pesa lo mismo que una con 500. Bray-Curtis usa abundancias pero <strong>depende del esfuerzo relativo</strong> de cada lista (si B se muestreó a la mitad, parece más distinto). La descomposición de Baselga es aditiva por construcción (βSIM + βSNE = βSOR exactamente), así que si los tres números no cuadran hay un error de cálculo. Ninguno de estos índices distingue parentesco, rareza ni valor de conservación: perder 10 especies de pastos y perder 10 polinizadores dan el mismo número. βSNE = 0 no significa ausencia de anidamiento, significa ausencia de anidamiento <em>perfecto</em> (Baselga 2010 lo discute explícitamente).", fuente: { t: "Baselga (2010) Partitioning the turnover and nestedness components of beta diversity, Global Ecology and Biogeography 19:134-143", u: "https://doi.org/10.1111/j.1466-8238.2009.00490.x" } },
+      { mod: "BI3 · Chao1, cobertura y rarefacción", f: ["Chao1 corregido por sesgo = S + f₁(f₁−1) / [2(f₂+1)]", "Chao1 clásico = S + f₁²/(2f₂), definido solo si f₂ > 0", "Cobertura de la muestra Ĉ = 1 − f₁/N (Chao & Jost 2012)", "Rarefacción de Hurlbert, valor esperado exacto: E[S_n] = Σ_i [1 − C(N−n_i, n)/C(N, n)]", "El portal calcula E[S_n] agrupando especies por clase de abundancia y acumulando el producto término a término"], autor: "Chao (1984) con la forma corregida por sesgo de Chao & Lee (1992); Chao & Jost (2012) para la cobertura; Hurlbert (1971) y Cole (1949) para la curva de rarefacción", validez: "Chao1 es un <strong>límite inferior</strong>: dice «al menos faltan estas especies», nunca «esta es la riqueza». Asume que las especies no vistas se parecen a la cola que describen f₁ y f₂; con muestreo parcheado f₁ se dispara y el estimador deja de servir. Requiere <strong>conteos enteros de individuos</strong>: con coberturas o frecuencias la teoría de especies no vistas no aplica. Rarefacción = interpolación dentro de tu N; el portal <strong>no extrapol</strong>a (el modelo asintótico de Chao et al. 2014/iNEXT — Ecological Monographs 84:45-67, https://doi.org/10.1890/13-0133.1 — pide ajuste sobre la matriz completa y no se implementa acá). No se calculan intervalos de confianza: esos piden bootstrap. Comparar predios solo es válido rarefactuando los dos al mismo n, y cada tipo de unidad (tallos, cantos, trampas) tiene su propia curva.", fuente: { t: "Chao & Jost (2012) Coverage-based rarefaction and extrapolation, Ecology 93:2533-2547", u: "https://doi.org/10.1890/11-1952.1" } },
+      { mod: "BI4 · Métricas de paisaje y conectancia", f: ["SHDI = −Σ pᵢ ln pᵢ con pᵢ = proporción de área de la clase i · SHDI_max = ln m · EQUIT = SHDI/SHDI_max", "Compacidad isoperimétrica C = 4πA/P² (A en m²) · SHAPE = 1/√C", "Densidad de parches PD = n/A · % del parche mayor sobre la suma de fragmentos", "PC = Σ_i Σ_j a_i·a_j·p*_ij / A_L² con p_ii = 1; núcleo gaussiano p = exp(−d²/L²) o exponencial p = exp(−d/(2L))", "dPC_i = 100·(PC − PC_(−i))/PC, al eliminar el nodo i con sus enlaces", "Relación especie-área S = c·A^z → S₂ = S₁·(A₂/A₁)^z"], autor: "McGarigal & Marks (1995) FRAGSTATS; Hadley & Real (1971) / Gibbs (1967) para la compacidad; Pascual-Hortal & Saura (2006) para PC y su contribución nodal; Saura & Pascual-Hortal (2007, Landscape and Urban Planning 83:91-103) para el índice de disponibilidad de hábitat; Arrhenius (1921) y Rosenzweig (1995) para la curva especie-área", validez: "Todo depende de <strong>la tipología y la escala</strong>: cambia la agrupación de clases o el tamaño de celda y se mueve SHDI; el perímetro de un fragmento depende de la resolución con que lo digitalizaste (efecto coastline), así que hay que declarar escala y área mínima mapeable. PC supone que todos los parches son iguales para la especie y que la probabilidad de cruce decae solo con la distancia en línea recta: sin matriz, sin barreras y sin resistencia del terreno, y es un índice <strong>especie-específico</strong> — cambiar L cambia el orden de los fragmentos. La relación especie-área <strong>no es una ley</strong>: da un orden de magnitud asumiendo equilibrio; histórica y documentadamente ha sobrestimado extinciones inmediatas (deuda de especies) y las ha subestimado cuando la pérdida se concentra en hábitats ricos. La cifra sale con decimales a propósito: es un valor esperado, no un conteo.", fuente: { t: "Pascual-Hortal & Saura (2006) Landscape Ecology 21:959-967", u: "https://doi.org/10.1007/s10980-006-0013-z" } },
       { mod: "A12 · Clave de orden de suelos", f: ["Decisión guiada: material parental + epipedón + régimen de humedad + endopedón → orden probable", "Material vítreo/alofánico manda sobre cualquier epipedón → Andisol; hístico domina sobre el resto"], autor: "Soil Survey Staff (2022) Keys to Soil Taxonomy, 13.ª ed.; terminología IGAC", validez: "Es una CLAVE ORIENTATIVA de campo. Los órdenes reales exigen datos de laboratorio (retención de P ≥85% para carácter ándico, CIC y saturación de bases para árgilico, coeficiente lineal de extensibilidad para vértico). Nunca uses este resultado en un informe legal sin perfil descrito y análisis.", fuente: { t: "USDA-NRCS Soil Taxonomy", u: "https://www.nrcs.usda.gov/conservation/resources/soil-survey" } },
       { mod: "Módulo 4 · Órdenes por departamento", f: ["Filtro por departamento sobre un mapa referencial de presencia de órdenes", "Se marca el orden dominante y se listan los ausentes"], autor: "IGAC (2012) Estudio General de Suelos de Colombia y cartas de reconocimiento de suelos por departamento", validez: "Es un catálogo de PRESENCIA, no de área ni de localización: decir que un departamento tiene 8 órdenes no dice cuánto ocupan ni dónde. El orden dominante es aproximado y puede cambiar entre cuencas vecinas. Para decidir uso o compra de tierra necesitas la carta de suelos a escala 1:100.000 o menor, o un levantamiento propio.", fuente: { t: "IGAC Suelos", u: "https://www.igac.gov.co" } },
       { mod: "A13 · Plan de calicatas y sondeos", f: ["Densidad de observaciones: 1 cada 10–50 ha en terreno homogéneo, 1 cada 2–5 ha en paisaje complejo", "Profundidad mínima: 1,20 m o hasta la limitante (roca, freático, carbonatos)"], autor: "Guía IGAC de levantamiento de suelos (densidades por escala) y USDA-NRCS Soil Survey Manual", validez: "La densidad calculada supone variabilidad moderada. En abanicos aluviales, volcanismos recientes o rellenos antrópicos la variabilidad es alta: duplica las observaciones o apoya con geofísica.", fuente: { t: "IGAC Levantamientos", u: "https://www.igac.gov.co" } },
@@ -4583,6 +5072,11 @@
       const mods = enArea.filter(m => m.num !== "★");
       const numTrans = enArea.length - mods.length;
       const hn = document.getElementById("hub-total-n"), ht = document.getElementById("hub-total-txt");
+      // El caparazón del directorio se llama como el área en la que estás
+      const aria = window.Area ? Area.info(Area.clave) : null;
+      const tit = document.getElementById("hub-titulo"), sub = document.getElementById("hub-sub");
+      if (tit && aria) tit.innerText = aria.k === "todas" ? "Directorio Agrológico Integral de Suelos" : "Panel de " + aria.nom;
+      if (sub && aria) { sub.innerText = aria.sub || ""; sub.style.cssText = "color:" + aria.hex; }
       if (hn) hn.innerText = mods.length;
       if (ht) ht.innerText = (window.Area && Area.clave !== "todas")
         ? `${mods.length} de ${total} · área ${Area.info(Area.clave).nom} + ${numTrans} transversales`
@@ -4591,7 +5085,7 @@
 
       enArea.forEach(m => {
         const card = document.createElement("div");
-        card.className = "bg-slate-950 border border-slate-800 hover:border-emerald-500/50 rounded-xl p-4 flex flex-col justify-between transition group cursor-pointer shadow-lg";
+        card.className = "hub-card bg-slate-950 border border-slate-800 hover:border-emerald-500/50 rounded-xl p-4 flex flex-col justify-between transition group cursor-pointer shadow-lg";
         card.onclick = () => cambiarPestana(m.id);
         // En la vista sin filtro se muestran las áreas que el módulo toca de verdad
         const icos = (window.Area && Area.clave === "todas" && m.num !== "★" && Area.areasDe(m.id).length > 1)
@@ -4601,7 +5095,7 @@
           <div>
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">${m.num} • ${m.bloq}${icos}</span>
-              <span class="text-[10px] text-emerald-400 font-semibold group-hover:translate-x-1 transition">Entrar →</span>
+              <span class="hub-entra text-[10px] text-emerald-400 font-semibold group-hover:translate-x-1 transition">Entrar →</span>
             </div>
             <h3 class="font-extrabold text-sm text-white group-hover:text-emerald-300 transition">${m.tit}</h3>
             <p class="text-xs text-slate-400 mt-1 leading-relaxed">${m.desc}</p>
@@ -6729,9 +7223,14 @@
         total_co2eq_t: "Total GEI (t CO₂eq/año)", gaswp: "Tabla de GWP usada", co2_total_t: "CO₂ (t/año)", ch4_total_kg: "CH₄ (kg/año)", n2o_total_kg: "N₂O (kg/año)", co2eq_ha: "Intensidad (t CO₂eq/ha·año)", fuente_dominante: "Fuente que manda",
         fuente_1_nombre: "Fuente 1", fuente_1_co2eq_t: "CO₂eq fuente 1 (t/año)", fuente_2_nombre: "Fuente 2", fuente_2_co2eq_t: "CO₂eq fuente 2 (t/año)", fuente_3_nombre: "Fuente 3", fuente_3_co2eq_t: "CO₂eq fuente 3 (t/año)",
         fuente_4_nombre: "Fuente 4", fuente_4_co2eq_t: "CO₂eq fuente 4 (t/año)", fuente_5_nombre: "Fuente 5", fuente_5_co2eq_t: "CO₂eq fuente 5 (t/año)", fuente_6_nombre: "Fuente 6", fuente_6_co2eq_t: "CO₂eq fuente 6 (t/año)",
+        riqueza_s: "Riqueza (S)", abundancia_n: "Abundancia (N)", shannon_h: "Shannon H′", base_h: "Base del logaritmo", pielou_j: "Equitabilidad J′", simpson_lambda: "Simpson λ", simpson_inverso: "Simpson inverso 1/λ", margalef: "Margalef", mcintosh: "McIntosh", berger_parker: "Berger-Parker d", especie_dominante: "Especie dominante", pct_dominancia: "% de la dominante",
+        jaccard: "Jaccard", sorensen: "Sørensen", bray_curtis: "Bray-Curtis", beta_whittaker: "β de Whittaker", beta_sim: "βSIM recambio", beta_sne: "βSNE pérdida", especies_compartidas: "Especies compartidas", inventarios_comparados: "Inventarios comparados",
+        chao1: "Chao1 (límite inferior)", f1_singulares: "f₁ singulares", f2_duplicadas: "f₂ duplicadas", cobertura_muestra: "Cobertura Ĉ (%)", riqueza_atrapada: "% de riqueza atrapada", rarefaccion_sn: "E[S_n] rarefactuada", n_rarefaccion: "n de la submuestra",
+        shdi: "SHDI del paisaje", equit_paisaje: "EQUIT del paisaje", clases_paisaje: "Clases de cobertura", pct_natural: "% de cobertura natural", compacidad_media: "Compacidad media", shape_medio: "SHAPE medio", pc_conectancia: "PC (conectancia)", dpc_mayor: "dPC del fragmento clave", fragmento_clave: "Fragmento que sostiene el flujo", z_especie_area: "z usada", s_esperada: "S₂ esperada", area_remanente_ha: "Área de hábitat después (ha)",
+        area_paisaje_ha: "Área total del paisaje (ha)", clase_dominante: "Clase dominante", pct_clase_dominante: "% de la clase dominante", fragmentos: "Fragmentos digitados", parche_mayor_ha: "Parche mayor (ha)", densidad_parches_ha: "Densidad de parches (PD, /ha)", pc_alog_pct: "PC en ALOG (%)", nucleo_usado: "Núcleo de conectancia", L_dispersion_m: "Distancia de dispersión L (m)", especie_foco: "Especie o grupo foco", s_actual: "Riqueza actual (S₁)", area_actual_ha: "Área de hábitat actual (A₁, ha)", pct_cambio: "Cambio de hábitat (%)", cambio_especies: "Cambio esperado en especies (S₂ − S₁)",
         puntaje: "Autoevaluación", mejor_puntaje: "Mejor puntaje", total: "Preguntas", casos_completados: "Casos completados", pr_marcas: "Pasos marcados", caso_1: "Caso 1", caso_2: "Caso 2", caso_3: "Caso 3", caso_4: "Caso 4", caso_5: "Caso 5 · Aire"
       },
-      titulos: { ubic: "📍 Identificación del predio", textura: "🔺 Clase textural", fertilidad: "🧪 Fertilidad IGAC", a12: "🪨 Orden de suelo (A12)", ordenes: "🌍 Órdenes por departamento (4)", b14: "🌱 Capacidad de uso (B14)", b16: "🏞️ Oferta edáfica (B16)", b20: "🧩 Limitantes y prácticas (B20)", b25: "🌳 Factor C de cobertura (B25)", b19: "🌊 Erosión RUSLE (B19)", b23: "🌿 Restauración prioritaria (B23)", c29: "💧 Balance hídrico (C29)", c30: "🌾 Fertilización y costos (C30)", c31: "🛢️ DRASTIC (C31)", c32: "🚜 Traficabilidad (C32)", c33: "💰 PSE (C33)", w1: "🧪 Estabilidad del agua W1", w2: "🧯 Cloración (W2)", w3: "🚿 Agua de riego (W3)", w4: "🐟 Oxígeno disuelto (W4)", ar1: "🌫️ Calidad del aire (AR1)", ar2: "🏭 Dispersión de la pluma (AR2)", ar3: "🔥 Emisiones GEI (AR3)", b27: "🗺️ Flujo SIG (B27)", practica: "🎓 Práctica y autoevaluación" },
+      titulos: { ubic: "📍 Identificación del predio", textura: "🔺 Clase textural", fertilidad: "🧪 Fertilidad IGAC", a12: "🪨 Orden de suelo (A12)", ordenes: "🌍 Órdenes por departamento (4)", b14: "🌱 Capacidad de uso (B14)", b16: "🏞️ Oferta edáfica (B16)", b20: "🧩 Limitantes y prácticas (B20)", b25: "🌳 Factor C de cobertura (B25)", b19: "🌊 Erosión RUSLE (B19)", b23: "🌿 Restauración prioritaria (B23)", c29: "💧 Balance hídrico (C29)", c30: "🌾 Fertilización y costos (C30)", c31: "🛢️ DRASTIC (C31)", c32: "🚜 Traficabilidad (C32)", c33: "💰 PSE (C33)", w1: "🧪 Estabilidad del agua W1", w2: "🧯 Cloración (W2)", w3: "🚿 Agua de riego (W3)", w4: "🐟 Oxígeno disuelto (W4)", ar1: "🌫️ Calidad del aire (AR1)", ar2: "🏭 Dispersión de la pluma (AR2)", ar3: "🔥 Emisiones GEI (AR3)", bi1: "🦋 Diversidad alfa (BI1)", bi2: "🔀 Similaridad (BI2)", bi3: "🔎 Esfuerzo de muestreo (BI3)", bi4: "🗺️ Paisaje y conectancia (BI4)", b27: "🗺️ Flujo SIG (B27)", practica: "🎓 Práctica y autoevaluación" },
       _esc(v) { return String(v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); },
       _nuevoId() { return "f" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); },
       _crear(s, id, nombre, datos) {
@@ -6951,7 +7450,7 @@
         const cont = document.getElementById("ficha-informe");
         if (!cont) return;
         if (!secs.length) { cont.innerHTML = '<p class="inf-note">La ficha está vacía: calcula en los módulos y pulsa "Traer lo último calculado".</p>'; cont.classList.remove("hidden"); return; }
-        const cab = `INFORME TÉCNICO PRELIMINAR DE SUELO, AGUA Y AIRE — ${this.nombre()}<br><span class="inf-note">Generado ${new Date().toLocaleString("es-CO")} · SUELOS_PARA_TODOS · Referencias: IGAC (2012), IDEAM/SICLICA-CAR, Foster &amp; Hathaway, Williams (1990), McCool (1987), FAO 56, Langelier (1936) / APHA 23.ª ed., Decreto 1076/2015 y Res. 2254/2017, US EPA (CT, AQI, ISC3), Briggs (1973) / Pasquill-Gifford-Turner, IPCC 2006 Tier 1</span>`;
+        const cab = `INFORME TÉCNICO PRELIMINAR DE SUELO, AGUA, AIRE Y BIODIVERSIDAD — ${this.nombre()}<br><span class="inf-note">Generado ${new Date().toLocaleString("es-CO")} · SUELOS_PARA_TODOS · Referencias: IGAC (2012), IDEAM/SICLICA-CAR, Foster &amp; Hathaway, Williams (1990), McCool (1987), FAO 56, Langelier (1936) / APHA 23.ª ed., Decreto 1076/2015 y Res. 2254/2017, US EPA (CT, AQI, ISC3), Briggs (1973) / Pasquill-Gifford-Turner, IPCC 2006 Tier 1, Shannon (1948) / Magurran &amp; McGill (2019), Baselga (2010), Chao &amp; Jost (2012), Hurlbert (1971), McGarigal &amp; Marks (1995), Saura &amp; Pascual-Hortal (2007), Arrhenius (1921) / Preston (1962)</span>`;
         cont.innerHTML = `<h3 class="inf-tit" style="font-size:13px">${cab}</h3>` + secs.map(s =>
           `<h3>${s.tit}</h3><table>${s.rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("")}</table>`).join("") +
           '<p class="inf-note">Documento de apoyo generado por el usuario; no sustituye un levantamiento agrológico oficial IGAC ni un estudio firmado por profesional competente.</p>';
@@ -7058,6 +7557,30 @@
           ["CO₂ / CH₄ / N₂O brutos (AR3)", f => f.datos.ar3 ? `${f.datos.ar3.co2_total_t ?? "—"} t · ${f.datos.ar3.ch4_total_kg ?? "—"} kg · ${f.datos.ar3.n2o_total_kg ?? "—"} kg` : null],
           ["Fuente que manda (AR3)", f => f.datos.ar3?.fuente_dominante],
           ["Desglose por fuente (AR3)", f => f.datos.ar3 ? [1, 2, 3, 4, 5, 6].map(i => f.datos.ar3["fuente_" + i + "_nombre"] ? `${f.datos.ar3["fuente_" + i + "_nombre"]}: ${f.datos.ar3["fuente_" + i + "_co2eq_t"]} t` : null).filter(Boolean).join(" · ") : null]
+        ] },
+        { g: "🦋 Biodiversidad (BI1-BI4)", filas: [
+          ["Riqueza y abundancia (BI1)", f => f.datos.bi1 ? `S = ${f.datos.bi1.riqueza_s ?? "—"} · N = ${f.datos.bi1.abundancia_n ?? "—"}` : null],
+          ["Shannon H′ y base (BI1)", f => f.datos.bi1 ? `${f.datos.bi1.shannon_h ?? "—"} (${f.datos.bi1.base_h ?? "base sin declarar"})` : null],
+          ["Equitabilidad J′ (BI1)", f => f.datos.bi1?.pielou_j],
+          ["Simpson λ / 1/λ (BI1)", f => f.datos.bi1 ? `${f.datos.bi1.simpson_lambda ?? "—"} / ${f.datos.bi1.simpson_inverso ?? "—"}` : null],
+          ["Margalef / McIntosh (BI1)", f => f.datos.bi1 ? `${f.datos.bi1.margalef ?? "—"} / ${f.datos.bi1.mcintosh ?? "—"}` : null],
+          ["Especie dominante (BI1)", f => f.datos.bi1 ? `${f.datos.bi1.especie_dominante ?? "—"} · ${f.datos.bi1.pct_dominancia ?? "—"} % de N` : null],
+          ["Inventarios comparados (BI2)", f => f.datos.bi2?.inventarios_comparados],
+          ["Jaccard / Sørensen (BI2)", f => f.datos.bi2 ? `${f.datos.bi2.jaccard ?? "—"} / ${f.datos.bi2.sorensen ?? "—"}` : null],
+          ["Bray-Curtis (BI2)", f => f.datos.bi2?.bray_curtis],
+          ["Recambio βSIM / pérdida βSNE (BI2)", f => f.datos.bi2 ? `${f.datos.bi2.beta_sim ?? "—"} / ${f.datos.bi2.beta_sne ?? "—"}` : null],
+          ["β de Whittaker (BI2)", f => f.datos.bi2?.beta_whittaker],
+          ["Compartidas (BI2)", f => f.datos.bi2?.especies_compartidas],
+          ["Chao1 y brecha (BI3)", f => f.datos.bi3 ? `${f.datos.bi3.chao1 ?? "—"} especies (Ĉ = ${f.datos.bi3.cobertura_muestra ?? "—"} %)` : null],
+          ["f₁ / f₂ de la muestra (BI3)", f => f.datos.bi3 ? `${f.datos.bi3.f1_singulares ?? "—"} / ${f.datos.bi3.f2_duplicadas ?? "—"}` : null],
+          ["Riqueza atrapada (BI3)", f => f.datos.bi3?.riqueza_atrapada],
+          ["Rarefacción E[S_n] (BI3)", f => f.datos.bi3 ? `${f.datos.bi3.rarefaccion_sn ?? "—"} a n = ${f.datos.bi3.n_rarefaccion ?? "—"}` : null],
+          ["SHDI / EQUIT del paisaje (BI4)", f => f.datos.bi4 ? `${f.datos.bi4.shdi ?? "—"} / ${f.datos.bi4.equit_paisaje ?? "—"}` : null],
+          ["Clases y % natural (BI4)", f => f.datos.bi4 ? `${f.datos.bi4.clases_paisaje ?? "—"} clases · ${f.datos.bi4.pct_natural ?? "—"} % natural` : null],
+          ["Compacidad / SHAPE (BI4)", f => f.datos.bi4 ? `${f.datos.bi4.compacidad_media ?? "—"} / ${f.datos.bi4.shape_medio ?? "—"}` : null],
+          ["Conectancia PC (BI4)", f => f.datos.bi4?.pc_conectancia],
+          ["Fragmento que sostiene el flujo (BI4)", f => f.datos.bi4 ? `${f.datos.bi4.fragmento_clave ?? "—"} · dPC ${f.datos.bi4.dpc_mayor ?? "—"} %` : null],
+          ["Especie-área (BI4)", f => f.datos.bi4 ? `z = ${f.datos.bi4.z_especie_area ?? "—"} → S₂ = ${f.datos.bi4.s_esperada ?? "—"} en ${f.datos.bi4.area_remanente_ha ?? "—"} ha` : null]
         ] },
         { g: "🌿 Restauración, PSE y autoevaluación", filas: [
           ["Tipo de sitio (B23)", f => f.datos.b23?.tipo],
@@ -9210,6 +9733,837 @@
     }
 
     // ==========================================================================
+    // BLOQUE BI · BIODIVERSIDAD
+    // ==========================================================================
+    // Misma caja de herramientas numérica que W y AR; el color de título es el
+    // rosa del área Biodiversidad en AREAS (#f472b6).
+    const BI = Object.assign({}, W, {
+      tit(txt) { return '<h4 class="text-[11px] font-black uppercase tracking-wider text-pink-400 mt-3 mb-1">' + txt + "</h4>"; },
+      txt(id) { const el = document.getElementById(id); return el ? String(el.value == null ? "" : el.value) : ""; }
+    });
+
+    BI._esc2 = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+    // Separadores admitidos, en orden de prioridad: tabulador (Excel), punto y
+    // coma, coma+espacio, dos espacios, y al final "nombre 14" con un solo espacio.
+    // La coma de decimales («8,4») NO se trata como separador.
+    function biCampos(linea) {
+      const t = String(linea == null ? "" : linea).trim();
+      const divide = re => t.split(re).map(x => String(x).trim()).filter(x => x.length);
+      let c = divide(/\t+/);
+      if (c.length < 2) c = divide(/;+/);
+      if (c.length < 2) c = divide(/,\s+/);
+      if (c.length < 2) c = divide(/\s{2,}/);
+      if (c.length < 2) {
+        const m = t.match(/^(.+?)\s+(-?\d+(?:[.,]\d+)?)\s*$/);
+        if (m) c = [m[1], m[2]];
+      }
+      return c;
+    }
+    // Número con coma o punto decimal. "1,234" se lee como mil doscientos
+    // treinta y cuatro (coma de miles); "8,4" como ocho con cuatro.
+    function biNum(s) {
+      if (s == null) return null;
+      const t = String(s).trim().replace(/\s+/g, "");
+      if (!/^[+-]?\d[\d.,]*$/.test(t)) return null;
+      const comas = (t.match(/,/g) || []).length, puntos = (t.match(/\./g) || []).length;
+      if (comas && puntos) return null;
+      if (comas > 1 || puntos > 1) return null;
+      if (comas === 1) {
+        const partes = t.split(",");
+        if (/^\d{3}$/.test(partes[1]) && /^\d{1,3}$/.test(partes[0])) return parseFloat(partes[0] + partes[1]);
+        return parseFloat(partes[0] + "." + partes[1]);
+      }
+      return parseFloat(t);
+    }
+    // Clave comparable: sin tildes, sin mayúsculas, espacios colapsados.
+    function biClave(nombre) {
+      return String(nombre).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+        .replace(/[^a-z0-9]+/g, " ").trim();
+    }
+    // Lee una lista "especie [+ abundancia]". Devuelve
+    // { filas:[{n,v}], faltan:[nombres], avisos:[], error:"" }
+    // v = null cuando la línea no trae número (sirve para presencia/ausencia).
+    function biLeer(raw, exigeAbundancia) {
+      const filas = [], avisos = [], faltan = [], ceros = [], vistos = {};
+      const lineas = String(raw || "").split(/\r?\n/).filter(l => l.trim().length);
+      if (!lineas.length) return { filas: [], avisos: [], faltan: [], ceros: [], error: "vacio" };
+      lineas.forEach((ln, i) => {
+        const c = biCampos(ln);
+        if (!c.length) return;
+        let nombre = c[0], v = null;
+        if (c.length >= 2) {
+          v = biNum(c[c.length - 1]);
+          if (v != null) nombre = c.slice(0, c.length - 1).join(" ");
+          else { avisos.push("Línea " + (i + 1) + " («" + BI._esc2(ln.trim().slice(0, 40)) + "»): el último campo no es un número legible. Si el nombre lleva comas, separa las columnas con «;» o pega desde Excel con tabulador."); v = null; }
+        }
+        if (c.length > 2) avisos.push("Línea " + (i + 1) + ": tiene más de dos campos. Tomé el último como abundancia y el resto como nombre.");
+        // Un 0 digitado no es un hueco: van a listas distintas para no reprocharle "sin conteo" a quien sí puso uno.
+        let cero = false;
+        if (v != null && !(v > 0)) { avisos.push("Línea " + (i + 1) + ": la abundancia " + BI.f(v, 2) + " no es un conteo (tiene que ser mayor que cero). Ese registro quedó fuera."); v = null; cero = true; }
+        if (v != null && !Number.isInteger(v)) avisos.push("Línea " + (i + 1) + ": abundancia " + BI.f(v, 3) + " no es entera. Si son individuos revisa el conteo; si son coberturas o frecuencias, mantén la misma unidad en toda la lista.");
+        const clave = biClave(nombre);
+        if (!clave) { avisos.push("Línea " + (i + 1) + ": sin nombre legible de especie, se ignoró."); return; }
+        if (v == null && exigeAbundancia) { (cero ? ceros : faltan).push(nombre); return; }
+        if (Object.prototype.hasOwnProperty.call(vistos, clave)) {
+          const prev = vistos[clave];
+          if (v != null && prev.v != null) { prev.v += v; avisos.push("«" + nombre + "» está repetida: sumé sus abundancias (quedó " + BI.f(prev.v, 2) + ") para no contar dos veces la misma especie."); }
+          else avisos.push("«" + nombre + "» está repetida: se conservó el primer registro.");
+          return;
+        }
+        const reg = { n: nombre, v: v };
+        vistos[clave] = reg; filas.push(reg);
+      });
+      // Si no quedó ni un registro, la causa puede ser de nombres o de conteos: son
+      // dos avisos distintos y decir el equivocado despista a quien digita.
+      if (!filas.length) return { filas: [], avisos: avisos, faltan: faltan, ceros: ceros, error: (faltan.length || ceros.length ? "sinabundancia" : "sinombrables") };
+      return { filas: filas, avisos: avisos, faltan: faltan, ceros: ceros, error: "" };
+    }
+    // Lee líneas "nombre; v1; v2; …" con exactamente n columnas numéricas (BI4).
+    function biLeerCols(raw, n) {
+      const filas = [], errores = [];
+      const lineas = String(raw || "").split(/\r?\n/).filter(l => l.trim().length);
+      if (!lineas.length) return { filas: [], errores: errores, error: "vacio" };
+      lineas.forEach((ln, i) => {
+        const c = biCampos(ln);
+        if (c.length !== n + 1) { errores.push("Línea " + (i + 1) + " («" + BI._esc2(ln.trim().slice(0, 40)) + "»): se esperan un nombre y " + n + " números separados por «;». Llegaron " + Math.max(0, c.length - 1) + "."); return; }
+        const vals = [];
+        for (let k = 1; k <= n; k++) {
+          const v = biNum(c[k]);
+          if (v == null) { errores.push("Línea " + (i + 1) + ": el campo " + k + " («" + BI._esc2(c[k]) + "») no es un número. Usa punto o coma decimal, no miles con punto."); return; }
+          vals.push(v);
+        }
+        filas.push({ n: c[0], vals: vals });
+      });
+      if (!filas.length) return { filas: [], errores: errores, error: errores.length ? "malo" : "vacio" };
+      return { filas: filas, errores: errores, error: "" };
+    }
+    // Las primeras n columnas de BI4 son magnitudes físicas (área en ha, perímetro
+    // en m): un cero o un negativo es error de digitación, no un dato. Esas filas se
+    // sacan y queda constancia en `errores`, que el propio bloque ya imprime.
+    // Las coordenadas sí pueden ser negativas (CRS proyectado), así que van fuera.
+    function biFiltrarPos(r, n) {
+      const buenos = [];
+      (r.filas || []).forEach(f => {
+        if (f.vals.slice(0, n).some(v => !(v > 0))) {
+          r.errores.push("«" + BI._esc2(f.n) + "»: leí " + f.vals.join(" · ") + ". Un área o un perímetro en cero o negativo no es un fragmento: revisa esa fila (coma mal pegada, o una columna de sobra).");
+        } else buenos.push(f);
+      });
+      r.filas = buenos;
+      if (!buenos.length) r.error = r.errores.length ? "malo" : "vacio";
+    }
+
+    // ==========================================================================
+    // BLOQUE BI · BIODIVERSIDAD
+    //   BI1 diversidad alfa · BI2 beta · BI3 esfuerzo de muestreo · BI4 paisaje
+    // ==========================================================================
+    // Las cuatro calculadoras comparten el mismo lector de listas, así que el
+    // pegado desde Excel (tabulador) funciona igual en todas. Ninguna trae datos
+    // de ejemplo: sin lista digitada no se calcula nada.
+    const BI_BASES = {
+      ln: { b: Math.E, log: Math.log, nom: "ln (base e)", uni: "nats" },
+      log2: { b: 2, log: x => Math.log2(x), nom: "log₂ (base 2)", uni: "bits" },
+      log10: { b: 10, log: x => Math.log10(x), nom: "log₁₀", uni: "ban" }
+    };
+
+    // Mensaje único cuando la lista no sirve, para no repetirlo en las cuatro.
+    function biFaltaBi(r, que) {
+      if (r.error === "vacio")
+        return BI.caja("Todavía no hay lista de " + que + ": pega una especie por línea con su abundancia (tal como sale de Excel). El portal <strong>no trae datos de ejemplo</strong>, y no es capricho — un índice copiado de un manual y presentado como propio es justo el error que estos módulos sirven para atrapar.", "ambar");
+      if (r.error === "sinombrables")
+        return BI.caja("Ninguna línea tenía un nombre de especie legible. El formato es <em>nombre; abundancia</em> (o nombre y número separados por tabulador).", "rojo");
+      if (r.error === "sinabundancia") {
+        const sin = r.faltan || [], ce = r.ceros || [];
+        const llama = a => a.slice(0, 8).map(x => BI._esc2(x)).join(", ") + (a.length > 8 ? ", …" : "");
+        const partes = [];
+        if (sin.length) partes.push(BI.n(sin.length) + " sin número (" + llama(sin) + ")");
+        if (ce.length) partes.push(BI.n(ce.length) + " con 0 individuos (" + llama(ce) + ")");
+        return BI.caja("Los nombres se leyeron bien, pero <strong>ninguna línea traía un conteo usable</strong>" + (partes.length ? ": " + partes.join("; ") : "") +
+          ". Sin conteo mayor que cero no hay H′, J′ ni Simpson que calcular: la fórmula necesita pᵢ = nᵢ/N. Escribe «nombre; individuos» en cada línea; si de verdad solo tienes presencia/ausencia, eso se trabaja en <strong>BI2</strong> (Jaccard y Sørensen) o con <strong>β de Whittaker</strong>, no aquí.", "rojo");
+      }
+      const p = BI.caja("Hay problemas con las líneas leídas: revisa los avisos abajo.", "rojo");
+      const e = (r.errores || []).concat(r.avisos || []);
+      return p + (e.length ? '<ul class="mt-1 space-y-0.5 text-[10px] text-amber-200/80">' + e.map(x => "<li>· " + x + "</li>").join("") + "</ul>" : "");
+    }
+
+    // Avisos del lector (líneas sin abundancia, repetidas, unidades raras).
+    function biAvisos(r) {
+      let s = "";
+      if (r.faltan && r.faltan.length)
+        s += BI.caja("Estas especies llegaron <strong>sin número</strong> y por eso quedaron fuera del cálculo: " + r.faltan.slice(0, 12).map(BI._esc2).join(", ") + (r.faltan.length > 12 ? "… y " + (r.faltan.length - 12) + " más" : "") + ". Si de verdad no tienes conteo de ellas, úsalas solo en BI2 (presencia/ausencia).", "ambar");
+      if (r.avisos && r.avisos.length)
+        s += '<div class="mt-2 text-[10px] text-slate-400 leading-relaxed">' + r.avisos.map(x => "· " + x).join("<br>") + "</div>";
+      return s;
+    }
+
+    function biTitulos(t) { return BI.tit(t); }
+
+    // Celdas de la tabla de resultados, con el valor destacado.
+    function biFilaClave(k, val, uni, tip, cls) {
+      return '<tr class="border-b border-slate-800 align-top"><td class="text-slate-400 py-1.5 pr-2">' + k +
+        '<p class="text-[9px] text-slate-500 leading-snug mt-0.5">' + tip + "</p></td>" +
+        '<td class="text-right py-1.5 font-black text-[13px] ' + (cls || "text-white") + ' whitespace-nowrap">' + val +
+        (uni ? '<span class="text-[9px] font-normal text-slate-500 ml-1">' + uni + "</span>" : "") +
+        "</td></tr>";
+    }
+
+    // ==========================================================================
+    // BI1 · Diversidad alfa (Shannon, Simpson, Pielou, Margalef, McIntosh,
+    //       Berger-Parker y número efectivo de especies)
+    // ==========================================================================
+    function biAlfa() {
+      const out = document.getElementById("bi1-res");
+      if (!out) return;
+      const r = biLeer(BI.txt("bi1-txt"), true);
+      if (r.error) { out.innerHTML = biFaltaBi(r, "especies"); return; }
+      const bk = BI.sel("bi1-base");
+      if (!BI_BASES[bk]) {
+        out.innerHTML = BI.caja("Falta elegir la <strong>base del logaritmo</strong>. No es un trámite de formulario: el mismo muestreo da la mitad de H′ en log₂ que en ln, y en un informe se comparan números de la misma base. La equitabilidad J′ y el número efectivo de especies no cambian (eso te lo muestra el propio resultado).", "ambar") + biAvisos(r);
+        return;
+      }
+      const bs = BI_BASES[bk], log = bs.log;
+      const filas = r.filas;
+      const S = filas.length;
+      const N = filas.reduce((s, f) => s + f.v, 0);
+      if (!(N > 0)) { out.innerHTML = BI.caja("La suma de abundancias da cero: sin individuos no hay comunidad que medir.", "rojo") + biAvisos(r); return; }
+
+      const ps = filas.map(f => { const p = f.v / N; return { n: f.n, v: f.v, p: p, ap: -p * log(p) }; });
+      const H = ps.reduce((s, x) => s + x.ap, 0);
+      const Hmax = log(S);
+      const J = Hmax > 0 ? H / Hmax : null;
+      const lam = ps.reduce((s, x) => s + x.p * x.p, 0);
+      const efectShan = Math.pow(bs.b, H);
+      // Con una sola especie Margalef vale 0 (S − 1 = 0), no está indefinido: solo
+      // hay que negarlo cuando ln N = 0, que sí es división entre cero.
+      const margalef = N > 1 ? (S - 1) / Math.log(N) : null;
+      const U = Math.sqrt(ps.reduce((s, x) => s + x.v * x.v, 0));
+      const mcintosh = N > 1 ? (N - U) / (N - Math.sqrt(N)) : null;
+      const maxv = ps.reduce((m, x) => Math.max(m, x.v), 0);
+      const bp = maxv / N;
+      const singles = filas.filter(f => Math.round(f.v) === 1).length;
+      const raras = ps.filter(x => x.p < 0.01).length;
+      const dom = ps.slice().sort((a, b) => b.ap - a.ap);
+      const top = dom.slice(0, 8);
+      const otras = dom.length - Math.min(dom.length, 8);
+
+      function bandaJ(j) {
+        if (j == null) return ["no aplicable", "ambar", "Una comunidad de una sola especie no tiene equitabilidad: H′máx = log 1 = 0 y J′ quedaría dividida entre cero. Reporta S y la dominancia, no J′."];
+        if (j < 0.40) return ["Muy desigualmente repartida", "ambar", "Hay una o dos especies que se quedan con casi todos los individuos. Típico de monocultivo, potrero degradado o muestreo con un solo punto dominante."];
+        if (j < 0.65) return ["Desigualmente repartida", "ambar", "La comunidad está dominada, pero todavía hay un grupo de especies con peso real."];
+        if (j < 0.85) return ["Buena equitabilidad", "verde", "Reparto razonablemente balanceado: es el rango normal de un sistema diversificado bien muestreado."];
+        return ["Muy equitativa", "verde", "Casi todas las especies aportan abundancias parecidas. Revisa que no sea un artefacto del método (parcelas del mismo tamaño sembradas igual)."];
+      }
+      const bj = bandaJ(J);
+
+      let h = "";
+      h += BI.tit("De dónde sale el número");
+      h += BI.tabla([
+        biFilaClave("Riqueza observada (S)", BI.n(S), "especies", "Cantidad de especies distintas en tu lista, con los nombres normalizados (sin tildes ni mayúsculas)."),
+        biFilaClave("Abundancia total (N)", BI.f(N, Number.isInteger(N) ? 0 : 2), "individuos", "Suma de todos los conteos. Los índices sin dimensión se leen siempre junto a esta cifra."),
+        biFilaClave("Especies singulares", BI.n(singles), "con 1 individuo", "Cada una de ellas es una pista de cuánto te falta por muestrear (BI3 usa f₁ para eso)."),
+        biFilaClave("Especies con p < 1 %", BI.n(raras), "de N", "La cola rara de tu muestra: pesa poco en H′ pero mucho en la riqueza."),
+        biFilaClave("Base del logaritmo", bs.nom, bs.uni, "Declárala en el informe: H′ sin base dicha no es comparable con nada.")
+      ]);
+
+      h += BI.tit("Índices de diversidad alfa");
+      h += BI.tabla([
+        biFilaClave("Shannon-Wiener (H′)", BI.f(H, 4), bs.uni, "−Σ pᵢ ln pᵢ. Sensible a las especies poco abundantes; sube con la riqueza y con la equitabilidad.", "text-pink-300"),
+        biFilaClave("H′ máxima (log S)", BI.f(Hmax, 4), bs.uni, "Lo que valdría H′ si todas las especies fueran igualmente abundantes. Es el techo de tu muestra."),
+        biFilaClave("Equitabilidad de Pielou (J′)", J == null ? "—" : BI.f(J, 4), "", "J′ = H′ / H′máx. No depende de la base del logaritmo. Compara comunidades de riqueza parecida.", "text-emerald-300"),
+        biFilaClave("Simpson (λ)", BI.f(lam, 4), "", "Σ pᵢ² = probabilidad de que dos individuos sacados al azar sean de la misma especie."),
+        biFilaClave("Simpson de diversidad (1 − λ)", BI.f(1 - lam, 4), "", "Lo contrario: probabilidad de que sean de especies distintas."),
+        biFilaClave("Simpson inverso (1 / λ)", BI.f(1 / lam, 3), "especies efectivas", "Número de especies igualmente abundantes que darían el mismo λ. Es el más robusto de los tres de diversidad."),
+        biFilaClave("Número efectivo por Shannon (" + bs.nom + " <sup>H′</sup>)", BI.f(efectShan, 3), "especies efectivas", "e<sup>H′</sup> (o su equivalente en tu base). Suele ser menor que 1/λ porque Shannon castiga más a las dominantes."),
+        biFilaClave("Margalef (D<sub>Mg</sub>)", margalef == null ? "—" : BI.f(margalef, 4), "", "(S − 1) / ln N. Crece con S pero depende mucho del esfuerzo: no lo uses para comparar listas con N distinto."),
+        biFilaClave("McIntosh (D)", mcintosh == null ? "—" : BI.f(mcintosh, 4), "", "(N − U) / (N − √N), con U = √(Σ nᵢ²). 0 si todo es de una especie, cerca de 1 si todo está perfectamente repartido."),
+        biFilaClave("Dominancia de Berger-Parker (d)", BI.f(bp, 4), "", "Nmáx / N: la fracción de individuos que pertenece a la especie más común."),
+        biFilaClave("Inverso de dominancia (1/d)", BI.f(1 / bp, 3), "", "Muy usado en hidrobiología; es un «número efectivo» que solo mira la especie dominante.")
+      ]);
+
+      h += BI.caja("<strong>Lectura de la equitabilidad:</strong> J′ = " + (J == null ? "no aplicable" : BI.f(J, 3)) + " → <strong>" + bj[0] + "</strong>. " + bj[2], bj[1]);
+      h += BI.caja("<strong>Cantidad, no variedad:</strong> el reparto de los individuos es " + BI.f(Hmax > 0 ? 100 * H / Hmax : 0, 1) + " % del máximo posible con tus " + BI.n(S) + " especies. Tu comunidad equivale a <strong>" + BI.f(1 / lam, 1) + " especies igualmente abundantes</strong> por Simpson (y a " + BI.f(efectShan, 1) + " por Shannon), cuando en la lista hay " + BI.n(S) + ". Los tres números describen lo mismo en unidades distintas: repórtalos juntos con S y N.", "azul");
+
+      h += BI.tit("Quién aporta cada punto de H′");
+      h += BI.tabla(top.map((x, i) =>
+        '<tr class="border-b border-slate-800"><td class="py-1 pr-2 text-slate-300">' + (i + 1) + " · " + BI._esc2(x.n) + "</td>" +
+        '<td class="text-right text-slate-400">' + BI.f(x.v, Number.isInteger(x.v) ? 0 : 2) + "</td>" +
+        '<td class="text-right text-slate-400">' + BI.f(100 * x.p, 2) + " %</td>" +
+        '<td class="text-right font-bold text-pink-300">' + BI.f(x.ap, 4) + "</td>" +
+        '<td class="text-right text-[10px] text-slate-500">' + BI.f(H > 0 ? 100 * x.ap / H : 0, 1) + " %</td></tr>"
+      ).concat([
+        '<tr><td colspan="2" class="text-[10px] text-slate-500 pt-1">columnas: individuos · pᵢ · aporte −pᵢ log pᵢ · % del H′ total</td><td colspan="3"></td></tr>'
+      ]));
+      if (otras > 0) h += '<p class="text-[10px] text-slate-500 mt-1">Las otras ' + BI.n(otras) + " especies restantes aportan juntas " + BI.f(dom.slice(8).reduce((s, x) => s + x.ap, 0), 4) + " (" + BI.f(H > 0 ? 100 * dom.slice(8).reduce((s, x) => s + x.ap, 0) / H : 0, 1) + " % de H′). Suma exacta: los aportes de todas las especies dan H′.</p>";
+
+      h += BI.caja("<strong>Cómo reportarlo:</strong> «S = " + BI.n(S) + " especies, N = " + BI.f(N, 0) + " individuos, H′ = " + BI.f(H, 3) + " (" + bs.nom + "), J′ = " + (J == null ? "n/a" : BI.f(J, 3)) + ", 1/λ = " + BI.f(1 / lam, 2) + "» y el método de muestreo. Si vas a comparar este predio con otro, no compares H′ a secas: iguala el esfuerzo con rarefacción en <strong>BI3</strong> o usa el número efectivo por Simpson, que es menos sensible a las rarezas.", "azul");
+      if (window.Ficha) Ficha.set("bi1", {
+        riqueza_s: S, abundancia_n: BI.r(N, 2), base_h: bs.nom, shannon_h: BI.r(H, 4),
+        pielou_j: J == null ? null : BI.r(J, 4), simpson_lambda: BI.r(lam, 4), simpson_inverso: BI.r(1 / lam, 2),
+        margalef: margalef == null ? null : BI.r(margalef, 3), mcintosh: mcintosh == null ? null : BI.r(mcintosh, 3),
+        berger_parker: BI.r(bp, 3), especie_dominante: dom[0].n, pct_dominancia: BI.r(100 * bp, 1)
+      });
+      out.innerHTML = h + biAvisos(r);
+    }
+
+    // ==========================================================================
+    // BI2 · Similaridad y recambio entre dos inventarios
+    //       (Jaccard, Sørensen, β de Whittaker, Bray-Curtis, Baselga)
+    // ==========================================================================
+    function biBeta() {
+      const out = document.getElementById("bi2-res");
+      if (!out) return;
+      const ra = biLeer(BI.txt("bi2-a"), false);
+      const rb = biLeer(BI.txt("bi2-b"), false);
+      if (ra.error || rb.error) {
+        const cual = ra.error ? "A" : "B";
+        out.innerHTML = BI.tit("Falta el inventario " + cual) + biFaltaBi(ra.error ? ra : rb, "especies") +
+          BI.caja("<strong>BI2 compara dos listas</strong>: necesitas una en el cuadro A y otra en el cuadro B. Pueden ser dos predios, dos fechas o dos coberturas. Si solo tienes una lista, usa BI1.", "ambar");
+        return;
+      }
+      const ma = {}, mb = {};
+      ra.filas.forEach(f => { ma[biClave(f.n)] = { n: f.n, v: f.v }; });
+      rb.filas.forEach(f => { mb[biClave(f.n)] = { n: f.n, v: f.v }; });
+      const ka = Object.keys(ma), kb = Object.keys(mb);
+      const enA = {}, enB = {};
+      ka.forEach(k => { enA[k] = true; }); kb.forEach(k => { enB[k] = true; });
+      const com = ka.filter(k => enB[k]);
+      const soloA = ka.filter(k => !enB[k]);
+      const soloB = kb.filter(k => !enA[k]);
+      const nA = ka.length, nB = kb.length, nCom = com.length;
+      const nUnion = nA + nB - nCom;
+      if (!nUnion) { out.innerHTML = BI.caja("Las dos listas quedaron vacías después de normalizar los nombres.", "rojo"); return; }
+
+      const jacSim = nCom / nUnion;
+      const sorSim = 2 * nCom / (nA + nB);
+      const bJbr = 1 - jacSim;   // dissimilarity de Jaccard
+      const bSor = 1 - sorSim;   // dissimilarity de Sørensen
+      const mn = Math.min(soloA.length, soloB.length);
+      const bSim = (nCom + mn) > 0 ? mn / (nCom + mn) : null;   // recambio (Simpson)
+      const bSne = bSim == null ? null : bSor - bSim;            // pérdida / anidamiento
+      const bIln = bSim == null ? null : bJbr - bSim;            // versión en escala de Jaccard
+      const alfaMedio = (nA + nB) / 2;
+      const whitt = nUnion / alfaMedio - 1;
+      const orden = nA >= nB ? { mas: "A", menos: "B", nMas: nA, nMenos: nB } : { mas: "B", menos: "A", nMas: nB, nMenos: nA };
+
+      const conAb = ra.filas.every(f => f.v != null) && rb.filas.every(f => f.v != null);
+      let bc = null, na = 0, nb = 0;
+      if (conAb) {
+        let num = 0, den = 0;
+        // Σ|x_Ai − x_Bi| sobre la unión: lo que solo está en A suma su abundancia
+        // entera (en B vale 0), y al revés.
+        ka.forEach(k => { na += ma[k].v; den += ma[k].v; num += enB[k] ? Math.abs(ma[k].v - mb[k].v) : ma[k].v; });
+        kb.forEach(k => { nb += mb[k].v; den += mb[k].v; if (!enA[k]) num += mb[k].v; });
+        bc = den > 0 ? num / den : null;
+      }
+
+      const lista = arr => arr.slice(0, 12).map(k => BI._esc2((ma[k] || mb[k]).n)).join(", ") + (arr.length > 12 ? " … y " + (arr.length - 12) + " más" : "");
+
+      let h = "";
+      h += BI.tit("Qué se comparó");
+      h += BI.tabla([
+        biFilaClave("Inventario " + (BI.txt("bi2-nom-a") || "A"), BI.n(nA), "especies", "Lista A, con los nombres ya normalizados."),
+        biFilaClave("Inventario " + (BI.txt("bi2-nom-b") || "B"), BI.n(nB), "especies", "Lista B."),
+        biFilaClave("Compartidas", BI.n(nCom), "", "Presentes en las dos listas."),
+        biFilaClave("Solo en A", BI.n(soloA.length), "", "Exclusivas de A."),
+        biFilaClave("Solo en B", BI.n(soloB.length), "", "Exclusivas de B."),
+        biFilaClave("Unión (γ)", BI.n(nUnion), "", "El universo de las dos listas juntas; es el que usa Whittaker.")
+      ]);
+
+      h += BI.tit("Similaridad (0 = nada en común, 1 = idénticos)");
+      h += BI.tabla([
+        biFilaClave("Jaccard", BI.f(jacSim, 4), "", "|A∩B| / |A∪B|. Solo presencia/ausencia: una especie con 1 individuo vale lo mismo que una con 500.", "text-emerald-300"),
+        biFilaClave("Sørensen", BI.f(sorSim, 4), "", "2|A∩B| / (|A|+|B|). Le da más peso a lo compartido; siempre Sørensen ≥ Jaccard.", "text-emerald-300"),
+        biFilaClave("Bray-Curtis (similaridad)", bc == null ? "—" : BI.f(1 - bc, 4), "", conAb ? "1 − BC. Aquí sí pesan las abundancias." : "N/A: necesitas abundancias en LAS DOS listas.", "text-emerald-300"),
+        biFilaClave("β de Whittaker", BI.f(whitt, 4), "β", "γ/ᾱ − 1: cuántas especies extra aparecen al juntar los dos inventarios, en relación con su riqueza media.")
+      ]);
+
+      h += BI.tit("Descomposición de Baselga: ¿recambio o pérdida?");
+      if (bSim == null) {
+        h += BI.caja("Las dos listas no comparten ninguna especie y una de las dos queda vacía de exclusivas: no hay forma de separar recambio de anidamiento. En la práctica significa que son inventarios <strong>completamente distintos</strong> (βsor = 1, todo es recambio).", "ambar");
+      } else {
+        h += BI.tabla([
+          biFilaClave("βSOR (total, Sørensen)", BI.f(bSor, 4), "", "(b+c)/(2a+b+c). La disimilitud que reparten los dos componentes."),
+          biFilaClave("βSIM (recambio)", BI.f(bSim, 4), "", "min(b,c)/(a+min(b,c)). Especies que se <strong>sustituyen</strong>: unas entran y otras salen."),
+          biFilaClave("βSNE (pérdida/anidamiento)", BI.f(bSne, 4), "", "βSOR − βSIM. Especies que se <strong>pierden</strong> sin reposición: las ricas se quedan y las pobres son un subconjunto."),
+          biFilaClave("βJAC (total, Jaccard)", BI.f(bJbr, 4), "", "La misma idea en la escala de Jaccard, para que reporte con el índice que ya usas."),
+          biFilaClave("βJAC-IC (recambio)", BI.f(bSim, 4), "", "βSIM es idéntico en las dos escalas: no es coincidencia, es la definición de Simpson."),
+          biFilaClave("βILN (pérdida)", bIln == null ? "—" : BI.f(bIln, 4), "", "βJAC − βJAC-IC.")
+        ]);
+        h += BI.caja("<strong>Chequeo de aditividad:</strong> βSIM + βSNE = " + BI.f(bSim + bSne, 6) + " y βSOR = " + BI.f(bSor, 6) + ". Diferencia " + BI.f(Math.abs(bSim + bSne - bSor), 8) + " — la descomposición de Baselga es exacta, así que cualquier otro valor sería error de cálculo.", "verde");
+        const manda = bSim >= bSne ? "recambio" : "pérdida neta";
+        h += BI.caja("<strong>Lectura:</strong> el " + BI.f(100 * bSim / (bSor > 0 ? bSor : 1), 0) + " % de la diferencia entre los dos inventarios es <strong>recambio</strong> y el " + BI.f(100 * bSne / (bSor > 0 ? bSor : 1), 0) + " % es <strong>pérdida/anidamiento</strong>. Domina el " + manda + ". " +
+          (manda === "recambio"
+            ? "Los dos sitios sostienen números de especies parecidos pero <strong>distintas</strong>: conservan valor regional juntos, y no puedes decir que uno «restauró» al otro."
+            : "Uno de los inventarios (el de " + orden.menos + ", " + BI.n(orden.nMenos) + " especies) es casi un subconjunto del otro (" + orden.mas + ", " + BI.n(orden.nMas) + "). Es la firma de <strong>pérdida selectiva</strong>: hábitat reducido, disturbio o muestreo más corto, no un cambio de composición."), "ambar");
+      }
+
+      h += BI.tit("Nombres en juego");
+      h += '<div class="space-y-1 text-[10px] leading-relaxed">' +
+        '<p><span class="text-emerald-300 font-bold">Compartidas (' + BI.n(nCom) + "):</span> " + (nCom ? lista(com) : "ninguna") + "</p>" +
+        '<p><span class="text-pink-300 font-bold">Solo en A (' + BI.n(soloA.length) + "):</span> " + (soloA.length ? lista(soloA) : "ninguna") + "</p>" +
+        '<p><span class="text-sky-300 font-bold">Solo en B (' + BI.n(soloB.length) + "):</span> " + (soloB.length ? lista(soloB) : "ninguna") + "</p></div>";
+
+      const und = BI.sel("bi2-unidad");
+      if (und) {
+        const msg = {
+          sitios: "Comparaste <strong>dos sitios</strong>: un Jaccard bajo aquí significa que la región tiene β-alta, es decir <strong>más biodiversidad regional</strong> por combinación de sitios distintos. No lo reportes como «el predio B es pobre».",
+          tiempo: "Comparaste <strong>el mismo sitio en dos fechas</strong>: ahora la diferencia sí es cambio. Mira βSNE: si subió, la restauración aún no devolvió las especies que se fueron; si manda βSIM, llegaron especies nuevas de otro ensamble (a veces invasoras: revisa la lista de exclusivas de B).",
+          tratamientos: "Comparaste <strong>dos coberturas o tratamientos</strong>: lo esperable es que la purista tenga más especies y el potrero exclusivas generalistas. Que las exclusivas del potrero sean malezas, pastos y pioneras de borde ya te dice de qué tipo es la pérdida."
+        };
+        h += BI.caja(msg[und], "azul");
+      } else {
+        h += BI.caja("Dime en el desplegable <strong>qué estás comparando</strong> (dos sitios, dos fechas o dos tratamientos): la matemática es la misma, pero la conclusión no. Un Jaccard bajo entre dos predios es buena noticia para la región; el mismo número entre dos años del mismo lote es mala noticia para el lote.", "ambar");
+      }
+
+      if (!conAb) {
+        h += BI.caja("<strong>Bray-Curtis no se calculó</strong> porque al menos una de las dos listas fue solo de nombres (presencia/ausencia). Si te interesan las abundancias, digítalas en las dos listas; si no las tienes, quédate con Jaccard y Sørensen y dilo en el informe.", "ambar");
+      } else if (bc != null) {
+        h += BI.caja("Bray-Curtis en términos de abundancia: <strong>BC = " + BI.f(bc, 4) + "</strong> (Σ|xᵢA − xᵢB| / Σ(xᵢA + xᵢB), con N = " + BI.f(na, 0) + " en A y " + BI.f(nb, 0) + " en B). Ojo: BC es muy sensible al <strong>esfuerzo desigual</strong>. Si una lista tiene la mitad de individuos que la otra, parte de ese número solo dice que muestreaste menos; eso se controla rarefactuando primero (BI3).", (na > 0 && nb > 0 && Math.abs(na / nb - 1) > 0.5) ? "rojo" : "azul");
+      }
+      if (window.Ficha) Ficha.set("bi2", {
+        inventarios_comparados: [BI.txt("bi2-nom-a") || "A", BI.txt("bi2-nom-b") || "B"].join(" ↔ "),
+        especies_compartidas: nCom, jaccard: BI.r(jacSim, 4), sorensen: BI.r(sorSim, 4),
+        bray_curtis: bc == null ? null : BI.r(bc, 4), beta_whittaker: BI.r(whitt, 3),
+        beta_sim: bSim == null ? null : BI.r(bSim, 4), beta_sne: bSne == null ? null : BI.r(bSne, 4)
+      });
+      out.innerHTML = h + biAvisos(ra) + biAvisos(rb);
+    }
+
+    // ==========================================================================
+    // BI3 · Esfuerzo de muestreo: Chao1, cobertura de la muestra y rarefacción
+    // ==========================================================================
+    // E[S_n] = Σ_i [1 − C(N−n_i, n)/C(N, n)]  (Hurlbert 1971 / Cole 1949).
+    // Se agrupa por clase de abundancia: todas las especies con el mismo conteo
+    // comparten el mismo producto, así la curva completa cuesta N × (#clases)
+    // multiplicaciones en vez de N × S.
+    function biRarefaccionPunto(clases, N, n) {
+      if (!(n > 0)) return 0;
+      let S = 0, esperado = 0;
+      Object.keys(clases).forEach(k => {
+        const c = Number(k), m = clases[k];
+        S += m;
+        let prod = 1;
+        for (let j = 0; j < n; j++) {
+          const den = N - j, num = den - c;
+          if (num <= 0) { prod = 0; break; }
+          prod *= num / den;
+        }
+        esperado += m * (1 - prod);
+      });
+      return esperado;
+    }
+
+    function biCurvaRarefaccion(clases, N, S) {
+      const cs = Object.keys(clases).map(Number);
+      const prod = {};
+      cs.forEach(c => { prod[c] = 1; });
+      const paso = Math.max(1, Math.ceil(N / 48));
+      const pts = [{ x: 0, y: 0 }];
+      for (let n = 1; n <= N; n++) {
+        const den = N - (n - 1);
+        for (let i = 0; i < cs.length; i++) {
+          const c = cs[i];
+          if (prod[c] > 0) prod[c] *= (den - c) / den;
+        }
+        if (n % paso === 0 || n === N) {
+          let sump = 0;
+          for (let i = 0; i < cs.length; i++) sump += clases[cs[i]] * prod[cs[i]];
+          pts.push({ x: n, y: S - sump });
+        }
+      }
+      return pts;
+    }
+
+    function biCurvaSvg(pts, S, N, chao) {
+      const w = 460, h = 190, pad = 14;
+      const ymax = Math.max(S, chao || 0) * 1.08 || 1;
+      const X = x => pad + (x / (N || 1)) * (w - 2 * pad);
+      const Y = y => h - pad - (y / ymax) * (h - 2 * pad);
+      let s = '<svg viewBox="0 0 ' + w + " " + h + '" class="w-full mt-2 rounded-xl border border-slate-800" role="img" aria-label="Curva de rarefacción: especies esperadas en función de los individuos muestreados">';
+      s += '<rect width="' + w + '" height="' + h + '" fill="#020617"/>';
+      [0.25, 0.5, 0.75, 1].forEach(fr => {
+        const yv = ymax * fr;
+        s += '<line x1="' + pad + '" y1="' + Y(yv).toFixed(1) + '" x2="' + (w - pad) + '" y2="' + Y(yv).toFixed(1) + '" stroke="#1e293b"/>';
+        s += '<text x="' + (pad + 2) + '" y="' + (Y(yv) - 2).toFixed(1) + '" font-size="8" fill="#475569">' + Math.round(yv) + "</text>";
+      });
+      if (chao > S) {
+        s += '<line x1="' + pad + '" y1="' + Y(chao).toFixed(1) + '" x2="' + (w - pad) + '" y2="' + Y(chao).toFixed(1) + '" stroke="#f472b6" stroke-dasharray="5 4"/>';
+        s += '<text x="' + (w - pad - 2) + '" y="' + (Y(chao) - 4).toFixed(1) + '" text-anchor="end" font-size="9" fill="#f472b6">Chao1 ' + BI.f(chao, 1) + "</text>";
+      }
+      s += '<line x1="' + pad + '" y1="' + Y(S).toFixed(1) + '" x2="' + (w - pad) + '" y2="' + Y(S).toFixed(1) + '" stroke="#475569" stroke-dasharray="3 3"/>';
+      s += '<text x="' + (pad + 2) + '" y="' + (Y(S) + 9).toFixed(1) + '" font-size="9" fill="#94a3b8">S observado = ' + S + "</text>";
+      s += '<polyline points="' + pts.map(p => X(p.x).toFixed(1) + "," + Y(p.y).toFixed(1)).join(" ") + '" fill="none" stroke="#f472b6" stroke-width="2.2"/>';
+      const ult = pts[pts.length - 1];
+      if (ult) s += '<circle cx="' + X(ult.x).toFixed(1) + '" cy="' + Y(ult.y).toFixed(1) + '" r="3.5" fill="#ec4899"/>';
+      s += '<text x="' + pad + '" y="' + (h - 3) + '" font-size="9" fill="#64748b">1 indiv.</text>';
+      s += '<text x="' + (w - pad) + '" y="' + (h - 3) + '" text-anchor="end" font-size="9" fill="#64748b">N = ' + N + " indiv.</text>";
+      s += '<text x="' + (w / 2) + '" y="' + (h - 3) + '" text-anchor="middle" font-size="9" fill="#475569">individuos de la submuestra (rarefacción, interpolación dentro de tu muestra)</text>';
+      s += "</svg>";
+      return s;
+    }
+
+    function biMuestreo() {
+      const out = document.getElementById("bi3-res");
+      if (!out) return;
+      const r = biLeer(BI.txt("bi3-txt"), true);
+      if (r.error) { out.innerHTML = biFaltaBi(r, "especies con sus individuos"); return; }
+      const noEnteras = r.filas.filter(f => !Number.isInteger(f.v));
+      if (noEnteras.length) {
+        out.innerHTML = BI.caja("Chao1 y la rarefacción se definieron sobre <strong>conteos de individuos</strong>, y en tu lista hay " + noEnteras.length + " abundancias no enteras (por ejemplo " + BI._esc2(String(noEnteras[0].v)) + "). Si son coberturas o frecuencias relativo-ocupación, la teoría de «especies no vistas» ya no aplica: quédate con BI1 y reporta la unidad. Si son decimales por error (un conteo con coma mal pegado), corrígelos.", "rojo") + biAvisos(r);
+        return;
+      }
+      const filas = r.filas, S = filas.length;
+      const N = filas.reduce((s, f) => s + f.v, 0);
+      if (!(N > 0)) { out.innerHTML = BI.caja("La suma de individuos es cero.", "rojo"); return; }
+      const clases = {};
+      filas.forEach(f => { clases[f.v] = (clases[f.v] || 0) + 1; });
+      const f1 = clases[1] || 0, f2 = clases[2] || 0, f3 = clases[3] || 0, f4 = clases[4] || 0;
+      const chaoSum = (f1 * (f1 - 1)) / (2 * (f2 + 1));
+      const chao = Math.max(S, S + chaoSum);
+      const chaoClasico = f2 > 0 ? S + (f1 * f1) / (2 * f2) : null;
+      const cobertura = 1 - f1 / N;
+      const pctAtrapada = chao > 0 ? (100 * S) / chao : 100;
+      const brecha = chao - S;
+
+      const modo = BI.sel("bi3-modo");
+      const nn = BI.v("bi3-n");
+      let rareSn = null, rareN = null, h = "";
+
+      h += BI.tit("Rareza de la muestra (la que delata el esfuerzo)");
+      h += BI.tabla([
+        biFilaClave("Individuos totales (N)", BI.n(N), "", "Suma de todos los conteos de tu lista."),
+        biFilaClave("Especies observadas (S)", BI.n(S), "", "Riqueza con la que sales hoy al papel."),
+        biFilaClave("f₁ · singulares", BI.n(f1), "especies", "Con exactamente 1 individuo. Son el motor de Chao1: cada una sugiere que hay otra igual de rara que no viste."),
+        biFilaClave("f₂ · duplicadas", BI.n(f2), "especies", "Con 2 individuos."),
+        biFilaClave("f₃ · f₄", BI.n(f3) + " · " + BI.n(f4), "especies", "Las usamos para el chequeo de la forma de la cola; un f₃/f₄ muy bajo frente a f₁ = cola mal muestreada.")
+      ]);
+
+      h += BI.tit("Riqueza no observada y cobertura");
+      h += BI.tabla([
+        biFilaClave("Chao1 (corr. por sesgo)", BI.f(chao, 2), "especies", "S + f₁(f₁−1) / 2(f₂+1). <strong>Límite inferior</strong>: «al menos estas especies faltan», no «hay estas».", "text-pink-300"),
+        biFilaClave("Brecha estimada (Chao1 − S)", BI.f(brecha, 2), "especies", "Lo mínimo que te falta por encontrar."),
+        biFilaClave("Cobertura de la muestra (Ĉ)", BI.f(100 * cobertura, 2), "%", "1 − f₁/N (Chao &amp; Jost 2012). Es la fracción de individuos del universo que pertenece a especies ya vistas — <strong>esta</strong> es la medida honesta de «cuánto muestreaste», no S."),
+        biFilaClave("Riqueza estimada atrapada", BI.f(pctAtrapada, 2), "%", "S / Chao1. Compara con Ĉ: si son muy distintos, tienes muchas rarezas sin capturar."),
+        biFilaClave("Chao1 clásico (sin corregir)", chaoClasico == null ? "—" : BI.f(chaoClasico, 2), "especies", "S + f₁²/(2f₂). Solo vale si f₂ > 0; con f₂ = 0 revienta, y por eso se reporta el corregido.")
+      ]);
+
+      if (f2 === 0 && f1 >= 3) {
+        h += BI.caja("<strong>Chao1 quedó corto</strong> porque no tienes ni una especie con 2 individuos (f₂ = 0): la fórmula corregida queda en " + BI.f(chao, 1) + " especies mientras el estimador de abanico de Chao &amp; Lee usaría f₃. Con f₁ = " + BI.n(f1) + " y f₂ = 0 la cola de rareza está mal descrita: el número real de especies faltantes es <strong>mayor</strong> que lo que dice la brecha. Aumenta el esfuerzo antes de reportar riqueza total.", "rojo");
+      }
+
+      const coberturaMsg = cobertura >= 0.95 ? ["Casi saturada", "verde", "Ĉ ≥ 95 %: difícilmente aparezcan muchas especies más. Puedes reportar S con confianza, aclarando que sigue siendo un límite inferior."] :
+        cobertura >= 0.85 ? ["Bien cubierta", "verde", "Ĉ entre 85 y 95 %: la lista es razonablemente representativa. Quedan rarezas, pero el grueso de la comunidad ya está."] :
+        cobertura >= 0.70 ? ["Cubrimiento insuficiente", "ambar", "Ĉ entre 70 y 85 %: te faltan especies y, sobre todo, te falta <strong>confianza en las abundancias</strong> de las raras. Sube el número de puntos o de individuos antes de comparar con otro predio."] :
+        ["Muestra insaturada", "rojo", "Ĉ < 70 %: la mitad de los individuos casi se los reparten cuatro especies dominantes y hay muchísimas singularidades. <strong>No reportes S como riqueza del predio</strong>: reportaría tu cansancio, no la comunidad."];
+      h += BI.caja("<strong>¿Ya muestreaste suficiente?</strong> " + coberturaMsg[0] + ". " + coberturaMsg[2] + " Con un Ĉ de " + BI.f(100 * cobertura, 1) + " %, cada nueva unidad de esfuerzo va a seguir sacando singulares.", coberturaMsg[1]);
+
+      let pts = null;
+      if (N <= 60000) pts = biCurvaRarefaccion(clases, N, S);
+      else h += BI.caja("Tu muestra tiene N = " + BI.n(N) + " individuos, por encima del límite con el que el portal dibuja la curva (evita congelar el navegador). Chao1 y la cobertura sí se calcularon; para la curva, trabaja sobre un subconjunto.", "ambar");
+
+      if (modo === "rare") {
+        if (nn == null) {
+          h += BI.caja("Escribe el <strong>n</strong> de individuos de la submuestra (por ejemplo el N del predio con el que te comparan, o el esfuerzo que sí financias). Sin n no hay punto que leer.", "ambar");
+        } else if (nn > N) {
+          h += BI.caja("Pediste n = " + BI.n(nn) + " individuos pero tu muestra completa tiene N = " + BI.n(N) + ". La rarefacción es <strong>interpolación</strong>: solo puede responder dentro de lo que ya tienes. Lo que está por encima de N es extrapolación, y el portal no la calcula — el modelo asintótico de Chao et al. (2014) necesita la matriz completa y ajustes que acá no se hacen, así que te daría un número con cara de exacto y sin fundamento. Quédate con el límite inferior de Chao1.", "rojo");
+        } else {
+          const e = biRarefaccionPunto(clases, N, Math.floor(nn));
+          rareN = Math.floor(nn); rareSn = e;
+          h += BI.tit("Rarefacción al esfuerzo que pediste");
+          h += BI.tabla([
+            biFilaClave("E[Sₙ] en n = " + BI.n(Math.floor(nn)), BI.f(e, 2), "especies", "Promedio exacto sobre <strong>todas</strong> las submuestras posibles de n individuos (no un sorteo: el valor esperado analítico).", "text-pink-300"),
+            biFilaClave("Vs. tu S observado (" + BI.n(N) + " ind.)", BI.f(S - e, 2), "especies menos", "Lo que pierdes al rarefactuar a n. No es que el otro predio tenga menos especies: es lo que <strong>tú</strong> mostrarías con su esfuerzo."),
+            biFilaClave("Proporción de S conservada", BI.f(100 * e / S, 1), "%", "Cuánta riqueza sobrevive al recorte de esfuerzo.")
+          ]);
+          h += BI.caja("Para comparar con otro inventario: rarefactúa <strong>los dos</strong> al mismo n (el menor de los dos N) y compara E[Sₙ], no S crudo. Si la diferencia entre predios desaparece al rarefactuar, lo que estabas midiendo era esfuerzo de muestreo y no diversidad.", "azul");
+        }
+      } else if (modo === "chao") {
+        h += BI.tit("Cuánto te falta, dicho en esfuerzo");
+        const densidad = N / S;
+        // Pendiente REAL de tu propia curva al final de la muestra: especies
+        // nuevas por individuo extra, medida entre los dos últimos puntos.
+        // No es un modelo ni una promesa: es lo que venía saliendo justo antes
+        // de parar de muestrear.
+        let ventana = null, pendiente = null;
+        if (pts && pts.length > 2) {
+          const a = pts[pts.length - 2], b = pts[pts.length - 1];
+          ventana = b.x - a.x;
+          pendiente = (b.y - a.y) / (ventana || 1);
+        } else if (N >= 8) {
+          const w = Math.max(1, Math.floor(N * 0.05));
+          ventana = w;
+          pendiente = (S - biRarefaccionPunto(clases, N, N - w)) / w;
+        }
+        h += BI.tabla([
+          biFilaClave("Esfuerzo actual", BI.n(N), "individuos", "Lo que ya muestreaste: " + BI.f(densidad, 2) + " individuos por especie en promedio."),
+          biFilaClave("Brecha de riqueza", BI.f(brecha, 2), "especies", "Límite inferior de especies no vistas (Chao1 − S)."),
+          biFilaClave("Ritmo de descubrimiento al final", pendiente == null ? "—" : BI.f(pendiente * 100, 2), "especies cada 100 ind.", pendiente == null ? "Con una muestra tan corta no hay pendiente que medir." : "Pendiente de tu curva de rarefacción en los últimos " + BI.n(ventana) + " individuos (" + BI.f(100 * pendiente / S, 1) + " % de tu riqueza por cada 100 individuos)."),
+          biFilaClave("Individuos para cerrar la brecha", pendiente == null || !(pendiente > 0) ? "—" : brecha <= 0 ? "≈ 0" : "~ " + BI.n(brecha / pendiente), "individuos", "Divide la brecha entre el ritmo con el que te venían saliendo especies. <strong>Es un piso, no un pronóstico</strong>: la curva se aplana, así que el esfuerzo real para encontrarlas todas es mayor.")
+        ]);
+        h += BI.caja("<strong>Lo que sí puedes defender en un informe:</strong> «la cobertura de mi muestra es Ĉ = " + BI.f(100 * cobertura, 1) + " %, la riqueza observada es S = " + BI.n(S) + " y Chao1 indica que <strong>al menos</strong> faltan " + BI.f(brecha, 1) + " especies». Cualquier afirmación de riqueza total sin un modelo paramétrico y sus intervalos es una conjetura, y acá no se calcula.", "azul");
+        if (brecha > 0 && pendiente != null && pendiente > 0) {
+          const esfuerzoExtra = brecha / pendiente;
+          h += BI.caja("Aviso de honestidad: " + BI.n(esfuerzoExtra) + " individuos extra a este ritmo subirían tu riqueza <strong>observada</strong> de " + BI.n(S) + " a ≈ " + BI.f(S + brecha, 1) + " — o sea, hasta el límite inferior de Chao1 (" + BI.f(chao, 1) + "), no hasta la riqueza total. Y como la curva se aplana al seguir muestreando, el esfuerzo real para encontrar esas especies es <strong>mayor</strong> que el número de arriba. Si al duplicar tu muestra la brecha no baja, el problema no es el número de individuos sino el <strong>diseño</strong> (puntos mal repartidos, hábitats sin cubrir).", "ambar");
+        }
+      } else {
+        h += BI.caja("Elige en el desplegable <strong>qué pregunta</strong> quieres responder: rarefacción (cuántas especies salen en una submuestra de n individuos, para comparar predios con esfuerzo distinto) o la brecha de Chao1 con su lectura en esfuerzo. Arriba ya tienes Chao1 y la cobertura, que salen con la sola lista.", "ambar");
+      }
+
+      if (pts && pts.length > 2) {
+        h += BI.tit("Curva de rarefacción");
+        h += biCurvaSvg(pts, S, N, chao);
+        const mitad = biRarefaccionPunto(clases, N, Math.max(1, Math.floor(N / 2)));
+        h += '<p class="text-[10px] text-slate-500 mt-1 leading-relaxed">Con la mitad de tus individuos esperarías <strong>' + BI.f(mitad, 2) + "</strong> de las " + BI.n(S) + " especies (" + BI.f(100 * mitad / S, 0) + " %). La curva aplana cuando f₁ se agota; si aún sube en N, te falta esfuerzo. La línea punteada de arriba es Chao1: un <strong>techo estimado</strong>, no una predicción.</p>";
+      }
+      if (window.Ficha) Ficha.set("bi3", {
+        chao1: BI.r(chao, 2), riqueza_s: S, abundancia_n: BI.r(N, 0), f1_singulares: f1, f2_duplicadas: f2,
+        cobertura_muestra: BI.r(100 * cobertura, 2), riqueza_atrapada: BI.r(pctAtrapada, 1),
+        n_rarefaccion: rareN, rarefaccion_sn: rareSn == null ? null : BI.r(rareSn, 2)
+      });
+      out.innerHTML = h + biAvisos(r);
+    }
+
+    // ==========================================================================
+    // BI4 · Paisaje: mosaico (SHDI), forma de fragmentos, conectancia (PC/dPC)
+    //       y relación especie-área
+    // ==========================================================================
+    function biPaisaje() {
+      const out = document.getElementById("bi4-res");
+      if (!out) return;
+      let h = "";
+      let algo = false;
+      const fd = {};
+
+      // ---- 1 · Composición del mosaico: SHDI, EVEN, dominancia --------------
+      const cob = biLeer(BI.txt("bi4-cob"), true);
+      if (!cob.error) {
+        algo = true;
+        const A = cob.filas.reduce((s, f) => s + f.v, 0);
+        const m = cob.filas.length;
+        const ps = cob.filas.map(f => ({ n: f.n, ha: f.v, p: f.v / A }));
+        const shdi = -ps.reduce((s, x) => s + x.p * Math.log(x.p), 0);
+        const shdiMax = Math.log(m);
+        const even = shdiMax > 0 ? shdi / shdiMax : null;
+        const psOrd = ps.slice().sort((a, b) => b.p - a.p);
+        const dom = psOrd[0];
+        const nat = BI.v("bi4-natural");
+        h += BI.tit("1 · Composición del mosaico (clases y área)");
+        h += BI.tabla([
+          biFilaClave("Área total del paisaje", BI.f(A, 2), "ha", "Suma de las clases que digitaste: es tu denominador, así que debe cubrir todo el área de estudio."),
+          biFilaClave("Número de clases (m)", BI.n(m), "", "SHDI_max = ln m crece con la tipología: si agrupas «bosque» en una sola clase, el techo baja."),
+          biFilaClave("SHDI", BI.f(shdi, 4), "", "−Σ pᵢ ln pᵢ sobre las áreas de cada clase (McGarigal &amp; Marks 1995).", "text-pink-300"),
+          biFilaClave("SHDI máximo (ln m)", BI.f(shdiMax, 4), "", "Lo que daría si toda el área estuviera repartida por igual entre las m clases."),
+          biFilaClave("EQUIT (equitabilidad del paisaje)", even == null ? "—" : BI.f(even, 4), "", "SHDI / SHDI_max. Responde «qué tan parejo es el reparto», independientemente del número de clases."),
+          biFilaClave("Clase dominante", BI.f(100 * dom.p, 1), "% de " + BI._esc2(dom.n), "La que manda en el paisaje. Con una sola clase dominante, SHDI se hunde aunque haya muchas clases rareadas."),
+          biFilaClave("Riqueza de clases efectiva (e<sup>SHDI</sup>)", BI.f(Math.exp(shdi), 2), "clases", "Número de clases igualmente abundantes que darían el mismo SHDI. Es la forma legible de reportarlo.")
+        ]);
+        fd.clases_paisaje = m; fd.shdi = BI.r(shdi, 4); fd.equit_paisaje = even == null ? null : BI.r(even, 3);
+        fd.area_paisaje_ha = BI.r(A, 2); fd.clase_dominante = dom.n; fd.pct_clase_dominante = BI.r(100 * dom.p, 1);
+        if (nat != null) {
+          const pct = 100 * nat / A;
+          fd.pct_natural = BI.r(pct, 1);
+          if (nat < 0 || nat > A) h += BI.caja("Digitaste " + BI.f(nat, 2) + " ha naturales sobre un total de " + BI.f(A, 2) + " ha: revisa, porque no puede ser negativo ni superar el área del paisaje. (El portal no decide qué es natural — eso lo define tu tipología.)", "rojo");
+          else h += BI.caja("<strong>Cobertura natural: " + BI.f(pct, 1) + " %</strong> (" + BI.f(nat, 2) + " de " + BI.f(A, 2) + " ha), con lo que la matriz transformada ocupa el " + BI.f(100 - pct, 1) + " %. Declara la tipología usada (IGAC, DANE, MapBiomas o la de tu CAR) en el mismo renglón: el mismo mapa con otra agrupación da otro porcentaje.", pct >= 50 ? "verde" : pct >= 30 ? "ambar" : "rojo");
+        } else {
+          h += BI.caja("Falta el número de <strong>hectáreas naturales</strong>. No lo calculo yo: «natural» depende de tu tipología (¿la ronda hídrica con pasto cuenta?, ¿el bosque secundario joven?, ¿el páramo?). Dilo tú y el portal solo hace la división.", "ambar");
+        }
+        h += BI.tabla(psOrd.map(x =>
+          '<tr class="border-b border-slate-800"><td class="py-1 text-slate-300">' + BI._esc2(x.n) + "</td>" +
+          '<td class="text-right text-slate-400">' + BI.f(x.ha, 2) + " ha</td>" +
+          '<td class="text-right font-bold ' + (x.p >= 0.5 ? "text-pink-300" : "text-slate-200") + '">' + BI.f(100 * x.p, 2) + " %</td>" +
+          '<td class="text-right text-[10px] text-slate-500">' + BI.f(-x.p * Math.log(x.p), 4) + "</td></tr>"
+        ));
+        h += '<p class="text-[10px] text-slate-500 mt-1">última columna: aporte de esa clase al SHDI. La suma de las m aporta SHDI = ' + BI.f(shdi, 4) + ".</p>";
+      } else if (BI.txt("bi4-cob").trim()) h += BI.tit("1 · Coberturas") + biFaltaBi(cob, "coberturas con su área");
+
+      // ---- 2 · Forma y tamaño de los fragmentos -----------------------------
+      const fr = biLeerCols(BI.txt("bi4-frag"), 2);
+      biFiltrarPos(fr, 2);
+      if (!fr.error) {
+        algo = true;
+        const At = fr.filas.reduce((s, f) => s + f.vals[0], 0);
+        const datos = fr.filas.map(f => {
+          const aM2 = f.vals[0] * 10000;
+          const P = f.vals[1];
+          const comp = P > 0 && aM2 > 0 ? (4 * Math.PI * aM2) / (P * P) : null;
+          return { n: f.n, ha: f.vals[0], P: P, comp: comp, shape: comp > 0 ? 1 / Math.sqrt(comp) : null };
+        });
+        const comps = datos.filter(d => d.comp != null);
+        const mc = comps.length ? comps.reduce((s, d) => s + d.comp, 0) / comps.length : null;
+        const ms = comps.length ? comps.reduce((s, d) => s + d.shape, 0) / comps.length : null;
+        const ord = datos.slice().sort((a, b) => b.ha - a.ha);
+        const mayor = ord[0];
+        const perimTotal = datos.reduce((s, d) => s + d.P, 0);
+        fd.fragmentos = datos.length; fd.compacidad_media = mc == null ? null : BI.r(mc, 4);
+        fd.shape_medio = ms == null ? null : BI.r(ms, 3); fd.parche_mayor_ha = BI.r(mayor.ha, 2);
+        fd.densidad_parches_ha = BI.r(datos.length / At, 4);
+        h += BI.tit("2 · Forma y tamaño de los fragmentos");
+        h += BI.tabla([
+          biFilaClave("Fragmentos", BI.n(datos.length), "", "Parches digitados."),
+          biFilaClave("Área en fragmentos", BI.f(At, 2), "ha", "No es el área del paisaje: es la suma de los parches. La densidad de parches se reporta sobre esta base y hay que decirlo."),
+          biFilaClave("Compacidad media", mc == null ? "—" : BI.f(mc, 4), "0-1", "4πA/P² con A en m². Vale 1 en un círculo perfecto; 0,1 ya es un parche muy dentado o alargado.", "text-pink-300"),
+          biFilaClave("SHAPE medio (1/√comp)", ms == null ? "—" : BI.f(ms, 4), "≥1", "Como lo reporta FRAGSTATS: 1 = circular, más grande = más irregular. Sube el borde frente al interior."),
+          biFilaClave("Parche mayor (LPI sobre fragmentos)", BI.f(100 * mayor.ha / At, 1), "% de " + BI._esc2(mayor.n), "Si un solo fragmento concentra la mitad del hábitat, todo el sistema depende de que ese parche sobreviva."),
+          biFilaClave("Densidad de parches (PD)", BI.f(datos.length / At, 3), "parches/ha", "≈ " + BI.f(datos.length / (At / 100), 2) + " por km². Crece al dividir un hábitat continuo, y también al cambiar la resolución con que digitalizaste."),
+          biFilaClave("Área media por fragmento", BI.f(At / datos.length, 2), "ha", "Con el tamaño mínimo de viabilidad de tu especie foco, no con el promedio: un promedio de 6 ha puede ser un parche de 30 ha y cinco de 1 ha."),
+          biFilaClave("Borde total", BI.f(perimTotal / 1000, 2), "km", "Longitud de borde acumulada: es donde entran el viento, la luz, el ganado y el fuego.")
+        ]);
+        h += BI.tabla(ord.map(d =>
+          '<tr class="border-b border-slate-800"><td class="py-1 text-slate-300">' + BI._esc2(d.n) + "</td>" +
+          '<td class="text-right text-slate-400">' + BI.f(d.ha, 2) + " ha</td>" +
+          '<td class="text-right text-slate-400">' + BI.f(d.P, 0) + " m</td>" +
+          '<td class="text-right font-bold ' + (d.comp == null ? "text-slate-500" : d.comp >= 0.6 ? "text-emerald-300" : d.comp >= 0.3 ? "text-amber-300" : "text-red-300") + '">' + (d.comp == null ? "—" : BI.f(d.comp, 3)) + "</td>" +
+          '<td class="text-right text-[10px] text-slate-500">' + (d.shape == null ? "—" : BI.f(d.shape, 3)) + "</td></tr>"
+        ));
+        h += '<p class="text-[10px] text-slate-500 mt-1">ordenados por área · columnas: nombre · ha · perímetro m · compacidad · SHAPE.</p>';
+        h += BI.caja("<strong>El perímetro depende de la escala.</strong> Digitaliza el mismo fragmento a 1:10.000 y a 1:2.000 y te dará dos compacicidades (efecto coastline). Reporta la escala y el tamaño de celda del raster del que sacaste área y perímetro, o el número no es reproducible.", "azul");
+        if (fr.errores.length) h += '<div class="mt-2 text-[10px] text-amber-200/80 leading-relaxed">' + fr.errores.map(x => "· " + x).join("<br>") + "</div>";
+      } else if (BI.txt("bi4-frag").trim()) h += BI.tit("2 · Fragmentos") + biFaltaBi(fr, "fragmentos");
+
+      // ---- 3 · Conectancia PC y contribución dPC ----------------------------
+      const lc = biLeerCols(BI.txt("bi4-loc"), 3);
+      biFiltrarPos(lc, 1);
+      const kk = BI.sel("bi4-k"), LL = BI.v("bi4-L");
+      if (!lc.error) {
+        if (!kk) {
+          h += BI.tit("3 · Conectancia") + BI.caja("Tienes " + BI.n(lc.filas.length) + " fragmentos con su ubicación, pero falta el <strong>núcleo de conectancia</strong>: gaussiano o exponencial. Los dos son legítimos (Saura &amp; Pascual-Hortal 2007) y dan números distintos, así que hay que declararlo.", "ambar");
+        } else if (!(LL > 0)) {
+          h += BI.tit("3 · Conectancia") + BI.caja("Falta <strong>L</strong>, la distancia media de dispersión de la especie foco, en metros. Sin L el decaimiento no tiene escala: 400 m son una barrera infranqueable para una rana y una caminata corta para un ave. El portal no la adivina porque no está en tu lista de especies.", "rojo");
+        } else {
+          algo = true;
+          const hs = lc.filas.map(f => f.vals[0]);
+          const xs = lc.filas.map(f => f.vals[1]);
+          const ys = lc.filas.map(f => f.vals[2]);
+          const AL = hs.reduce((s, x) => s + x, 0);
+          const alfa = 1 / (2 * LL);
+          // Probabilidad de conexión DIRECTA entre dos parches, según el núcleo.
+          const pDir = (i, j) => {
+            const d = Math.hypot(xs[i] - xs[j], ys[i] - ys[j]);
+            return kk === "gauss" ? Math.exp(-(d * d) / (LL * LL)) : Math.exp(-alfa * d);
+          };
+          // p* entre los parches de `idx`: la probabilidad de la RUTA de mayor
+          // probabilidad, permitiendo saltar por terceros. Sin esto un parche
+          // puente nunca suma y el índice deja de decir nada sobre conectividad.
+          // Es clausura transitiva en el álgebra (max, ×): cerrar por k y
+          // quedarse con el mejor producto. Los valores están en (0,1], así que
+          // agregar saltos nunca puede subir la probabilidad: converge.
+          const mejorRuta = idx => {
+            const n = idx.length, w = [];
+            for (let a = 0; a < n; a++) {
+              w.push([]);
+              for (let b = 0; b < n; b++) w[a].push(a === b ? 1 : (b < a ? w[b][a] : pDir(idx[a], idx[b])));
+            }
+            for (let k = 0; k < n; k++) {
+              for (let a = 0; a < n; a++) {
+                const ak = w[a][k];
+                if (!ak) continue;
+                for (let b = 0; b < n; b++) {
+                  const v = ak * w[k][b];
+                  if (v > w[a][b]) w[a][b] = v;
+                }
+              }
+            }
+            return w;
+          };
+          // Ojo con el denominador: PC se normaliza SIEMPRE por AL² del paisaje
+          // completo. Si al quitar un parche se volviera a normalizar por su
+          // área restante, sacar un fragmento grande podría SUBIR el índice y
+          // dPC saldría negativo (el parche grande aparecería como "perjudicial"
+          // y el orden de prioridad quedaría invertido).
+          const pcDe = idx => {
+            const w = mejorRuta(idx);
+            let num = 0;
+            for (let a = 0; a < idx.length; a++) {
+              for (let b = 0; b < idx.length; b++) num += hs[idx[a]] * hs[idx[b]] * w[a][b];
+            }
+            return num / (AL * AL);
+          };
+          const todos = hs.map((_, i) => i);
+          const PC = pcDe(todos);
+          const dpc = hs.map((_, i) => {
+            const PCm = pcDe(todos.filter(j => j !== i));
+            return { n: lc.filas[i].n, ha: hs[i], x: xs[i], y: ys[i], dpc: PC > 0 ? 100 * (PC - PCm) / PC : null };
+          }).sort((a, b) => (b.dpc == null ? -1e9 : b.dpc) - (a.dpc == null ? -1e9 : a.dpc));
+          const suma = dpc.reduce((s, d) => s + (d.dpc > 0 ? d.dpc : 0), 0);
+          h += BI.tit("3 · Conectancia funcional (PC y dPC)");
+          h += BI.tabla([
+            biFilaClave("Especie o grupo foco", BI._esc2(BI.txt("bi4-foco") || "— sin nombre —"), "", "declárala: PC es un índice <strong>especie-específico</strong>, no del paisaje."),
+            biFilaClave("Núcleo usado", kk === "gauss" ? "gaussiano p = exp(−d²/L²)" : "exponencial p = exp(−d/(2L))", "", "Con L = " + BI.f(LL, 0) + " m. Cambiar el núcleo cambia el orden de los fragmentos, no solo el número."),
+            biFilaClave("PC (conectancia del paisaje)", BI.f(PC, 5), "0-1", "Índice de probabilidad de conectancia (Saura &amp; Pascual-Hortal 2007): Σ aᵢ aⱼ p*ᵢⱼ / A_L², con p* = la ruta de mayor probabilidad entre los dos parches, aunque tenga que saltar por un tercero.", "text-pink-300"),
+            biFilaClave("PC en ALOG (hábitat accesible)", BI.f(100 * PC, 2), "%", "Se lee mejor así: el % del «hábitat accesible» que realmente está conectado."),
+            biFilaClave("Área total en fragmentos (AL)", BI.f(AL, 2), "ha", "El denominador del índice. Es <strong>fijo</strong>: se usa el mismo A_L con y sin cada parche, porque el paisaje no se achica cuando desaparece un fragmento."),
+            biFilaClave("Suma de dPC", BI.f(suma, 1), "%", "Con A_L fijo la suma vale 100 % justo cuando ningún parche está conectado con otro, y sube hasta ~200 % cuando hay mucha conexión indirecta (cada par de parches se le cuenta a los dos). " + (suma >= 100 && suma < 200 ? "Está en rango: " : "FUERA DE RANGO (100-200 %): ") + BI.f(suma, 1) + " % repartidos entre " + BI.n(hs.length) + " fragmentos; la media sería " + BI.f(100 / hs.length, 1) + " %.")
+          ]);
+          const rolDpc = d => d.dpc == null ? "sin datos" : d.dpc >= 10 ? "pilar del flujo" : d.dpc >= 2 ? "aporte secundario" : "casi irrelevante para esta especie";
+          h += BI.tabla(dpc.map((d, i) =>
+            '<tr class="border-b border-slate-800"><td class="py-1 text-slate-300">' + (i + 1) + " · " + BI._esc2(d.n) + "</td>" +
+            '<td class="text-right text-slate-400">' + BI.f(d.ha, 2) + " ha</td>" +
+            '<td class="text-right font-bold ' + (d.dpc >= 10 ? "text-pink-300" : d.dpc >= 2 ? "text-amber-300" : "text-slate-500") + '">' + (d.dpc == null ? "—" : BI.f(d.dpc, 2)) + " %</td>" +
+            '<td class="text-right text-[10px] text-slate-500">' + rolDpc(d) + "</td></tr>"
+          ));
+          const top3 = dpc.slice(0, 3).reduce((s, d) => s + (d.dpc > 0 ? d.dpc : 0), 0);
+          fd.pc_conectancia = BI.r(PC, 5); fd.pc_alog_pct = BI.r(100 * PC, 1);
+          fd.fragmento_clave = dpc[0].n; fd.dpc_mayor = BI.r(dpc[0].dpc, 2);
+          fd.nucleo_usado = kk === "gauss" ? "gaussiano" : "exponencial"; fd.L_dispersion_m = BI.r(LL, 0);
+          fd.especie_foco = BI.txt("bi4-foco") || null;
+          const dUlt = dpc[dpc.length - 1];
+          const fraseUlt = dUlt.dpc >= 10 ? "aun así es pilar: con pocos fragmentos no hay ninguno de sobra"
+            : dUlt.dpc >= 2 ? "aporte secundario: defenderlo cuesta, pero perderlo también"
+            : "casi irrelevante para esta especie: ahí no va el presupuesto";
+          h += BI.caja("<strong>" + BI._esc2(dpc[0].n) + "</strong> sostiene el " + BI.f(dpc[0].dpc, 1) + " % de la conectancia con " + BI.f(dpc[0].ha, 2) + " ha. Los tres primeros suman " + BI.f(top3, 1) + " %: ahí va tu restauración y tu protección. Al otro extremo, " + BI._esc2(dUlt.n) + " (dPC = " + BI.f(dUlt.dpc, 2) + " %, " + BI.f(dUlt.ha, 2) + " ha): " + fraseUlt + ".", "verde");
+          h += BI.caja("<strong>Cómo interpretarlo:</strong> dPC compara quitar el fragmento del mapa (<em>PRIa</em>, nodo eliminado) contra tenerlo, siempre contra el mismo A_L del paisaje completo. Un dPC alto puede venir de dos cosas: área grande, o posición buena (conecta dos grupos que sin él quedan a distancia fatal). Por eso se mira <strong>junto</strong> a la columna de área, y por eso conviene mirar también el dPC por hectárea: un parche de 1 ha con dPC = 16 % vale más por hectárea que uno de 10 ha con 55 %. Los supuestos son fuertes y hay que declararlos: el decaimiento es solo función de la distancia en línea recta, no hay matriz ni barreras (potrero, carretera y río valen lo mismo), todos los parches son igual de buenos para la especie, y p* es <strong>la ruta de mayor probabilidad</strong>, no la probabilidad de que <em>exista</em> algún camino (eso requiere la unión de todos los caminos y solo lo calculan bien Conefor o un grafo explícito). Este bloque sirve para jerarquizar y para argumentar; no reemplaza el cálculo formal con su capa de resistencia.", "ambar");
+          if (hs.length < 3) h += BI.caja("Con " + BI.n(hs.length) + " fragmentos el índice es matemáticamente válido pero <strong>no dice mucho</strong>: PC y dPC sirven para jerarquizar una red, y con dos nodos la jerarquía es trivial.", "ambar");
+          if (lc.errores.length) h += '<div class="mt-2 text-[10px] text-amber-200/80 leading-relaxed">' + lc.errores.map(x => "· " + x).join("<br>") + "</div>";
+        }
+      } else if (BI.txt("bi4-loc").trim()) h += BI.tit("3 · Conectancia") + biFaltaBi(lc, "fragmentos con x e y");
+
+      // ---- 4 · Relación especie-área ---------------------------------------
+      const s1 = BI.v("bi4-s1"), a1 = BI.v("bi4-a1"), pd = BI.v("bi4-perd");
+      let zsel = BI.sel("bi4-z"), z = zsel === "custom" ? BI.v("bi4-z2") : (zsel ? parseFloat(zsel) : null);
+      if (z != null && !(z > 0 && z < 1)) z = null;
+      if (s1 != null && a1 != null && pd != null && z != null) {
+        if (!(s1 > 0 && a1 > 0)) {
+          h += BI.tit("4 · Relación especie-área") + BI.caja("S₁ y A₁ tienen que ser mayores que cero: sin área de referencia no hay curva que ajustar.", "rojo");
+        } else {
+          algo = true;
+          const a2 = a1 * (1 - pd / 100);
+          if (a2 <= 0) {
+            h += BI.tit("4 · Relación especie-área") + BI.caja("Con " + BI.f(pd, 1) + " % el área de hábitat queda en " + BI.f(a2, 2) + " ha. La curva S = c·A<sup>z</sup> no está definida para A ≤ 0: si desaparece <strong>todo</strong> el hábitat, la pregunta deja de ser de especie-área y pasa a ser de si queda algún remanente que conservar.", "rojo");
+          } else {
+            const c = s1 / Math.pow(a1, z);
+            const s2 = c * Math.pow(a2, z);
+            const dS = s2 - s1;
+            fd.s_actual = BI.r(s1, 0); fd.area_actual_ha = BI.r(a1, 2); fd.pct_cambio = BI.r(pd, 1);
+            fd.z_especie_area = BI.r(z, 2); fd.area_remanente_ha = BI.r(a2, 2);
+            fd.s_esperada = BI.r(s2, 2); fd.cambio_especies = BI.r(dS, 2);
+            h += BI.tit("4 · Relación especie-área S = c · A" + "<sup>z</sup>");
+            h += BI.tabla([
+              biFilaClave("Hoy", BI.f(s1, 0) + " sp / " + BI.f(a1, 2) + " ha", "", "De tu inventario (o del BI3 del mismo predio) y del área que lo sostiene."),
+              biFilaClave("Constante c", BI.f(c, 3), "sp·ha⁻ᶻ", "c = S₁ / A₁ᶻ. Es <strong>específica de tu sistema y de tu z</strong>: no se traslada a otro taxón ni a otra región."),
+              biFilaClave("z usada", BI.f(z, 2), "", "Pendiente de la curva. z = 0,15 es hábitat contiguo, z = 0,25-0,35 islas oceánicas o taxa séditos (Preston 1962; Rosenzweig 1995)."),
+              biFilaClave("Área después del cambio", BI.f(a2, 2), "ha", (pd > 0 ? "Se pierde " : pd < 0 ? "Se gana " : "Sin cambio: ") + BI.f(Math.abs(a1 - a2), 2) + " ha frente a las " + BI.f(a1, 2) + " de hoy."),
+              biFilaClave("Especies esperadas (S₂)", BI.f(s2, 2), "especies", "S₂ = S₁·(A₂/A₁)ᶻ. Con decimales a propósito: es un valor esperado, no un conteo.", "text-pink-300"),
+              biFilaClave("Cambio de riqueza", BI.f(dS, 2) + " (" + BI.f(100 * dS / s1, 1) + " %)", "", (dS < 0 ? "Pérdida esperada al equilibrio" : dS > 0 ? "Ganancia esperada al equilibrio" : "Sin cambio esperado") + ". Redondea hacia arriba si vas a reportar especies que se van.")
+            ]);
+            const severo = Math.abs(pd) >= 50;
+            h += BI.caja("<strong>Este es el número que hay que saber leer.</strong> Con z = " + BI.f(z, 2) + " y " + BI.f(pd, 1) + " % de cambio de hábitat, S pasaría de " + BI.n(s1) + " a ≈" + BI.f(s2, 1) + " especies. <strong>No es una profecía de extinción:</strong> la curva asume equilibrio, y en fragmentos reales la pérdida llega tarde (deuda de especies, que puede tardar décadas) o llega distinto si la pérdida se concentra en los hábitats más ricos. Su uso honesto es de <strong>orden de magnitud</strong> para argumentar por qué un " + BI.f(Math.abs(pd), 0) + " % de hábitat no es un detalle. " + (severo ? "Acá el cambio mueve la mitad del hábitat: ninguna decisión seria debería tomarse solo con esta cifra, sin una línea base real de campo." : "Completa el argumento con PC (¿quedan conectados los que quedan?) y con la forma de los fragmentos, que es donde la misma área puede ser funcionalmente mucho menos."), severo ? "rojo" : "ambar");
+            h += BI.caja("<strong>Cómpralo con la conectancia:</strong> pérdida de área y pérdida de especies no son lo mismo que pérdida de flujo. Puedes perder 20 % del hábitat y casi no mover PC si los parches que quedan siguen cerca; o perder 5 % y derrumbarla si te llevas el que hacía de puente. Arriba tienes dPC por fragmento: esa es la lista de lo que no se toca.", "azul");
+          }
+        }
+      } else if (s1 != null || a1 != null || pd != null || z != null) {
+        h += BI.tit("4 · Relación especie-área") + BI.caja("Faltan datos en el bloque 4: se necesitan <strong>S₁</strong> (especies hoy), <strong>A₁</strong> (ha de hábitat hoy), <strong>% de cambio</strong> y una <strong>z</strong> declarada. Con tres de los cuatro no se despeja nada, y el portal no completa lo que no digitaste.", "ambar");
+      }
+
+      if (!algo && !h) {
+        out.innerHTML = BI.caja("BI4 tiene <strong>cuatro cálculos independientes</strong> y ninguno tiene datos todavía: pega coberturas (clase; ha), fragmentos (nombre; ha; perímetro m), ubicación de parches (nombre; ha; x; y) con su L y núcleo, o los cuatro campos de especie-área. Puedes llenar solo uno: cada bloque se calcula por separado y no te va a pedir el resto.", "ambar") +
+          (function () { const e = [].concat(cob.avisos || [], fr.errores || [], lc.errores || []); return e.length ? '<div class="mt-2 text-[10px] text-amber-200/80 leading-relaxed">' + e.map(x => "· " + x).join("<br>") + "</div>" : ""; })();
+        return;
+      }
+      if (window.Ficha && Object.keys(fd).length) Ficha.set("bi4", fd);
+      out.innerHTML = h + (cob.error ? "" : biAvisos(cob));
+    }
+
+    // ==========================================================================
     // MODO PRÁCTICA: CASOS GUIADOS + AUTOEVALUACIÓN
     // ==========================================================================
     const PRACTICAS = [
@@ -9280,6 +10634,22 @@
           { d: "Cierra el ciclo en AR3 con las actividades del predio (diésel, nitrógeno, encalado, cabezas y quema): t CO₂eq por fuente, reparto por gas y sensibilidad al GWP. Declara que es Tier 1 con factores por defecto: prioriza, no se reporta.", mod: "tab-ar3", lab: "AR3 GEI" },
           { d: "Contrasta AR3 con el stock de carbono del suelo de B24 en el mismo lote: puede secuestrar más de lo que emite, o justo lo contrario. Guarda AR1-AR3 y B24 en la ficha para que el informe y el CSV salgan juntos.", mod: "tab-b24", lab: "B24 SOC" }
         ]
+      },
+      {
+        t: "Caso 6 · Biodiversidad de un predio: qué tan diverso es, cuánto cambió y qué te falta por muestrear",
+        meta: "Usa: BI1 · BI2 · BI3 · BI4 · B23/B28 · Ficha",
+        pasos: [
+          { d: "Anota el inventario en BI1 con la unidad clara: individuos por especie (o cobertura, pero una sola unidad en toda la lista). Si mezclas «14 individuos» con «35 % de cobertura», el índice sale sin significado y el portal no lo puede arreglar por ti.", mod: "tab-bi1", lab: "BI1 lista" },
+          { d: "Declara la base del logaritmo antes de leer H′. Con log₂ tu comunidad «mide» la mitad que con ln; en un informe o una comparación con un paper, la base va dicha. J′ no cambia: esa es la cifra que sobrevive a cualquier base.", mod: "tab-bi1", lab: "BI1 base" },
+          { d: "Lee H′ junto a J′ y al número efectivo de especies (1/λ). Riqueza no es diversidad: dos listas con 30 especies dan números muy distintos si en una dos especies concentran el 90 % de los individuos. Revisa además qué especie aporta cada punto de H′, para poder defender el número.", mod: "tab-bi1", lab: "BI1 lectura" },
+          { d: "Pasa tu lista a BI3 y mira la cobertura de la muestra Ĉ = 1 − f₁/N. Si f₁ está alto, gran parte de lo que viste son singulares: Chao1 te dice cuántas especies faltan <strong>como mínimo</strong>, no cuántas hay.", mod: "tab-bi3", lab: "BI3 cobertura" },
+          { d: "Para comparar con el predio del vecino o con un dato publicado, rarefactúa los dos al mismo n (el menor de los dos N). Si la diferencia de riqueza desaparece al rarefactuar, lo que estabas comparando era esfuerzo de muestreo, no diversidad.", mod: "tab-bi3", lab: "BI3 rarefacción" },
+          { d: "Si tienes antes/después (restauración, exclusión de ganado, dos coberturas), corre BI2 con las dos listas y mira la descomposición de Baselga: βSIM alto es recambio (llegaron otras especies), βSNE alto es pérdida neta. La conclusión de manejo es distinta en cada caso.", mod: "tab-bi2", lab: "BI2 beta" },
+          { d: "Declara qué comparaste (dos sitios, dos fechas o dos tratamientos). El mismo Jaccard bajo es buena noticia entre dos predios de la región y mala noticia entre dos años del mismo lote.", mod: "tab-bi2", lab: "BI2 lectura" },
+          { d: "Si la decisión es espacial, ve a BI4: SHDI y % natural del mosaico, compacidad de los fragmentos y, sobre todo, PC con el dPC de cada parche. El dPC te dice cuál fragmento sostienen el flujo aunque sea chico: ese es el que no se toca y el que se restaura primero.", mod: "tab-bi4", lab: "BI4 conectancia" },
+          { d: "Usa la relación especie-área solo como orden de magnitud de perder hábitat, con tu z declarada y su fuente. Contrástala con el dPC: perder 20 % de área no es lo mismo que perder 20 % de conectancia.", mod: "tab-bi4", lab: "BI4 especie-área" },
+          { d: "Cruza el resultado con la restauración (B23) y con los ecosistemas estratégicos (B28): un lote con βSNE alto y fragmento clave aislado es candidato a conectividad, no a más árboles. Guarda BI1-BI4 en la ficha para que el informe y el CSV salgan con todo.", mod: "tab-ficha", lab: "Informe" }
+        ]
       }
     ];
     const QUIZ = [
@@ -9309,7 +10679,16 @@
       { q: "Noche despejada con viento de 1 m/s, y a la mañana siguiente sol fuerte con 2 m/s. Las clases de Pasquill son:", r: ["F de noche y A de día: la misma fuente llega mucho más concentrada al suelo de noche", "A de noche y F de día", "D en los dos casos", "F en los dos casos"], ok: 0, why: "Cielo despejado y calma nocturna = inversión térmica que aplasta la turbulencia (F, σz mínima, pluma larga y concentrada). Sol fuerte con viento flojo = convección vigorosa (A, mezcla rápida hacia arriba). Y ojo: con la tabla modificada de Gifford el día soleado a 2 m/s baja a A-B, una letra más estable — de noche las dos tablas coinciden.", mod: "tab-ar2" },
       { q: "Las σ de Briggs urbanas (McElroy-Pooler) están ajustadas para:", r: ["Chimeneas altas y calientes dentro de una ciudad", "Liberaciones en superficie, clima seco y terreno plano: el ensayo de 65 liberaciones en St. Louis. Una chimenea alta y caliente se comporta como rural", "Cualquier ciudad del mundo, sin condiciones", "Valles con brisas de ladera"], ok: 1, why: "Briggs las recomienda para fuentes de superficie (calefacción, tráfico, chimeneas bajas). Además el coeficiente del denominador de σz(E-F) urbano sale ilegible en la tabla de BARC y los manuales lo reprinten distinto: de noche el número urbano es menos confiable que el rural, así que corre los dos juegos y reporta el rango.", mod: "tab-ar2" },
       { q: "Quemas 6 t de materia seca de pasto. En el inventario de AR3 esa quema:", r: ["Suma todo: CO₂, CH₄ y N₂O", "No suma el CO₂ (es biogénico, regla del IPCC), pero sí suma el CH₄ (2,3 kg/t MS) y el N₂O (0,21 kg/t MS)", "Suma solo el CO₂", "No suma nada"], ok: 1, why: "El carbono del CO₂ de la quema lo fijó la fotosíntesis del mismo ciclo, así que el balance neto es cero y por convención del IPCC se reporta en una línea aparte, fuera del total. El CH₄ y el N₂O no se fijaron: esos sí cuentan, y son lo caro de la quema.", mod: "tab-ar3" },
-      { q: "Tus suelos manejados emitieron 12 kg de N₂O-N. En CO₂eq con GWP AR5 son unos:", r: ["3.180 kg (12 × 265)", "5.000 kg (12 × 44,0128/28,0134 × 265)", "336 kg (12 × 28)", "12 kg: el nitrógeno ya está expresado en CO₂eq"], ok: 1, why: "Los factores de emisión del IPCC salen en kg N₂O-N, pero el GWP es para la molécula entera: primero 12 × 44,0128/28,0134 = 18,9 kg N₂O y luego × 265 ≈ 5.000 kg CO₂eq. Saltarse el paso del oxígeno subestima el N₂O un 36 %, y en un predio ganadero el N₂O suele ser el segundo gas en peso.", mod: "tab-ar3" }
+      { q: "Tus suelos manejados emitieron 12 kg de N₂O-N. En CO₂eq con GWP AR5 son unos:", r: ["3.180 kg (12 × 265)", "5.000 kg (12 × 44,0128/28,0134 × 265)", "336 kg (12 × 28)", "12 kg: el nitrógeno ya está expresado en CO₂eq"], ok: 1, why: "Los factores de emisión del IPCC salen en kg N₂O-N, pero el GWP es para la molécula entera: primero 12 × 44,0128/28,0134 = 18,9 kg N₂O y luego × 265 ≈ 5.000 kg CO₂eq. Saltarse el paso del oxígeno subestima el N₂O un 36 %, y en un predio ganadero el N₂O suele ser el segundo gas en peso.", mod: "tab-ar3" },
+      { q: "Dos predios: uno con 30 especies donde 2 concentran el 90 % de los individuos, y otro con 30 especies igualmente abundantes. ¿Cuál es la lectura correcta?", r: ["Tienen la misma diversidad porque S es igual", "Tienen distinta diversidad: la segunda lista da H′ y 1/λ mucho mayores; hay que reportar riqueza Y equitabilidad", "El primero tiene más diversidad porque domina mejor", "Nada se puede decir sin las especies rareadas"], ok: 1, why: "La riqueza (S) no mide el reparto. Por eso BI1 reporta S, H′, J′ y el número efectivo de especies (1/λ): el predio equitativo equivale a muchas más especies «funcionalmente presentes» que el dominado.", mod: "tab-bi1" },
+      { q: "Calculas H′ en log₂ y te da 1,74. Tu compañero lo calcula en ln y le da 2,41 para la misma lista. ¿Quién está mal?", r: ["Tú: H′ siempre se reporta en ln", "Ninguno: es la misma diversidad en otra unidad. Lo que hay que declarar es la base, y J′ queda idéntica en las dos", "Él: la base e no se usa en ecología", "Ambos: H′ no depende de la base"], ok: 1, why: "Cambiar de base multiplica H′ por una constante (ln 2). J′ = H′/H′máx es un cociente dentro de la misma base, así que no se mueve. Por eso BI1 te obliga a elegir base antes de calcular.", mod: "tab-bi1" },
+      { q: "Quieres comparar tu inventario (N = 480 individuos) con el de un vecino (N = 120). ¿Cuál es la forma válida?", r: ["Comparar S de cada uno: 42 vs 28 especies", "Comparar H′ crudo", "Rarefactuar los dos a n = 120 y comparar E[S₁₂₀], porque con N distinto la riqueza cruda mide sobre todo esfuerzo", "Dividir cada H′ entre su N"], ok: 2, why: "S y H′ crecen con el esfuerzo. La rarefacción de Hurlbert da el valor esperado de especies en una submuestra de n individuos tomada de TU lista, sin extrapolar: igualas el esfuerzo y ahí la comparación significa algo.", mod: "tab-bi3" },
+      { q: "Tu lista tiene 60 especies, f₁ = 10 singulares y f₂ = 4 raras. Chao1 corregido da ≈ 69 y la cobertura Ĉ ≈ 83 %. ¿Qué quieres decir con eso?", r: ["El predio tiene 69 especies", "Al menos 69: Chao1 es un límite inferior, no una medición de la riqueza total. Y el 83 % de cobertura es muestreo, no cuántas especies hay", "Faltan exactamente 9 por encontrar", "La cobertura del 83 % significa que está bien muestreada la cola de rareza"], ok: 1, why: "Chao1 cuenta la cola de rareza que f₁ y f₂ delatan y promete un mínimo: «al menos 69», nunca «hay 69». La cobertura Ĉ = 1 − f₁/N dice qué fracción de los individuos ya apareció en tu lista, y puede ser alta aunque te falten muchas especies raras. Por eso BI3 da los dos números, no uno.", mod: "tab-bi3" },
+      { q: "En BI2, dos inventarios dan Jaccard = 0,10. Uno es un bosque y el otro un potrero de la misma finca. ¿Cómo se lee?", r: ["El potrero perdió 90 % de las especies del bosque", "Son comunidades casi distintas: puede ser recambio (llegaron otras especies) o pérdida. Hay que mirarlo con la descomposición de Baselga (βSIM/βSNE) y decir qué estás comparando", "La finca tiene baja biodiversidad regional", "El índice está mal: Jaccard no puede ser tan bajo"], ok: 1, why: "Jaccard solo dice «cuántas comparten». Que la diferencia sea sustitución o pérdida la separa Baselga: βSIM = recambio, βSNE = pérdida/anidamiento. Y entre DOS SITIOS un β alto es riqueza regional alta, no un fracaso.", mod: "tab-bi2" },
+      { q: "Siguiendo la restauración de un lote: dos años después, βSIM es alto y βSNE casi cero. Interpretación correcta:", r: ["Se recuperaron exactamente las especies originales", "El ensamble cambió: se fueron unas especies y llegaron otras; no es la misma comunidad, aunque la riqueza se parezca", "No pasó nada", "La muestra está saturada"], ok: 1, why: "βSIM mide recambio puro: especies que entran y salen. Si manda βSIM, la restauración está armando otro ensamble (a veces con generalistas de borde o invasoras: de ahí el valor de listar las exclusivas de cada lado). Para devolver el bosque original querrías βSNE cayendo con el tiempo.", mod: "tab-bi2" },
+      { q: "En BI4, un fragmento de 1 ha tiene dPC = 14 % y uno de 20 ha tiene dPC = 9 %. ¿Qué significa?", r: ["El grande es más importante: el área manda", "Ese parche chico vale más para la conectancia: está en la posición que une dos grupos. Protegerlo o restaurarlo cuesta poco y sostiene mucho flujo", "Los dos números están mal: dPC debe seguir al área", "dPC mide calidad de hábitat"], ok: 1, why: "PC = ΣΣ aᵢaⱼp*ᵢⱼ/A_L² y dPC mide cuánto cae PC si ese nodo desaparece. Puede caer por área o por posición. Ojo con el supuesto: es distancia en línea recta, con una sola L para toda la especie foco y sin matriz ni barreras.", mod: "tab-bi4" },
+      { q: "La relación especie-área con z = 0,25 predice que perder 40 % del hábitat elimina ≈ 12 % de las especies. ¿Hasta dónde puedes llevar esa cifra?", r: ["Es una predicción de extinción: hay que listar 12 % de especies perdidas", "Es un orden de magnitud bajo el supuesto de equilibrio; la respuesta real llega tarde (deuda de especies) y depende de dónde se concentró la pérdida", "Es exacta si la z la elegiste bien", "No sirve para nada"], ok: 1, why: "S = cA^z relaciona área y riqueza en equilibrio: con z = 0,25 queda S₂/S₁ = 0,60^0,25 = 0,88, o sea un 12 % menos de especies esperadas. Las extinciones por fragmentación tienen rezago de décadas y la curva no distingue si perdiste el hábitat rico o el pobre. Se usa para argumentar orden de magnitud, acompañada de PC y de una línea base real.", mod: "tab-bi4" },
+      { q: "El predio A es bosque continuo (una sola clase de cobertura); el predio B es mosaico de potrero, cultivo y casa de labor. BI4 da SHDI más alto en B. ¿Qué significa eso?", r: ["Que B es más biodiverso que A", "Que B tiene el área más repartida entre más clases: mide heterogeneidad del mapa, no vida. Un mosaico agrícola puede superar holgadamente a un bosque maduro continuo", "Que A está degradado porque no varía", "Que la tipología está mal: el bosque debería dar más"], ok: 1, why: "SHDI = −Σ pᵢ ln pᵢ sobre las proporciones de área de cada clase: sube con el número de clases y con el reparto parejo, y es máximo cuando todas ocupan lo mismo. Un bosque continuo tiene p = 1 y SHDI = 0 aunque sea el mejor hábitat de la cuenca. Por eso BI4 lo reporta junto al % natural que tú declaras y al techo ln m: para describir el paisaje, y para decidir conectancia, no para jerarquizar calidad ecológica.", mod: "tab-bi4" }
     ];
     function renderizarPractica() {
       const cont = document.getElementById("pr-casos");
@@ -10058,6 +11437,7 @@
     // =========================================================================
     window.addEventListener("DOMContentLoaded", () => {
       Area.arrancar();
+      Portada.arrancar();
       b19Init();
       actualizarTexturaInfo();
       dibujarTrianguloTextural();
@@ -10068,7 +11448,7 @@
       renderizarMetodo();
       buscarNormas();
       renderizarB27(); c29Construir(); c31Construir(); poblarDeptosOrdenes(); renderizarPractica();
-      ["ficha-secciones", "metodo-grid", "hub-grid", "b26-lista", "b27-pasos", "a12-res", "a13-sim", "b16-sintesis", "b19-res-ap", "b19-res-ae", "b19-res-ie", "b19-res-t", "c29-res", "c30-res", "c31-res", "c32-res", "c33-res", "w1-res", "w2-res", "w2-thio-res", "w3-res", "w4-res", "ar1-res", "ar2-res", "ar2-est", "ar3-res", "pr-quiz-res"]
+      ["ficha-secciones", "metodo-grid", "hub-grid", "b26-lista", "b27-pasos", "a12-res", "a13-sim", "b16-sintesis", "b19-res-ap", "b19-res-ae", "b19-res-ie", "b19-res-t", "c29-res", "c30-res", "c31-res", "c32-res", "c33-res", "w1-res", "w2-res", "w2-thio-res", "w3-res", "w4-res", "ar1-res", "ar2-res", "ar2-est", "ar3-res", "bi1-res", "bi2-res", "bi3-res", "bi4-res", "pr-quiz-res"]
         .forEach(id => { const el = document.getElementById(id); if (el) el.setAttribute("aria-live", "polite"); });
       Ficha.badge();
       Ficha.llenarFormulario();
@@ -10077,6 +11457,8 @@
       // URL con #pestana: enlaces directos a cada módulo
       const h = location.hash.slice(1);
       if (h && document.getElementById(h)?.classList.contains("tab-content")) cambiarPestana(h);
+      // Sin enlace directo en la URL y con la preferencia marcada: se abre el área recordada
+      else if (Portada.directo && Portada.area) Portada.entrar(Portada.area);
       window.addEventListener("hashchange", () => {
         const hh = location.hash.slice(1);
         if (hh && document.getElementById(hh)?.classList.contains("tab-content")) cambiarPestana(hh);
