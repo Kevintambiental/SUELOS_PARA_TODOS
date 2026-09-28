@@ -123,7 +123,7 @@
           <div id="buscador-resultados" class="absolute top-full left-0 right-0 mt-1 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-h-64 overflow-y-auto z-50 hidden text-xs"></div>
         </div>
 
-        <button onclick="cambiarPestana('tab-ficha')" id="ficha-badge" class="px-2.5 py-1.5 rounded-xl bg-teal-900/60 hover:bg-teal-800/70 text-teal-200 text-xs font-bold border border-teal-700/50 transition flex items-center gap-1 cursor-pointer whitespace-nowrap" title="Ficha de Suelo: queda guardada en este navegador y alimenta todos los módulos">
+        <button onclick="cambiarPestana('tab-ficha')" id="ficha-badge" class="px-2.5 py-1.5 rounded-xl bg-teal-900/60 hover:bg-teal-800/70 text-teal-200 text-xs font-bold border border-teal-700/50 transition flex items-center gap-1 cursor-pointer whitespace-nowrap" title="Ficha de Suelo: guarda varios predios en este navegador y alimenta todos los módulos">
           📋 Ficha: <span id="ficha-badge-txt" class="font-medium text-teal-300">sin datos</span>
         </button>
         <button onclick="cargarEjemploCaparrapi()" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md shadow-emerald-900/30 transition flex items-center gap-1 cursor-pointer whitespace-nowrap" title="Rellena la planilla con datos de ejemplo solo para ver el funcionamiento; no es un predio real">
@@ -255,7 +255,23 @@
       <div class="bg-slate-900 border border-teal-500/30 rounded-2xl p-5 shadow-xl space-y-4">
         <div class="border-b border-slate-800 pb-3">
           <h2 class="text-lg font-black text-white flex items-center gap-2"><span>📋</span> Mi Ficha de Suelo</h2>
-          <p class="text-xs text-slate-400 mt-1">Los datos que registres aquí quedan <strong class="text-teal-300">guardados en este navegador</strong> (no se envían a ningún servidor) y viajan entre módulos: textural, B14 capacidad de uso, B19 erosión y B22 enmiendas la usan como punto de partida. Puedes actualizarla cuando quieras.</p>
+          <p class="text-xs text-slate-400 mt-1">Los datos que registres aquí quedan <strong class="text-teal-300">guardados en este navegador</strong> (no se envían a ningún servidor) y viajan entre módulos: textural, B14 capacidad de uso, B19 erosión y B22 enmiendas la usan como punto de partida. Puedes tener <strong class="text-teal-300">varias fichas a la vez</strong> (un predio, lote o parcela por ficha) y compararlas.</p>
+        </div>
+        <!-- SELECTOR DE FICHAS: VARIOS PREDIOS EN EL MISMO NAVEGADOR -->
+        <div class="bg-slate-950/70 border border-teal-500/20 rounded-xl p-3 space-y-2.5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 items-end">
+            <div>
+              <label for="ficha-sel" class="text-slate-400 block mb-0.5 text-[11px] font-bold uppercase tracking-wider">Ficha activa:</label>
+              <select id="ficha-sel" onchange="Ficha.cambiar(this.value)" class="w-full bg-slate-900 border border-teal-600/50 focus:border-teal-500 rounded-lg px-2.5 py-2 text-white font-bold text-xs cursor-pointer focus:outline-none"></select>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="Ficha.renombrar()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold cursor-pointer text-xs">✏ Renombrar</button>
+              <button onclick="Ficha.eliminar()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-red-900/60 border border-slate-700 text-slate-300 font-bold cursor-pointer text-xs">🗑 Eliminar esta</button>
+              <button onclick="Ficha.comparar()" class="px-3 py-2 rounded-xl bg-purple-700 hover:bg-purple-600 text-white font-bold cursor-pointer text-xs">📊 Comparar predios</button>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-500 leading-relaxed">Puedes abrir <strong class="text-slate-400">varias fichas</strong> (un predio, lote o parcela por ficha) y alternar entre ellas. Cambiar de ficha cambia el archivo guardado, <strong class="text-amber-300">no</strong> lo que tienes en pantalla: al cambiar, ve a los módulos, recalcula y pulsa «Traer lo último calculado» para volcarlos en la ficha activa.</p>
+          <div id="ficha-comparar" class="hidden overflow-x-auto pt-1"></div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-xs">
           <div><label class="text-slate-400 block mb-0.5">Predio / lote:</label><input id="ficha-predio" placeholder="Nombre del predio o lote" oninput="Ficha.campo('ubic','predio',this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-1.5 text-slate-200 focus:border-teal-500 focus:outline-none"></div>
@@ -272,8 +288,9 @@
           <button onclick="Ficha.informe()" class="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold cursor-pointer">🧾 Informe consolidado</button>
           <button onclick="Ficha.imprimirInforme()" class="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-bold cursor-pointer">🖨 Imprimir informe</button>
           <button onclick="Ficha.exportarCSV()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold cursor-pointer">⬇ Exportar CSV (Excel)</button>
-          <button onclick="Ficha.exportar()" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold cursor-pointer">⬇ Exportar ficha (JSON)</button>
-          <button onclick="Ficha.nueva()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-red-900/50 border border-slate-700 text-slate-300 font-bold cursor-pointer">🧹 Nueva ficha (borra todo)</button>
+          <button onclick="Ficha.exportar()" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold cursor-pointer">⬇ Exportar esta ficha (JSON)</button>
+          <button onclick="Ficha.exportarTodas()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-sky-900/60 border border-slate-700 text-slate-300 font-bold cursor-pointer">🗂 Respaldo de todas las fichas (JSON)</button>
+          <button onclick="Ficha.nueva()" class="px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold cursor-pointer">➕ Nueva ficha</button>
         </div>
         <div id="ficha-secciones" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs"></div>
         <div id="ficha-informe" class="hidden space-y-1"></div>
@@ -3649,7 +3666,7 @@
     }
 
     const catalogoModulos = [
-      { id: "tab-ficha", num: "★", tit: "Mi Ficha de Suelo", bloq: "Transversal", norm: "localStorage (sin servidores)", desc: "Identificación del predio y datos que viajan entre módulos: textural, fertilidad, capacidad de uso y erosión. Guardada en tu navegador, exportable en JSON." },
+      { id: "tab-ficha", num: "★", tit: "Mi Ficha de Suelo", bloq: "Transversal", norm: "localStorage (sin servidores)", desc: "Varias fichas a la vez (un predio por ficha), con comparación de indicadores entre predios. Identificación y datos que viajan entre módulos: textural, fertilidad, capacidad de uso y erosión. Guardada en tu navegador, exportable en JSON y CSV." },
       { id: "tab-metodo", num: "★", tit: "Metodología y Fuentes", bloq: "Transversal", norm: "IGAC · IDEAM · USDA · FAO · IPCC", desc: "Fórmula, autor, rango de validez y enlace de cada cálculo del portal: RUSLE (R, K, LS, C, P, T, Se), fertilidad IGAC, CIC, textural, encalado, yeso y carbono." },
       { id: "tab-practica", num: "★", tit: "Modo Práctica y Autoevaluación", bloq: "Transversal", norm: "Casos integradores · 12 preguntas", desc: "Tres casos reales paso a paso (erosión en lote cafetero, riego y costos, fosa y acuífero) que te llevan por los módulos en orden, más una autoevaluación con retroalimentación y módulos de repaso." },
       { id: "tab-fertilidad", num: "1", tit: "Fertilidad del Suelo IGAC", bloq: "Principal", norm: "IGAC IN-GAG-PC05-02", desc: "Cálculo en 2 profundidades (0-25 y 25-50 cm), radar nutricional y diagnóstico oficial." },
@@ -5850,6 +5867,9 @@
     // ==========================================================================
     const Ficha = {
       KEY: "spt_ficha_v1",
+      STORE: "spt_fichas_v2",
+      _s: null,
+      _selNombre: "",
       data: null,
       etiquetas: {
         predio: "Predio / lote", municipio: "Municipio", vereda: "Vereda", departamento: "Departamento",
@@ -5870,17 +5890,120 @@
         puntaje: "Autoevaluación", mejor_puntaje: "Mejor puntaje", total: "Preguntas", casos_completados: "Casos completados", pr_marcas: "Pasos marcados", caso_1: "Caso 1", caso_2: "Caso 2", caso_3: "Caso 3"
       },
       titulos: { ubic: "📍 Identificación del predio", textura: "🔺 Clase textural", fertilidad: "🧪 Fertilidad IGAC", a12: "🪨 Orden de suelo (A12)", ordenes: "🌍 Órdenes por departamento (4)", b14: "🌱 Capacidad de uso (B14)", b16: "🏞️ Oferta edáfica (B16)", b20: "🧩 Limitantes y prácticas (B20)", b25: "🌳 Factor C de cobertura (B25)", b19: "🌊 Erosión RUSLE (B19)", b23: "🌿 Restauración prioritaria (B23)", c29: "💧 Balance hídrico (C29)", c30: "🌾 Fertilización y costos (C30)", c31: "🛢️ DRASTIC (C31)", c32: "🚜 Traficabilidad (C32)", c33: "💰 PSE (C33)", b27: "🗺️ Flujo SIG (B27)", practica: "🎓 Práctica y autoevaluación" },
+      _esc(v) { return String(v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); },
+      _nuevoId() { return "f" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); },
+      _crear(s, id, nombre, datos) {
+        s.fichas[id] = { id, nombre: String(nombre || "Ficha").trim().slice(0, 60) || "Ficha", creado: Date.now(), actualizado: Date.now(), datos: datos && typeof datos === "object" && !Array.isArray(datos) ? datos : {} };
+        return id;
+      },
+      _escribir() { try { localStorage.setItem(this.STORE, JSON.stringify(this._s)); } catch (e) {} },
+      store() {
+        if (this._s) return this._s;
+        let s = null, crudo = null, valido = false, migrada = false;
+        try {
+          crudo = localStorage.getItem(this.STORE);
+          if (crudo) { const p = JSON.parse(crudo); if (p && typeof p === "object" && p.fichas && typeof p.fichas === "object" && !Array.isArray(p.fichas)) { s = p; valido = true; } }
+        } catch (e) { s = null; }
+        if (!s) s = { v: 2, activo: "", fichas: {} };
+        // La ficha antigua (v1, de un solo predio) solo se adopta si todavía no existe un almacén v2 usable en el navegador
+        if (!valido && !Object.keys(s.fichas).length) {
+          let vieja = null;
+          try { const raw = localStorage.getItem(this.KEY); vieja = raw ? JSON.parse(raw) : null; } catch (e) { vieja = null; }
+          if (vieja && typeof vieja === "object" && !Array.isArray(vieja) && Object.keys(vieja).length) {
+            const u = vieja.ubic || {};
+            s.activo = this._crear(s, "f1", u.predio || u.municipio || "Ficha 1", vieja);
+            migrada = true;
+          }
+        }
+        if (valido) {
+          Object.keys(s.fichas).forEach(k => {
+            const f = s.fichas[k];
+            if (!f || typeof f !== "object" || Array.isArray(f)) { delete s.fichas[k]; return; }
+            f.id = k;
+            f.datos = (f.datos && typeof f.datos === "object" && !Array.isArray(f.datos)) ? f.datos : {};
+            f.nombre = String(f.nombre || "Ficha").trim().slice(0, 60) || "Ficha";
+          });
+        }
+        if (!Object.keys(s.fichas).length) { s.activo = ""; migrada = false; }
+        this._s = s;
+        if (s.activo && !s.fichas[s.activo]) s.activo = Object.keys(s.fichas)[0] || "";
+        if (migrada) this._escribir();
+        return s;
+      },
+      _nombreLibre(s, base) { const usados = new Set(Object.values(s.fichas).map(f => f.nombre)); let n = base, i = 1; while (usados.has(n)) n = base + " " + (++i); return n; },
+      lista() { return Object.values(this.store().fichas).sort((a, b) => String(a.nombre).localeCompare(String(b.nombre), "es")); },
+      activa() { const s = this.store(); return s.fichas[s.activo] || null; },
+      nombre() { const f = this.activa(); return f ? f.nombre : "Nueva ficha"; },
       load() {
-        if (this.data) return this.data;
-        try { const raw = localStorage.getItem(this.KEY); this.data = raw ? JSON.parse(raw) : {}; }
-        catch (e) { this.data = {}; }
+        if (!this.data) { const f = this.activa(); this.data = f ? f.datos : {}; }
         if (typeof this.data !== "object" || Array.isArray(this.data)) this.data = {};
         return this.data;
       },
       save() {
-        this.data._ts = Date.now();
-        try { localStorage.setItem(this.KEY, JSON.stringify(this.data)); } catch (e) {}
+        const d = this.load();
+        d._ts = Date.now();
+        const s = this.store();
+        let f = s.fichas[s.activo];
+        if (!f) { s.activo = this._crear(s, this._nuevoId(), this._nombreLibre(s, "Ficha"), d); f = s.fichas[s.activo]; }
+        f.datos = d;
+        f.actualizado = Date.now();
+        if (/^(Ficha|Predio)( \d+)?$/.test(f.nombre)) {
+          const u = d.ubic || {};
+          const base = String(u.predio || u.municipio || "").trim().slice(0, 60);
+          if (base) {
+            const usados = new Set(Object.values(s.fichas).filter(x => x.id !== f.id).map(x => x.nombre));
+            let n = base, i = 2;
+            while (usados.has(n)) n = base.slice(0, 54) + " (" + (i++) + ")";
+            f.nombre = n;
+          }
+        }
+        this._escribir();
         this.badge();
+        if (this._selNombre !== f.nombre) this.renderSelector();
+      },
+      _usar(id) {
+        const s = this.store();
+        s.activo = s.fichas[id] ? id : "";
+        this.data = null;
+        this.load();
+        this._escribir();
+        this.llenarFormulario(); this.render(); this.badge(); this.renderSelector(); this._refrescarSalidas();
+      },
+      cambiar(id) { if (id && !this.store().fichas[id]) return; this._usar(id); },
+      nueva() {
+        const s = this.store();
+        const def = this._nombreLibre(s, "Predio");
+        const n = (prompt("Nombre de la ficha nueva (predio, lote o parcela):", def) || "").trim();
+        if (n === "") return;
+        this._usar(this._crear(s, this._nuevoId(), n, {}));
+        document.getElementById("ficha-predio")?.focus();
+      },
+      renombrar() {
+        const f = this.activa(); if (!f) { alert("Aún no hay ninguna ficha guardada: escribe un dato o pulsa «Traer lo último calculado»."); return; }
+        const n = (prompt("Nombre de esta ficha:", f.nombre) || "").trim().slice(0, 60);
+        if (!n || n === f.nombre) return;
+        f.nombre = n; this._escribir(); this.badge(); this.renderSelector(); this._refrescarSalidas();
+      },
+      eliminar() {
+        const s = this.store(); const f = this.activa();
+        if (!f) { this._usar(""); return; }
+        if (!confirm(`¿Eliminar la ficha «${f.nombre}» y todo lo que ha guardado en este navegador? No se puede deshacer.`)) return;
+        delete s.fichas[f.id];
+        this._usar(Object.keys(s.fichas)[0] || "");
+      },
+      _refrescarSalidas() {
+        const inf = document.getElementById("ficha-informe");
+        if (inf) { inf.classList.add("hidden"); inf.innerHTML = ""; }
+        const cmp = document.getElementById("ficha-comparar");
+        if (cmp && !cmp.classList.contains("hidden")) this.comparar();
+      },
+      renderSelector() {
+        const sel = document.getElementById("ficha-sel"); if (!sel) return;
+        const s = this.store(); const l = this.lista();
+        this._selNombre = s.fichas[s.activo] ? s.fichas[s.activo].nombre : "";
+        if (!l.length) { sel.innerHTML = '<option value="">— aún no hay ficha: escribe o pulsa Traer —</option>'; sel.title = "0 fichas guardadas"; return; }
+        sel.innerHTML = l.map(f => `<option value="${f.id}"${f.id === s.activo ? " selected" : ""}>${this._esc(f.nombre)}</option>`).join("");
+        sel.title = l.length + " ficha(s) guardada(s) en este navegador";
       },
       campo(sec, k, v) { const d = this.load(); d[sec] = d[sec] || {}; d[sec][k] = v; this.save(); this.render(); },
       set(sec, obj) { const d = this.load(); d[sec] = Object.assign({}, d[sec], obj); d[sec]._ts = Date.now(); this.save(); this.render(); },
@@ -5888,19 +6011,18 @@
       get(sec) { return this.load()[sec] || null; },
       badge() {
         const el = document.getElementById("ficha-badge-txt"); if (!el) return;
-        const u = this.load().ubic || {};
-        const nombre = u.predio || u.municipio || u.vereda || "";
-        el.innerText = nombre ? (nombre.length > 18 ? nombre.slice(0, 17) + "…" : nombre) : "sin datos";
-        el.closest("button")?.classList.toggle("border-teal-500/60", !!nombre);
+        const n = this.nombre();
+        el.innerText = n.length > 20 ? n.slice(0, 19) + "…" : n;
+        el.closest("button")?.classList.toggle("border-teal-500/60", Object.keys(this.load()).filter(k => k !== "_ts").length > 0);
       },
       render() {
         const cont = document.getElementById("ficha-secciones"); if (!cont) return;
         const d = this.load();
         const secs = Object.keys(this.titulos).filter(s => d[s] && Object.keys(d[s]).some(k => k !== "_ts" && d[s][k] !== "" && d[s][k] != null));
-        if (!secs.length) { cont.innerHTML = '<p class="text-slate-500 col-span-full">Aún no hay datos. Escribe arriba o calcula en los módulos y pulsa "Traer lo último calculado".</p>'; return; }
+        if (!secs.length) { cont.innerHTML = '<p class="text-slate-500 col-span-full">Esta ficha está vacía. Escribe arriba o calcula en los módulos y pulsa "Traer lo último calculado". Usa el selector de arriba para alternar entre predios.</p>'; return; }
         cont.innerHTML = secs.map(s => {
           const rows = Object.entries(d[s]).filter(([k, v]) => k !== "_ts" && k !== "pr_marcas" && v !== "" && v != null)
-            .map(([k, v]) => `<div class="flex justify-between gap-2 border-b border-slate-800/60 py-1"><span class="text-slate-400">${this.etiquetas[k] || k}</span><span class="text-slate-100 font-bold text-right">${Array.isArray(v) ? v.join(" · ") : v}</span></div>`).join("");
+            .map(([k, v]) => `<div class="flex justify-between gap-2 border-b border-slate-800/60 py-1"><span class="text-slate-400">${this.etiquetas[k] || k}</span><span class="text-slate-100 font-bold text-right">${this._esc(Array.isArray(v) ? v.join(" · ") : v)}</span></div>`).join("");
           const ts = d[s]._ts ? `<span class="text-[9px] text-slate-500">${new Date(d[s]._ts).toLocaleString("es-CO")}</span>` : "";
           return `<div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-1"><div class="flex items-center justify-between"><h4 class="font-black text-teal-300">${this.titulos[s]}</h4>${ts}</div>${rows}</div>`;
         }).join("");
@@ -5935,23 +6057,24 @@
       },
       exportar() {
         const d = this.load();
-        const blob = new Blob([JSON.stringify({ portal: "SUELOS_PARA_TODOS", modulo: "Ficha de Suelo", exportado: new Date().toISOString(), datos: d }, null, 2)], { type: "application/json" });
+        const blob = new Blob([JSON.stringify({ portal: "SUELOS_PARA_TODOS", modulo: "Ficha de Suelo", ficha: this.nombre(), exportado: new Date().toISOString(), datos: d }, null, 2)], { type: "application/json" });
         const a = document.createElement("a");
-        const nombre = ((d.ubic?.predio || d.ubic?.municipio || "ficha").replace(/[^\w\-]+/g, "_")).slice(0, 40);
+        const nombre = this._slug(this.nombre());
         a.href = URL.createObjectURL(blob); a.download = `${nombre}_${new Date().toISOString().slice(0, 10)}.json`;
         document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
       },
-      nueva() {
-        if (!confirm("¿Borrar toda la Ficha de Suelo guardada en este navegador? Los módulos conservan lo que tengas en pantalla.")) return;
-        try { localStorage.removeItem(this.KEY); } catch (e) {}
-        this.data = {};
-        ["ficha-predio", "ficha-mun", "ficha-vereda", "ficha-depto", "ficha-area", "ficha-lat", "ficha-lon", "ficha-resp"].forEach(id => { const el = document.getElementById(id); if (el) el.value = ""; });
-        this.save(); this.render();
+      exportarTodas() {
+        const s = this.store();
+        const blob = new Blob([JSON.stringify({ portal: "SUELOS_PARA_TODOS", modulo: "Fichas de Suelo — respaldo completo", version: 2, exportado: new Date().toISOString(), activo: s.activo, fichas: s.fichas }, null, 2)], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob); a.download = `fichas_suelos_${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
       },
+      _slug(n) { return String(n || "ficha").replace(/[^\w\-]+/g, "_").slice(0, 40); },
       llenarFormulario() {
         const u = this.load().ubic || {};
         const map = { "ficha-predio": u.predio, "ficha-mun": u.municipio, "ficha-vereda": u.vereda, "ficha-depto": u.departamento, "ficha-area": u.area_ha, "ficha-lat": u.lat, "ficha-lon": u.lon, "ficha-resp": u.responsable };
-        Object.entries(map).forEach(([id, v]) => { const el = document.getElementById(id); if (el && v != null) el.value = v; });
+        Object.entries(map).forEach(([id, v]) => { const el = document.getElementById(id); if (el) el.value = v == null ? "" : v; });
       },
       // Recoge ficha + dictámenes vivos de los módulos para el informe
       _datosInforme() {
@@ -5986,13 +6109,101 @@
         const cont = document.getElementById("ficha-informe");
         if (!cont) return;
         if (!secs.length) { cont.innerHTML = '<p class="inf-note">La ficha está vacía: calcula en los módulos y pulsa "Traer lo último calculado".</p>'; cont.classList.remove("hidden"); return; }
-        const d = this.load().ubic || {};
-        const cab = `INFORME TÉCNICO PRELIMINAR DE SUELOS — ${d.predio || d.municipio || "Predio sin nombre"}<br><span class="inf-note">Generado ${new Date().toLocaleString("es-CO")} · SUELOS_PARA_TODOS · Referencias: IGAC (2012), IDEAM/SICLICA-CAR, Foster &amp; Hathaway, Williams (1990), McCool (1987), FAO (1994)</span>`;
+        const cab = `INFORME TÉCNICO PRELIMINAR DE SUELOS — ${this.nombre()}<br><span class="inf-note">Generado ${new Date().toLocaleString("es-CO")} · SUELOS_PARA_TODOS · Referencias: IGAC (2012), IDEAM/SICLICA-CAR, Foster &amp; Hathaway, Williams (1990), McCool (1987), FAO (1994)</span>`;
         cont.innerHTML = `<h3 class="inf-tit" style="font-size:13px">${cab}</h3>` + secs.map(s =>
           `<h3>${s.tit}</h3><table>${s.rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("")}</table>`).join("") +
           '<p class="inf-note">Documento de apoyo generado por el usuario; no sustituye un levantamiento agrológico oficial IGAC ni un estudio firmado por profesional competente.</p>';
         cont.classList.remove("hidden");
         cont.scrollIntoView({ behavior: "smooth", block: "start" });
+      },
+      GRUPOS_CMP: [
+        { g: "📍 Identificación", filas: [
+          ["Predio / lote", f => f.datos.ubic?.predio],
+          ["Municipio", f => f.datos.ubic?.municipio],
+          ["Vereda", f => f.datos.ubic?.vereda],
+          ["Departamento", f => f.datos.ubic?.departamento],
+          ["Área (ha)", f => f.datos.ubic?.area_ha],
+          ["Coordenadas (WGS84)", f => f.datos.ubic?.lat != null && f.datos.ubic?.lon != null ? `${f.datos.ubic.lat}, ${f.datos.ubic.lon}` : null],
+          ["Responsable", f => f.datos.ubic?.responsable]
+        ] },
+        { g: "🔺 Propiedades del suelo", filas: [
+          ["Clase textural", f => f.datos.textura?.clase_textural],
+          ["Arena / Limo / Arcilla (%)", f => f.datos.textura ? `${f.datos.textura.arena ?? "—"} / ${f.datos.textura.limo ?? "—"} / ${f.datos.textura.arcilla ?? "—"}` : null],
+          ["pH (H₂O)", f => f.datos.fertilidad?.ph],
+          ["CIC (cmol/kg)", f => f.datos.fertilidad?.cic],
+          ["M.O. (%)", f => f.datos.fertilidad?.co],
+          ["P disponible (mg/kg)", f => f.datos.fertilidad?.p_asequible],
+          ["K (cmol/kg)", f => f.datos.fertilidad?.k],
+          ["Sat. bases (%)", f => f.datos.fertilidad?.sbt],
+          ["Orden probable (A12)", f => f.datos.a12?.orden_probable],
+          ["Órdenes del departamento", f => f.datos.ordenes?.presentes?.join(" · ")],
+          ["Orden dominante", f => f.datos.ordenes?.dominante]
+        ] },
+        { g: "🌱 Uso, capacidad y cobertura", filas: [
+          ["Capacidad de uso (B14)", f => f.datos.b14?.clase],
+          ["Subclase", f => f.datos.b14?.subclase],
+          ["Pendiente (%)", f => f.datos.b14?.pendiente_pct],
+          ["Profundidad (cm)", f => f.datos.b14?.profundidad_cm],
+          ["Drenaje", f => f.datos.b14?.drenaje],
+          ["Oferta edáfica (B16)", f => f.datos.b16?.oferta],
+          ["Índice oferta (0-100)", f => f.datos.b16?.indice],
+          ["Sistema / uso (B25)", f => f.datos.b25?.sistema],
+          ["Cobertura (%)", f => f.datos.b25?.cobertura_pct],
+          ["Factor C estimado", f => f.datos.b25?.C_estimado],
+          ["Prácticas (B20)", f => f.datos.b20?.practicas?.join(" · ")],
+          ["P combinada estimada", f => f.datos.b20?.P_estimada]
+        ] },
+        { g: "🌊 Erosión RUSLE / SI (B19)", filas: [
+          ["R · erosividad", f => f.datos.b19?.R],
+          ["K · erodabilidad (Williams)", f => f.datos.b19?.K],
+          ["LS · topográfico (Wischmeier)", f => f.datos.b19?.LS],
+          ["C · cobertura", f => f.datos.b19?.C],
+          ["P · prácticas", f => f.datos.b19?.P],
+          ["AP = R·K·LS (t/ha·año)", f => f.datos.b19?.AP],
+          ["Ae = R·K·LS·C·P (t/ha·año)", f => f.datos.b19?.Ae],
+          ["T tolerable (t/ha·año)", f => f.datos.b19?.T],
+          ["IE = C·P", f => f.datos.b19?.IE],
+          ["Se · susceptibilidad AHP", f => f.datos.b19?.Se]
+        ] },
+        { g: "💧 Agua, nutrición y riesgo", filas: [
+          ["Lluvia (mm/año)", f => f.datos.c29?.precip_mm_anio],
+          ["ETP (mm/año)", f => f.datos.c29?.etp_mm_anio],
+          ["Déficit hídrico (mm/año)", f => f.datos.c29?.deficit_mm_anio],
+          ["Riego necesario (m³/ha·año)", f => f.datos.c29?.necesidad_riego_m3_ha],
+          ["Cultivo (C30)", f => f.datos.c30?.cultivo],
+          ["Costo fertilización (COP)", f => f.datos.c30?.costo_total_cop],
+          ["DRASTIC′ (C31)", f => f.datos.c31?.drastic],
+          ["Vulnerabilidad acuífero", f => f.datos.c31?.vulnerabilidad],
+          ["Controladores dominantes", f => f.datos.c31?.dominantes?.join(" · ")],
+          ["Traficabilidad (C32)", f => f.datos.c32 ? `${f.datos.c32.ratio ?? "—"} → ${f.datos.c32.estado ?? "—"}` : null],
+          ["Carga por eje (t)", f => f.datos.c32?.carga_eje_t]
+        ] },
+        { g: "🌿 Restauración, PSE y autoevaluación", filas: [
+          ["Tipo de sitio (B23)", f => f.datos.b23?.tipo],
+          ["Severidad (B23)", f => f.datos.b23?.severidad],
+          ["Área a restaurar (ha)", f => f.datos.b23?.area_ha],
+          ["Uso / cobertura PSE (C33)", f => f.datos.c33?.uso],
+          ["Rango PSE (COP/ha·año)", f => f.datos.c33?.rango_ha_anio],
+          ["Flujo SIG completado", f => f.datos.b27?.flujo_completado === true ? "Sí" : null],
+          ["Autoevaluación (quiz)", f => f.datos.practica?.puntaje != null ? `${f.datos.practica.puntaje}/${f.datos.practica.total ?? 12}` : null],
+          ["Última actualización", f => f.actualizado ? new Date(f.actualizado).toLocaleString("es-CO") : null]
+        ] }
+      ],
+      comparar() {
+        const cont = document.getElementById("ficha-comparar"); if (!cont) return;
+        const l = this.lista(), s = this.store();
+        if (l.length < 2) {
+          cont.innerHTML = `<div class="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-[11px] text-amber-200 leading-relaxed">Hace falta <strong>una segunda ficha</strong> para comparar. ${l.length === 1 ? `Tienes 1 guardada («${this._esc(l[0].nombre)}»): pulsa <strong>➕ Nueva ficha</strong> para abrir la del otro predio.` : "Aún no hay ninguna ficha guardada en este navegador: calcula un predio y pulsa «Traer lo último calculado»."} Después trabaja los módulos con la nueva ficha activa y vuelve a traer.</div>`;
+          cont.classList.remove("hidden"); return;
+        }
+        const celda = v => v == null || v === "" ? '<span class="text-slate-700">—</span>' : this._esc(v);
+        const cab = `<tr class="border-b border-teal-500/40"><th class="text-left py-1.5 pr-3 text-slate-400 font-bold text-[11px]">Indicador</th>${l.map(f => `<th class="text-right py-1.5 px-2 font-black whitespace-nowrap text-[11px] ${f.id === s.activo ? "text-teal-300" : "text-purple-300"}">${this._esc(f.nombre)}${f.id === s.activo ? " ◀" : ""}<span class="block text-[9px] font-normal text-slate-500">${f.actualizado ? new Date(f.actualizado).toLocaleDateString("es-CO") : ""}</span></th>`).join("")}</tr>`;
+        const cuerpo = this.GRUPOS_CMP.map(gp => `<tr class="border-t border-slate-800"><td colspan="${l.length + 1}" class="pt-2.5 pb-1 text-[10px] font-black uppercase tracking-wider text-teal-400">${gp.g}</td></tr>` +
+          gp.filas.map(([t, fn]) => `<tr class="border-t border-slate-800/40"><td class="py-1 pr-3 text-slate-400 whitespace-nowrap text-[11px]">${t}</td>${l.map(f => `<td class="py-1 px-2 text-right font-bold text-slate-100 whitespace-nowrap text-[11px]">${celda(fn(f))}</td>`).join("")}</tr>`).join("")
+        ).join("");
+        cont.innerHTML = `<table class="w-full text-xs border-collapse">${cab}<tbody>${cuerpo}</tbody></table>
+          <p class="text-[10px] text-slate-500 mt-2 leading-relaxed">Comparación de las <strong class="text-slate-300">${l.length}</strong> fichas guardadas en este navegador (◀ = la activa). La «—» significa que ese dato aún no se ha calculado ni traído en esa ficha, no que el predio carezca de él. Esta tabla no sustituye la carta de suelos ni el levantamiento de cada predio.</p>`;
+        cont.classList.remove("hidden");
       },
       imprimirInforme() {
         const cont = document.getElementById("ficha-informe");
@@ -6010,8 +6221,7 @@
         secs.forEach(s => s.rows.forEach(([k, v]) => rows.push([esc(s.tit), esc(k), esc(v)].join(";"))));
         const blob = new Blob(["\ufeff" + rows.join("\r\n")], { type: "text/csv;charset=utf-8" });
         const a = document.createElement("a");
-        const d = this.load().ubic || {};
-        const nombre = ((d.predio || d.municipio || "ficha").replace(/[^\w\-]+/g, "_")).slice(0, 40);
+        const nombre = this._slug(this.nombre());
         a.href = URL.createObjectURL(blob); a.download = `${nombre}_${new Date().toISOString().slice(0, 10)}.csv`;
         document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
       }
@@ -7288,6 +7498,7 @@
       Ficha.badge();
       Ficha.llenarFormulario();
       Ficha.render();
+      Ficha.renderSelector();
       // URL con #pestana: enlaces directos a cada módulo
       const h = location.hash.slice(1);
       if (h && document.getElementById(h)?.classList.contains("tab-content")) cambiarPestana(h);
