@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Portal Agrológico Integral - Suelos IGAC Colombia | Edafología, Fertilidad & Gestión Ambiental</title>
+  <title>AMBIOMA · Portal Ambiental Integral — Suelo, Agua, Aire, Biodiversidad y Norma</title>
   
   <!-- METADATOS Y FUENTES CIENTÍFICAS OFICIALES COLOMBIA -->
-  <meta name="description" content="Plataforma integral oficial y educativa de agrología, física, química, taxonomía y conservación de suelos para Ingeniería Ambiental en Colombia. Metodologías oficiales IGAC, IDEAM, MinAmbiente e ICA.">
-  <meta name="keywords" content="suelos igac, fertilidad de suelos, edafologia colombia, usle rusle colombia, capacidad de uso de tierras igac, bioindicadores daphnia, ordenes suelo taxonomy usda, complejos de cambio albrecht">
-  <meta name="author" content="Especialistas de Suelos & Ingeniería Ambiental Colombia">
+  <meta name="description" content="AMBIOMA: plataforma de análisis ambiental del territorio colombiano. Suelo (edafología IGAC, RUSLE), agua (estabilidad, cloración, riego, oxígeno disuelto), aire (ICA Res. 2254, pluma gaussiana, GEI Tier 1), biodiversidad (Shannon, Jaccard, Chao1, métricas de paisaje) y normativa, con calculadoras reales que funcionan sin señal en campo.">
+  <meta name="keywords" content="portal ambiental colombia, suelos igac, fertilidad de suelos, edafologia colombia, usle rusle colombia, capacidad de uso de tierras igac, calidad de agua riego, langelier, cloracion ct, indice de calidad del aire 2254, dispersion gaussiana briggs, emisiones GEI ipcc, indices de diversidad shannon chao1, metricas de paisaje conectancia, normativa ambiental colombia, bioindicadores daphnia, ordenes suelo taxonomy usda, complejos de cambio albrecht">
+  <meta name="author" content="AMBIOMA · Ingeniería Ambiental Colombia">
   <meta name="theme-color" content="#0f172a">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="manifest" href="manifest.webmanifest">
@@ -179,10 +179,10 @@
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-1.5 cursor-pointer" onclick="cambiarPestana('tab-hub')">
-              AGRO-SUELOS <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">IGAC v4.0 PRO</span>
+              AMBIOMA <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">5 áreas · v4.1</span>
             </h1>
           </div>
-          <p class="text-[11px] text-slate-400">Plataforma Integral de Edafología & Ingeniería Ambiental Colombia</p>
+          <p class="text-[11px] text-slate-400">Suelo · Agua · Aire · Biodiversidad · Norma — Ingeniería Ambiental Colombia</p>
         </div>
       </div>
 
@@ -323,6 +323,13 @@
         </select>
       </div>
 
+      <div class="relative inline-block text-left">
+        <select id="select-bloque-le" aria-label="Ir a una herramienta del Bloque LE: Norma ambiental" onchange="seleccionarModuloLE(this.value)" class="bg-slate-900 border border-slate-700 text-amber-300 hover:text-amber-200 rounded-lg px-2.5 py-1.5 text-xs font-bold focus:outline-none cursor-pointer">
+          <option value="" disabled selected>⚖️ Bloque LE: Norma (LE1-LE4) ▼</option>
+          <option value="tab-le1">LE1. ¿Licencia, permiso o nada? Árbol de trámite</option>
+        </select>
+      </div>
+
       <button onclick="cambiarPestana('tab-hub')" id="btn-tab-hub" class="tab-btn px-2.5 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold flex items-center gap-1 cursor-pointer whitespace-nowrap">
         <span>📌</span> Directorio General
       </button>
@@ -346,8 +353,10 @@
     <!-- =================================================================== -->
     <div id="tab-portada" class="tab-content no-print space-y-5">
       <div class="text-center pt-1">
-        <h2 class="text-xl md:text-3xl font-black text-white leading-tight">Elige el área con la que vas a trabajar</h2>
-        <p class="text-[12px] text-slate-400 mt-2 max-w-3xl mx-auto leading-relaxed">Cada área abre su propio tablero y su propio fondo. Dentro del área la barra de pestañas muestra <strong class="text-slate-300">solo los módulos de esa área</strong>, y el botón <strong class="text-slate-300">🧭 Elegir área</strong> de arriba te devuelve aquí en un clic. Los enlaces directos que ya compartiste (con <strong class="text-slate-300">#tab-b19</strong>, <strong class="text-slate-300">#tab-w1</strong>, <strong class="text-slate-300">#tab-ar2</strong>) siguen abriendo ese módulo y cambiando solos al área que le toca.</p>
+        <h2 class="text-3xl md:text-5xl font-black leading-none tracking-tight bg-gradient-to-r from-emerald-300 via-teal-200 to-sky-300 bg-clip-text text-transparent">AMBIOMA</h2>
+        <p class="text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-slate-500 mt-2">Suelo · Agua · Aire · Biodiversidad · Norma</p>
+        <h3 class="text-lg md:text-xl font-bold text-white leading-tight mt-3">Elige el área con la que vas a trabajar</h3>
+        <p class="text-[12px] text-slate-400 mt-2 max-w-3xl mx-auto leading-relaxed">Ambioma es el bioma completo de un predio: lo que está abajo (<strong class="text-slate-300">suelo</strong>), lo que lo cruza (<strong class="text-slate-300">agua</strong>), lo que sale de él (<strong class="text-slate-300">aire</strong>), lo que lo habita (<strong class="text-slate-300">biodiversidad</strong>) y lo que lo permite o lo prohíbe (<strong class="text-slate-300">norma</strong>). Cada área abre su propio tablero y su propio fondo. Dentro del área la barra de pestañas muestra <strong class="text-slate-300">solo los módulos de esa área</strong>, y el botón <strong class="text-slate-300">🧭 Elegir área</strong> de arriba te devuelve aquí en un clic. Los enlaces directos que ya compartiste (con <strong class="text-slate-300">#tab-b19</strong>, <strong class="text-slate-300">#tab-w1</strong>, <strong class="text-slate-300">#tab-ar2</strong>) siguen abriendo ese módulo y cambiando solos al área que le toca.</p>
       </div>
       <div id="portada-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3 flex flex-col sm:flex-row sm:items-center gap-2 text-[11px]">
@@ -368,7 +377,7 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-4">
           <div>
             <span class="badge-norma badge-igac mb-1">Malla Curricular Ingeniería Ambiental Colombia</span>
-            <h2 id="hub-titulo" class="text-xl md:text-2xl font-black text-white">Directorio Agrológico Integral de Suelos</h2>
+            <h2 id="hub-titulo" class="text-xl md:text-2xl font-black text-white">AMBIOMA · Directorio ambiental integral del territorio</h2>
             <p id="hub-sub" class="text-[11px] text-slate-400 italic mt-0.5"></p>
             <p class="text-xs text-slate-400">Accede directamente a los <strong class="text-emerald-400" id="hub-total-n">35</strong> módulos con sus calculadoras, sustentos normativos y diagnósticos oficiales.</p>
           </div>
@@ -1393,6 +1402,73 @@
         <div id="bi4-res" class="text-xs"></div>
         <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed">
           <strong class="text-red-300">Límites:</strong> las métricas de paisaje salen de <strong>la tipología y la escala del mapa</strong>: cambia el tamaño de celda o agrupa clases y cambia SHDI, y el perímetro de un fragmento depende de la resolución con que lo digitalizaste (efecto/coastline). PC y dPC suponen que <strong>todos los fragmentos son iguales para la especie</strong> y que la probabilidad de cruce decae solo con la distancia: no hay matriz, ni barreras, ni ríos. Y la relación especie-área <strong>no es una ley</strong>: da un orden de magnitud del efecto de perder hábitat asumiendo equilibrio, y históricamente ha sobrestimado extinciones (la "deuda de especies" tarda en pagarse) o las ha subestimado cuando la pérdida se concentra en los hábitats más ricos. Úsalo para argumentar orden de magnitud, no como predicción puntual.
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- BLOQUE LE · NORMA AMBIENTAL · LE1 ÁRBOL DE TRÁMITE -->
+    <!-- =================================================================== -->
+    <div id="tab-le1" class="tab-content hidden space-y-5">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="border-b border-slate-800 pb-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge-norma badge-minambiente">Decreto 1076 de 2015 · arts. 2.2.2.3.2.1 a 2.2.2.3.2.4</span>
+            <span class="badge-norma badge-ideam">Modificado por Dec. 703/2018 · Dec. 852/2024 · Dec. 1186/2025 · Dec. 1421/2016 · Dec. 670/2025</span>
+          </div>
+          <h2 class="text-lg font-black text-white flex items-center gap-2 mt-1"><span>⚖️</span> LE1 · Árbol de trámite: ¿licencia ambiental, y quién te la decide?</h2>
+          <p class="text-xs text-slate-400 mt-1">El punto de partida de cualquier trámite. En Colombia la licencia ambiental <strong class="text-amber-300">no se decide por el tamaño del predio ni por el buen criterio del funcionario</strong>: el artículo 2.2.2.3.2.1 dice que están sujetos a licencia <strong>únicamente</strong> los proyectos de dos listas cerradas (2.2.2.3.2.2 para la ANLA y 2.2.2.3.2.3 para las CAR), y que ninguna autoridad puede imponer planes de manejo ambientales por fuera de ellas. Así que lo que define tu caso es <strong>la actividad y su magnitud</strong>: digitando la cifra real de tu proyecto esta herramienta aplica el umbral literal de la norma y te devuelve la autoridad, el artículo invocado y el texto exacto en que se apoya.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div>
+            <label for="le1-act" class="text-slate-400 font-bold block mb-1">1 · ¿Qué vas a hacer o construir? <span class="text-amber-400">(obligatorio)</span></label>
+            <select id="le1-act" onchange="le1Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+              <option value="">Elige la actividad que vas a desarrollar…</option>
+            </select>
+            <p class="text-[10px] text-slate-500 mt-1">La lista está armada numeral por numeral desde el texto vigente del decreto. Si tu actividad no aparece, lo más probable es que <strong class="text-slate-400">no esté en las listas taxativas</strong> y por lo tanto no sea licenciable por esta vía: escoge entonces la última opción del grupo «Agro y fauna» y el portal te lo confirma con la cita del artículo 2.2.2.3.2.1.</p>
+          </div>
+          <div id="le1-mag-caja" class="hidden">
+            <label for="le1-mag" class="text-slate-400 font-bold block mb-1">2 · <span id="le1-mag-lab">Magnitud</span></label>
+            <input type="text" inputmode="decimal" id="le1-mag" placeholder="Dígitala tú: el portal no la estima por ti" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:border-amber-500 focus:outline-none">
+            <p class="text-[10px] text-slate-500 mt-1">Usa la <strong>producción o capacidad proyectada</strong> que va en tu estudio o en tu idea de proyecto, no la que sale de la maquinaria instalada hoy: los umbrales del decreto están redactados en términos de lo proyectado.</p>
+          </div>
+        </div>
+
+        <div id="le1-tipo-caja" class="hidden bg-slate-950 border border-slate-800 rounded-xl p-3">
+          <label for="le1-tipo" class="text-slate-400 font-bold block mb-1 text-xs">2b · ¿De qué fuente se trata? <span class="text-slate-500 font-normal">(el sector eléctrico se reparte por fuente y potencia, no solo por potencia)</span></label>
+          <select id="le1-tipo" onchange="le1Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 text-xs focus:border-amber-500 focus:outline-none">
+            <option value="">Elige la fuente…</option>
+            <option value="hidro">Hídrica (aprovecha el recurso hídrico)</option>
+            <option value="termica">Térmica u otra no hídrica (gas, carbón, diésel, doble combustible)</option>
+            <option value="alternativa">Virtualmente contaminante (solar, eólica, biomasa, geotérmica)</option>
+          </select>
+          <p class="text-[10px] text-slate-500 mt-1.5">Ojo con la palabra del decreto: «fuentes de energía <strong>virtualmente contaminantes</strong>» es la categoría regulatoria para solar/eólica/biomasa, y no significa que contaminen. Significa que el propio numeral las pone en manos de la autoridad territorial en el rango de 10 a menos de 50 MW.</p>
+        </div>
+
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2">
+          <h4 class="text-[11px] font-black uppercase tracking-wider text-amber-400">3 · Contexto del predio o del proyecto <span class="text-slate-500 font-normal normal-case">(esto es lo que cambia de autoridad al proyecto ya clasificado)</span></h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-[11px]">
+            <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le1-parte-anla" onchange="le1Calcular()" class="mt-0.5 accent-amber-500"><span class="text-slate-300">La actividad es <strong>parte de un proyecto mayor</strong> cuya licencia es privativa de la ANLA</span></label>
+            <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le1-peticionario-car" onchange="le1Calcular()" class="mt-0.5 accent-amber-500"><span class="text-slate-300">El peticionario <strong>es una CAR</strong>, una corporación de desarrollo sostenible, un gran centro urbano o una autoridad de la Ley 768 de 2002</span></label>
+            <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le1-al-interior-pnn" onchange="le1Calcular()" class="mt-0.5 accent-amber-500"><span class="text-slate-300">Se ejecuta <strong>al interior</strong> de un área del Sistema de Parques Nacionales Naturales</span></label>
+            <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le1-zona-amortiguadora" onchange="le1Calcular()" class="mt-0.5 accent-amber-500"><span class="text-slate-300">Está en una <strong>zona amortiguadora de Parques Nacionales previamente determinada</strong></span></label>
+            <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le1-multijurisdiccion" onchange="le1Calcular()" class="mt-0.5 accent-amber-500"><span class="text-slate-300">Cruza <strong>dos o más jurisdicciones</strong> de autoridad ambiental</span></label>
+            <label class="flex items-start gap-2 cursor-pointer" id="le1-eco-env"><input type="checkbox" id="le1-eco-especial" onchange="le1Calcular()" class="mt-0.5 accent-amber-500"><span class="text-slate-300"><strong>Interviene directamente</strong> un humedal RAMSAR, un páramo o un manglar</span></label>
+            <label class="flex items-start gap-2 cursor-pointer hidden" id="le1-zni-env"><input type="checkbox" id="le1-zni" onchange="le1Calcular()" class="mt-0.5 accent-amber-500"><span class="text-slate-300">Es una pequeña hidro que operará en una <strong>Zona No Interconectada (ZNI)</strong></span></label>
+          </div>
+          <p class="text-[10px] text-slate-500">Nada de esto está «de más»: los cuatro primeros son literalmente apartes del propio Decreto 1076 y son la causa más común de que un expediente radicado en la CAR termine devuelto o avocado por la ANLA. Los dos últimos no cambian la autoridad: agregan un requisito previo o una instancia que hay que surtir.</p>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <button onclick="le1Calcular()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">⚖️ Decidir con la norma</button>
+          <button onclick="document.getElementById('le1-mag').value='';document.getElementById('le1-act').value='';le1Refrescar();document.getElementById('le1-res').innerHTML=''" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Limpiar</button>
+          <button onclick="cambiarPestana('tab-b26')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Buscador de normas (B26)</button>
+          <button onclick="cambiarPestana('tab-metodo')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Metodología y fuentes</button>
+        </div>
+        <div id="le1-res" class="text-xs"></div>
+        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed">
+          <strong class="text-red-300">Límites de esta herramienta:</strong> decide <strong>licencia ambiental</strong> y su autoridad. No decide permisos, y una actividad sin licencia casi siempre necesita alguno (vertimiento, concesión de aguas, ocupación de cauce, aprovechamiento forestal, emisión atmosférica): eso va en <strong>LE2</strong>. Tampoco sabe si tu proyecto le toca a la ANLA por una <strong>concesión minero-energética previa</strong>, ni si aplica el régimen de transición por fechas de radicación anteriores a 2014, ni si un plan de ordenamiento local exige algo más. Y la competencia territorial la define tu <strong>jurisdicción</strong>, que aquí no se evalúa: hay 33 corporaciones autónomas regionales y de desarrollo sostenible más las autoridades ambientales urbanas, y cuál te corresponde depende del municipio exacto, no del departamento. Esta herramienta es el filtro para no llegar a la ventanilla equivocada; no sustituye el concepto de la autoridad ni la asesoría jurídica.
         </div>
       </div>
     </div>
@@ -4391,7 +4467,7 @@
   <div id="print-area" class="print-only p-8 bg-white text-black font-sans text-xs">
     <div class="border-b-2 border-black pb-3 mb-4 flex justify-between items-center">
       <div>
-        <h2 class="text-base font-bold uppercase">AGRO-SUELOS · Informe de Evaluación de Fertilidad Natural de Suelos</h2>
+        <h2 class="text-base font-bold uppercase">AMBIOMA · Suelo — Informe de Evaluación de Fertilidad Natural de Suelos</h2>
         <h3 class="text-xs font-semibold">Simulación educativa basada en la metodología IGAC (Instituto Geográfico Agustín Codazzi) — No constituye documento ni concepto oficial del IGAC</h3>
       </div>
       <div class="text-right text-[10px]">
@@ -4540,6 +4616,14 @@
       }
     }
 
+    function seleccionarModuloLE(tabId) {
+      if (tabId) {
+        cambiarPestana(tabId);
+        const s = document.getElementById("select-bloque-le");
+        if (s) s.value = "";
+      }
+    }
+
     const catalogoModulos = [
       { id: "tab-ficha", num: "★", tit: "Mi Ficha de Suelo", bloq: "Transversal", norm: "localStorage (sin servidores)", desc: "Varias fichas a la vez (un predio por ficha), con mapa de clic para geolocalizar (Leaflet/OpenStreetMap) y comparación de indicadores entre predios. Identificación y datos que viajan entre módulos: textural, fertilidad, capacidad de uso y erosión. Guardada en tu navegador, exportable en JSON y CSV." },
       { id: "tab-metodo", num: "★", tit: "Metodología y Fuentes", bloq: "Transversal", norm: "IGAC · IDEAM · USDA · FAO · IPCC", desc: "Fórmula, autor, rango de validez y enlace de cada cálculo del portal: RUSLE (R, K, LS, C, P, T, Se), fertilidad IGAC, CIC, textural, encalado, yeso y carbono." },
@@ -4592,7 +4676,8 @@
       { id: "tab-bi1", num: "BI1", tit: "Diversidad alfa de tu inventario", bloq: "Bloque BI: Biodiversidad", norm: "Shannon 1948 · Simpson 1949 · Pielou 1966 · Magurran 2011", desc: "Pegas la lista de especie e individuos (o la traes desde Excel con tabulador) y calcula riqueza S, abundancia N, Shannon H′ en la base que declares (ln, log₂ o log₁₀), equitabilidad J′, Simpson λ / 1−λ / 1/λ, número efectivo de especies, Margalef, McIntosh y Berger-Parker. Además te muestra qué especie aporta cada punto de H′, para que el índice no sea una caja negra." },
       { id: "tab-bi2", num: "BI2", tit: "Similaridad y recambio entre dos inventarios", bloq: "Bloque BI: Biodiversidad", norm: "Jaccard 1912 · Sørensen 1948 · Whittaker 1960 · Bray-Curtis 1957 · Baselga 2010", desc: "Compara dos listas (dos predios, dos fechas o dos coberturas) con Jaccard, Sørensen y Bray-Curtis cuando hay abundancias, la β de Whittaker, y la descomposición de Baselga que separa cuánta diferencia es recambio de especies (βSIM) y cuánta es pérdida neta (βSNE), con el chequeo de aditividad. Los nombres se normalizan sin tildes ni mayúsculas." },
       { id: "tab-bi3", num: "BI3", tit: "¿Ya muestreaste suficiente? Chao1 y rarefacción", bloq: "Bloque BI: Biodiversidad", norm: "Chao 1984 · Chao & Jost 2012 · Hurlbert 1971", desc: "Con f₁ y f₂ estima la riqueza no observada (Chao1 corregido por sesgo), la cobertura de tu muestra Ĉ = 1 − f₁/N, el % de riqueza atrapada y la curva de rarefacción exacta E[S_n] sobre todas las submuestras posibles, dibujada en SVG. Sirve para comparar predios con esfuerzo distinto sin tener que extrapolar: el portal no proyecta más allá de tu N y te lo dice." },
-      { id: "tab-bi4", num: "BI4", tit: "Paisaje: mosaico, fragmentos y conectancia", bloq: "Bloque BI: Biodiversidad", norm: "FRAGSTATS (McGarigal & Marks 1995) · Saura & Pascual-Hortal 2007 · Arrhenius 1921", desc: "Cuatro cálculos espaciales independientes con tus propios digitados: composición del mosaico (SHDI, EQUIT, dominancia y % natural que tú declaras), forma de los fragmentos (compacidad 4πA/P², SHAPE, densidad y parche mayor), conectancia PC con núcleo gaussiano o exponencial y dPC de cada parche para saber cuál sostiene el flujo, y relación especie-área S = c·A^z. En PC, p* es la ruta de mayor probabilidad (admite saltos por otros parches) y el denominador A_L es el del paisaje completo, fijo: es la idea de Saura &amp; Pascual-Hortal simplificada, no el cálculo formal de Conefor con matriz de resistencia." }
+      { id: "tab-bi4", num: "BI4", tit: "Paisaje: mosaico, fragmentos y conectancia", bloq: "Bloque BI: Biodiversidad", norm: "FRAGSTATS (McGarigal & Marks 1995) · Saura & Pascual-Hortal 2007 · Arrhenius 1921", desc: "Cuatro cálculos espaciales independientes con tus propios digitados: composición del mosaico (SHDI, EQUIT, dominancia y % natural que tú declaras), forma de los fragmentos (compacidad 4πA/P², SHAPE, densidad y parche mayor), conectancia PC con núcleo gaussiano o exponencial y dPC de cada parche para saber cuál sostiene el flujo, y relación especie-área S = c·A^z. En PC, p* es la ruta de mayor probabilidad (admite saltos por otros parches) y el denominador A_L es el del paisaje completo, fijo: es la idea de Saura &amp; Pascual-Hortal simplificada, no el cálculo formal de Conefor con matriz de resistencia." },
+      { id: "tab-le1", num: "LE1", tit: "Árbol de trámite: ¿licencia ambiental, y de quién?", bloq: "Bloque LE: Norma", norm: "Decreto 1076/2015 arts. 2.2.2.3.2.1 a 2.2.2.3.2.4 · Dec. 852/2024 · Dec. 1186/2025 · Dec. 1421/2016 · Dec. 670/2025", desc: "Escoges la actividad y digitas la magnitud que tu propio proyecto tiene (t/año, MW, kV, m³, hectáreas, habitantes servidos, pulgadas) y el motor decide con el umbral literal del decreto: ANLA, CAR o ni una ni otra. Compara tu cifra con el umbral, te muestra el porcentaje del límite y el margen que te separa de la otra autoridad, y aplica los cuatro traslados de competencia que están en el mismo texto (parágrafos 4º y 5º del art. 2.2.2.3.2.3 y numerales 12.a y 12.b del 2.2.2.3.2.2): parte de un proyecto licenciado por ANLA, peticionario que es una CAR, predio al interior del PNN o en su zona amortiguadora. Avisa además la multijurisdicción (art. 2.2.2.3.2.6) y el concepto previo del Ministerio por RAMSAR, páramo o manglar (art. 2.2.2.3.2.4)." }
     ];
 
     // =========================================================================
@@ -4651,12 +4736,13 @@
       "tab-bi1": ["biodiv"],
       "tab-bi2": ["biodiv"],
       "tab-bi3": ["biodiv"],
-      "tab-bi4": ["biodiv", "suelo"]
+      "tab-bi4": ["biodiv", "suelo"],
+      "tab-le1": ["legal"]
     };
 
     const AREAS = [
       { k: "todas", nom: "Todas", ico: "🗂️", hex: "#94a3b8",
-        sub: "los 5 áreas en una sola lista, sin filtro",
+        sub: "las 5 áreas en una sola lista, sin filtro",
         ya: "Todo el portal sin filtro: cada tarjeta muestra además las áreas que de verdad trabaja.",
         faltan: [] },
       { k: "suelo", nom: "Suelos", ico: "🟤", hex: "#10b981",
@@ -4789,7 +4875,7 @@
       _opciones() {
         if (!this._ops) {
           this._ops = {};
-          ["select-bloque-a", "select-bloque-b", "select-bloque-c", "select-bloque-w", "select-bloque-ar", "select-bloque-bi"].forEach(id => {
+          ["select-bloque-a", "select-bloque-b", "select-bloque-c", "select-bloque-w", "select-bloque-ar", "select-bloque-bi", "select-bloque-le"].forEach(id => {
             const s = document.getElementById(id);
             if (!s || !s.options) return;
             this._ops[id] = Array.prototype.slice.call(s.options).map(o => ({ v: o.value || "", t: o.text }));
@@ -5033,6 +5119,7 @@
       { mod: "BI2 · Similaridad y β de Whittaker", f: ["Jaccard = |A∩B|/|A∪B| · Sørensen = 2|A∩B|/(|A|+|B|)", "β de Whittaker = γ/ᾱ − 1, con γ = riqueza de la unión y ᾱ = (S_A+S_B)/2", "Bray-Curtis BC = Σ|x_Ai − x_Bi| / Σ(x_Ai + x_Bi), sobre la unión y con 0 donde falta", "Baselga: βSOR = (b+c)/(2a+b+c) = βSIM + βSNE, con βSIM = min(b,c)/(a+min(b,c)) y βSNE = βSOR − βSIM", "Equivalencia de escalas: βJAC = (b+c)/(a+b+c) y βILN = βJAC − βSIM"], autor: "Jaccard (1908/1912); Sørensen (1948); Whittaker (1960); Bray & Curtis (1957); Baselga (2010), separación de componentes de recambio y anidamiento en la β-degacidad multipar", validez: "Jaccard y Sørensen son de presencia/ausencia: una especie con 1 individuo pesa lo mismo que una con 500. Bray-Curtis usa abundancias pero <strong>depende del esfuerzo relativo</strong> de cada lista (si B se muestreó a la mitad, parece más distinto). La descomposición de Baselga es aditiva por construcción (βSIM + βSNE = βSOR exactamente), así que si los tres números no cuadran hay un error de cálculo. Ninguno de estos índices distingue parentesco, rareza ni valor de conservación: perder 10 especies de pastos y perder 10 polinizadores dan el mismo número. βSNE = 0 no significa ausencia de anidamiento, significa ausencia de anidamiento <em>perfecto</em> (Baselga 2010 lo discute explícitamente).", fuente: { t: "Baselga (2010) Partitioning the turnover and nestedness components of beta diversity, Global Ecology and Biogeography 19:134-143", u: "https://doi.org/10.1111/j.1466-8238.2009.00490.x" } },
       { mod: "BI3 · Chao1, cobertura y rarefacción", f: ["Chao1 corregido por sesgo = S + f₁(f₁−1) / [2(f₂+1)]", "Chao1 clásico = S + f₁²/(2f₂), definido solo si f₂ > 0", "Cobertura de la muestra Ĉ = 1 − f₁/N (Chao & Jost 2012)", "Rarefacción de Hurlbert, valor esperado exacto: E[S_n] = Σ_i [1 − C(N−n_i, n)/C(N, n)]", "El portal calcula E[S_n] agrupando especies por clase de abundancia y acumulando el producto término a término"], autor: "Chao (1984) con la forma corregida por sesgo de Chao & Lee (1992); Chao & Jost (2012) para la cobertura; Hurlbert (1971) y Cole (1949) para la curva de rarefacción", validez: "Chao1 es un <strong>límite inferior</strong>: dice «al menos faltan estas especies», nunca «esta es la riqueza». Asume que las especies no vistas se parecen a la cola que describen f₁ y f₂; con muestreo parcheado f₁ se dispara y el estimador deja de servir. Requiere <strong>conteos enteros de individuos</strong>: con coberturas o frecuencias la teoría de especies no vistas no aplica. Rarefacción = interpolación dentro de tu N; el portal <strong>no extrapol</strong>a (el modelo asintótico de Chao et al. 2014/iNEXT — Ecological Monographs 84:45-67, https://doi.org/10.1890/13-0133.1 — pide ajuste sobre la matriz completa y no se implementa acá). No se calculan intervalos de confianza: esos piden bootstrap. Comparar predios solo es válido rarefactuando los dos al mismo n, y cada tipo de unidad (tallos, cantos, trampas) tiene su propia curva.", fuente: { t: "Chao & Jost (2012) Coverage-based rarefaction and extrapolation, Ecology 93:2533-2547", u: "https://doi.org/10.1890/11-1952.1" } },
       { mod: "BI4 · Métricas de paisaje y conectancia", f: ["SHDI = −Σ pᵢ ln pᵢ con pᵢ = proporción de área de la clase i · SHDI_max = ln m · EQUIT = SHDI/SHDI_max", "Compacidad isoperimétrica C = 4πA/P² (A en m²) · SHAPE = 1/√C", "Densidad de parches PD = n/A · % del parche mayor sobre la suma de fragmentos", "PC = Σ_i Σ_j a_i·a_j·p*_ij / A_L² con p_ii = 1; núcleo gaussiano p = exp(−d²/L²) o exponencial p = exp(−d/(2L))", "dPC_i = 100·(PC − PC_(−i))/PC, al eliminar el nodo i con sus enlaces", "Relación especie-área S = c·A^z → S₂ = S₁·(A₂/A₁)^z"], autor: "McGarigal & Marks (1995) FRAGSTATS; Hadley & Real (1971) / Gibbs (1967) para la compacidad; Pascual-Hortal & Saura (2006) para PC y su contribución nodal; Saura & Pascual-Hortal (2007, Landscape and Urban Planning 83:91-103) para el índice de disponibilidad de hábitat; Arrhenius (1921) y Rosenzweig (1995) para la curva especie-área", validez: "Todo depende de <strong>la tipología y la escala</strong>: cambia la agrupación de clases o el tamaño de celda y se mueve SHDI; el perímetro de un fragmento depende de la resolución con que lo digitalizaste (efecto coastline), así que hay que declarar escala y área mínima mapeable. PC supone que todos los parches son iguales para la especie y que la probabilidad de cruce decae solo con la distancia en línea recta: sin matriz, sin barreras y sin resistencia del terreno, y es un índice <strong>especie-específico</strong> — cambiar L cambia el orden de los fragmentos. La relación especie-área <strong>no es una ley</strong>: da un orden de magnitud asumiendo equilibrio; histórica y documentadamente ha sobrestimado extinciones inmediatas (deuda de especies) y las ha subestimado cuando la pérdida se concentra en hábitats ricos. La cifra sale con decimales a propósito: es un valor esperado, no un conteo.", fuente: { t: "Pascual-Hortal & Saura (2006) Landscape Ecology 21:959-967", u: "https://doi.org/10.1007/s10980-006-0013-z" } },
+      { mod: "LE1 · Árbol de trámite de licencia ambiental", f: ["Regla base: solo los proyectos enumerados en los arts. 2.2.2.3.2.2 (ANLA) y 2.2.2.3.2.3 (CAR) están sujetos a licencia ambiental — art. 2.2.2.3.2.1", "Clasificación por magnitud proyectada: ≥800.000 t/año carbón · ≥600.000 t/año arcillas · ≥250.000 m³/año materiales · ≥2.000.000 t/año remoción de metálicos · ≥1.000.000 t/año otros minerales (por encima: ANLA; por debajo: CAR)", "Eléctrico: ≥100 MW ANLA (Dec. 1186/2025) · 10–<100 MW CAR · hídrica <100 MW CAR salvo PCH en ZNI ≤10 MW · alternativa ≥50 MW ANLA y 10–<50 MW CAR (Dec. 852/2024) · líneas ≥220 kV ANLA y 50–<220 kV CAR", "Obras: presa >200.000.000 m³ ANLA, ≤ CAR · riego >20.000 ha ANLA y 5.000–20.000 ha CAR · trasvase con mínimo caudal ≥2 m³/s ANLA · ductos ≥6 pulgadas ANLA · PTAR ≥200.000 habitantes CAR · valorización orgánicos ≥20.000 t/año CAR · concretera >10.000 m³/mes CAR", "Traslados de competencia: parágrafo 5o (parte de proyecto ANLA) · parágrafo 4o (peticionario es una CAR) · num. 12.a (al interior del PNN) · num. 12.b (zona amortiguadora determinada) · art. 2.2.2.3.2.6 (multijurisdicción → la ANLA designa) · art. 2.2.2.3.2.4 (RAMSAR, páramo o manglar → concepto previo del Ministerio)"], autor: "Decreto 1076 de 2015 (Decreto Único Sector Ambiente), Título 2 Parte 2 Libro 2, con las modificaciones citadas en el propio texto: Dec. 703/2018, Dec. 852/2024, Dec. 1186/2025, Dec. 1421/2016 y Dec. 670/2025", validez: "Es un <strong>filtro de competencia</strong>, no un concepto jurídico. Las listas son <strong>taxativas</strong>: que tu actividad no aparezca significa que no procede exigir licencia ni plan de manejo ambiental por esa vía (art. 2.2.2.3.2.1), pero <strong>no</strong> significa que no requiera permisos — vertimiento, concesión de aguas, ocupación de cauce, aprovechamiento forestal y emisión atmosférica se tramitan aparte. Los umbrales están redactados sobre la <strong>producción o capacidad proyectada</strong>, y el umbral que se aplica es el de la fecha de radicación: si la norma cambió a mitad de trámite, puede aplicar el régimen de transición (art. 2.2.2.3.11.1). Tampoco decide tu <strong>autoridad territorial</strong>: con 33 corporaciones autónomas regionales y de desarrollo sostenible más las autoridades urbanas (art. 66 de la Ley 99 de 1993, Ley 768 de 2002), cuál te corresponde depende del municipio exacto. Antes de radicar, verifica el texto consolidado en la Función Pública.", fuente: { t: "Decreto 1076 de 2015 — arts. 2.2.2.3.2.1 a 2.2.2.3.2.4 (Función Pública, Sistema PILA)", u: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=73926" } },
       { mod: "A12 · Clave de orden de suelos", f: ["Decisión guiada: material parental + epipedón + régimen de humedad + endopedón → orden probable", "Material vítreo/alofánico manda sobre cualquier epipedón → Andisol; hístico domina sobre el resto"], autor: "Soil Survey Staff (2022) Keys to Soil Taxonomy, 13.ª ed.; terminología IGAC", validez: "Es una CLAVE ORIENTATIVA de campo. Los órdenes reales exigen datos de laboratorio (retención de P ≥85% para carácter ándico, CIC y saturación de bases para árgilico, coeficiente lineal de extensibilidad para vértico). Nunca uses este resultado en un informe legal sin perfil descrito y análisis.", fuente: { t: "USDA-NRCS Soil Taxonomy", u: "https://www.nrcs.usda.gov/conservation/resources/soil-survey" } },
       { mod: "Módulo 4 · Órdenes por departamento", f: ["Filtro por departamento sobre un mapa referencial de presencia de órdenes", "Se marca el orden dominante y se listan los ausentes"], autor: "IGAC (2012) Estudio General de Suelos de Colombia y cartas de reconocimiento de suelos por departamento", validez: "Es un catálogo de PRESENCIA, no de área ni de localización: decir que un departamento tiene 8 órdenes no dice cuánto ocupan ni dónde. El orden dominante es aproximado y puede cambiar entre cuencas vecinas. Para decidir uso o compra de tierra necesitas la carta de suelos a escala 1:100.000 o menor, o un levantamiento propio.", fuente: { t: "IGAC Suelos", u: "https://www.igac.gov.co" } },
       { mod: "A13 · Plan de calicatas y sondeos", f: ["Densidad de observaciones: 1 cada 10–50 ha en terreno homogéneo, 1 cada 2–5 ha en paisaje complejo", "Profundidad mínima: 1,20 m o hasta la limitante (roca, freático, carbonatos)"], autor: "Guía IGAC de levantamiento de suelos (densidades por escala) y USDA-NRCS Soil Survey Manual", validez: "La densidad calculada supone variabilidad moderada. En abanicos aluviales, volcanismos recientes o rellenos antrópicos la variabilidad es alta: duplica las observaciones o apoya con geofísica.", fuente: { t: "IGAC Levantamientos", u: "https://www.igac.gov.co" } },
@@ -5075,7 +5162,7 @@
       // El caparazón del directorio se llama como el área en la que estás
       const aria = window.Area ? Area.info(Area.clave) : null;
       const tit = document.getElementById("hub-titulo"), sub = document.getElementById("hub-sub");
-      if (tit && aria) tit.innerText = aria.k === "todas" ? "Directorio Agrológico Integral de Suelos" : "Panel de " + aria.nom;
+      if (tit && aria) tit.innerText = aria.k === "todas" ? "AMBIOMA · Directorio integral del territorio" : "Panel de " + aria.nom;
       if (sub && aria) { sub.innerText = aria.sub || ""; sub.style.cssText = "color:" + aria.hex; }
       if (hn) hn.innerText = mods.length;
       if (ht) ht.innerText = (window.Area && Area.clave !== "todas")
@@ -7228,9 +7315,10 @@
         chao1: "Chao1 (límite inferior)", f1_singulares: "f₁ singulares", f2_duplicadas: "f₂ duplicadas", cobertura_muestra: "Cobertura Ĉ (%)", riqueza_atrapada: "% de riqueza atrapada", rarefaccion_sn: "E[S_n] rarefactuada", n_rarefaccion: "n de la submuestra",
         shdi: "SHDI del paisaje", equit_paisaje: "EQUIT del paisaje", clases_paisaje: "Clases de cobertura", pct_natural: "% de cobertura natural", compacidad_media: "Compacidad media", shape_medio: "SHAPE medio", pc_conectancia: "PC (conectancia)", dpc_mayor: "dPC del fragmento clave", fragmento_clave: "Fragmento que sostiene el flujo", z_especie_area: "z usada", s_esperada: "S₂ esperada", area_remanente_ha: "Área de hábitat después (ha)",
         area_paisaje_ha: "Área total del paisaje (ha)", clase_dominante: "Clase dominante", pct_clase_dominante: "% de la clase dominante", fragmentos: "Fragmentos digitados", parche_mayor_ha: "Parche mayor (ha)", densidad_parches_ha: "Densidad de parches (PD, /ha)", pc_alog_pct: "PC en ALOG (%)", nucleo_usado: "Núcleo de conectancia", L_dispersion_m: "Distancia de dispersión L (m)", especie_foco: "Especie o grupo foco", s_actual: "Riqueza actual (S₁)", area_actual_ha: "Área de hábitat actual (A₁, ha)", pct_cambio: "Cambio de hábitat (%)", cambio_especies: "Cambio esperado en especies (S₂ − S₁)",
+        actividad: "Actividad declarada", magnitud: "Magnitud del proyecto", autoridad: "Autoridad competente", articulo: "Artículo invocado",
         puntaje: "Autoevaluación", mejor_puntaje: "Mejor puntaje", total: "Preguntas", casos_completados: "Casos completados", pr_marcas: "Pasos marcados", caso_1: "Caso 1", caso_2: "Caso 2", caso_3: "Caso 3", caso_4: "Caso 4", caso_5: "Caso 5 · Aire"
       },
-      titulos: { ubic: "📍 Identificación del predio", textura: "🔺 Clase textural", fertilidad: "🧪 Fertilidad IGAC", a12: "🪨 Orden de suelo (A12)", ordenes: "🌍 Órdenes por departamento (4)", b14: "🌱 Capacidad de uso (B14)", b16: "🏞️ Oferta edáfica (B16)", b20: "🧩 Limitantes y prácticas (B20)", b25: "🌳 Factor C de cobertura (B25)", b19: "🌊 Erosión RUSLE (B19)", b23: "🌿 Restauración prioritaria (B23)", c29: "💧 Balance hídrico (C29)", c30: "🌾 Fertilización y costos (C30)", c31: "🛢️ DRASTIC (C31)", c32: "🚜 Traficabilidad (C32)", c33: "💰 PSE (C33)", w1: "🧪 Estabilidad del agua W1", w2: "🧯 Cloración (W2)", w3: "🚿 Agua de riego (W3)", w4: "🐟 Oxígeno disuelto (W4)", ar1: "🌫️ Calidad del aire (AR1)", ar2: "🏭 Dispersión de la pluma (AR2)", ar3: "🔥 Emisiones GEI (AR3)", bi1: "🦋 Diversidad alfa (BI1)", bi2: "🔀 Similaridad (BI2)", bi3: "🔎 Esfuerzo de muestreo (BI3)", bi4: "🗺️ Paisaje y conectancia (BI4)", b27: "🗺️ Flujo SIG (B27)", practica: "🎓 Práctica y autoevaluación" },
+      titulos: { ubic: "📍 Identificación del predio", textura: "🔺 Clase textural", fertilidad: "🧪 Fertilidad IGAC", a12: "🪨 Orden de suelo (A12)", ordenes: "🌍 Órdenes por departamento (4)", b14: "🌱 Capacidad de uso (B14)", b16: "🏞️ Oferta edáfica (B16)", b20: "🧩 Limitantes y prácticas (B20)", b25: "🌳 Factor C de cobertura (B25)", b19: "🌊 Erosión RUSLE (B19)", b23: "🌿 Restauración prioritaria (B23)", c29: "💧 Balance hídrico (C29)", c30: "🌾 Fertilización y costos (C30)", c31: "🛢️ DRASTIC (C31)", c32: "🚜 Traficabilidad (C32)", c33: "💰 PSE (C33)", w1: "🧪 Estabilidad del agua W1", w2: "🧯 Cloración (W2)", w3: "🚿 Agua de riego (W3)", w4: "🐟 Oxígeno disuelto (W4)", ar1: "🌫️ Calidad del aire (AR1)", ar2: "🏭 Dispersión de la pluma (AR2)", ar3: "🔥 Emisiones GEI (AR3)", bi1: "🦋 Diversidad alfa (BI1)", bi2: "🔀 Similaridad (BI2)", bi3: "🔎 Esfuerzo de muestreo (BI3)", bi4: "🗺️ Paisaje y conectancia (BI4)", le1: "⚖️ Árbol de trámite (LE1)", b27: "🗺️ Flujo SIG (B27)", practica: "🎓 Práctica y autoevaluación" },
       _esc(v) { return String(v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); },
       _nuevoId() { return "f" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); },
       _crear(s, id, nombre, datos) {
@@ -7398,7 +7486,7 @@
       },
       exportar() {
         const d = this.load();
-        const blob = new Blob([JSON.stringify({ portal: "SUELOS_PARA_TODOS", modulo: "Ficha de Suelo", ficha: this.nombre(), exportado: new Date().toISOString(), datos: d }, null, 2)], { type: "application/json" });
+        const blob = new Blob([JSON.stringify({ portal: "AMBIOMA", modulo: "Ficha de Predio", ficha: this.nombre(), exportado: new Date().toISOString(), datos: d }, null, 2)], { type: "application/json" });
         const a = document.createElement("a");
         const nombre = this._slug(this.nombre());
         a.href = URL.createObjectURL(blob); a.download = `${nombre}_${new Date().toISOString().slice(0, 10)}.json`;
@@ -7406,7 +7494,7 @@
       },
       exportarTodas() {
         const s = this.store();
-        const blob = new Blob([JSON.stringify({ portal: "SUELOS_PARA_TODOS", modulo: "Fichas de Suelo — respaldo completo", version: 2, exportado: new Date().toISOString(), activo: s.activo, fichas: s.fichas }, null, 2)], { type: "application/json" });
+        const blob = new Blob([JSON.stringify({ portal: "AMBIOMA", modulo: "Fichas — respaldo completo", version: 2, exportado: new Date().toISOString(), activo: s.activo, fichas: s.fichas }, null, 2)], { type: "application/json" });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob); a.download = `fichas_suelos_${new Date().toISOString().slice(0, 10)}.json`;
         document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
@@ -7450,7 +7538,7 @@
         const cont = document.getElementById("ficha-informe");
         if (!cont) return;
         if (!secs.length) { cont.innerHTML = '<p class="inf-note">La ficha está vacía: calcula en los módulos y pulsa "Traer lo último calculado".</p>'; cont.classList.remove("hidden"); return; }
-        const cab = `INFORME TÉCNICO PRELIMINAR DE SUELO, AGUA, AIRE Y BIODIVERSIDAD — ${this.nombre()}<br><span class="inf-note">Generado ${new Date().toLocaleString("es-CO")} · SUELOS_PARA_TODOS · Referencias: IGAC (2012), IDEAM/SICLICA-CAR, Foster &amp; Hathaway, Williams (1990), McCool (1987), FAO 56, Langelier (1936) / APHA 23.ª ed., Decreto 1076/2015 y Res. 2254/2017, US EPA (CT, AQI, ISC3), Briggs (1973) / Pasquill-Gifford-Turner, IPCC 2006 Tier 1, Shannon (1948) / Magurran &amp; McGill (2019), Baselga (2010), Chao &amp; Jost (2012), Hurlbert (1971), McGarigal &amp; Marks (1995), Saura &amp; Pascual-Hortal (2007), Arrhenius (1921) / Preston (1962)</span>`;
+        const cab = `INFORME TÉCNICO PRELIMINAR DE SUELO, AGUA, AIRE Y BIODIVERSIDAD — ${this.nombre()}<br><span class="inf-note">Generado ${new Date().toLocaleString("es-CO")} · AMBIOMA — portal ambiental integral · Referencias: IGAC (2012), IDEAM/SICLICA-CAR, Foster &amp; Hathaway, Williams (1990), McCool (1987), FAO 56, Langelier (1936) / APHA 23.ª ed., Decreto 1076/2015 y Res. 2254/2017, US EPA (CT, AQI, ISC3), Briggs (1973) / Pasquill-Gifford-Turner, IPCC 2006 Tier 1, Shannon (1948) / Magurran &amp; McGill (2019), Baselga (2010), Chao &amp; Jost (2012), Hurlbert (1971), McGarigal &amp; Marks (1995), Saura &amp; Pascual-Hortal (2007), Arrhenius (1921) / Preston (1962)</span>`;
         cont.innerHTML = `<h3 class="inf-tit" style="font-size:13px">${cab}</h3>` + secs.map(s =>
           `<h3>${s.tit}</h3><table>${s.rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("")}</table>`).join("") +
           '<p class="inf-note">Documento de apoyo generado por el usuario; no sustituye un levantamiento agrológico oficial IGAC ni un estudio firmado por profesional competente.</p>';
@@ -7581,6 +7669,12 @@
           ["Conectancia PC (BI4)", f => f.datos.bi4?.pc_conectancia],
           ["Fragmento que sostiene el flujo (BI4)", f => f.datos.bi4 ? `${f.datos.bi4.fragmento_clave ?? "—"} · dPC ${f.datos.bi4.dpc_mayor ?? "—"} %` : null],
           ["Especie-área (BI4)", f => f.datos.bi4 ? `z = ${f.datos.bi4.z_especie_area ?? "—"} → S₂ = ${f.datos.bi4.s_esperada ?? "—"} en ${f.datos.bi4.area_remanente_ha ?? "—"} ha` : null]
+        ] },
+        { g: "⚖️ Norma y trámite (LE1)", filas: [
+          ["Actividad declarada (LE1)", f => f.datos.le1?.actividad],
+          ["Magnitud digitada (LE1)", f => f.datos.le1?.magnitud],
+          ["Autoría del trámite (LE1)", f => f.datos.le1?.autoridad],
+          ["Artículo invocado (LE1)", f => f.datos.le1?.articulo]
         ] },
         { g: "🌿 Restauración, PSE y autoevaluación", filas: [
           ["Tipo de sitio (B23)", f => f.datos.b23?.tipo],
@@ -10564,6 +10658,325 @@
     }
 
     // ==========================================================================
+    // BLOQUE LE · LEGAL — LE1 árbol de trámite, LE2 permisos, LE3 cronograma, LE4 predio
+    // ==========================================================================
+    // Todo el bloque se apoya en el Decreto 1076 de 2015 (Decreto Único Sector
+    // Ambiente) tal como está en el espejo oficial de la Cancillería, y en la Ley
+    // 1437 de 2011 (CPACA). Las listas de proyectos son TAXATIVAS (art. 2.2.2.3.2.1):
+    // lo que no está allí no requiere licencia ambiental, y la autoridad no puede
+    // imponer planes de manejo ambientales por fuera del decreto o del régimen de
+    // transición (art. 2.2.2.3.11.1). Ninguna cifra de acá está de memoria.
+    const LE = Object.assign({}, W, {
+      tit(txt) { return '<h4 class="text-[11px] font-black uppercase tracking-wider text-amber-400 mt-3 mb-1">' + txt + "</h4>"; },
+      txt(id) { const el = document.getElementById(id); return el ? String(el.value == null ? "" : el.value) : ""; },
+      chk(id) { const el = document.getElementById(id); return !!(el && el.checked); },
+      val(id) { const el = document.getElementById(id); return el ? String(el.value || "") : ""; }
+    });
+    LE._esc2 = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    LE.fila = function (k, v, nota, cls) {
+      return '<tr class="border-b border-slate-800"><td class="text-slate-400 py-1 pr-2 align-top">' + k +
+        '</td><td class="text-right font-bold ' + (cls || "text-white") + ' align-top">' + v + "</td>" +
+        '<td class="text-[10px] text-slate-500 pl-2 align-top">' + (nota || "") + "</td></tr>";
+    };
+
+    // --- LE1 · reglas de licencia ambiental -------------------------------------
+    // a: "ANLA" | "CAR" | "NO".  cit: artículo y numeral.  q: fragmento literal.
+    // test(v) devuelve la regla aplicable para el valor digitado (o null si falta).
+    const LE_A = "2.2.2.3.2.2", LE_C = "2.2.2.3.2.3";
+    const LE_REGLAS = [
+      // Minero
+      { g: "Minero", n: "Explotación de carbón", uni: "t/año", lab: "Explotación proyectada", dec: 0,
+        test: v => v >= 800000
+          ? { a: "ANLA", cit: LE_A + " num. 2 letra a", q: "Carbón: cuando la explotación proyectada sea mayor o igual a ochocientos mil (800.000) toneladas/año", lim: 800000 }
+          : { a: "CAR", cit: LE_C + " num. 1 letra a", q: "Carbón: cuando la explotación proyectada sea menor a ochocientas mil (800.000) toneladas/año", lim: 800000 } },
+      { g: "Minero", n: "Explotación de arcillas", uni: "t/año", lab: "Producción proyectada", dec: 0,
+        test: v => v >= 600000
+          ? { a: "ANLA", cit: LE_A + " num. 2 letra b", q: "Arcillas: producción proyectada mayor o igual a seiscientas mil (600.000) toneladas/año", lim: 600000 }
+          : { a: "CAR", cit: LE_C + " num. 1 letra b", q: "Arcillas: producción proyectada menor a seiscientas mil (600.000) toneladas/año", lim: 600000 } },
+      { g: "Minero", n: "Materiales de construcción o minerales industriales no metálicos", uni: "m³/año", lab: "Producción proyectada", dec: 0,
+        test: v => v >= 250000
+          ? { a: "ANLA", cit: LE_A + " num. 2 letra b", q: "Otros materiales de construcción o minerales industriales no metálicos: producción proyectada mayor o igual a doscientos cincuenta mil (250.000) metros cúbicos/año", lim: 250000 }
+          : { a: "CAR", cit: LE_C + " num. 1 letra b", q: "Materiales de construcción: producción menor a doscientos cincuenta mil (250.000) metros cúbicos/año", lim: 250000 } },
+      { g: "Minero", n: "Minerales metálicos, piedras preciosas o semipreciosas", uni: "t/año", lab: "Remoción total de material útil y estéril", dec: 0,
+        test: v => v >= 2000000
+          ? { a: "ANLA", cit: LE_A + " num. 2 letra c", q: "Minerales metálicos y piedras preciosas y semipreciosas: remoción total de material útil y estéril proyectada mayor o igual a dos millones (2.000.000) de toneladas/año", lim: 2000000 }
+          : { a: "CAR", cit: LE_C + " num. 1 letra c", q: "Minerales metálicos, piedras preciosas y semipreciosas: remoción total proyectada menor a dos millones (2.000.000) de toneladas/año", lim: 2000000 } },
+      { g: "Minero", n: "Otros minerales y materiales", uni: "t/año", lab: "Explotación de mineral proyectada", dec: 0,
+        test: v => v >= 1000000
+          ? { a: "ANLA", cit: LE_A + " num. 2 letra d", q: "Otros minerales y materiales: explotación proyectada mayor o igual a un millón (1.000.000) toneladas/año", lim: 1000000 }
+          : { a: "CAR", cit: LE_C + " num. 1 letra d", q: "Otros minerales y materiales: explotación proyectada menor a un millón (1.000.000) toneladas/año", lim: 1000000 } },
+      { g: "Minero", n: "Planta de beneficio de oro", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 23 (adicionado por el Decreto 1421 de 2016)", q: "La construcción y operación de plantas de beneficio de oro" },
+      // Hidrocarburos
+      { g: "Hidrocarburos", n: "Exploración sísmica que exige abrir vías para tránsito vehicular", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 1 letra a", q: "Las actividades de exploración sísmica que requieran la construcción de vías para el tránsito vehicular" },
+      { g: "Hidrocarburos", n: "Exploración sísmica en área marina", uni: "m", lab: "Profundidad del agua en el área de trabajo", dec: 0,
+        test: v => v < 200
+          ? { a: "ANLA", cit: LE_A + " num. 1 letra a", q: "Las actividades de exploración sísmica en las áreas marinas del territorio nacional cuando se realicen en profundidades inferiores a 200 metros", lim: 200 }
+          : { a: "NO", cit: LE_A + " num. 1 letra a (a contrario)", q: "El numeral solo llama a licencia la sísmica marina por debajo de 200 m; en aguas más profundas no está en las listas, sin perjuicio del permiso de ocupación de causa marina y del concepto de Invemar", lim: 200 } },
+      { g: "Hidrocarburos", n: "Perforación exploratoria fuera de campos existentes", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 1 letra b", q: "Los proyectos de perforación exploratoria por fuera de campos de producción de hidrocarburos existentes, de acuerdo con el área de interés que declare el peticionario" },
+      { g: "Hidrocarburos", n: "Explotación de hidrocarburos (pozos, instalaciones, obras complementarias)", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 1 letra c", q: "La explotación de hidrocarburos que incluye la perforación de los pozos de cualquier tipo, la construcción de instalaciones propias de la actividad, las obras complementarias incluido el transporte interno de fluidos del campo por ductos, el almacenamiento interno, vías internas y demás infraestructura asociada y conexa" },
+      { g: "Hidrocarburos", n: "Transporte de hidrocarburos por ductos fuera de campos", uni: "pulgadas", lab: "Diámetro de la línea de conducción", dec: 2,
+        test: v => v >= 6
+          ? { a: "ANLA", cit: LE_A + " num. 1 letra d", q: "El transporte y conducción de hidrocarburos líquidos y gaseosos por fuera de los campos de explotación que impliquen líneas de conducción con diámetros iguales o superiores a seis (6) pulgadas (15.24 centímetros), incluyendo estaciones de bombeo y/o reducción de presión; salvo la distribución de gas natural domiciliario, comercial o industrial", lim: 6 }
+          : { a: "NO", cit: LE_A + " num. 1 letra d (a contrario)", q: "Por debajo de 6 pulgadas el decreto no lo pone en la lista de ANLA, y la lista de CAR no menciona ductos: no hay licencia ambiental por este numeral", lim: 6 } },
+      { g: "Hidrocarburos", n: "Terminal de entrega o estación de transferencia de hidrocarburos", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 1 letra e", q: "Los terminales de entrega y estaciones de transferencia de hidrocarburos, entendidos como la infraestructura de almacenamiento asociada al transporte de hidrocarburos y sus productos y derivados por ductos" },
+      { g: "Hidrocarburos", n: "Refinería o desarrollo petroquímico de complejo de refinación", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 1 letra f", q: "La construcción y operación de refinerías y los desarrollos petroquímicos que formen parte de un complejo de refinación" },
+      // Eléctrico
+      { g: "Eléctrico", n: "Central generadora · todavía no sé si es hídrica, térmica o alternativa", uni: "MW", lab: "Capacidad instalada", dec: 1, sub: true,
+        test: v => {
+          if (v >= 100) return { a: "ANLA", cit: LE_A + " num. 4 numeral 1 (texto del Decreto 1186 de 2025)", q: "La construcción y operación de centrales generadoras de energía eléctrica con capacidad instalada igual o superior a cien (100) MW", lim: 100 };
+          const t = LE._tipo;
+          if (!t) return { a: "VER" };
+          if (t === "hidro") return LE._zni && v <= 10
+            ? { a: "NO", cit: LE_C + " num. 4 letra c (excepción)", q: "Están exceptuadas las pequeñas hidroeléctricas destinadas a operar en Zonas No Interconectadas (ZNI) cuya capacidad sea igual o menor a diez (10) MW", lim: 10 }
+            : { a: "CAR", cit: LE_C + " num. 4 letra c", q: "Centrales generadoras de energía a partir del recurso hídrico con una capacidad menor a cien (100) MW, exceptuando las pequeñas hidro en ZNI de hasta 10 MW", lim: 100 };
+          if (t === "alternativa") return v >= 50
+            ? { a: "ANLA", cit: LE_A + " num. 4 numeral 2 (texto del Decreto 1186 de 2025)", q: "Los proyectos de exploración y uso para la generación de energía eléctrica de fuentes de energía alternativa virtualmente contaminantes con capacidad instalada igual o superior a cincuenta (50) MW", lim: 50 }
+            : (v >= 10
+              ? { a: "CAR", cit: LE_C + " num. 4 letra d", q: "Los proyectos de generación o exploración y uso de fuentes de energía virtualmente contaminantes con capacidad instalada igual o mayor a diez (10) MW y menor de cincuenta (50) MW", lim: 10 }
+              : { a: "NO", cit: LE_C + " num. 4 letra d (a contrario)", q: "Menos de 10 MW en fuente virtualmente contaminante no aparece en ninguna de las dos listas", lim: 10 });
+          return v >= 10
+            ? { a: "CAR", cit: LE_C + " num. 4 letra a", q: "La construcción y operación de centrales generadoras con una capacidad mayor o igual a diez (10) y menor de cien (100) MW, diferentes a las centrales generadoras de energía a partir del recurso hídrico", lim: 10 }
+            : { a: "NO", cit: LE_C + " num. 4 letra a (a contrario)", q: "Menos de 10 MW no está en las listas: no requiere licencia ambiental, sin perjuicio del permiso de emisión atmosférica si quemas combustible", lim: 10 };
+        } },
+      { g: "Eléctrico", n: "Central térmica / no hídrica entre 10 y 100 MW", uni: "MW", lab: "Capacidad instalada", dec: 1,
+        test: v => v >= 10 && v < 100
+          ? { a: "CAR", cit: LE_C + " num. 4 letra a (texto del Decreto 852 de 2024)", q: "La construcción y operación de centrales generadoras con una capacidad mayor o igual a diez (10) y menor de cien (100) MW, diferentes a las centrales generadoras de energía a partir del recurso hídrico", lim: 10 }
+          : (v >= 100 ? { a: "ANLA", cit: LE_A + " num. 4 numeral 1 (texto del Decreto 1186 de 2025)", q: "La construcción y operación de centrales generadoras de energía eléctrica con capacidad instalada igual o superior a cien (100) MW", lim: 100 }
+                       : { a: "NO", cit: LE_C + " num. 4 letra a (a contrario)", q: "Menos de 10 MW no está en las listas: no requiere licencia ambiental, sin perjuicio del permiso de emisión atmosférica si quemas combustible", lim: 10 }) },
+      { g: "Eléctrico", n: "Central hidroeléctrica", uni: "MW", lab: "Capacidad instalada", dec: 1,
+        test: v => v >= 100
+          ? { a: "ANLA", cit: LE_A + " num. 4 numeral 1 (texto del Decreto 1186 de 2025)", q: "La construcción y operación de centrales generadoras de energía eléctrica con capacidad instalada igual o superior a cien (100) MW. La lista de ANLA no distingue si la fuente es hídrica: con 100 MW o más es ANLA", lim: 100 }
+          : (LE._zni && v <= 10
+            ? { a: "NO", cit: LE_C + " num. 4 letra c (excepción)", q: "Están exceptuadas las pequeñas hidroeléctricas destinadas a operar en Zonas No Interconectadas (ZNI) cuya capacidad sea igual o menor a diez (10) MW", lim: 10 }
+            : { a: "CAR", cit: LE_C + " num. 4 letra c", q: "Centrales generadoras de energía a partir del recurso hídrico con capacidad menor a cien (100) MW, exceptuando las pequeñas hidro en ZNI de hasta 10 MW", lim: 100 }) },
+      { g: "Eléctrico", n: "Fuente de energía alternativa virtualmente contaminante", uni: "MW", lab: "Capacidad instalada", dec: 1,
+        test: v => v >= 50
+          ? { a: "ANLA", cit: LE_A + " num. 4 numeral 2", q: "Proyectos de exploración y uso para generación de fuentes de energía alternativa virtualmente contaminantes con capacidad instalada igual o superior a cincuenta (50) MW", lim: 50 }
+          : (v >= 10 ? { a: "CAR", cit: LE_C + " num. 4 letra d", q: "Generación o exploración y uso de fuentes de energía virtualmente contaminantes con capacidad instalada igual o mayor a diez (10) MW y menor de cincuenta (50) MW", lim: 10 }
+                     : { a: "NO", cit: LE_C + " num. 4 letra d (a contrario)", q: "Menos de 10 MW no aparece en ninguna de las dos listas", lim: 10 }) },
+      { g: "Eléctrico", n: "Línea de transmisión", uni: "kV", lab: "Tensión de operación", dec: 0,
+        test: v => v >= 220
+          ? { a: "ANLA", cit: LE_A + " num. 4 numeral 3", q: "El tendido de las líneas de transmisión del Sistema de Transmisión Nacional (STN), que se proyecte operen a tensiones iguales o superiores a doscientos veinte (220) KV", lim: 220 }
+          : (v >= 50 ? { a: "CAR", cit: LE_C + " num. 4 letra b", q: "Líneas del Sistema de Transmisión Regional que operan a tensiones entre cincuenta (50) KV y menores de doscientos veinte (220) KV", lim: 50 }
+                     : { a: "NO", cit: LE_C + " num. 4 letra b (a contrario)", q: "Debajo de 50 kV el decreto no exige licencia ambiental por este concepto", lim: 50 }) },
+      { g: "Eléctrico", n: "Generación de energía nuclear", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 5", q: "Los proyectos para la generación de energía nuclear" },
+      { g: "Eléctrico", n: "Parque solar con diseño optimizado (LASOLAR) o eólico con diseño optimizado (LAEÓLICA)", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 4 numerales 4 y 5", q: "Los proyectos de Licencia Ambiental Solar Con Diseño Optimizado LASOLAR (capítulo 10) y de Licencia Ambiental Eólica con Diseño Optimizado LAEÓLICA (capítulo 11) del propio decreto. Son licencia unificada: una sola resolución cubre el proyecto y sus obras de evacuación cuando cumplen los criterios de los artículos 2.2.2.10.2 y 2.2.2.11.2; si no los cumplen, se vuelve a las listas ordinarias." },
+      // Infraestructura
+      { g: "Infraestructura", n: "Presa, represa o embalse", uni: "m³", lab: "Capacidad de almacenamiento", dec: 0,
+        test: v => v > 200000000
+          ? { a: "ANLA", cit: LE_A + " num. 3", q: "La construcción de presas, represas o embalses, cualquiera sea su destinación con capacidad mayor de doscientos millones (200.000.000) de metros cúbicos de agua", lim: 200000000 }
+          : { a: "CAR", cit: LE_C + " num. 3", q: "La construcción de presas, represas o embalses con capacidad igual o inferior a doscientos millones (200.000.000) de metros cúbicos de agua", lim: 200000000 } },
+      { g: "Infraestructura", n: "Distrito de riego y/o de drenaje", uni: "ha", lab: "Área de cobertura", dec: 1,
+        test: v => v > 20000
+          ? { a: "ANLA", cit: LE_A + " num. 9", q: "La construcción y operación de distritos de riego y/o de drenaje con coberturas superiores a 20.000 hectáreas", lim: 20000 }
+          : (v >= 5000 ? { a: "CAR", cit: LE_C + " num. 17", q: "Distritos de riego y/o drenaje para áreas mayores o iguales a cinco mil (5.000) hectáreas e inferiores o iguales a veinte mil (20.000) hectáreas", lim: 5000 }
+                       : { a: "NO", cit: LE_C + " num. 17 (a contrario)", q: "Un distrito de menos de 5.000 ha no está en las listas: no requiere licencia ambiental, aunque la captación sí necesita concesión de aguas (LE2)", lim: 5000 }) },
+      { g: "Infraestructura", n: "Trasvase de agua entre cuencas", uni: "m³/s", lab: "Mínimo caudal de la cuenca más generosa de las dos", dec: 2,
+        test: v => v >= 2
+          ? { a: "ANLA", cit: LE_A + " num. 15", q: "Los proyectos que requieran trasvase de una cuenca a otra cuando al menos una de las dos presente un valor igual o superior a 2 metros cúbicos/segundo durante los períodos de mínimo caudal", lim: 2 }
+          : { a: "CAR", cit: LE_C + " num. 18", q: "Trasvase de cuenca a otra cuando al menos una de las dos presente un valor igual o inferior a dos (2) metros cúbicos/segundo durante los períodos de mínimo caudal", lim: 2 } },
+      { g: "Infraestructura", n: "Carretera, puente, segunda calzada o túnel en la red vial nacional", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 8.1", q: "Proyectos de la red vial nacional: construcción de carreteras incluyendo puentes y demás infraestructura asociada; construcción de segundas calzadas (salvo el parágrafo 2 del artículo 2.2.2.5.1.1); construcción de túneles con sus accesos" },
+      { g: "Infraestructura", n: "Carretera, puente, segunda calzada o túnel en red vial secundaria o terciaria", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 7", q: "Proyectos en la red vial secundaria y terciaria: construcción de carreteras incluyendo puentes y demás infraestructura asociada; construcción de segundas calzadas; construcción de túneles con sus accesos" },
+      { g: "Infraestructura", n: "Puerto marítimo de gran calado, su dragado de acceso, o estabilización de playas", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 6", q: "La construcción o ampliación y operación de puertos marítimos de gran calado; los dragados de profundización de los canales de acceso a puertos marítimos de gran calado; la estabilización de playas y de entradas costeras" },
+      { g: "Infraestructura", n: "Puerto marítimo que no es de gran calado, o obras duras privadas en costa", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 5", q: "La construcción, ampliación y operación de puertos marítimos que no sean de gran calado; los dragados de profundización de los canales de acceso a los puertos que no sean considerados como de gran calado; obras privadas de rompeolas, espolones, diques y regeneración de dunas y playas" },
+      { g: "Infraestructura", n: "Aeropuerto internacional o nueva pista en uno existente", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 7", q: "La construcción y operación de aeropuertos internacionales y de nuevas pistas en los mismos" },
+      { g: "Infraestructura", n: "Aeropuerto de nivel nacional o nueva pista en uno existente", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 6", q: "La construcción y operación de aeropuertos del nivel nacional y de nuevas pistas en los mismos" },
+      { g: "Infraestructura", n: "Obras públicas en la red fluvial nacional (puertos públicos, rectificación de cauce, espolones, desviación, dragado)", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 8.2", q: "Ejecución de proyectos en la red fluvial nacional: construcción y operación de puertos públicos; rectificación de cauces, cierre de brazos, meandros y madreviejas; construcción de espolones; desviación de cauces; dragados de profundización en canales navegables y en áreas de deltas" },
+      { g: "Infraestructura", n: "Obras privadas en la red fluvial nacional", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 8", q: "Ejecución de obras de carácter privado en la red fluvial nacional: construcción y operación de puertos; rectificación de cauces, cierre de brazos, meandros y madreviejas; espolones; desviación de cauces; dragados de profundización" },
+      { g: "Infraestructura", n: "Vía férrea o variante de la red férrea nacional", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 8.3", q: "La construcción de vías férreas y/o variantes de la red férrea nacional tanto pública como privada" },
+      { g: "Infraestructura", n: "Vía férrea regional o variante de una regional", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 9", q: "La construcción de vías férreas de carácter regional y/o variantes de estas tanto públicas como privadas" },
+      { g: "Infraestructura", n: "Obras marítimas duras públicas y regeneración de dunas y playas", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 8.4", q: "La construcción de obras marítimas duras (rompeolas, espolones, construcción de diques) y de regeneración de dunas y playas" },
+      // Residuos e industria
+      { g: "Residuos", n: "Instalación de almacenamiento, tratamiento, aprovechamiento o disposición final de residuos peligrosos; relleno de seguridad hospitalario", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 10", q: "La construcción y operación de instalaciones cuyo objeto sea el almacenamiento, tratamiento, aprovechamiento, recuperación y/o disposición final de residuos o desechos peligrosos, y la construcción y operación de rellenos de seguridad para residuos hospitalarios en los casos en que la normatividad sobre la materia lo permita" },
+      { g: "Residuos", n: "Instalación de manejo de RAEE, pilas o acumuladores", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 11", q: "La construcción y operación de instalaciones cuyo objeto sea el almacenamiento, tratamiento, aprovechamiento (recuperación/reciclado) y/o disposición final de Residuos de Aparatos Eléctricos y Electrónicos (RAEE) y de residuos de pilas y/o acumuladores. Concordancia: las actividades de reparación y reacondicionamiento de aparatos eléctricos y electrónicos usados NO requieren licencia ambiental" },
+      { g: "Residuos", n: "Planta de aprovechamiento o valorización de residuos orgánicos biodegradables", uni: "t/año", lab: "Toneladas/año a valorizar", dec: 0,
+        test: v => v >= 20000
+          ? { a: "CAR", cit: LE_C + " num. 12", q: "La construcción y operación de plantas cuyo objeto sea el aprovechamiento y valorización de residuos sólidos orgánicos biodegradables mayores o iguales a veinte mil (20.000) toneladas/año", lim: 20000 }
+          : { a: "NO", cit: LE_C + " num. 12 (a contrario)", q: "Compostar o valorizar menos de 20.000 t/año no está en la lista: no procede exigir licencia ambiental ni plan de manejo ambiental (art. 2.2.2.3.2.1)", lim: 20000 } },
+      { g: "Residuos", n: "Relleno sanitario", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 13", q: "La construcción y operación de rellenos sanitarios; no obstante la operación únicamente podrá ser adelantada por las personas señaladas en el artículo 15 de la Ley 142 de 1994" },
+      { g: "Residuos", n: "Planta de tratamiento de aguas residuales", uni: "hab", lab: "Población servida", dec: 0,
+        test: v => v >= 200000
+          ? { a: "CAR", cit: LE_C + " num. 14", q: "La construcción y operación de sistemas de tratamiento de aguas residuales que sirva a poblaciones iguales o superiores a doscientos mil (200.000) habitantes", lim: 200000 }
+          : { a: "NO", cit: LE_C + " num. 14 (a contrario)", q: "Por debajo de 200.000 habitantes no requiere licencia ambiental por este numeral; el vertimiento tratado sí necesita permiso de vertimiento (LE2)", lim: 200000 } },
+      { g: "Industrial", n: "Siderúrgica, cementera o planta concretera fija", uni: "m³/mes", lab: "Producción de concreto (déjalo vacío si es siderúrgica o cementera)", dec: 0, opcional: true,
+        test: v => v == null ? { a: "CAR", cit: LE_C + " num. 2", q: "Siderúrgicas, cementeras y plantas concreteras fijas cuya producción de concreto sea superior a diez mil (10.000) metros cúbicos/mes", lim: null }
+          : (v > 10000 ? { a: "CAR", cit: LE_C + " num. 2", q: "Siderúrgicas, cementeras y plantas concreteras fijas cuya producción de concreto sea superior a diez mil (10.000) metros cúbicos/mes", lim: 10000 }
+                       : { a: "NO", cit: LE_C + " num. 2 (a contrario)", q: "Una planta concretera con producción de concreto de hasta 10.000 m³/mes no entra por este numeral; se evalúa por emisiones (permiso de emisión atmosférica, LE2)", lim: 10000 }) },
+      { g: "Industrial", n: "Fabricación de sustancias químicas básicas de origen mineral, alcoholes o ácidos inorgánicos", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 15", q: "La industria manufacturera para la fabricación de: sustancias químicas básicas de origen mineral; alcoholes; ácidos inorgánicos y sus compuestos oxigenados" },
+      { g: "Industrial", n: "Almacenamiento de sustancias peligrosas (distintas de hidrocarburos)", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 16", q: "Los proyectos cuyo objeto sea el almacenamiento de sustancias peligrosas, con excepción de los hidrocarburos" },
+      { g: "Industrial", n: "Parque tecnológico y ambiental", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 23 (adicionado por el Decreto 670 de 2025)", q: "La construcción y operación de Parques Tecnológicos y Ambientales" },
+      // Agro, químicos y fauna
+      { g: "Agro y fauna", n: "Producción de pesticidas, o importación de plaguicidas en los casos del numeral", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 10", q: "La producción de pesticidas; y la importación de pesticidas: plaguicidas de uso agrícola (ingrediente activo y/o formulado) con excepción de los de origen biológico vegetal; de uso veterinario; de uso en salud pública; de uso industrial; y de uso doméstico, salvo los de empaque individual" },
+      { g: "Agro y fauna", n: "Importación o producción de sustancias sujetas a tratados ambientales, u OVM", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 11", q: "La importación y/o producción de aquellas sustancias, materiales o productos sujetos a controles por virtud de tratados, convenios y protocolos internacionales de carácter ambiental. Tratándose de Organismos Vivos Modificados (OVM) se aplica únicamente el procedimiento de la Ley 740 de 2002 y sus decretos reglamentarios" },
+      { g: "Agro y fauna", n: "Introducir al país parentales o especies foráneas, o zoocriadero con especies CITES", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 16", q: "La introducción al país de parentales, especies, subespecies, razas, híbridos o variedades foráneas con fines de cultivo, levante, control biológico, reproducción y/o comercialización, que puedan afectar la estabilidad de los ecosistemas o de la vida silvestre; así como el establecimiento de zoocriaderos que implique manejo de especies listadas en los Apéndices CITES. No se podrá autorizar la introducción de especies declaradas invasoras" },
+      { g: "Agro y fauna", n: "Caza comercial o zoocriadero con fines comerciales", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 19", q: "La caza comercial y el establecimiento de zoocriaderos con fines comerciales. Parágrafo 3o: las CAR solo pueden licenciar zoocriaderos de especies exóticas en ciclo cerrado, con pie parental de predio proveedor autorizado" },
+      { g: "Agro y fauna", n: "Infraestructura o agroindustria dentro de un área protegida pública nacional que NO es parque nacional", uni: "", lab: "", dec: 0, fijo: "ANLA",
+        cit: LE_A + " num. 13 (texto corregido por el Decreto 703 de 2018)", q: "Los proyectos, obras o actividades de construcción de infraestructura o agroindustria que se pretendan realizar en las áreas protegidas públicas nacionales, distintas de las áreas de Parques Nacionales Naturales, siempre y cuando su ejecución sea compatible con los usos definidos para la categoría de manejo respectiva. No aplica a unidades habitacionales ni a mantenimiento y rehabilitación de infraestructura de transporte (art. 44 de la Ley 1682 de 2013), salvo el mejoramiento." },
+      { g: "Agro y fauna", n: "Infraestructura o agroindustria en un área protegida pública REGIONAL (parque regional, DMI, vía parque…)", uni: "", lab: "", dec: 0, fijo: "CAR",
+        cit: LE_C + " num. 21 (texto corregido por el Decreto 703 de 2018)", q: "Los proyectos, obras o actividades de construcción de infraestructura o agroindustria que se pretendan realizar en las áreas protegidas públicas regionales, distintas a las áreas de Parques Regionales Naturales, siempre y cuando su ejecución sea compatible con los usos definidos para la categoría de manejo respectiva." },
+      { g: "Agro y fauna", n: "Proyecto que afecte un humedal RAMSAR, un páramo o un manglar", uni: "", lab: "", dec: 0, fijo: "OTRA",
+        cit: "2.2.2.3.2.4", q: "Cuando los proyectos de los artículos 2.2.2.3.2.2 y 2.2.2.3.2.3 pretendan intervenir humedales incluidos en la lista de humedales de importancia internacional (RAMSAR), páramos o manglares, la autoridad ambiental competente deberá solicitar concepto previo al Ministerio de Ambiente y Desarrollo Sostenible sobre la conservación y el uso sostenible de dichos ecosistemas" },
+      { g: "Agro y fauna", n: "Acuicultura, cultivos, ganadería, forestal o agroindustria común y corriente", uni: "", lab: "", dec: 0, fijo: "NO",
+        cit: "2.2.2.3.2.1", q: "Estarán sujetos a licencia ambiental ÚNICAMENTE los proyectos, obras y actividades que se enumeran en los artículos 2.2.2.3.2.2 y 2.2.2.3.2.3. Las autoridades ambientales no podrán establecer o imponer planes de manejo ambiental para proyectos diferentes a los establecidos en el presente decreto o como resultado de la aplicación del régimen de transición" },
+      { g: "Agro y fauna", n: "Construcción de vivienda, urbanizaciones o licencias de urbanismo", uni: "", lab: "", dec: 0, fijo: "NO",
+        cit: "2.2.2.3.2.1", q: "El sector de vivienda no aparece en las listas taxativas de los artículos 2.2.2.3.2.2 y 2.2.2.3.2.3, así que no es licenciable por ese camino; lo que sí puede exigir la autoridad es permiso de vertimiento, de ocupación de cauce y la verificación de que el predio esté clasificado como suelo urbano o de expansión por el plan de ordenamiento (LE4)" },
+      { g: "Agro y fauna", n: "Actividad que ya venía con plan de manejo ambiental antes de 2014", uni: "", lab: "", dec: 0, fijo: "TRANS",
+        cit: "2.2.2.3.11.1", q: "El régimen de transición se aplica a los proyectos, obras o actividades que iniciaron los trámites para obtener una licencia ambiental o el establecimiento de un plan de manejo ambiental bajo las reglas anteriores" }
+    ];
+
+    function le1Pintar() {
+      const s = document.getElementById("le1-act");
+      if (!s) return;
+      const grupos = [];
+      LE_REGLAS.forEach((r, i) => { const g = grupos.indexOf(r.g); if (g < 0) grupos.push(r.g); });
+      let h = '<option value="">Elige la actividad que vas a desarrollar…</option>';
+      grupos.forEach(g => {
+        h += '<optgroup label="' + LE._esc2(g) + '">';
+        LE_REGLAS.forEach((r, i) => { if (r.g === g) h += '<option value="' + i + '">' + LE._esc2(r.n) + "</option>"; });
+        h += "</optgroup>";
+      });
+      s.innerHTML = h;
+      le1Refrescar();
+    }
+
+    function le1Refrescar() {
+      const i = LE.val("le1-act"), r = LE_REGLAS[i];
+      const caja = document.getElementById("le1-mag-caja"), lab = document.getElementById("le1-mag-lab");
+      if (!r || !r.lab) { if (caja) caja.classList.add("hidden"); }
+      else {
+        if (caja) caja.classList.remove("hidden");
+        if (lab) lab.innerHTML = LE._esc2(r.lab) + (r.uni ? ' <span class="text-slate-500">(' + LE._esc2(r.uni) + ")</span>" : "") +
+          (r.dec === 0 ? "" : ' <span class="text-slate-600">· acepta decimales con coma</span>');
+      }
+      const tipo = document.getElementById("le1-tipo-caja");
+      if (tipo) tipo.classList.toggle("hidden", !(r && r.sub));
+      const esHidro = !!(r && (/hidroel/i.test(r.n) || (r.sub && LE.val("le1-tipo") === "hidro")));
+      const zni = document.getElementById("le1-zni-env");
+      if (zni) zni.classList.toggle("hidden", !esHidro);
+      const eco = document.getElementById("le1-eco-env");
+      if (eco) eco.classList.toggle("hidden", !(r && r.g !== "Agro y fauna"));
+    }
+
+    // El veredicto se construye con la regla base + las cuatro causas de traslado
+    // de competencia que están en el propio decreto (y que la gente olvida).
+    function le1Calcular() {
+      const out = document.getElementById("le1-res");
+      if (!out) return;
+      const i = LE.val("le1-act"), r = LE_REGLAS[i];
+      LE._zni = LE.chk("le1-zni");
+      if (!r) {
+        out.innerHTML = LE.caja("No has elegido actividad. El árbol de trámite no adivina: la licencia ambiental se define por el <strong>tipo de proyecto y su magnitud</strong>, porque las listas del Decreto 1076 son taxativas (art. 2.2.2.3.2.1).", "ambar");
+        return;
+      }
+      const v = r.uni ? LE.v("le1-mag") : null;
+      LE._tipo = LE.val("le1-tipo");
+      if (r.uni && !r.fijo && !r.opcional && v == null) {
+        out.innerHTML = LE.caja("Necesito la magnitud para decidir. Esta actividad se licencia por umbral: <strong>" + LE._esc2(r.lab) + " en " + LE._esc2(r.uni) + "</strong>. Digítala; si la dejas vacía el portal no elige por ti.", "rojo");
+        return;
+      }
+      let res = r.fijo ? { a: r.fijo, cit: r.cit, q: r.q, lim: null } : r.test(v);
+      if (!res) { out.innerHTML = LE.caja("No pude interpretar el valor digitado.", "rojo"); return; }
+      if (res.a === "VER") {
+        out.innerHTML = LE.caja("Con <strong>" + LE.n(v, r.dec) + " MW</strong> todavía no te puedo dar la autoridad: hay que decir primero <strong>de qué fuente</strong> se trata, porque el decreto reparte la competencia por fuente y no solo por potencia. Marca la casilla de abajo (hídrica, térmica o virtualmente contaminante) y vuelve a calcular.", "ambar") +
+          LE.caja("Referencia rápida: la <strong>hídrica</strong> menor a 100 MW es de CAR (con la excepción de pequeñas hidro en ZNI hasta 10 MW); la <strong>no hídrica</strong> entre 10 y 100 MW es de CAR; la <strong>virtualmente contaminante</strong> entre 10 y menos de 50 MW es de CAR y desde 50 MW pasa a la ANLA. Con 100 MW o más, cualquiera de ellas es de ANLA.", "azul");
+        return;
+      }
+      const avisos = [], traslados = [];
+      // Regla del propio decreto: si es parte de un proyecto licenciado por ANLA, la CAR pierde la competencia.
+      if (res.a === "CAR" && LE.chk("le1-parte-anla")) {
+        traslados.push({ de: "CAR", a: "ANLA", cit: LE_C + " parágrafo 5o", txt: "Las CAR no tienen estas competencias cuando los proyectos, obras o actividades formen parte de un proyecto cuya licencia ambiental sea de competencia privativa de la ANLA." });
+        res.a = "ANLA";
+      }
+      if ((res.a === "CAR" || res.a === "ANLA") && LE.chk("le1-peticionario-car")) {
+        traslados.push({ de: res.a, a: "ANLA", cit: LE_C + " parágrafo 4o", txt: "Cuando la licencia la solicita una CAR, una corporación de desarrollo sostenible, un gran centro urbano (art. 66 de la Ley 99 de 1993) o una autoridad de la Ley 768 de 2002, la competencia pasa a la ANLA." });
+        res.a = "ANLA";
+      }
+      if (LE.chk("le1-al-interior-pnn")) {
+        traslados.push({ de: res.a, a: "ANLA", cit: LE_A + " num. 12 letra a y parágrafo 2o", txt: "Los proyectos que afecten áreas del Sistema de Parques Nacionales Naturales por realizarse al interior de estas son privativos de la ANLA, y antes de decidir el Ministerio cuenta con el concepto de Parques Nacionales Naturales." });
+        res.a = "ANLA";
+      }
+      if (LE.chk("le1-zona-amortiguadora")) {
+        traslados.push({ de: res.a, a: "ANLA", cit: LE_A + " num. 12 letra b", txt: "Proyectos de las dos listas localizados en zonas amortiguadoras previamente determinadas del Sistema de Parques Nacionales: licencia de la ANLA, siempre que sean compatibles con el plan de manejo de esa zona." });
+        res.a = "ANLA";
+      }
+      if (LE.chk("le1-multijurisdiccion")) {
+        avisos.push({ t: "rojo", txt: "Está en jurisdicción de <strong>dos o más autoridades ambientales</strong>: las autoridades deben remitir la solicitud a la ANLA, que <strong>designa</strong> la autoridad que decide (art. 2.2.2.3.2.6). No es que te toque escoger: hay que pedir la definición de competencia." });
+      }
+      if (LE.chk("le1-eco-especial")) {
+        avisos.push({ t: "ambar", txt: "Si el proyecto <strong>introduce</strong> (no solo se ubica cerca) intervención directa en un humedal RAMSAR, un páramo o un manglar, la autoridad debe pedir <strong>concepto previo al Ministerio de Ambiente</strong> antes de decidir (art. 2.2.2.3.2.4). Eso es un tiempo más en el cronograma (LE3) y un argumento que hay que responder por escrito." });
+      }
+      const fd = { actividad: r.n, magnitud: v, autoridad: res.a, articulo: res.cit };
+      // --- salida ---
+      let h = "";
+      const color = res.a === "ANLA" ? "rojo" : res.a === "CAR" ? "ambar" : res.a === "NO" ? "verde" : "azul";
+      const titulares = {
+        ANLA: "Licencia ambiental · la decide la <strong>ANLA</strong>",
+        CAR: "Licencia ambiental · la decide la <strong>CAR</strong> (o la autoridad ambiental urbana) de tu jurisdicción",
+        NO: "<strong>No requiere licencia ambiental</strong> y la autoridad no te puede imponer un plan de manejo ambiental por esta vía",
+        TRANS: "Está en <strong>régimen de transición</strong>: se define por la fecha en que radicaste, no por las listas de hoy",
+        OTRA: "No es una regla de licencia: es una regla de <strong>concepto previo</strong> sobre ecosistemas estratégicos"
+      };
+      h += LE.caja(titulares[res.a] || res.a, color);
+      h += LE.tit("1 · Regla que aplica y por qué");
+      const filas = [];
+      filas.push(LE.fila("Actividad declarada", LE._esc2(r.n), "Tú la elegiste; el portal no la infiere."));
+      if (r.uni && v != null) filas.push(LE.fila("Tu magnitud", LE.n(v, r.dec) + " " + LE._esc2(r.uni), "", "text-white"));
+      if (res.lim != null) {
+        const pct = v != null ? (100 * v) / res.lim : null;
+        filas.push(LE.fila("Umbral de la norma", LE.n(res.lim, 0) + " " + LE._esc2(r.uni), "La cifra que parte la competencia."));
+        filas.push(LE.fila("Vas al", pct == null ? "—" : LE.f(pct, 1) + " % del umbral", pct != null && pct >= 100 ? "Te pasaste: por eso cambia la autoridad." : pct != null ? "Te falta " + LE.n(res.lim - v, r.dec) + " " + LE._esc2(r.uni) + " para el otro lado." : "", pct != null && pct >= 100 ? "text-red-300" : "text-emerald-300"));
+        if (pct != null && Math.abs(pct - 100) <= 10 && pct < 100) filas.push(LE.fila("Margen de seguridad", "estás a " + LE.f(100 - pct, 1) + " % del umbral", "Un cambio de proyecto hacia arriba te mueve de autoridad: revisa el cálculo de la producción proyectada antes de radicar.", "text-amber-300"));
+      }
+      filas.push(LE.fila("Artículo invocado", "Decreto 1076 de 2015, " + LE._esc2(res.cit), "", "text-sky-300"));
+      h += LE.tabla(filas);
+      h += '<p class="text-[11px] text-slate-400 mt-2 leading-relaxed border border-slate-800 rounded-xl p-2.5 bg-slate-950"><span class="text-slate-500">Texto de la norma:</span> “' + LE._esc2(res.q) + "”</p>";
+      if (traslados.length) {
+        h += LE.tit("2 · Te cambia de autoridad");
+        h += LE.tabla(traslados.map(t => LE.fila(t.de + " → " + t.a, "art. " + LE._esc2(t.cit), LE._esc2(t.txt), "text-red-300")));
+        h += LE.pie("Estas cuatro reglas están en el mismo decreto y son las que más se pierden: el proyecto se queda sin el permiso de la CAR a la que radicaste.");
+      }
+      if (avisos.length) { h += LE.tit("3 · Avisos del caso"); avisos.forEach(a => { h += LE.caja(a.txt, a.t); }); }
+      if (res.a === "NO") {
+        h += LE.caja("Que no requiera licencia <strong>no significa que no requiera nada</strong>. Sigue siendo exigible el permiso de vertimiento si descargas (art. 2.2.3.3.5.1), la concesión de aguas si captas, el permiso de aprovechamiento forestal si talas, y la licencia de urbanismo del municipio. Bájalo al <strong>LE2</strong>, que es el checklist de permisos, y al <strong>LE4</strong>, que revisa las restricciones del predio.", "azul");
+      }
+      if (res.a === "ANLA" || res.a === "CAR") {
+        h += LE.caja("Siguiente paso: <strong>LE3</strong> te arma el cronograma de plazos reales del trámite (15 días hábiles para que te digan si necesitas DAA, y luego evaluación del estudio), y <strong>LE2</strong> la lista de permisos específicos que van con el proyecto.", "azul");
+      }
+      h += LE.pie("Motor de reglas construido sobre el texto vigente de los artículos 2.2.2.3.2.1, 2.2.2.3.2.2 y 2.2.2.3.2.3 del Decreto 1076 de 2015 (con las modificaciones de los Decretos 703 de 2018, 852 de 2024, 1186 de 2025 y 670 de 2025 que aparecen citadas en el propio texto). No sustituye el concepto de la autoridad ni el de un abogado: es el filtro para no llegar a la ventanilla equivocada.");
+      out.innerHTML = h;
+      if (window.Ficha) Ficha.set("le1", fd);
+    }
+
+    // ==========================================================================
     // MODO PRÁCTICA: CASOS GUIADOS + AUTOEVALUACIÓN
     // ==========================================================================
     const PRACTICAS = [
@@ -11447,8 +11860,8 @@
       renderizarHub();
       renderizarMetodo();
       buscarNormas();
-      renderizarB27(); c29Construir(); c31Construir(); poblarDeptosOrdenes(); renderizarPractica();
-      ["ficha-secciones", "metodo-grid", "hub-grid", "b26-lista", "b27-pasos", "a12-res", "a13-sim", "b16-sintesis", "b19-res-ap", "b19-res-ae", "b19-res-ie", "b19-res-t", "c29-res", "c30-res", "c31-res", "c32-res", "c33-res", "w1-res", "w2-res", "w2-thio-res", "w3-res", "w4-res", "ar1-res", "ar2-res", "ar2-est", "ar3-res", "bi1-res", "bi2-res", "bi3-res", "bi4-res", "pr-quiz-res"]
+      renderizarB27(); c29Construir(); c31Construir(); poblarDeptosOrdenes(); renderizarPractica(); le1Pintar();
+      ["ficha-secciones", "metodo-grid", "hub-grid", "b26-lista", "b27-pasos", "a12-res", "a13-sim", "b16-sintesis", "b19-res-ap", "b19-res-ae", "b19-res-ie", "b19-res-t", "c29-res", "c30-res", "c31-res", "c32-res", "c33-res", "w1-res", "w2-res", "w2-thio-res", "w3-res", "w4-res", "ar1-res", "ar2-res", "ar2-est", "ar3-res", "bi1-res", "bi2-res", "bi3-res", "bi4-res", "le1-res", "pr-quiz-res"]
         .forEach(id => { const el = document.getElementById(id); if (el) el.setAttribute("aria-live", "polite"); });
       Ficha.badge();
       Ficha.llenarFormulario();

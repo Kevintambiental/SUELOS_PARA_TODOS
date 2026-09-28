@@ -1,7 +1,7 @@
-/* SUELOS_PARA_TODOS · service worker para uso offline en campo */
+/* AMBIOMA · service worker para uso offline en campo */
 // Cambia el número cuando cambie un archivo cacheado (datos_erosion.js, icon.svg,
 // manifest). index.html se sirve primero desde la red, así que no requiere esto.
-const CACHE = "spt-offline-v2";
+const CACHE = "spt-offline-v3";
 const MISMOSITIO = [
   "./index.html",
   "./datos_erosion.js",

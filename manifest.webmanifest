@@ -1,7 +1,7 @@
 {
-  "name": "SUELOS_PARA_TODOS · Portal Agrológico Colombia",
-  "short_name": "Suelos",
-  "description": "41 módulos de edafología, fertilidad, erosión RUSLE, capacidad de uso, balance hídrico y manejo de suelos con metodología IGAC/IDEAM. Funciona sin señal en campo.",
+  "name": "AMBIOMA · Portal Ambiental Integral Colombia",
+  "short_name": "AMBIOMA",
+  "description": "Suelo, agua, aire, biodiversidad y norma en un solo tablero: edafología y erosión RUSLE con metodología IGAC/IDEAM, calidad y potabilización del agua, ICA y dispersión de emisiones, índices de diversidad y paisaje, y normativa ambiental colombiana. Calculadoras reales y uso sin señal en campo.",
   "start_url": "./?fuente=pwa",
   "scope": "./",
   "display": "standalone",
