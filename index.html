@@ -1445,6 +1445,18 @@
           </div>
         </div>
 
+        <!-- FILTRO INTERACTIVO POR DEPARTAMENTO -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-start">
+          <div class="md:col-span-1">
+            <label for="ord-depto" class="text-slate-400 block mb-1 text-[11px] font-bold uppercase tracking-wider">Filtra por departamento:</label>
+            <select id="ord-depto" onchange="filtrarOrdenesDepto(this.value)" class="w-full bg-slate-950 border border-slate-700 focus:border-emerald-500 rounded-lg px-2.5 py-2 text-white font-bold text-xs cursor-pointer focus:outline-none">
+              <option value="">— Elige un departamento —</option>
+            </select>
+            <p class="text-[10px] text-slate-500 mt-1.5 leading-relaxed">Mapa referencial de los órdenes <strong>documentados por el IGAC</strong> en cada departamento. No es un levantamiento: un mismo municipio puede tener varios órdenes en secuencia.</p>
+          </div>
+          <div id="ord-depto-res" class="md:col-span-2"></div>
+        </div>
+
         <div id="grid-ordenes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
     </div>
@@ -3643,7 +3655,7 @@
       { id: "tab-fertilidad", num: "1", tit: "Fertilidad del Suelo IGAC", bloq: "Principal", norm: "IGAC IN-GAG-PC05-02", desc: "Cálculo en 2 profundidades (0-25 y 25-50 cm), radar nutricional y diagnóstico oficial." },
       { id: "tab-contaminantes", num: "2", tit: "Dispersión & Contaminación", bloq: "Principal", norm: "Decreto 1076/2015 MinAmbiente", desc: "Transporte de solutos, advección, dispersión, bioindicadores y biomarcadores." },
       { id: "tab-textura", num: "3", tit: "Triángulo Textural USDA/IGAC", bloq: "Principal", norm: "IGAC Tablas 16 y 17", desc: "12 clases texturales, retención de agua disponible, conductividad y laboreo." },
-      { id: "tab-ordenes", num: "4", tit: "12 Órdenes Taxonómicos", bloq: "Principal", norm: "Soil Taxonomy USDA / IGAC 2012", desc: "Distribución nacional, fertilidad natural y coberturas de Colombia." },
+      { id: "tab-ordenes", num: "4", tit: "12 Órdenes Taxonómicos", bloq: "Principal", norm: "Soil Taxonomy USDA / IGAC 2012", desc: "Filtro interactivo por departamento: órdenes presentes, dominante y limitante principal." },
       { id: "tab-cic", num: "5", tit: "Complejo de Cambio & CIC", bloq: "Principal", norm: "IGAC Tabla 24 / Albrecht", desc: "Equilibrio catiónico, saturación de bases, toxicidad de aluminio y encalado." },
       { id: "tab-a1", num: "A1", tit: "Factores y Formación del Suelo", bloq: "Bloque A: Edafología", norm: "IGAC Suelos de Colombia", desc: "Modelo Jenny (Cl, O, R, P, T) y procesos genéticos dominantes esperados." },
       { id: "tab-a2", num: "A2", tit: "Meteorización Física, Química y Biológica", bloq: "Bloque A: Edafología", norm: "SGC / IGAC Meteorización", desc: "Termoclastia, hidrólisis, oxidación y meteorización según clima y litología." },
@@ -3703,6 +3715,7 @@
       { mod: "C32 · Traficabilidad", f: ["σ_suelo = resistencia por textura × factor de humedad", "Prueda = (carga eje × 9,81 ÷ 2 ruedas) / 0,12 m² de huella", "ratio = Prueda / σ_suelo", "profundidad de subsolado ≈ 0,25 m + 0,06 m·t⁻¹ por eje"], autor: "Mecánica de suelos aplicada a tráfico agrícola (reglas ASAE y física de suelos IGAC)", validez: "Huella fija de 0,12 m²: la presión real de contacto depende de la presión de inflado del neumático. Las resistencias por textura son orden de magnitud; para una decisión técnica usa penetrómetro de campo.", fuente: { t: "IGAC Física de Suelos", u: "https://www.igac.gov.co" } },
       { mod: "C33 · PSE", f: ["Ingreso = rango COP/ha·año por cobertura × área × multiplicador de servicio"], autor: "Rangos referenciales de programas CAR 2024-2025; marco CONPES 4053 de 2021", validez: "No es tarifa oficial: cada CAR fija montos por proyecto y verificación. Solo orientativo para negociar o comparar costo de oportunidad.", fuente: { t: "DNP CONPES 4053", u: "https://www.dnp.gov.co" } },
       { mod: "A12 · Clave de orden de suelos", f: ["Decisión guiada: material parental + epipedón + régimen de humedad + endopedón → orden probable", "Material vítreo/alofánico manda sobre cualquier epipedón → Andisol; hístico domina sobre el resto"], autor: "Soil Survey Staff (2022) Keys to Soil Taxonomy, 13.ª ed.; terminología IGAC", validez: "Es una CLAVE ORIENTATIVA de campo. Los órdenes reales exigen datos de laboratorio (retención de P ≥85% para carácter ándico, CIC y saturación de bases para árgilico, coeficiente lineal de extensibilidad para vértico). Nunca uses este resultado en un informe legal sin perfil descrito y análisis.", fuente: { t: "USDA-NRCS Soil Taxonomy", u: "https://www.nrcs.usda.gov/conservation/resources/soil-survey" } },
+      { mod: "Módulo 4 · Órdenes por departamento", f: ["Filtro por departamento sobre un mapa referencial de presencia de órdenes", "Se marca el orden dominante y se listan los ausentes"], autor: "IGAC (2012) Estudio General de Suelos de Colombia y cartas de reconocimiento de suelos por departamento", validez: "Es un catálogo de PRESENCIA, no de área ni de localización: decir que un departamento tiene 8 órdenes no dice cuánto ocupan ni dónde. El orden dominante es aproximado y puede cambiar entre cuencas vecinas. Para decidir uso o compra de tierra necesitas la carta de suelos a escala 1:100.000 o menor, o un levantamiento propio.", fuente: { t: "IGAC Suelos", u: "https://www.igac.gov.co" } },
       { mod: "A13 · Plan de calicatas y sondeos", f: ["Densidad de observaciones: 1 cada 10–50 ha en terreno homogéneo, 1 cada 2–5 ha en paisaje complejo", "Profundidad mínima: 1,20 m o hasta la limitante (roca, freático, carbonatos)"], autor: "Guía IGAC de levantamiento de suelos (densidades por escala) y USDA-NRCS Soil Survey Manual", validez: "La densidad calculada supone variabilidad moderada. En abanicos aluviales, volcanismos recientes o rellenos antrópicos la variabilidad es alta: duplica las observaciones o apoya con geofísica.", fuente: { t: "IGAC Levantamientos", u: "https://www.igac.gov.co" } },
       { mod: "B16 · Oferta y demanda edáfica", f: ["Índice 0–100 = ponderación de textura, profundidad, pendiente, drenaje y pH", "Oferta LIMITADA / MODERADA / ALTA según rangos del índice"], autor: "Método de evaluación multicriterio simple (suma ponderada 1–5), base de la oferta tierra del IGAC", validez: "Índice adimensional comparativo, no una clasificación oficial. Cambiar los pesos cambia el resultado: declara siempre los pesos usados y valida con el uso histórico real del predio.", fuente: { t: "IGAC", u: "https://www.igac.gov.co" } },
       { mod: "B20 · Probabilidad combinada de limitantes", f: ["P combinada = producto de probabilidades independientes de cada limitante reportada"], autor: "Regla del producto para eventos independientes (probabilidad clásica)", validez: "Conservadora por diseño: las limitantes edáficas están CORRELACIONADAS (pendiente alta suele acompañar suelos delgados), así que el producto real es mayor que el calculado. Úsala para priorizar, no para decidir inversión.", fuente: { t: "IGAC / USDA", u: "https://www.igac.gov.co" } },
@@ -4674,21 +4687,101 @@
       { id: "gelisoles", nombre: "Gelisoles", sub: "Suelos con permafrost o hielo permanente", col: true, reg: "andina", cub: "<0.01% en Colombia", fert: "N/A (no aptitud agrícola) / Protección íntegra (crioturbados)", epipedon: "Hístico u Ócrico / Crioturbación", desc: "Propios de la tundra ártica y antártica. En Colombia solo existen microsectores en las cumbres periglaciares del Cocuy, Ruiz y Huila por encima de 4.800 msnm." }
     ];
 
-    function renderizarOrdenesSuelo(filtro) {
+    // Órdenes documentados por el IGAC en cada departamento (referencial, no levantamiento)
+    const ORDENES_DEPTO = {
+      "Amazonas": { dom: "oxisoles", ord: ["oxisoles", "ultisoles", "inceptisoles", "entisoles", "histosoles", "espodosoles"], nota: "Escudo de Guayana y terrazas antiguas: oxisoles muy intemperizados y ácidos sobre roca vieja, con franjas aluviales de entisoles e histosoles de várzea. Los espodosoles aparecen en los arenales cuarzosos del sur." },
+      "Antioquia": { dom: "inceptisoles", ord: ["inceptisoles", "ultisoles", "oxisoles", "entisoles", "andisoles", "vertisoles", "histosoles"], nota: "Tres cordilleras con pendientes fuertes: inceptisoles de ladera y ultisoles de valle bajo, entisoles en las riberas del Cauca y el Nechí, vertisoles en las depresiones del bajo Cauca y andisoles aislados al pie del Nevado." },
+      "Arauca": { dom: "inceptisoles", ord: ["inceptisoles", "entisoles", "oxisoles", "ultisoles", "vertisoles", "histosoles"], nota: "Piedemonte llanero: inceptisoles de abanico y oxisoles antiguos de terraza alta, entisoles e histosoles de morichal en las inundaciones estacionales del Arauca y el Cravo Norte." },
+      "Atlántico": { dom: "alfisoles", ord: ["alfisoles", "inceptisoles", "entisoles", "vertisoles", "histosoles"], nota: "Terraza marina y planicie del Magdalena: alfisoles salinos con yeso en la sabana, vertisoles de la depresión Momposina e histosoles de ciénaga. Limitante fuerte de drenaje y sodicidad." },
+      "Bogotá D.C.": { dom: "inceptisoles", ord: ["inceptisoles", "andisoles", "molisoles", "histosoles", "entisoles"], nota: "Altiplano Cundiboyacense: inceptisoles y molisoles de sabana, histosoles de humedal hoy casi desaparecidos por la expansión urbana y andisoles de páramo hacia el Sumapaz." },
+      "Bolívar": { dom: "alfisoles", ord: ["alfisoles", "inceptisoles", "entisoles", "vertisoles", "histosoles", "oxisoles"], nota: "Depresión Momposina y Dique del Río: alfisoles y vertisoles de textura fina con salinidad y sodicidad, inceptisoles y oxisoles en las colinas de San Juan." },
+      "Boyacá": { dom: "inceptisoles", ord: ["inceptisoles", "molisoles", "entisoles", "andisoles", "histosoles", "vertisoles", "gelisoles"], nota: "Cordillera Oriental: molisoles e inceptisoles del altiplano, entisoles de los valles del Chicamocha y el Boyacá, andisoles e histosoles de páramo y gelisoles en las cumbres del Cocuy." },
+      "Caldas": { dom: "andisoles", ord: ["andisoles", "inceptisoles", "ultisoles", "oxisoles", "entisoles", "vertisoles", "histosoles", "gelisoles"], nota: "Eje cafetero: andisoles de ceniza del Ruiz en la franja alta, inceptisoles de ladera y entisoles del valle del Cauca. Retención de fósforo muy alta en los andisoles." },
+      "Caquetá": { dom: "oxisoles", ord: ["oxisoles", "ultisoles", "inceptisoles", "entisoles", "histosoles"], nota: "Transición Amazonía-llano: oxisoles y ultisoles ácidos de terraza, inceptisoles de piedemonte y entisoles e histosoles de várzea a lo largo del río Caquetá." },
+      "Casanare": { dom: "inceptisoles", ord: ["inceptisoles", "entisoles", "oxisoles", "ultisoles", "vertisoles", "histosoles"], nota: "Sabanas inundables: inceptisoles y oxisoles de terraza alta, entisoles e histosoles de morichal en la llanura anegadiza y vertisoles en las depresiones de Hato Corozal." },
+      "Cauca": { dom: "inceptisoles", ord: ["inceptisoles", "andisoles", "ultisoles", "oxisoles", "entisoles", "vertisoles", "histosoles", "gelisoles"], nota: "Macizo Colombiano: andisoles volcánicos de Puracé y Nevado del Huila, inceptisoles de ladera, vertisoles del valle del Patía y gelisoles en las cumbres del Huila." },
+      "Cesar": { dom: "alfisoles", ord: ["alfisoles", "inceptisoles", "entisoles", "aridisoles", "vertisoles", "molisoles"], nota: "Valle del Cesar y Serranía del Perijá: alfisoles de sabana, aridisoles del semiarido de La Jagua y Chimila, y molisoles e inceptisoles al pie de la serranía." },
+      "Chocó": { dom: "ultisoles", ord: ["ultisoles", "oxisoles", "inceptisoles", "entisoles", "histosoles"], nota: "El departamento más húmedo del país: ultisoles ácidos de ladera y oxisoles de terraza, con extensos histosoles de turba en el Atrato, el Baudó y el bajo San Juan. Limitante de exceso de agua por doquier." },
+      "Córdoba": { dom: "inceptisoles", ord: ["inceptisoles", "alfisoles", "entisoles", "vertisoles", "oxisoles", "histosoles"], nota: "Sinú medio y planicie Zenú: inceptisoles y alfisoles de sabana, vertisoles e histosoles de la depresión del San Jorge y oxisoles en las estribaciones de San Jerónimo." },
+      "Cundinamarca": { dom: "inceptisoles", ord: ["inceptisoles", "andisoles", "molisoles", "entisoles", "ultisoles", "oxisoles", "vertisoles", "histosoles"], nota: "Tres realidades en un departamento: molisoles e inceptisoles del altiplano, andisoles de la vertiente del Sumapaz, y oxisoles y vertisoles cálidos del valle del Magdalena." },
+      "Guainía": { dom: "oxisoles", ord: ["oxisoles", "ultisoles", "entisoles", "inceptisoles", "espodosoles", "histosoles"], nota: "Escudo de Guayana y serranías de Chiribiquete y Juri: oxisoles y ultisoles muy viejos y ácidos, espodosoles sobre arenas blancas cuarzosas y entisoles del Orinoco." },
+      "Guaviare": { dom: "oxisoles", ord: ["oxisoles", "ultisoles", "entisoles", "inceptisoles", "espodosoles"], nota: "Terrazas del Guaviare y piedemonte: oxisoles y ultisoles áricos de arena con capacidad de uso forestal, entisoles de ribera y bolsones de espodosoles." },
+      "Huila": { dom: "inceptisoles", ord: ["inceptisoles", "andisoles", "ultisoles", "oxisoles", "entisoles", "vertisoles", "histosoles", "gelisoles"], nota: "Macizo y valle del Magdalena: andisoles de ceniza del Huila y Puracé en la mitad occidental, inceptisoles y vertisoles del Magdalena medio y gelisoles en la cumbre del Nevado." },
+      "La Guajira": { dom: "aridisoles", ord: ["aridisoles", "entisoles", "inceptisoles", "alfisoles", "vertisoles", "histosoles"], nota: "Manda el clima árido: aridisoles y entisoles cálcicos en casi todo el territorio, alfisoles salinos del bajo Ranchería e histosoles de la Ciénaga Grande. Sin riego no hay agricultura." },
+      "Magdalena": { dom: "alfisoles", ord: ["alfisoles", "entisoles", "inceptisoles", "vertisoles", "histosoles", "aridisoles"], nota: "Medio Magdalena y Zona Bananera: alfisoles de terraza y sabana, entisoles de barra fluvial, vertisoles de ciénaga e histosoles de la Ciénaga Grande; aridisoles en el semiarido de Santa Marta." },
+      "Meta": { dom: "oxisoles", ord: ["oxisoles", "ultisoles", "inceptisoles", "entisoles", "vertisoles", "histosoles"], nota: "Llanos del Ariari y Orinoquía: oxisoles y ultisoles de terraza antigua, inceptisoles de piedemonte, entisoles del Guatiquía y vertisoles e histosoles de sabana inundable." },
+      "Nariño": { dom: "andisoles", ord: ["andisoles", "inceptisoles", "ultisoles", "entisoles", "molisoles", "histosoles", "vertisoles"], nota: "Cinturón de fuego: andisoles de Galeras, Cumbal y Azufral, molisoles vitricos de la meseta de Túquerres e Ipiales, inceptisoles de ladera y vertisoles del Patía." },
+      "Norte de Santander": { dom: "inceptisoles", ord: ["inceptisoles", "entisoles", "alfisoles", "molisoles", "ultisoles", "aridisoles", "gelisoles"], nota: "Cañón del Chicamocha y Perijá: inceptisoles y entisoles de ladera, aridisoles del cañón seco, molisoles del altiplano y gelisoles en las cumbres del Cocuy." },
+      "Putumayo": { dom: "oxisoles", ord: ["oxisoles", "ultisoles", "inceptisoles", "entisoles", "andisoles", "histosoles"], nota: "Piedemonte amazónico: oxisoles y ultisoles de terraza, inceptisoles con andisoles de ceniza hacia Mocoa, y entisoles e histosoles de las vegas del Putumayo." },
+      "Quindío": { dom: "andisoles", ord: ["andisoles", "inceptisoles", "ultisoles", "oxisoles", "entisoles", "vertisoles"], nota: "Piedemonte del Ruiz al Quindío: andisoles de ceniza vítrica en la franja cafetera alta, inceptisoles y ultisoles de ladera y entisoles del valle del Cauca." },
+      "Risaralda": { dom: "andisoles", ord: ["andisoles", "inceptisoles", "ultisoles", "entisoles", "oxisoles", "alfisoles", "histosoles", "gelisoles"], nota: "Vertiente del Ruiz: andisoles e histosoles de alta montaña, inceptisoles de ladera cafetera y entisoles y alfisoles del valle del Cauca. Gelisoles solo en la cumbre." },
+      "San Andrés y Providencia": { dom: "entisoles", ord: ["entisoles", "inceptisoles", "histosoles"], nota: "Islas oceánicas de origen coralino: entisoles de arenas carbonatadas e inceptisoles poco desarrollados sobre roca calcárea, con histosoles en los humedales de Providencia. Muy frágiles a la salinización." },
+      "Santander": { dom: "inceptisoles", ord: ["inceptisoles", "entisoles", "alfisoles", "molisoles", "ultisoles", "vertisoles", "aridisoles"], nota: "Cordillera y valles secos: inceptisoles de ladera, alfisoles y molisoles de la meseta, entisoles del Suárez y el Suan, vertisoles de Vélez y aridisoles del cañón del Chicamocha." },
+      "Sucre": { dom: "alfisoles", ord: ["alfisoles", "inceptisoles", "entisoles", "vertisoles", "histosoles"], nota: "Sabanas de Sucre y San Jorge: alfisoles de sabana bien drenado, vertisoles e histosoles de la depresión Momposina e inceptisoles en el flanco de la serranía de San Jacinto." },
+      "Tolima": { dom: "inceptisoles", ord: ["inceptisoles", "andisoles", "entisoles", "alfisoles", "vertisoles", "oxisoles", "histosoles", "gelisoles"], nota: "Valle del Magdalena y cordillera Central: inceptisoles y vertisoles del Espinal y Honda, andisoles del Líbano bajo la ceniza del Ruiz, alfisoles de sabana y gelisoles en la cumbre." },
+      "Valle del Cauca": { dom: "vertisoles", ord: ["vertisoles", "inceptisoles", "andisoles", "entisoles", "alfisoles", "ultisoles", "histosoles"], nota: "El valle agrícola del país: vertisoles pesados de la llanura de inundación del Cauca, andisoles de la cordillera Occidental, inceptisoles y ultisoles de ladera e histosoles de los pantanos." },
+      "Vaupés": { dom: "oxisoles", ord: ["oxisoles", "ultisoles", "entisoles", "inceptisoles", "espodosoles"], nota: "Río Vaupés y Mitú: oxisoles y ultisoles de terraza, espodosoles de arena blanca y entisoles de ribera. Suelos ácidos con fósforo casi inexistente." },
+      "Vichada": { dom: "oxisoles", ord: ["oxisoles", "ultisoles", "entisoles", "inceptisoles", "vertisoles", "histosoles"], nota: "Terrazo de los Llanos y río Vichada: oxisoles muy antiguos y ultisoles áricos de arena, entisoles del Orinoco y vertisoles e histosoles en las depresiones." }
+    };
+
+    function poblarDeptosOrdenes() {
+      const sel = document.getElementById("ord-depto");
+      if (!sel || sel.options.length > 1) return;
+      Object.keys(ORDENES_DEPTO).sort((a, b) => a.localeCompare(b, "es")).forEach(d => {
+        sel.insertAdjacentHTML("beforeend", `<option value="${d}">${d}</option>`);
+      });
+    }
+
+    function filtrarOrdenesDepto(depto) {
+      poblarDeptosOrdenes();
+      const res = document.getElementById("ord-depto-res");
+      if (!depto || !ORDENES_DEPTO[depto]) {
+        if (res) res.innerHTML = "";
+        document.querySelectorAll(".filter-btn").forEach((b, i) => {
+          b.classList.toggle("bg-emerald-600", i === 0); b.classList.toggle("text-white", i === 0); b.classList.toggle("font-bold", i === 0);
+          b.classList.toggle("bg-slate-800", i !== 0); b.classList.toggle("text-slate-300", i !== 0);
+        });
+        renderizarOrdenesSuelo("todos");
+        return;
+      }
+      const d = ORDENES_DEPTO[depto];
+      const nombres = d.ord.map(id => catalogoOrdenes.find(o => o.id === id)?.nombre || id);
+      const domNombre = catalogoOrdenes.find(o => o.id === d.dom)?.nombre || d.dom;
+      const ausentes = catalogoOrdenes.filter(o => !d.ord.includes(o.id)).map(o => o.nombre);
+      if (res) {
+        res.innerHTML = `
+          <div class="bg-slate-950 border border-emerald-700/60 rounded-xl p-3.5 space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h4 class="font-black text-white text-sm">📍 ${depto}: ${d.ord.length} de 12 órdenes documentados</h4>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-700/50">Dominante: ${domNombre}</span>
+            </div>
+            <p class="text-[11px] text-slate-300 leading-relaxed">${d.nota}</p>
+            <div class="flex flex-wrap gap-1 pt-1">
+              ${nombres.map(n => `<span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-900/50 text-emerald-300 border border-emerald-700/40">${n}</span>`).join("")}
+              ${ausentes.map(n => `<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-900 text-slate-600 border border-slate-800 line-through">${n}</span>`).join("")}
+            </div>
+          </div>`;
+      }
+      renderizarOrdenesSuelo("todos", d.ord, d.dom);
+      if (window.Ficha) Ficha.set("ordenes", { departamento: depto, presentes: nombres, dominante: domNombre });
+    }
+
+    function renderizarOrdenesSuelo(filtro, soloIds, domId) {
       const grid = document.getElementById("grid-ordenes");
       if (!grid) return;
       grid.innerHTML = "";
 
       let lista = catalogoOrdenes;
-      if (filtro === "colombia") lista = catalogoOrdenes.filter(o => o.col);
+      if (soloIds) lista = catalogoOrdenes.filter(o => soloIds.includes(o.id));
+      else if (filtro === "colombia") lista = catalogoOrdenes.filter(o => o.col);
       else if (filtro === "andina") lista = catalogoOrdenes.filter(o => o.reg === "andina");
 
       lista.forEach(item => {
         const card = document.createElement("div");
-        card.className = "bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2 hover:border-emerald-500/50 transition";
+        card.className = "bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2 hover:border-emerald-500/50 transition" + (item.id === domId ? " border-amber-600/70" : "");
         card.innerHTML = `
           <div class="flex items-center justify-between">
-            <h4 class="font-extrabold text-base text-white">${item.nombre}</h4>
+            <h4 class="font-extrabold text-base text-white">${item.nombre}${item.id === domId ? ' <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-500/25 text-amber-300 align-middle">DOMINANTE</span>' : ""}</h4>
             <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${item.col ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-800 text-slate-400'}">
               ${item.cub}
             </span>
@@ -4708,6 +4801,10 @@
     }
 
     function filtrarOrdenes(f) {
+      const sel = document.getElementById("ord-depto");
+      if (sel) sel.value = "";
+      const res = document.getElementById("ord-depto-res");
+      if (res) res.innerHTML = "";
       document.querySelectorAll(".filter-btn").forEach(b => {
         b.classList.remove("bg-emerald-600", "text-white", "font-bold");
         b.classList.add("bg-slate-800", "text-slate-300");
@@ -5769,9 +5866,10 @@
         orden_probable: "Orden probable", material: "Material parental", epipedon: "Epipedón", humedad: "Régimen de humedad", endopedon: "Endopedón",
         oferta: "Oferta edáfica", indice: "Índice (0-100)", practicas: "Prácticas seleccionadas", P_estimada: "P combinada", tipo: "Tipo de sitio", severidad: "Severidad",
         sistema: "Sistema / uso", cobertura_pct: "Cobertura (%)", C_estimado: "Factor C estimado",
+        presentes: "Órdenes presentes", dominante: "Orden dominante",
         puntaje: "Autoevaluación", mejor_puntaje: "Mejor puntaje", total: "Preguntas", casos_completados: "Casos completados", pr_marcas: "Pasos marcados", caso_1: "Caso 1", caso_2: "Caso 2", caso_3: "Caso 3"
       },
-      titulos: { ubic: "📍 Identificación del predio", textura: "🔺 Clase textural", fertilidad: "🧪 Fertilidad IGAC", a12: "🪨 Orden de suelo (A12)", b14: "🌱 Capacidad de uso (B14)", b16: "🏞️ Oferta edáfica (B16)", b20: "🧩 Limitantes y prácticas (B20)", b25: "🌳 Factor C de cobertura (B25)", b19: "🌊 Erosión RUSLE (B19)", b23: "🌿 Restauración prioritaria (B23)", c29: "💧 Balance hídrico (C29)", c30: "🌾 Fertilización y costos (C30)", c31: "🛢️ DRASTIC (C31)", c32: "🚜 Traficabilidad (C32)", c33: "💰 PSE (C33)", b27: "🗺️ Flujo SIG (B27)", practica: "🎓 Práctica y autoevaluación" },
+      titulos: { ubic: "📍 Identificación del predio", textura: "🔺 Clase textural", fertilidad: "🧪 Fertilidad IGAC", a12: "🪨 Orden de suelo (A12)", ordenes: "🌍 Órdenes por departamento (4)", b14: "🌱 Capacidad de uso (B14)", b16: "🏞️ Oferta edáfica (B16)", b20: "🧩 Limitantes y prácticas (B20)", b25: "🌳 Factor C de cobertura (B25)", b19: "🌊 Erosión RUSLE (B19)", b23: "🌿 Restauración prioritaria (B23)", c29: "💧 Balance hídrico (C29)", c30: "🌾 Fertilización y costos (C30)", c31: "🛢️ DRASTIC (C31)", c32: "🚜 Traficabilidad (C32)", c33: "💰 PSE (C33)", b27: "🗺️ Flujo SIG (B27)", practica: "🎓 Práctica y autoevaluación" },
       load() {
         if (this.data) return this.data;
         try { const raw = localStorage.getItem(this.KEY); this.data = raw ? JSON.parse(raw) : {}; }
@@ -7184,7 +7282,7 @@
       renderizarHub();
       renderizarMetodo();
       buscarNormas();
-      renderizarB27(); c29Construir(); c31Construir(); renderizarPractica();
+      renderizarB27(); c29Construir(); c31Construir(); poblarDeptosOrdenes(); renderizarPractica();
       ["ficha-secciones", "metodo-grid", "hub-grid", "b26-lista", "b27-pasos", "a12-res", "a13-sim", "b16-sintesis", "b19-res-ap", "b19-res-ae", "b19-res-ie", "b19-res-t", "c29-res", "c30-res", "c31-res", "c32-res", "c33-res", "pr-quiz-res"]
         .forEach(id => { const el = document.getElementById(id); if (el) el.setAttribute("aria-live", "polite"); });
       Ficha.badge();
