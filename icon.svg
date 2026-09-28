@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="SUELOS_PARA_TODOS">
+  <rect width="512" height="512" rx="96" fill="#020617"/>
+  <path d="M96 300h320v96a24 24 0 0 1-24 24H120a24 24 0 0 1-24-24z" fill="#7c4a21"/>
+  <path d="M96 236h320v64H96z" fill="#a16207"/>
+  <path d="M96 196h320v40H96z" fill="#3f2a14"/>
+  <rect x="96" y="196" width="320" height="14" fill="#16a34a"/>
+  <path d="M256 176c0-44 30-78 78-84-4 52-32 84-78 84z" fill="#22c55e"/>
+  <path d="M256 176c0-44-30-78-78-84 4 52 32 84 78 84z" fill="#16a34a"/>
+  <rect x="248" y="150" width="16" height="86" rx="8" fill="#0f172a"/>
+  <g fill="#e2e8f0" opacity=".85">
+    <circle cx="150" cy="348" r="9"/>
+    <circle cx="214" cy="372" r="7"/>
+    <circle cx="300" cy="344" r="8"/>
+    <circle cx="360" cy="376" r="6"/>
+  </g>
+</svg>

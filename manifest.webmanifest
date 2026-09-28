@@ -1,0 +1,16 @@
+{
+  "name": "SUELOS_PARA_TODOS · Portal Agrológico Colombia",
+  "short_name": "Suelos",
+  "description": "41 módulos de edafología, fertilidad, erosión RUSLE, capacidad de uso, balance hídrico y manejo de suelos con metodología IGAC/IDEAM. Funciona sin señal en campo.",
+  "start_url": "./?fuente=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#020617",
+  "theme_color": "#0f172a",
+  "lang": "es-CO",
+  "categories": ["education", "productivity", "science"],
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
