@@ -325,8 +325,9 @@
 
       <div class="relative inline-block text-left">
         <select id="select-bloque-le" aria-label="Ir a una herramienta del Bloque LE: Norma ambiental" onchange="seleccionarModuloLE(this.value)" class="bg-slate-900 border border-slate-700 text-amber-300 hover:text-amber-200 rounded-lg px-2.5 py-1.5 text-xs font-bold focus:outline-none cursor-pointer">
-          <option value="" disabled selected>⚖️ Bloque LE: Norma (LE1-LE4) ▼</option>
+          <option value="" disabled selected>⚖️ Bloque LE: Norma (LE1-LE2) ▼</option>
           <option value="tab-le1">LE1. ¿Licencia, permiso o nada? Árbol de trámite</option>
+          <option value="tab-le2">LE2. Checklist de permisos: qué te piden y en cuántos días</option>
         </select>
       </div>
 
@@ -1469,6 +1470,294 @@
         <div id="le1-res" class="text-xs"></div>
         <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed">
           <strong class="text-red-300">Límites de esta herramienta:</strong> decide <strong>licencia ambiental</strong> y su autoridad. No decide permisos, y una actividad sin licencia casi siempre necesita alguno (vertimiento, concesión de aguas, ocupación de cauce, aprovechamiento forestal, emisión atmosférica): eso va en <strong>LE2</strong>. Tampoco sabe si tu proyecto le toca a la ANLA por una <strong>concesión minero-energética previa</strong>, ni si aplica el régimen de transición por fechas de radicación anteriores a 2014, ni si un plan de ordenamiento local exige algo más. Y la competencia territorial la define tu <strong>jurisdicción</strong>, que aquí no se evalúa: hay 33 corporaciones autónomas regionales y de desarrollo sostenible más las autoridades ambientales urbanas, y cuál te corresponde depende del municipio exacto, no del departamento. Esta herramienta es el filtro para no llegar a la ventanilla equivocada; no sustituye el concepto de la autoridad ni la asesoría jurídica.
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- BLOQUE LE · LE2 CHECKLIST DE PERMISOS AMBIENTALES -->
+    <!-- =================================================================== -->
+    <div id="tab-le2" class="tab-content hidden space-y-5">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div class="border-b border-slate-800 pb-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge-norma badge-minambiente">Decreto 1076 de 2015 · arts. 2.2.3.3.5 · 2.2.3.2.9 · 2.2.1.1.7 · 2.2.5.1.7 · 2.2.1.2.4</span>
+            <span class="badge-norma badge-ideam">Con las modificaciones de Dec. 50/2018 · Dec. 703/2018 · Dec. 690/2021 · Dec. 875/2026</span>
+          </div>
+          <h2 class="text-lg font-black text-white flex items-center gap-2 mt-1"><span>📋</span> LE2 · Checklist de permisos: qué te van a pedir, ante quién y en cuántos días</h2>
+          <p class="text-xs text-slate-400 mt-1">LE1 responde por <strong>licencia ambiental</strong>; este bloque responde por los <strong>permisos específicos</strong>, que son otra ventanilla y otra lista de papeles. Cada requisito que sale acá está tomado del artículo que enumera la solicitud, no de un formulario genérico: por eso verás que el permiso de vertimiento exige <strong>22 numerales</strong>, el de emisión atmosférica <strong>10 literales más 3 anexos</strong>, y que la ocupación de cauce <strong>no tiene lista legal cerrada</strong> porque el decreto remite a las condiciones que fije la autoridad. El portal arma tu checklist, marca lo que en tu caso no aplica y suma el reloj de días hábiles que trae la norma.</p>
+        </div>
+
+        <div>
+          <label for="le2-tr" class="text-slate-400 font-bold block mb-1 text-xs">1 · ¿Qué permiso vas a tramitar? <span class="text-amber-400">(obligatorio)</span></label>
+          <select id="le2-tr" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 text-xs focus:border-amber-500 focus:outline-none">
+            <option value="">Elige el permiso o la autorización que necesitas…</option>
+            <option value="vert">💧 Vertimiento al agua, al mar o al suelo</option>
+            <option value="conc">🚰 Concesión de aguas (captar o derivar)</option>
+            <option value="occ">🏗️ Ocupación de cauce o de playas</option>
+            <option value="for">🌳 Aprovechamiento forestal o tala de árboles</option>
+            <option value="em">🏭 Emisión atmosférica por chimenea, ducto o quema</option>
+            <option value="rui">🔊 Ruido que supera el estándar o en horario restringido</option>
+            <option value="fau">🦌 Fauna silvestre: caza, zoocriadero, zoológico o transplante</option>
+          </select>
+        </div>
+
+        <div id="le2-g-vert" class="le2g hidden space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="le2-v-cuerpo" class="text-slate-400 font-bold block mb-1">¿Dónde va a caer la descarga?</label>
+              <select id="le2-v-cuerpo" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige el cuerpo receptor…</option>
+                <option value="sup">Aguas superficiales (río, quebrada, lago)</option>
+                <option value="mar">Aguas marinas (costa o unidad ambiental marina)</option>
+                <option value="suelo">Al suelo (infiltración, pozo de percolación)</option>
+                <option value="alc">Al sistema de alcantarillado público</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-v-clase" class="text-slate-400 font-bold block mb-1">¿Sabes en qué clase está clasificado ese cuerpo de agua?</label>
+              <select id="le2-v-clase" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">No lo he verificado…</option>
+                <option value="I">Clase I · cuerpos de agua que no admiten vertimientos</option>
+                <option value="II">Clase II · cuerpos de aguas que admiten vertimientos con algún tratamiento</option>
+                <option value="nc">Sin clasificar · la autoridad no ha expedido todavía el estudio de clasificación</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-v-caudal" class="text-slate-400 font-bold block mb-1">Caudal de la descarga <span class="text-slate-500">(l/s, es el numeral 12 de la solicitud)</span></label>
+              <input type="text" inputmode="decimal" id="le2-v-caudal" placeholder="Digítalo desde tu balance hídrico" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:border-amber-500 focus:outline-none">
+            </div>
+            <div class="space-y-2 pt-1">
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-v-juridica" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">Solicita una <strong>persona jurídica</strong> (sociedad, empresa, cooperativa)</span></label>
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-v-apoderado" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">Va a <strong>apoderado</strong> (abogado o tercero que firma por ti)</span></label>
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-v-existente" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">La descarga <strong>ya venía haciéndose</strong> y no tiene permiso</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div id="le2-g-conc" class="le2g hidden space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="le2-c-uso" class="text-slate-400 font-bold block mb-1">¿Para qué vas a usar el agua?</label>
+              <select id="le2-c-uso" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige la destinación…</option>
+                <option value="ml">Beber, bañarse, abrevar animales, lavar ropas (sin obras ni infraestructura)</option>
+                <option value="dom">Doméstico y sanitario de una vivienda o finca con acometida</option>
+                <option value="riego">Riego de cultivos o pastos</option>
+                <option value="gan">Ganadería, porcicultura o avicultura</option>
+                <option value="ind">Industrial o de proceso</option>
+                <option value="acui">Acuicultura</option>
+                <option value="hidro">Generación hidroeléctrica</option>
+                <option value="sp">Prestación del servicio público de acueducto</option>
+                <option value="otro">Otra destinación</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-c-caudal" class="text-slate-400 font-bold block mb-1">Caudal que vas a solicitar <span class="text-slate-500">(l/s, literal e de la solicitud)</span></label>
+              <input type="text" inputmode="decimal" id="le2-c-caudal" placeholder="Digítalo tú: lo toma tu balance hídrico" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:border-amber-500 focus:outline-none">
+            </div>
+            <div>
+              <label for="le2-c-anos" class="text-slate-400 font-bold block mb-1">¿Por cuántos años la pides?</label>
+              <input type="text" inputmode="numeric" id="le2-c-anos" placeholder="Ej. 5, 10, 30…" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:border-amber-500 focus:outline-none">
+            </div>
+            <div class="space-y-2 pt-1">
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-c-obras" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">Vas a construir <strong>obras de captación, derivación o conducción</strong> (bocatoma, canal, bombeo)</span></label>
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-c-tenedor" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">No eres el propietario: eres <strong>poseedor o mero tenedor</strong> del predio</span></label>
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-c-verti" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">De este aprovechamiento <strong>también se derivan vertimientos</strong></span></label>
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-c-gestor" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">Es un <strong>Gestor Comunitario del Agua</strong> o de saneamiento básico</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div id="le2-g-occ" class="le2g hidden space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="le2-o-acto" class="text-slate-400 font-bold block mb-1">¿Qué vas a hacer en el cauce o en la playa?</label>
+              <select id="le2-o-acto" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige la actuación…</option>
+                <option value="cauce">Construir una obra que ocupe el cauce (cruce, bypass, toma, mota, vado)</option>
+                <option value="playasperm">Ocupación <strong>permanente</strong> de playas</option>
+                <option value="playastrans">Ocupación <strong>transitoria</strong> de playas</option>
+                <option value="turismo">Instalar servicios de turismo, recreación o deporte en cuerpo de agua público</option>
+                <option value="dragado">Dragado u obra de navegabilidad que ejecuta el Ministerio de Transporte</option>
+                <option value="pescasub">Pesca de subsistencia con ocupación transitoria de playa</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-o-m2" class="text-slate-400 font-bold block mb-1">Área que vas a ocupar <span class="text-slate-500">(m²)</span></label>
+              <input type="text" inputmode="decimal" id="le2-o-m2" placeholder="Digítala del plano de tu obra" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:border-amber-500 focus:outline-none">
+            </div>
+            <div class="sm:col-span-2 space-y-2">
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-o-mar" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">Está en <strong>área marítima</strong> jurisdicción de la Dirección General Marítima y Portuaria (Dimar)</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div id="le2-g-for" class="le2g hidden space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="le2-f-clase" class="text-slate-400 font-bold block mb-1">¿Qué tipo de aprovechamiento forestal es?</label>
+              <select id="le2-f-clase" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige la clase…</option>
+                <option value="unico">Único (una sola vez, por cambio de aptitud del suelo o utilidad pública)</option>
+                <option value="persistente">Persistente (explotación periódica sin destruir el bosque)</option>
+                <option value="domestico">Doméstico (leña o madera para consumo de la familia, sin comercial)</option>
+                <option value="pfmn">Productos forestales no maderables o manejo sostenible de la flora</option>
+                <option value="aislado">Tala o poda de árboles aislados en centro urbano</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-f-suelo" class="text-slate-400 font-bold block mb-1">¿Dónde están los árboles?</label>
+              <select id="le2-f-suelo" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige el terreno…</option>
+                <option value="publico">Terreno de dominio público</option>
+                <option value="privado">Terreno de dominio privado</option>
+                <option value="plantacion">Dentro de mi plantación forestal, cerca viva o rompevientos sembrados</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-f-vol" class="text-slate-400 font-bold block mb-1">Volumen a aprovechar <span class="text-slate-500">(m³)</span></label>
+              <input type="text" inputmode="decimal" id="le2-f-vol" placeholder="Del inventario o del cubicaje" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:border-amber-500 focus:outline-none">
+            </div>
+            <div>
+              <label for="le2-f-ha" class="text-slate-400 font-bold block mb-1">Área del aprovechamiento <span class="text-slate-500">(ha)</span></label>
+              <input type="text" inputmode="decimal" id="le2-f-ha" placeholder="De la carta IGAC o tu levantamiento" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:border-amber-500 focus:outline-none">
+            </div>
+            <div class="sm:col-span-2 space-y-2">
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-f-la" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">La tala hace parte de un <strong>proyecto ya sometido a licencia ambiental o a plan de manejo ambiental</strong></span></label>
+            </div>
+          </div>
+        </div>
+
+        <div id="le2-g-em" class="le2g hidden space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="le2-e-caso" class="text-slate-400 font-bold block mb-1">¿Cuál de los casos del artículo 2.2.5.1.7.2 es el tuyo?</label>
+              <select id="le2-e-caso" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige el literal de la norma…</option>
+                <option value="a">a) Quemas abiertas controladas en zona rural</option>
+                <option value="b">b) Humos, gases, vapores, polvos o partículas por ductos o chimeneas</option>
+                <option value="c">c) Emisiones fugitivas de minería a cielo abierto</option>
+                <option value="d">d) Incineración de residuos sólidos, líquidos o gaseosos</option>
+                <option value="e">e) Almacenamiento, transporte, carga y descarga en puertos</option>
+                <option value="f">f) Operación de calderas o incineradores de un establecimiento</option>
+                <option value="g">g) Quema de combustibles en operación ordinaria de campos de petróleo y gas</option>
+                <option value="h">h) Procesos que puedan producir emisiones de sustancias tóxicas</option>
+                <option value="i">i) Producción de lubricantes y combustibles</option>
+                <option value="j">j) Refinación y almacenamiento de petróleo, o procesos petroquímicos</option>
+                <option value="k">k) Operación de plantas termoeléctricas</option>
+                <option value="l">l) Operación de reactores nucleares</option>
+                <option value="m">m) Actividades generadoras de olores ofensivos</option>
+                <option value="n">n) Las demás que el Ministerio establezca</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-e-comb" class="text-slate-400 font-bold block mb-1">¿Qué combustible usa la fuente?</label>
+              <select id="le2-e-comb" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige el combustible…</option>
+                <option value="gn">Gas natural</option>
+                <option value="glp">Gas licuado del petróleo (GLP)</option>
+                <option value="solido">Sólido (carbón, coque, leña, biomasa)</option>
+                <option value="liquido">Líquido (diésel, fuel óil, kerosén)</option>
+                <option value="otro">Otro o sin combustión (polvo, vapores, olores)</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-e-sector" class="text-slate-400 font-bold block mb-1">Sector de la instalación <span class="text-slate-500">(define si el estudio de dispersión es obligatorio)</span></label>
+              <select id="le2-e-sector" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige el sector…</option>
+                <option value="refineria">Refinación de petróleo</option>
+                <option value="cemento">Cemento</option>
+                <option value="quimica">Química o petroquímica</option>
+                <option value="siderurgica">Siderúrgica</option>
+                <option value="quemaagro">Quemas agroindustriales</option>
+                <option value="termo">Termoeléctrica</option>
+                <option value="otrosector">Otro sector</option>
+              </select>
+            </div>
+            <div class="space-y-2 pt-1">
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-e-la" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">El permiso se solicita <strong>dentro de una licencia ambiental</strong></span></label>
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-e-colectivo" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">Se solicita como <strong>permiso colectivo</strong> (asociación de pequeños o medianos empresarios)</span></label>
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-e-emerg" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">Es una <strong>quema incidental por emergencia</strong> en campo de gas o hidrocarburos</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div id="le2-g-rui" class="le2g hidden space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="le2-r-tipo" class="text-slate-400 font-bold block mb-1">¿Qué genera el ruido?</label>
+              <select id="le2-r-tipo" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige la fuente…</option>
+                <option value="obra">Obra de construcción o demolición con maquinaria</option>
+                <option value="estab">Establecimiento comercial, industrial o de servicios</option>
+                <option value="evento">Evento con equipos de amplificación de sonido</option>
+                <option value="altavoz">Altoparlantes en acto cultural, deportivo, religioso o político</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-r-horario" class="text-slate-400 font-bold block mb-1">¿En qué horario opera?</label>
+              <select id="le2-r-horario" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige el horario…</option>
+                <option value="hab">Dentro del horario que ya fijó la autoridad</option>
+                <option value="noche">Entre las 7:00 p. m. y las 7:00 a. m., de lunes a sábado</option>
+                <option value="dome">Domingos o días festivos, a cualquier hora</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-r-sector" class="text-slate-400 font-bold block mb-1">¿En qué tipo de sector está?</label>
+              <select id="le2-r-sector" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige la zonificación acústica…</option>
+                <option value="A">Sector A · Tranquilidad y Silencio: hospitales, guarderías, bibliotecas, sanatorios y hogares geriátricos</option>
+                <option value="B">Sector B · Tranquilidad y Ruido Moderado: residencial, parques urbanos, escuelas, universidades y colegios</option>
+                <option value="C">Sector C · Ruido Intermedio Restringido: usos industriales y comerciales, oficinas, uso institucional</option>
+                <option value="D">Sector D · Zona Suburbana o Rural de Tranquilidad y Ruido Moderado</option>
+                <option value="nc">Sin zonificación definida por el municipio</option>
+              </select>
+            </div>
+            <div class="space-y-2 pt-1">
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-r-supera" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">El nivel de presión sonora <strong>supera el estándar vigente</strong> (lo mediste o lo estimas por encima)</span></label>
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-r-emerg" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">Es una <strong>obra de emergencia</strong> (riesgo inminente o servicio esencial)</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div id="le2-g-fau" class="le2g hidden space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label for="le2-fa-modo" class="text-slate-400 font-bold block mb-1">¿Qué vas a hacer con fauna silvestre?</label>
+              <select id="le2-fa-modo" onchange="le2Refrescar()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 focus:border-amber-500 focus:outline-none">
+                <option value="">Elige el modo de aprovechamiento…</option>
+                <option value="subsistencia">Caza de subsistencia</option>
+                <option value="comercial">Caza comercial</option>
+                <option value="deportiva">Caza deportiva</option>
+                <option value="control">Caza de control</option>
+                <option value="fomento">Caza de fomento (parentales para zoocriadero o coto)</option>
+                <option value="zoocriadero">Establecer un zoocriadero</option>
+                <option value="zoológico">Establecer un zoológico o colección viva</option>
+                <option value="transplante">Transplante o reintroducción de fauna</option>
+              </select>
+            </div>
+            <div>
+              <label for="le2-fa-ind" class="text-slate-400 font-bold block mb-1">Número de individuos que declaras <span class="text-slate-500">(lo que pide el permiso)</span></label>
+              <input type="text" inputmode="numeric" id="le2-fa-ind" placeholder="Dígitalo tú: no lo estimo por ti" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono focus:border-amber-500 focus:outline-none">
+            </div>
+            <div class="sm:col-span-2 space-y-2">
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-fa-cites" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">La especie está en los <strong>apéndices CITES</strong> o es <strong>foránea</strong></span></label>
+              <label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="le2-fa-pnn" onchange="le2Refrescar()" class="mt-0.5 accent-amber-500"><span class="text-slate-300 text-[11px]">Se haría <strong>dentro de un área del Sistema de Parques Nacionales Naturales</strong></span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <button onclick="le2Calcular()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">📋 Armar mi checklist</button>
+          <button onclick="le2Limpiar()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Limpiar</button>
+          <button onclick="cambiarPestana('tab-le1')" class="bg-slate-800 hover:bg-amber-900/40 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">← LE1 · ¿Licencia o no?</button>
+          <button onclick="cambiarPestana('tab-metodo')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Metodología y fuentes</button>
+        </div>
+        <div id="le2-res" class="text-xs"></div>
+        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-[11px] text-slate-400 leading-relaxed">
+          <strong class="text-red-300">Límites de esta herramienta:</strong> arma el checklist con lo que <em>el Decreto 1076 exige</em> y suma los días hábiles que <em>el mismo decreto fija</em>. Hay cosas que no están en este decreto y por tanto no pueden salir de acá: los <strong>valores límite de parámetros</strong> del vertimiento (resolución de vertimientos puntuales del Ministerio), la <strong>tasa retributiva</strong> por uso del agua, los <strong>estándares de emisión</strong> de cada contaminante y los de <strong>ruido</strong>, y el procedimiento del permiso de ruido, que se rige por el Código Nacional de Policía. También falta el anexo de la <strong>constancia de pago</strong>: la tarifa la fija cada corporación. Antes de radicar, baja la lista de requisitos de la ventanilla de tu autoridad: si alguno no está en el decreto, el portal lo marca como <strong>pendiente de verificar</strong> en vez de inventarlo.
         </div>
       </div>
     </div>
@@ -4677,7 +4966,8 @@
       { id: "tab-bi2", num: "BI2", tit: "Similaridad y recambio entre dos inventarios", bloq: "Bloque BI: Biodiversidad", norm: "Jaccard 1912 · Sørensen 1948 · Whittaker 1960 · Bray-Curtis 1957 · Baselga 2010", desc: "Compara dos listas (dos predios, dos fechas o dos coberturas) con Jaccard, Sørensen y Bray-Curtis cuando hay abundancias, la β de Whittaker, y la descomposición de Baselga que separa cuánta diferencia es recambio de especies (βSIM) y cuánta es pérdida neta (βSNE), con el chequeo de aditividad. Los nombres se normalizan sin tildes ni mayúsculas." },
       { id: "tab-bi3", num: "BI3", tit: "¿Ya muestreaste suficiente? Chao1 y rarefacción", bloq: "Bloque BI: Biodiversidad", norm: "Chao 1984 · Chao & Jost 2012 · Hurlbert 1971", desc: "Con f₁ y f₂ estima la riqueza no observada (Chao1 corregido por sesgo), la cobertura de tu muestra Ĉ = 1 − f₁/N, el % de riqueza atrapada y la curva de rarefacción exacta E[S_n] sobre todas las submuestras posibles, dibujada en SVG. Sirve para comparar predios con esfuerzo distinto sin tener que extrapolar: el portal no proyecta más allá de tu N y te lo dice." },
       { id: "tab-bi4", num: "BI4", tit: "Paisaje: mosaico, fragmentos y conectancia", bloq: "Bloque BI: Biodiversidad", norm: "FRAGSTATS (McGarigal & Marks 1995) · Saura & Pascual-Hortal 2007 · Arrhenius 1921", desc: "Cuatro cálculos espaciales independientes con tus propios digitados: composición del mosaico (SHDI, EQUIT, dominancia y % natural que tú declaras), forma de los fragmentos (compacidad 4πA/P², SHAPE, densidad y parche mayor), conectancia PC con núcleo gaussiano o exponencial y dPC de cada parche para saber cuál sostiene el flujo, y relación especie-área S = c·A^z. En PC, p* es la ruta de mayor probabilidad (admite saltos por otros parches) y el denominador A_L es el del paisaje completo, fijo: es la idea de Saura &amp; Pascual-Hortal simplificada, no el cálculo formal de Conefor con matriz de resistencia." },
-      { id: "tab-le1", num: "LE1", tit: "Árbol de trámite: ¿licencia ambiental, y de quién?", bloq: "Bloque LE: Norma", norm: "Decreto 1076/2015 arts. 2.2.2.3.2.1 a 2.2.2.3.2.4 · Dec. 852/2024 · Dec. 1186/2025 · Dec. 1421/2016 · Dec. 670/2025", desc: "Escoges la actividad y digitas la magnitud que tu propio proyecto tiene (t/año, MW, kV, m³, hectáreas, habitantes servidos, pulgadas) y el motor decide con el umbral literal del decreto: ANLA, CAR o ni una ni otra. Compara tu cifra con el umbral, te muestra el porcentaje del límite y el margen que te separa de la otra autoridad, y aplica los cuatro traslados de competencia que están en el mismo texto (parágrafos 4º y 5º del art. 2.2.2.3.2.3 y numerales 12.a y 12.b del 2.2.2.3.2.2): parte de un proyecto licenciado por ANLA, peticionario que es una CAR, predio al interior del PNN o en su zona amortiguadora. Avisa además la multijurisdicción (art. 2.2.2.3.2.6) y el concepto previo del Ministerio por RAMSAR, páramo o manglar (art. 2.2.2.3.2.4)." }
+      { id: "tab-le1", num: "LE1", tit: "Árbol de trámite: ¿licencia ambiental, y de quién?", bloq: "Bloque LE: Norma", norm: "Decreto 1076/2015 arts. 2.2.2.3.2.1 a 2.2.2.3.2.4 · Dec. 852/2024 · Dec. 1186/2025 · Dec. 1421/2016 · Dec. 670/2025", desc: "Escoges la actividad y digitas la magnitud que tu propio proyecto tiene (t/año, MW, kV, m³, hectáreas, habitantes servidos, pulgadas) y el motor decide con el umbral literal del decreto: ANLA, CAR o ni una ni otra. Compara tu cifra con el umbral, te muestra el porcentaje del límite y el margen que te separa de la otra autoridad, y aplica los cuatro traslados de competencia que están en el mismo texto (parágrafos 4º y 5º del art. 2.2.2.3.2.3 y numerales 12.a y 12.b del 2.2.2.3.2.2): parte de un proyecto licenciado por ANLA, peticionario que es una CAR, predio al interior del PNN o en su zona amortiguadora. Avisa además la multijurisdicción (art. 2.2.2.3.2.6) y el concepto previo del Ministerio por RAMSAR, páramo o manglar (art. 2.2.2.3.2.4)." },
+      { id: "tab-le2", num: "LE2", tit: "Checklist de permisos: qué te piden y en cuántos días", bloq: "Bloque LE: Norma", norm: "Decreto 1076/2015 · vertimiento 2.2.3.3.5 · concesión 2.2.3.2.7 · ocupación 2.2.3.2.12 · forestal 2.2.1.1.7 · emisiones 2.2.5.1.7 · ruido 2.2.5.1.5.15 · fauna 2.2.1.2.4 · Dec. 50/2018 · Dec. 703/2018 · Dec. 690/2021 · Dec. 875/2026", desc: "Eliges el permiso específico (vertimientos, concesión de aguas, ocupación de cauce o playas, aprovechamiento forestal, emisiones atmosféricas, ruido o fauna y flora silvestre) y digitas lo que tiene tu caso: cuerpo de agua y su clase, caudal, uso, área talada o volumetría, combustible y sector, horario y tipo de fuente, modo de aprovechamiento. El motor decide si el permiso aplica, ante qué autoridad y con qué artículo; baja la lista de requisitos literales del numeral correspondiente marcando cada papel como APLICA, VERIFICA o NO APLICA; arma el reloj sumando sólo los días hábiles que el decreto escribe en cifras (y separa los que corren por tu cuenta de los de la autoridad); y cierra con la vigencia, la renovación, las garantías y las advertencias del caso. No rellena vereda, municipio ni autoridad: los dejas vacíos y la herramienta te lo devuelve como pendiente." }
     ];
 
     // =========================================================================
@@ -4737,7 +5027,8 @@
       "tab-bi2": ["biodiv"],
       "tab-bi3": ["biodiv"],
       "tab-bi4": ["biodiv", "suelo"],
-      "tab-le1": ["legal"]
+      "tab-le1": ["legal"],
+      "tab-le2": ["legal", "agua", "aire", "biodiv"]
     };
 
     const AREAS = [
@@ -4772,8 +5063,8 @@
                  "Modelos de distribución de especies y curva de área-especie calibrada con datos propios: la z de BI4 la declaras tú, el portal no la ajusta por regresión"] },
       { k: "legal", nom: "Legal", ico: "⚖️", hex: "#fbbf24",
         sub: "normativa ambiental colombiana y ordenamiento del territorio",
-        ya: "Buscador de normativa ambiental (B26) con su texto oficial, conflictos de uso frente al ordenamiento (B15), ecosistemas con protección expresa (B28) y el marco de PSE (C33, CONPES 4053).",
-        faltan: ["Árbol de trámite: responder qué vas a hacer (vertimiento, concesión de agua, ocupación de cauces, aprovechamiento forestal, licencia ambiental, POMCA) y salir con la CAR competente, requisitos, plazos y enlaces al formulario",
+        ya: "LE1 · Árbol de trámite: marca si tu actividad está sujeta a licencia ambiental por las listas taxativas del artículo 2.2.2.3.2.1, con la magnitud que desempata y el contexto que reparte la competencia entre la ANLA, Parques Nacionales y la autoridad ambiental territorial. LE2 · Checklist de permisos específicos: siete familias (vertimiento, concesión de aguas, ocupación de cauce y playas, aprovechamiento forestal, emisión atmosférica, ruido con equipos y fauna silvestre) con cada requisito copiado del numeral que lo enumera, el reloj de días hábiles que sí está escrito en el decreto y la vigencia del permiso otorgado. Completan el área: buscador de normativa ambiental (B26) con su texto oficial, conflictos de uso frente al ordenamiento (B15), ecosistemas con protección expresa (B28) y el marco de PSE (C33, CONPES 4053).",
+        faltan: ["La ventanilla concreta: LE2 informa el tipo de autoridad con jurisdicción, pero falta casar el municipio del predio con la CAR o autoridad ambiental que corresponde y con el enlace al formato que esa entidad publica",
                  "Chequeo de un predio contra normas de restricción: páramo delimitado, humedal Ramsar, ronda hídrica, área protegida, suelo no urbanizable",
                  "Verificador de instrumentos de planeación (EOT/POT/PBM) y sus cortapas de suelo"] }
     ];
@@ -5120,6 +5411,7 @@
       { mod: "BI3 · Chao1, cobertura y rarefacción", f: ["Chao1 corregido por sesgo = S + f₁(f₁−1) / [2(f₂+1)]", "Chao1 clásico = S + f₁²/(2f₂), definido solo si f₂ > 0", "Cobertura de la muestra Ĉ = 1 − f₁/N (Chao & Jost 2012)", "Rarefacción de Hurlbert, valor esperado exacto: E[S_n] = Σ_i [1 − C(N−n_i, n)/C(N, n)]", "El portal calcula E[S_n] agrupando especies por clase de abundancia y acumulando el producto término a término"], autor: "Chao (1984) con la forma corregida por sesgo de Chao & Lee (1992); Chao & Jost (2012) para la cobertura; Hurlbert (1971) y Cole (1949) para la curva de rarefacción", validez: "Chao1 es un <strong>límite inferior</strong>: dice «al menos faltan estas especies», nunca «esta es la riqueza». Asume que las especies no vistas se parecen a la cola que describen f₁ y f₂; con muestreo parcheado f₁ se dispara y el estimador deja de servir. Requiere <strong>conteos enteros de individuos</strong>: con coberturas o frecuencias la teoría de especies no vistas no aplica. Rarefacción = interpolación dentro de tu N; el portal <strong>no extrapol</strong>a (el modelo asintótico de Chao et al. 2014/iNEXT — Ecological Monographs 84:45-67, https://doi.org/10.1890/13-0133.1 — pide ajuste sobre la matriz completa y no se implementa acá). No se calculan intervalos de confianza: esos piden bootstrap. Comparar predios solo es válido rarefactuando los dos al mismo n, y cada tipo de unidad (tallos, cantos, trampas) tiene su propia curva.", fuente: { t: "Chao & Jost (2012) Coverage-based rarefaction and extrapolation, Ecology 93:2533-2547", u: "https://doi.org/10.1890/11-1952.1" } },
       { mod: "BI4 · Métricas de paisaje y conectancia", f: ["SHDI = −Σ pᵢ ln pᵢ con pᵢ = proporción de área de la clase i · SHDI_max = ln m · EQUIT = SHDI/SHDI_max", "Compacidad isoperimétrica C = 4πA/P² (A en m²) · SHAPE = 1/√C", "Densidad de parches PD = n/A · % del parche mayor sobre la suma de fragmentos", "PC = Σ_i Σ_j a_i·a_j·p*_ij / A_L² con p_ii = 1; núcleo gaussiano p = exp(−d²/L²) o exponencial p = exp(−d/(2L))", "dPC_i = 100·(PC − PC_(−i))/PC, al eliminar el nodo i con sus enlaces", "Relación especie-área S = c·A^z → S₂ = S₁·(A₂/A₁)^z"], autor: "McGarigal & Marks (1995) FRAGSTATS; Hadley & Real (1971) / Gibbs (1967) para la compacidad; Pascual-Hortal & Saura (2006) para PC y su contribución nodal; Saura & Pascual-Hortal (2007, Landscape and Urban Planning 83:91-103) para el índice de disponibilidad de hábitat; Arrhenius (1921) y Rosenzweig (1995) para la curva especie-área", validez: "Todo depende de <strong>la tipología y la escala</strong>: cambia la agrupación de clases o el tamaño de celda y se mueve SHDI; el perímetro de un fragmento depende de la resolución con que lo digitalizaste (efecto coastline), así que hay que declarar escala y área mínima mapeable. PC supone que todos los parches son iguales para la especie y que la probabilidad de cruce decae solo con la distancia en línea recta: sin matriz, sin barreras y sin resistencia del terreno, y es un índice <strong>especie-específico</strong> — cambiar L cambia el orden de los fragmentos. La relación especie-área <strong>no es una ley</strong>: da un orden de magnitud asumiendo equilibrio; histórica y documentadamente ha sobrestimado extinciones inmediatas (deuda de especies) y las ha subestimado cuando la pérdida se concentra en hábitats ricos. La cifra sale con decimales a propósito: es un valor esperado, no un conteo.", fuente: { t: "Pascual-Hortal & Saura (2006) Landscape Ecology 21:959-967", u: "https://doi.org/10.1007/s10980-006-0013-z" } },
       { mod: "LE1 · Árbol de trámite de licencia ambiental", f: ["Regla base: solo los proyectos enumerados en los arts. 2.2.2.3.2.2 (ANLA) y 2.2.2.3.2.3 (CAR) están sujetos a licencia ambiental — art. 2.2.2.3.2.1", "Clasificación por magnitud proyectada: ≥800.000 t/año carbón · ≥600.000 t/año arcillas · ≥250.000 m³/año materiales · ≥2.000.000 t/año remoción de metálicos · ≥1.000.000 t/año otros minerales (por encima: ANLA; por debajo: CAR)", "Eléctrico: ≥100 MW ANLA (Dec. 1186/2025) · 10–<100 MW CAR · hídrica <100 MW CAR salvo PCH en ZNI ≤10 MW · alternativa ≥50 MW ANLA y 10–<50 MW CAR (Dec. 852/2024) · líneas ≥220 kV ANLA y 50–<220 kV CAR", "Obras: presa >200.000.000 m³ ANLA, ≤ CAR · riego >20.000 ha ANLA y 5.000–20.000 ha CAR · trasvase con mínimo caudal ≥2 m³/s ANLA · ductos ≥6 pulgadas ANLA · PTAR ≥200.000 habitantes CAR · valorización orgánicos ≥20.000 t/año CAR · concretera >10.000 m³/mes CAR", "Traslados de competencia: parágrafo 5o (parte de proyecto ANLA) · parágrafo 4o (peticionario es una CAR) · num. 12.a (al interior del PNN) · num. 12.b (zona amortiguadora determinada) · art. 2.2.2.3.2.6 (multijurisdicción → la ANLA designa) · art. 2.2.2.3.2.4 (RAMSAR, páramo o manglar → concepto previo del Ministerio)"], autor: "Decreto 1076 de 2015 (Decreto Único Sector Ambiente), Título 2 Parte 2 Libro 2, con las modificaciones citadas en el propio texto: Dec. 703/2018, Dec. 852/2024, Dec. 1186/2025, Dec. 1421/2016 y Dec. 670/2025", validez: "Es un <strong>filtro de competencia</strong>, no un concepto jurídico. Las listas son <strong>taxativas</strong>: que tu actividad no aparezca significa que no procede exigir licencia ni plan de manejo ambiental por esa vía (art. 2.2.2.3.2.1), pero <strong>no</strong> significa que no requiera permisos — vertimiento, concesión de aguas, ocupación de cauce, aprovechamiento forestal y emisión atmosférica se tramitan aparte. Los umbrales están redactados sobre la <strong>producción o capacidad proyectada</strong>, y el umbral que se aplica es el de la fecha de radicación: si la norma cambió a mitad de trámite, puede aplicar el régimen de transición (art. 2.2.2.3.11.1). Tampoco decide tu <strong>autoridad territorial</strong>: con 33 corporaciones autónomas regionales y de desarrollo sostenible más las autoridades urbanas (art. 66 de la Ley 99 de 1993, Ley 768 de 2002), cuál te corresponde depende del municipio exacto. Antes de radicar, verifica el texto consolidado en la Función Pública.", fuente: { t: "Decreto 1076 de 2015 — arts. 2.2.2.3.2.1 a 2.2.2.3.2.4 (Función Pública, Sistema PILA)", u: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=73926" } },
+      { mod: "LE2 · Checklist de permisos específicos", f: ["Aplicabilidad por familia: vertimiento (art. 2.2.3.3.5.1) · concesión de aguas (2.2.3.2.7.1) · ocupación de cauce y playas (2.2.3.2.12.1) · aprovechamiento forestal (2.2.1.1.7.1) · emisión atmosférica (2.2.5.1.7.1) · ruido con equipos (2.2.5.1.5.15) · fauna y flora silvestre (2.2.1.2.4.2)", "Requisitos tomados del numeral que enumera la solicitud, no de un formulario genérico: 22 numerales del 2.2.3.3.5.2 (con los 8, 11 y 19 modificados por el Dec. 50/2018), 16 literales del 2.2.3.2.7.1, literales a–n del 2.2.5.1.7.2 más el párrafo 1o que añade 3 anexos, numerales 1 a 11 del 2.2.1.2.15.3", "Marcado en tres estados: APLICA cuando el numeral es exigible con los datos que digitaste, VERIFICA cuando la norma lo condiciona a un dato que el portal no tiene o lo desarrolla otra norma, NO APLICA cuando tu propia respuesta lo excluye", "Reloj: sólo se suman los días hábiles que el decreto escribe en cifras y se separa el reloj de la autoridad del que corre por tu cuenta — vertimiento 10 (verificar) + 30 (estudio) + 8 (informe técnico) + 20 (decidir) = 68 días de la autoridad, con 10 tuyos para subsanar y 5 para el recurso de reposición (art. 2.2.3.3.5.5); emisión atmosférica 10 + 15 + 5 + 15 + 60 = 105 días de la autoridad (art. 2.2.5.1.7.5), más los 10 de respuesta del art. 2.2.5.1.7.14", "Vigencia y garantías: 10 años del permiso de vertimiento con renovación en el primer trimestre del último año · concesión 10 años y hasta 50 en riego · emisión ≤5 años sin licencia y ≤5 con póliza del 30 % · forestal la fija la Corporación con el tope del art. 55 del Decreto-ley 2811 de 1974 · fauna ≤1 año o ≤2 meses de faenas"], autor: "Decreto 1076 de 2015, Título 2 (recursos naturales renovables), con las modificaciones señaladas en el propio texto: Dec. 50/2018, Dec. 703/2018, Dec. 690/2021 y Dec. 875/2026; tasas de la Ley 99 de 1993 arts. 42-43", validez: "Es una <strong>lista de verificación</strong>, no un concepto jurídico ni un formulario oficial. El texto de cada requisito está copiado del numeral, pero <strong>el orden y la forma</strong> los fija el manual de procedimientos de tu autoridad, y muchos numerales piden documentos que ya no existen como tales (certificados, conceptos técnicos previos). Los plazos son los <strong>máximos legales</strong>: la autoridad puede tardar menos, y el silencio administrativo no siempre significa aprobado — en emisión atmosférica los 90 días de silencio sí renuevan, en lo demás hay que pedir el oficio. La ocupación de cauce <strong>no tiene lista cerrada</strong> porque el decreto remite a 'las condiciones que establezca la Autoridad Ambiental competente'. Las <strong>tarifas</strong> de vertimiento y concesión se liquidan por la fórmula de la autoridad con tu caudal real, y los estándares de ruido <strong>no están en este decreto</strong>: están en la resolución que adopta los límites por sector. Antes de radicar, descarga el formato único de tu CAR y coteja numeral por numeral.", fuente: { t: "Decreto 1076 de 2015 — espejo oficial Función Pública (Sistema PILA)", u: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=73926" } },
       { mod: "A12 · Clave de orden de suelos", f: ["Decisión guiada: material parental + epipedón + régimen de humedad + endopedón → orden probable", "Material vítreo/alofánico manda sobre cualquier epipedón → Andisol; hístico domina sobre el resto"], autor: "Soil Survey Staff (2022) Keys to Soil Taxonomy, 13.ª ed.; terminología IGAC", validez: "Es una CLAVE ORIENTATIVA de campo. Los órdenes reales exigen datos de laboratorio (retención de P ≥85% para carácter ándico, CIC y saturación de bases para árgilico, coeficiente lineal de extensibilidad para vértico). Nunca uses este resultado en un informe legal sin perfil descrito y análisis.", fuente: { t: "USDA-NRCS Soil Taxonomy", u: "https://www.nrcs.usda.gov/conservation/resources/soil-survey" } },
       { mod: "Módulo 4 · Órdenes por departamento", f: ["Filtro por departamento sobre un mapa referencial de presencia de órdenes", "Se marca el orden dominante y se listan los ausentes"], autor: "IGAC (2012) Estudio General de Suelos de Colombia y cartas de reconocimiento de suelos por departamento", validez: "Es un catálogo de PRESENCIA, no de área ni de localización: decir que un departamento tiene 8 órdenes no dice cuánto ocupan ni dónde. El orden dominante es aproximado y puede cambiar entre cuencas vecinas. Para decidir uso o compra de tierra necesitas la carta de suelos a escala 1:100.000 o menor, o un levantamiento propio.", fuente: { t: "IGAC Suelos", u: "https://www.igac.gov.co" } },
       { mod: "A13 · Plan de calicatas y sondeos", f: ["Densidad de observaciones: 1 cada 10–50 ha en terreno homogéneo, 1 cada 2–5 ha en paisaje complejo", "Profundidad mínima: 1,20 m o hasta la limitante (roca, freático, carbonatos)"], autor: "Guía IGAC de levantamiento de suelos (densidades por escala) y USDA-NRCS Soil Survey Manual", validez: "La densidad calculada supone variabilidad moderada. En abanicos aluviales, volcanismos recientes o rellenos antrópicos la variabilidad es alta: duplica las observaciones o apoya con geofísica.", fuente: { t: "IGAC Levantamientos", u: "https://www.igac.gov.co" } },
@@ -7316,9 +7608,10 @@
         shdi: "SHDI del paisaje", equit_paisaje: "EQUIT del paisaje", clases_paisaje: "Clases de cobertura", pct_natural: "% de cobertura natural", compacidad_media: "Compacidad media", shape_medio: "SHAPE medio", pc_conectancia: "PC (conectancia)", dpc_mayor: "dPC del fragmento clave", fragmento_clave: "Fragmento que sostiene el flujo", z_especie_area: "z usada", s_esperada: "S₂ esperada", area_remanente_ha: "Área de hábitat después (ha)",
         area_paisaje_ha: "Área total del paisaje (ha)", clase_dominante: "Clase dominante", pct_clase_dominante: "% de la clase dominante", fragmentos: "Fragmentos digitados", parche_mayor_ha: "Parche mayor (ha)", densidad_parches_ha: "Densidad de parches (PD, /ha)", pc_alog_pct: "PC en ALOG (%)", nucleo_usado: "Núcleo de conectancia", L_dispersion_m: "Distancia de dispersión L (m)", especie_foco: "Especie o grupo foco", s_actual: "Riqueza actual (S₁)", area_actual_ha: "Área de hábitat actual (A₁, ha)", pct_cambio: "Cambio de hábitat (%)", cambio_especies: "Cambio esperado en especies (S₂ − S₁)",
         actividad: "Actividad declarada", magnitud: "Magnitud del proyecto", autoridad: "Autoridad competente", articulo: "Artículo invocado",
-        puntaje: "Autoevaluación", mejor_puntaje: "Mejor puntaje", total: "Preguntas", casos_completados: "Casos completados", pr_marcas: "Pasos marcados", caso_1: "Caso 1", caso_2: "Caso 2", caso_3: "Caso 3", caso_4: "Caso 4", caso_5: "Caso 5 · Aire"
+        permiso: "Permiso evaluado (LE2)", estado: "Estado del permiso", requisitos: "Requisitos que aplican", pendientes: "Requisitos por verificar", reloj: "Reloj de la autoridad (días hábiles)",
+        puntaje: "Autoevaluación", mejor_puntaje: "Mejor puntaje", total: "Preguntas", casos_completados: "Casos completados", pr_marcas: "Pasos marcados", caso_1: "Caso 1", caso_2: "Caso 2", caso_3: "Caso 3", caso_4: "Caso 4", caso_5: "Caso 5 · Aire", caso_6: "Caso 6 · Biodiversidad", caso_7: "Caso 7 · Trámite ambiental"
       },
-      titulos: { ubic: "📍 Identificación del predio", textura: "🔺 Clase textural", fertilidad: "🧪 Fertilidad IGAC", a12: "🪨 Orden de suelo (A12)", ordenes: "🌍 Órdenes por departamento (4)", b14: "🌱 Capacidad de uso (B14)", b16: "🏞️ Oferta edáfica (B16)", b20: "🧩 Limitantes y prácticas (B20)", b25: "🌳 Factor C de cobertura (B25)", b19: "🌊 Erosión RUSLE (B19)", b23: "🌿 Restauración prioritaria (B23)", c29: "💧 Balance hídrico (C29)", c30: "🌾 Fertilización y costos (C30)", c31: "🛢️ DRASTIC (C31)", c32: "🚜 Traficabilidad (C32)", c33: "💰 PSE (C33)", w1: "🧪 Estabilidad del agua W1", w2: "🧯 Cloración (W2)", w3: "🚿 Agua de riego (W3)", w4: "🐟 Oxígeno disuelto (W4)", ar1: "🌫️ Calidad del aire (AR1)", ar2: "🏭 Dispersión de la pluma (AR2)", ar3: "🔥 Emisiones GEI (AR3)", bi1: "🦋 Diversidad alfa (BI1)", bi2: "🔀 Similaridad (BI2)", bi3: "🔎 Esfuerzo de muestreo (BI3)", bi4: "🗺️ Paisaje y conectancia (BI4)", le1: "⚖️ Árbol de trámite (LE1)", b27: "🗺️ Flujo SIG (B27)", practica: "🎓 Práctica y autoevaluación" },
+      titulos: { ubic: "📍 Identificación del predio", textura: "🔺 Clase textural", fertilidad: "🧪 Fertilidad IGAC", a12: "🪨 Orden de suelo (A12)", ordenes: "🌍 Órdenes por departamento (4)", b14: "🌱 Capacidad de uso (B14)", b16: "🏞️ Oferta edáfica (B16)", b20: "🧩 Limitantes y prácticas (B20)", b25: "🌳 Factor C de cobertura (B25)", b19: "🌊 Erosión RUSLE (B19)", b23: "🌿 Restauración prioritaria (B23)", c29: "💧 Balance hídrico (C29)", c30: "🌾 Fertilización y costos (C30)", c31: "🛢️ DRASTIC (C31)", c32: "🚜 Traficabilidad (C32)", c33: "💰 PSE (C33)", w1: "🧪 Estabilidad del agua W1", w2: "🧯 Cloración (W2)", w3: "🚿 Agua de riego (W3)", w4: "🐟 Oxígeno disuelto (W4)", ar1: "🌫️ Calidad del aire (AR1)", ar2: "🏭 Dispersión de la pluma (AR2)", ar3: "🔥 Emisiones GEI (AR3)", bi1: "🦋 Diversidad alfa (BI1)", bi2: "🔀 Similaridad (BI2)", bi3: "🔎 Esfuerzo de muestreo (BI3)", bi4: "🗺️ Paisaje y conectancia (BI4)", le1: "⚖️ Árbol de trámite (LE1)", le2: "📋 Checklist de permisos (LE2)", b27: "🗺️ Flujo SIG (B27)", practica: "🎓 Práctica y autoevaluación" },
       _esc(v) { return String(v).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); },
       _nuevoId() { return "f" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); },
       _crear(s, id, nombre, datos) {
@@ -7670,11 +7963,17 @@
           ["Fragmento que sostiene el flujo (BI4)", f => f.datos.bi4 ? `${f.datos.bi4.fragmento_clave ?? "—"} · dPC ${f.datos.bi4.dpc_mayor ?? "—"} %` : null],
           ["Especie-área (BI4)", f => f.datos.bi4 ? `z = ${f.datos.bi4.z_especie_area ?? "—"} → S₂ = ${f.datos.bi4.s_esperada ?? "—"} en ${f.datos.bi4.area_remanente_ha ?? "—"} ha` : null]
         ] },
-        { g: "⚖️ Norma y trámite (LE1)", filas: [
+        { g: "⚖️ Norma y trámite (LE1-LE2)", filas: [
           ["Actividad declarada (LE1)", f => f.datos.le1?.actividad],
           ["Magnitud digitada (LE1)", f => f.datos.le1?.magnitud],
           ["Autoría del trámite (LE1)", f => f.datos.le1?.autoridad],
-          ["Artículo invocado (LE1)", f => f.datos.le1?.articulo]
+          ["Artículo invocado (LE1)", f => f.datos.le1?.articulo],
+          ["Permiso evaluado (LE2)", f => f.datos.le2?.permiso],
+          ["Estado del permiso (LE2)", f => f.datos.le2?.estado],
+          ["Ante quién (LE2)", f => f.datos.le2?.autoridad],
+          ["Requisitos que aplican (LE2)", f => f.datos.le2?.requisitos],
+          ["Por verificar (LE2)", f => f.datos.le2?.pendientes],
+          ["Reloj de la autoridad (LE2)", f => f.datos.le2 ? (f.datos.le2.reloj ? f.datos.le2.reloj + " días hábiles" : "el decreto no numera días") : null]
         ] },
         { g: "🌿 Restauración, PSE y autoevaluación", filas: [
           ["Tipo de sitio (B23)", f => f.datos.b23?.tipo],
@@ -10976,6 +11275,577 @@
       if (window.Ficha) Ficha.set("le1", fd);
     }
 
+    // --- LE2 · checklist de permisos específicos --------------------------------
+    // Un permiso específico no es una licencia: es otra ventanilla y otra lista de
+    // papeles. Cada requisito de acá está copiado del numeral o literal del
+    // Decreto 1076 de 2015 que lo enumera, y cada plazo sólo se suma cuando el
+    // propio decreto lo fija en días hábiles. Cuando la norma no tiene lista
+    // cerrada (ocupación de cauce) o remite a otra norma (estándares de ruido,
+    // valores límite de vertimiento), el motor lo declara como "VERIFICA" en vez
+    // de inventar el papel. Estados: SI aplica, NO la norma lo excluye,
+    // PEND falta un dato que sólo el interesado o la ventanilla tienen.
+    const LE_PERMISOS = [
+      {
+        k: "vert", nom: "Vertimiento al agua, al mar o al suelo", g: "le2-g-vert",
+        base: { cit: "2.2.3.3.5.1", q: "Toda persona natural o jurídica cuya actividad o servicio genere vertimientos a las aguas superficiales, marinas, o al suelo, deberá solicitar y tramitar ante la autoridad ambiental competente, el respectivo permiso de vertimientos." },
+        campos: {
+          cuerpo: ["sel", "le2-v-cuerpo"], clase: ["sel", "le2-v-clase"], caudal: ["num", "le2-v-caudal"],
+          juridica: ["chk", "le2-v-juridica"], apoderado: ["chk", "le2-v-apoderado"], existente: ["chk", "le2-v-existente"]
+        },
+        decide(c) {
+          if (!c.cuerpo) return { e: "PEND", tit: "Falta decir dónde va a caer la descarga", aut: "—", txt: "El artículo 2.2.3.3.5.1 amarra el permiso al cuerpo receptor: aguas superficiales, marinas o suelo. Elige uno; si la descarga va al alcantarillado público el camino es otro y el portal te lo muestra." };
+          if (c.cuerpo === "alc") return { e: "NO", aut: "prestador del servicio de alcantarillado, no la autoridad ambiental", tit: "No es permiso de vertimiento ante la autoridad ambiental", txt: "Las industrias sólo pueden descargar al alcantarillado si cumplen la norma de vertimientos puntuales a esos sistemas; el control se hace con el prestador del servicio.", q: "Las industrias sólo podrán ser autorizadas a descargar sus efluentes en el sistema de alcantarillado público, siempre y cuando cumplan la norma de vertimientos puntuales a los sistemas de alcantarillado público.", cit: "2.2.3.2.23.3", num: "19" };
+          if (c.clase === "I") return { e: "PEND", aut: "la autoridad ambiental no puede autorizarlo", tit: "El cuerpo receptor está en Clase I: el vertimiento no se admite", txt: "Antes de radicar hay que resolver otra cosa. En Clase I no se admiten vertimientos y el plan de cumplimiento tampoco es viable: o se cambia el punto de descarga o se busca otra alternativa.", q: "Clase I. Cuerpos de agua que no admiten vertimientos.", cit: "2.2.3.2.20.1" };
+          return { e: "SI", aut: "autoridad ambiental con jurisdicción: CAR, corporación de desarrollo sostenible o autoridad ambiental de los grandes centros urbanos; en área marítima interviene la Dimar", tit: "Sí necesitas permiso de vertimiento", txt: "Tu actividad genera una descarga en un cuerpo de agua o en el suelo, y el decreto exige el permiso para cualquiera de los tres destinos." };
+        },
+        reqs(c) {
+          const R = [
+            { t: "Nombre, dirección e identificación del solicitante", cit: "2.2.3.3.5.2 num. 1", q: "Nombre, dirección e identificación del solicitante y razón social si se trata de una persona jurídica." },
+            { t: "Poder del apoderado", cit: "2.2.3.3.5.2 num. 2", q: "Poder debidamente otorgado, cuando se actúe mediante apoderado.", ok: le2Ok(c, (c) => c.apoderado), nota: "El poder sólo se allega cuando actúas por apoderado; si firmas tú la solicitud, este numeral no entra al expediente." },
+            { t: "Certificado de existencia y representación legal", cit: "2.2.3.3.5.2 num. 3", q: "Certificado de existencia y representación legal para el caso de persona jurídica.", ok: le2Ok(c, (c) => c.juridica), nota: "Sólo cuando el solicitante es persona jurídica." },
+            { t: "Autorización del propietario o poseedor", cit: "2.2.3.3.5.2 num. 4", q: "Autorización del propietario o poseedor cuando el solicitante sea mero tenedor.", ok: null, nota: "El decreto lo condiciona a que seas mero tenedor del predio: aquí no se pregunta, así que verifícalo tú." },
+            { t: "Certificado del Registrador de Instrumentos Públicos", cit: "2.2.3.3.5.2 num. 5", q: "Certificado actualizado del Registrador de Instrumentos Públicos y Privados sobre la propiedad del inmueble, o la prueba idónea de la posesión o tenencia." },
+            { t: "Nombre y localización del predio, proyecto, obra o actividad", cit: "2.2.3.3.5.2 num. 6", q: "Nombre y localización del predio, proyecto, obra o actividad." },
+            { t: "Costo del proyecto, obra o actividad", cit: "2.2.3.3.5.2 num. 7", q: "Costo del proyecto, obra o actividad." },
+            { t: "Fuente de abastecimiento con su cuenca", cit: "2.2.3.3.5.2 num. 8", q: "Fuente de abastecimiento indicando la cuenca hidrográfica o unidad ambiental costera u oceánica a la cual pertenece.", nota: "Numeral modificado por el Decreto 50 de 2018." },
+            { t: "Características de las actividades que generan el vertimiento", cit: "2.2.3.3.5.2 num. 9", q: "Características de las actividades que generan el vertimiento." },
+            { t: "Plano georreferenciado de las descargas", cit: "2.2.3.3.5.2 num. 10", q: "Plano donde se identifique origen, cantidad y localización georreferenciada de las descargas al cuerpo de agua o al suelo." },
+            { t: "Nombre de la fuente receptora", cit: "2.2.3.3.5.2 num. 11", q: "Nombre de la fuente receptora del vertimiento indicando la cuenca hidrográfica o unidad ambiental costera u oceánica a la cual pertenece.", nota: "Numeral modificado por el Decreto 50 de 2018." },
+            { t: "Caudal de la descarga en litros por segundo", cit: "2.2.3.3.5.2 num. 12", q: "Caudal de la descarga expresada en litros por segundo.", val: c.caudal },
+            { t: "Frecuencia de la descarga", cit: "2.2.3.3.5.2 num. 13", q: "Frecuencia de la descarga expresada en días por mes." },
+            { t: "Tiempo de la descarga", cit: "2.2.3.3.5.2 num. 14", q: "Tiempo de la descarga expresada en horas por día." },
+            { t: "Tipo de flujo", cit: "2.2.3.3.5.2 num. 15", q: "Tipo de flujo de la descarga indicando si es continuo o intermitente." },
+            { t: "Caracterización del vertimiento", cit: "2.2.3.3.5.2 num. 16", q: "Caracterización actual del vertimiento existente o estado final previsto para el vertimiento proyectado de conformidad con la norma de vertimientos vigente.", nota: "Los valores límite de parámetros no están en este decreto: están en la resolución de vertimientos puntuales." },
+            { t: "Memorias, diseños y planos del sistema de tratamiento", cit: "2.2.3.3.5.2 num. 17", q: "Ubicación, descripción de la operación del sistema, memorias técnicas y diseños de ingeniería conceptual y básica, planos de detalle del sistema de tratamiento y condiciones de eficiencia del sistema de tratamiento que se adoptará." },
+            { t: "Concepto de uso del suelo del municipio", cit: "2.2.3.3.5.2 num. 18", q: "Concepto sobre el uso del suelo expedido por la autoridad municipal competente." },
+            { t: "Evaluación ambiental del vertimiento", cit: "2.2.3.3.5.2 num. 19", q: "Evaluación ambiental del vertimiento, salvo para los vertimientos generados a los sistemas de alcantarillado público.", ok: le2Ok(c, (c) => c.cuerpo !== "alc"), nota: "El propio numeral aparta los vertimientos generados a los sistemas de alcantarillado público: con ese destino el estudio ambiental no se allega y el control pasa al prestador del servicio." },
+            { t: "Plan de gestión del riesgo para el manejo del vertimiento", cit: "2.2.3.3.5.2 num. 20", q: "Plan de gestión del riesgo para el manejo del vertimiento.", nota: "Lo exige el propio decreto a las actividades industriales, comerciales y de servicios; el Ministerio fijó términos de referencia por acto administrativo." },
+            { t: "Constancia de pago del servicio de evaluación", cit: "2.2.3.3.5.2 num. 21", q: "Constancia de pago para la prestación del servicio de evaluación del permiso de vertimiento.", nota: "La tarifa la liquida cada autoridad: no está en el decreto." },
+            { t: "Lo demás que la autoridad considere necesario", cit: "2.2.3.3.5.2 num. 22", q: "Los demás aspectos que la autoridad ambiental competente consideré necesarios para el otorgamiento del permiso.", nota: "Numeral abierto: baja la lista propia de la ventanilla de tu autoridad." },
+            { t: "Laboratorio acreditado por el Ideam para las muestras", cit: "2.2.3.3.5.2 parágrafo 2o", q: "Los análisis de las muestras deberán ser realizados por laboratorios acreditados por el Ideam" },
+            { t: "Estudios y diseños firmados por profesional con matrícula", cit: "2.2.3.3.5.2 parágrafo 3o", q: "Los estudios, diseños, memorias, planos y demás especificaciones de los sistemas de recolección y tratamiento de las aguas residuales deberán ser elaborados por firmas especializadas o por profesionales calificados para ello y que cuenten con su respectiva matrícula profesional de acuerdo con las normas vigentes en la materia." },
+            { t: "Planos en 100 cm x 70 cm y copia digital", cit: "2.2.3.3.5.2 parágrafo 4o", q: "Los planos a que se refiere el presente artículo deberán presentarse en formato análogo tamaño 100 cm x 70 cm y copia digital de los mismos." },
+            { t: "Descartar los sitios donde el vertimiento está prohibido", cit: "2.2.3.3.4.3 num. 4", q: "En un sector aguas arriba de las bocatomas para agua potable, en extensión que determinará, en cada caso, la autoridad ambiental competente.", nota: "El artículo enumera doce prohibiciones: cabeceras, acuíferos, zonas de recreación, bocatomas, cuerpos declarados protegidos, alcantarillado de aguas lluvias, descargas de embarcaciones, lavados de agroquímicos, alteración de usos, riesgos sanitarios, contaminantes orgánicos persistentes y zonas de alta vulnerabilidad de acuíferos." }
+          ];
+          if (c.existente) R.push({ t: "Legalización de la descarga que ya se está haciendo", cit: "2.2.3.3.5.14", q: "Los generadores de vertimientos que no tengan permiso de vertimiento y que estén cumpliendo con la normatividad vigente en la materia antes del 25 octubre de 2010, tendrán un plazo de hasta ocho (8) meses, contados a partir de dicha fecha para efectuar la legalización del mismo, sin perjuicio de las sanciones a las que haya lugar.", nota: "El plazo de ocho meses corrió desde el 25/10/2010 y hoy está vencido: la descarga sin permiso es infracción, y el plan de cumplimiento ya no es una prórroga automática." });
+          return R;
+        },
+        plazos(c) {
+          const L = [
+            { p: "Verificar que la documentación esté completa", d: 10, who: "autoridad", cit: "2.2.3.3.5.5 num. 1", q: "la autoridad ambiental competente contará con diez (10) días hábiles para verificar que la documentación esté completa, la cual incluye el pago por concepto del servicio de evaluación." },
+            { p: "Allegar lo que falte, si te lo requieren", d: 10, who: "tuyo", cit: "2.2.3.3.5.5 num. 1", q: "En caso que la documentación esté incompleta, se requerirá al interesado para que la allegue en el término de diez (10) días hábiles, contados a partir del envío de la comunicación." },
+            { p: "Estudio de la solicitud y visitas técnicas", d: 30, who: "autoridad", cit: "2.2.3.3.5.5 num. 3", q: "Dentro de los treinta (30) días hábiles siguientes a la publicación del auto de iniciación de trámite, realizará el estudio de la solicitud de vertimiento y practicará las visitas técnicas necesarias." },
+            { p: "Informe técnico", d: 8, who: "autoridad", cit: "2.2.3.3.5.5 num. 4", q: "Dentro de los ocho (8) días hábiles siguientes a la realización de las visitas técnicas, se deberá emitir el correspondiente informe técnico." },
+            { p: "Resolución que otorga o niega", d: 20, who: "autoridad", cit: "2.2.3.3.5.5 num. 6", q: "La autoridad ambiental competente decidirá mediante resolución si otorga o niega el permiso de vertimiento, en un término no mayor a veinte (20) días hábiles, contados a partir de la expedición del auto de trámite." },
+            { p: "Recurso de reposición, si te niegan", d: 5, who: "tuyo", cit: "2.2.3.3.5.5 num. 7", q: "Contra la resolución mediante la cual se otorga o se niega el permiso de vertimientos, procederá el recurso de reposición dentro de los cinco (5) días hábiles siguientes a la fecha de notificación de la misma." }
+          ];
+          return L;
+        },
+        vig(c) {
+          return [
+            { lab: "Vigencia del permiso", val: "hasta 10 años", cit: "2.2.3.3.5.7", q: "El permiso de vertimiento se otorgará por un término no mayor a diez (10) años." },
+            { lab: "Cuándo pedir la renovación", val: "en el primer trimestre del último año", cit: "2.2.3.3.5.10", q: "Las solicitudes para renovación del permiso de vertimiento deberán ser presentadas ante la autoridad ambiental competente, dentro del primer trimestre del último año de vigencia del permiso." },
+            { lab: "Si cambian las condiciones", val: "aviso inmediato y modificación", cit: "2.2.3.3.5.9", q: "Cuando quiera que se presenten modificaciones o cambios en las condiciones bajo las cuales se otorgó el permiso, el usuario deberá dar aviso de inmediato y por escrito a la autoridad ambiental competente y solicitar la modificación del permiso" },
+            { lab: "El trámite de modificación", val: "la mitad de los términos", cit: "2.2.3.3.5.9", q: "El trámite de la modificación del permiso de vertimiento se regirá por el procedimiento previsto para el otorgamiento del permiso de vertimiento, reduciendo a la mitad los términos señalados en el artículo 2.2.3.3.5.5." }
+          ];
+        },
+        avisos(c) {
+          const A = [{ t: "azul", txt: "Los <strong>valores límite de parámetros</strong> que tu descarga debe cumplir no salen de este decreto: están en la resolución de vertimientos puntuales del Ministerio, y el listado de actividades sujeto a ella se actualiza por resolución. El portal no los inventa." }];
+          if (c.clase === "nc") A.push({ t: "rojo", txt: "No has verificado la clasificación del cuerpo receptor. Es el dato que decide si tu vertimiento <strong>se admite o no</strong> (art. 2.2.3.2.20.1), y es el primer documento que hay que pedirle a la autoridad antes de diseñar el tratamiento." });
+          if (c.cuerpo === "suelo") A.push({ t: "ambar", txt: "Para vertimiento al suelo la autoridad verifica además que <strong>no exista otra alternativa</strong>, que no haya alcantarillado al cual conectarse, la vulnerabilidad del acuífero y los vertimientos al suelo en predios colindantes (art. 2.2.3.3.5.6 parágrafo 1o)." });
+          if (c.cuerpo === "mar") A.push({ t: "ambar", txt: "En área marina el permiso se tramita con la autoridad ambiental pero la ocupación del lecho o la infraestructura de entrega puede requerir autorización de la <strong>Dimar</strong> (art. 2.2.3.2.12.1)." });
+          if (c.clase === "I") A.push({ t: "rojo", txt: "Si el cuerpo es Clase I tampoco te sirve el <strong>plan de cumplimiento</strong>: la autoridad sólo lo exige cuando el vertimiento no se realiza en cuerpos de agua Clase I (art. 2.2.3.3.5.12)." });
+          if (c.existente) A.push({ t: "rojo", txt: "La descarga que ya estás haciendo <strong>no tiene permiso</strong> y no hay reloj de legalización que esperar: el artículo 2.2.3.3.5.14 dio ocho (8) meses contados desde el 25 de octubre de 2010, plazo vencido en junio de 2011. Hoy se radica la solicitud como permiso nuevo y la descarga sin permiso queda expuesta a las sanciones del régimen de inspección y vigilancia." });
+          A.push({ t: "verde", txt: "Ojo con el numeral 19: la <strong>evaluación ambiental del vertimiento</strong> tiene una excepción expresa para quienes descargan a alcantarillado público. Es la única diferencia de peso entre descargar al alcantarillado y descargar al río." });
+          return A;
+        }
+      },
+      {
+        k: "conc", nom: "Concesión de aguas", g: "le2-g-conc",
+        base: { cit: "2.2.3.2.7.1", q: "Toda persona natural o jurídica, pública o privada, requiere concesión para obtener el derecho al aprovechamiento de las aguas para los siguientes fines:" },
+        campos: {
+          uso: ["sel", "le2-c-uso"], caudal: ["num", "le2-c-caudal"], anos: ["num", "le2-c-anos"],
+          obras: ["chk", "le2-c-obras"], tenedor: ["chk", "le2-c-tenedor"], verti: ["chk", "le2-c-verti"], gestor: ["chk", "le2-c-gestor"]
+        },
+        decide(c) {
+          if (!c.uso) return { e: "PEND", tit: "Falta la destinación del agua", aut: "—", txt: "La concesión se pide por <strong>destinación</strong>. El artículo 2.2.3.2.7.1 lista dieciséis fines, y el artículo 2.2.3.2.6.1 deja por fuera los usos que se ejercen por ministerio de la ley. Elige la destinación." };
+          if (c.uso === "ml") return { e: "NO", aut: "no requiere concesión: es un uso por ministerio de la ley", tit: "No necesitas concesión para tomar el agua así", txt: "Beber, bañarse, abrevar animales y lavar ropas directamente en el cauce, sin obras ni derivación, es uso por ministerio de la ley. Si para eso hay que construir bocatoma, canal o bombeo, el caso cambia: el propio decreto exige concesión cuando el abastecimiento doméstico requiere derivación.", q: "Todos los habitantes pueden utilizar las aguas de uso público mientras discurran por cauces naturales, para beber, bañarse, abrevar animales, lavar ropas y cualesquiera otros objetos similares, de acuerdo con las normas sanitarias sobre la materia y con las de protección de los recursos naturales renovables.", cit: "2.2.3.2.6.1" };
+          if (c.uso === "dom") return { e: "SI", aut: "CAR, corporación de desarrollo sostenible o autoridad ambiental de los grandes centros urbanos, según la jurisdicción", tit: "Sí necesitas concesión de aguas", txt: "El abastecimiento doméstico requiere concesión cuando implica derivación (literal a del art. 2.2.3.2.7.1). Si es un acueducto veredal con obras, la concesión es la base de todo el trámite." };
+          return { e: "SI", aut: "CAR, corporación de desarrollo sostenible o autoridad ambiental de los grandes centros urbanos, según la jurisdicción", tit: "Sí necesitas concesión de aguas", txt: "Esa destinación está en la lista del artículo 2.2.3.2.7.1, así que el derecho de aprovechamiento se adquiere por concesión y no por costumbre ni por ser dueño del predio." };
+        },
+        reqs(c) {
+          const R = [
+            { t: "Identificación del solicitante y, si es jurídica, su representante legal", cit: "2.2.3.2.9.1 lit. a", q: "Nombre y apellidos del solicitante, documentos de identidad, domicilio y nacionalidad." },
+            { t: "Nombre de la fuente", cit: "2.2.3.2.9.1 lit. b", q: "Nombre de la fuente de donde se pretende hacer la derivación, o donde se desea usar el agua." },
+            { t: "Predios, municipios o comunidades beneficiadas", cit: "2.2.3.2.9.1 lit. c", q: "Nombre del predio o predios, municipios o comunidades que se van a beneficiar, y su jurisdicción." },
+            { t: "Destinación del agua", cit: "2.2.3.2.9.1 lit. d", q: "Información sobre la destinación que se le dará al agua." },
+            { t: "Caudal en litros por segundo", cit: "2.2.3.2.9.1 lit. e", q: "Cantidad de agua que se desea utilizar en litros por segundo.", val: c.caudal },
+            { t: "Sistemas de captación, conducción y restitución de sobrantes, con sus inversiones", cit: "2.2.3.2.9.1 lit. f", q: "Información sobre los sistemas que se adoptarán para la captación, derivación, conducción, restitución de sobrantes, distribución y drenaje, y sobre las inversiones, cuantía de las mismas y término en el cual se van a realizar.", ok: le2Ok(c, (c) => c.obras), nota: "Aunque no construyas obras, el literal se diligencia: se declara que no las hay." },
+            { t: "Servidumbre, si el paso cruza predios de terceros", cit: "2.2.3.2.9.1 lit. g", q: "Informar si se requiere establecimiento de servidumbre para el aprovechamiento del agua o para la construcción de las obras proyectadas." },
+            { t: "Término solicitado", cit: "2.2.3.2.9.1 lit. h", q: "Término por el cual se solicita la concesión.", val: c.anos },
+            { t: "Extensión y clase de cultivos, si es riego", cit: "2.2.3.2.9.1 lit. i", q: "Extensión y clase de cultivos que se van a regar.", ok: le2Ok(c, (c) => /riego|gan/.test(c.uso)), nota: "El literal está redactado para riego; en otros usos se marca como no aplica." },
+            { t: "Datos de las concesiones con características especiales", cit: "2.2.3.2.9.1 lit. j", q: "Los datos previstos en la sección 10 de este capítulo para concesiones con características especiales." },
+            { t: "PUEAA: programa de uso eficiente y ahorro del agua", cit: "2.2.3.2.1.1.5", q: "la solicitud de concesión de aguas y la solicitud de presentación de licencia ambiental que lleve implícita la concesión de aguas deberán presentar ante la autoridad ambiental competente el Programa para el Uso Eficiente y Ahorro de Agua (PUEAA).", ok: le2Ok(c, (c) => !c.gestor), nota: "Los Gestores Comunitarios del Agua con destinación de consumo humano y doméstico entre 1,0 LPS y 4,0 LPS están excluidos de presentar el PUEAA (parágrafo del mismo artículo, mod. Decreto 875 de 2026)." },
+            { t: "Documento del Gestor Comunitario del Agua", cit: "2.2.3.2.9.2 lit. a", q: "Para el caso de los Gestores Comunitarios del Agua y el Saneamiento Básico, allegarán el documento equivalente de acuerdo con la tipología de constitución de la forma organizativa acogida y del régimen legal que le sea propio", ok: le2Ok(c, (c) => c.gestor), nota: "Literal modificado por el Decreto 875 de 2026." },
+            { t: "Autorización del propietario o poseedor", cit: "2.2.3.2.9.2 lit. b", q: "Autorización del propietario o poseedor cuando el solicitante sea mero tenedor,", ok: le2Ok(c, (c) => c.tenedor), nota: "Aquí el portal sí pregunta si eres mero tenedor; márcalo en la casilla." },
+            { t: "Certificado de registro o prueba de posesión", cit: "2.2.3.2.9.2 lit. c", q: "Certificado actualizado expedido por la Oficina de Registro de Instrumentos Públicos y Privados sobre la propiedad del inmueble, o la prueba adecuada de la posesión o tenencia." },
+            { t: "Detalles de las obras si vas a prestar servicio público", cit: "2.2.3.2.9.6", q: "En las solicitudes para usar aguas para prestar servicios públicos deberán indicarse todos los detalles de las obras, la extensión y el número de predios o de habitantes que se proyecta beneficiar, el plazo dentro del cual se dará al servicio y la reglamentación del mismo.", ok: le2Ok(c, (c) => c.uso === "sp"), nota: "El artículo está redactado para las solicitudes de uso del agua destinadas a prestar servicios públicos; con la destinación que elegiste este detalle de obras no se allega." },
+            { t: "Permiso de vertimiento si del uso se derivan descargas", cit: "2.2.3.2.20.2", q: "Si como consecuencia del aprovechamiento de aguas en cualquiera de los usos previstos por el artículo 2.2.3.2.7.1 de este Decreto se han de incorporar a las aguas sustancias o desechos, se requerirá permiso de vertimiento", ok: le2Ok(c, (c) => c.verti), nota: "Se puede radicar junto con la concesión: el propio artículo lo permite." },
+            { t: "Solicitud conjunta si la derivación beneficia predios de distintos dueños", cit: "2.2.3.2.9.12", q: "Cuando una derivación vaya a beneficiar predios de distintos dueños, la solicitud concesión deberá formularse por todos los interesados." }
+          ];
+          return R;
+        },
+        plazos(c) {
+          const L = [
+            { p: "Fijación del aviso de la visita ocular", d: 10, who: "autoridad", cit: "2.2.3.2.9.4", q: "Por lo menos con diez (10) días de anticipación a la práctica de la visita ocular la Autoridad Ambiental competente hará fijar en lugar público de sus oficinas y en la página web de la entidad, un aviso en el cual se indique el lugar; la fecha y el objeto de la visita" },
+            { p: "Práctica de la visita ocular", d: null, who: "autoridad", cit: "2.2.3.2.9.3", q: "Presentada la solicitud, se ordenará la práctica de una visita ocular a costa del interesado.", nota: "El decreto no fija el plazo: la visita es a costa del interesado y la programa la autoridad." },
+            { p: "Término para allegar pruebas o documentos si hay oposición", d: null, who: "autoridad", cit: "2.2.3.2.9.7", q: "La Autoridad Ambiental competente por su parte, podrá exigir al opositor y al solicitante de la concesión los documentos, pruebas y estudios de orden técnico y legal que juzgue necesarios", nota: "El aviso del mirror oficial corta la frase: el término lo fija la autoridad en cada caso, no el decreto." },
+            { p: "Providencia que otorga o niega la concesión", d: 15, who: "autoridad", cit: "2.2.3.2.9.8", q: "dentro de los quince (15) días siguientes a la práctica de la visita ocular o del vencimiento del término para la prueba, si lo hubiere fijado, la Autoridad Ambiental competente decidirá mediante providencia motivada si es o no procedente otorgar la concesión solicitada." }
+          ];
+          return L;
+        },
+        vig(c) {
+          const V = [
+            { lab: "Término ordinario", val: "hasta 10 años", cit: "2.2.3.2.7.4", q: "Las concesiones a que se refieren los artículos anteriores se otorgarán por un término no mayor de diez (10) años, salvo las destinadas a la prestación de servicios públicos o a la construcción de obras de interés público o social, que podrán ser otorgadas por períodos hasta de cincuenta (50) años." },
+            { lab: "Tope en servicios públicos u obras de interés público o social", val: "hasta 50 años", cit: "2.2.3.2.7.4", q: "salvo las destinadas a la prestación de servicios públicos o a la construcción de obras de interés público o social, que podrán ser otorgadas por períodos hasta de cincuenta (50) años." },
+            { lab: "Cómo se fija el término", val: "según la naturaleza y duración de la actividad", cit: "2.2.3.2.7.3", q: "El término de las concesiones será fijado en la resolución que las otorgue, teniendo en cuenta la naturaleza y duración de la actividad, para cuyo ejercicio se otorga, de tal suerte que su utilización resulte económicamente rentable y socialmente benéfica." },
+            { lab: "Para poder usar el agua", val: "obras hidráulicas construidas y aprobadas", cit: "2.2.3.2.9.11", q: "Para que se pueda hacer uso de una concesión de aguas se requiere que las obras hidráulicas ordenadas en la resolución respectiva hayan sido construidas por el titular de la concesión y aprobadas por la Autoridad Ambiental competente" },
+            { lab: "Riesgo de escasez", val: "el caudal concedido no está garantizado", cit: "2.2.3.2.7.2", q: "El suministro de aguas para satisfacer concesiones está sujeto a la disponibilidad del recurso, por tanto, el Estado no es responsable cuando por causas naturales no pueda garantizar el caudal concedido." }
+          ];
+          if (c.anos != null && c.anos > 10 && c.uso !== "sp") V.push({ lab: "Ojo con el plazo que digitaste", val: LE.n(c.anos, 0) + " años", cit: "2.2.3.2.7.4", q: "se otorgarán por un término no mayor de diez (10) años", nota: "Pediste más de diez años y no declaraste servicio público: la autoridad sólo te concede hasta diez, y el tope de cincuenta exige servicios públicos u obras de interés público o social." });
+          return V;
+        },
+        avisos(c) {
+          const A = [{ t: "azul", txt: "La <strong>tasa por uso del agua</strong> (artículos 42 y 43 de la Ley 99 de 1993) no la calcula este portal: el decreto remite a los reglamentos y la liquida cada autoridad." },
+            { t: "rojo", txt: "La concesión <strong>no es un derecho sobre el predio</strong> ni sobre el caudal de estiaje: en escasez todas las concesiones se abastecen a prorrata o por turnos (art. 2.2.3.2.7.2). El balance hídrico del proyecto debe dimensionarse con el caudal de disponibilidad, no con el medido en época de lluvias." }];
+          if (c.uso === "hidro") A.push({ t: "ambar", txt: "Si además es generación de energía eléctrica, revisa <strong>LE1</strong>: con 100 MW o más la licencia ambiental es privativa de la ANLA, y debajo de ese umbral depende de la fuente y de la jurisdicción. La concesión de aguas y la licencia son dos trámites distintos." });
+          if (c.gestor) A.push({ t: "verde", txt: "Los Gestores Comunitarios tienen un régimen propio: el anexo del literal a del artículo 2.2.3.2.9.2 se acredita con el documento equivalente según su tipología organizativa (Decreto 1077 de 2015, subrogado por el Decreto 960 de 2025)." });
+          return A;
+        }
+      },
+      {
+        k: "occ", nom: "Ocupación de cauce o de playas", g: "le2-g-occ",
+        base: { cit: "2.2.3.2.12.1", q: "La construcción de obras que ocupen el cauce de una corriente o depósito de agua requiere autorización, que se otorgará en las condiciones que establezca la Autoridad Ambiental competente. Igualmente se requerirá permiso cuando se trate de la ocupación permanente o transitoria de playas." },
+        campos: { acto: ["sel", "le2-o-acto"], m2: ["num", "le2-o-m2"], mar: ["chk", "le2-o-mar"] },
+        decide(c) {
+          if (!c.acto) return { e: "PEND", tit: "Falta decir qué actuación es", aut: "—", txt: "El capítulo 12 de la parte 2 trata por separado la ocupación del cauce, la ocupación de playas, los servicios de turismo y la pesca de subsistencia. Elige cuál es tu caso." };
+          if (c.acto === "pescasub") return { e: "NO", aut: "no requiere permiso", tit: "La ocupación transitoria de playas para pesca de subsistencia no requiere permiso", txt: "Está expresamente excluida.", q: "La ocupación transitoria de playas para pesca de subsistencia no requiere permiso.", cit: "2.2.3.2.12.3" };
+          if (c.acto === "dragado") return { e: "NO", aut: "Ministerio de Transporte, con coordinación con la autoridad ambiental", tit: "El dragado del Ministerio de Transporte no requiere esta autorización", txt: "Pero no es un salvoconducto: debe cumplir el artículo 26 del Decreto-ley 2811 de 1974 y los mecanismos de coordinación que fije la autoridad ambiental.", q: "Cuando el Ministerio Transporte deba realizar operaciones de dragado o construir obras que ocupen los cauces de ríos o lagos con el fin de mantener sus condiciones de navegabilidad, no requerirá la autorización a que se refiere este capítulo, pero deberá cumplir lo establecido por el artículo 26 del Decreto-ley 2811 de 1974", cit: "2.2.3.2.12.1" };
+          if (c.acto === "turismo") return { e: "SI", aut: "autoridad ambiental del cuerpo de agua público, por concesión o por asociación", tit: "No es permiso de ocupación: es concesión o asociación", txt: "El artículo 2.2.3.2.12.2 trata el establecimiento de servicios de turismo, recreación o deporte en corrientes, lagos y demás depósitos de aguas del dominio público por otra vía.", q: "El establecimiento de servicios de turismo, recreación o deporte en corrientes, lagos y demás depósitos de aguas del dominio público requieren concesión o asociación en los términos que establezca la Autoridad Ambiental competente.", cit: "2.2.3.2.12.2" };
+          return { e: "SI", aut: c.mar ? "Dirección General Marítima y Portuaria (Dimar), previo concepto de la autoridad ambiental" : "autoridad ambiental con jurisdicción", tit: "Sí necesitas autorización o permiso de ocupación", txt: "Ocupar el cauce con una obra, o las playas de forma permanente o transitoria, requiere el acto de la autoridad." };
+        },
+        reqs(c) {
+          return [
+            { t: "Condiciones que fije la autoridad ambiental", cit: "2.2.3.2.12.1", q: "que se otorgará en las condiciones que establezca la Autoridad Ambiental competente.", ok: null, nota: "Este es el punto honesto: el decreto NO trae lista cerrada de requisitos para la ocupación de cauce. La lista la publica tu autoridad en su ventanilla única; bájala y complétala ahí." },
+            { t: "Concepto previo de la autoridad ambiental si es área de Dimar", cit: "2.2.3.2.12.1", q: "La Dirección General Marítima y Portuaria otorgará estas autorizaciones o permisos en las áreas de su jurisdicción, de acuerdo con lo establecido en el Decreto-ley 2324 de 1984, previo concepto de la Autoridad Ambiental competente.", ok: le2Ok(c, (c) => c.mar), nota: "El concepto previo entra al expediente sólo cuando el área cae en jurisdicción de la Dimar; fuera de esa área resuelve solo la autoridad ambiental." },
+            { t: "Área ocupada, del plano de la obra", cit: "2.2.3.2.12.1", q: "Igualmente se requerirá permiso cuando se trate de la ocupación permanente o transitoria de playas.", val: c.m2, nota: "El decreto no tasa el área: el dato lo aporta tu plano. Sirve para dimensionar la compensación que la autoridad puede exigir." },
+            { t: "Coordinación con el Ministerio de Transporte si es obra de navegabilidad", cit: "2.2.3.2.12.1", q: "los mecanismos de coordinación que establezca la autoridad ambiental competente conjuntamente con el citado Ministerio para garantizar la protección de las aguas, cauces y playas.", ok: le2Ok(c, (c) => c.acto === "dragado"), nota: "La coordinación con el Ministerio de Transporte está escrita para obras que afectan la navegabilidad; si tu acto no es dragado, no hay que tramitarla." },
+            { t: "Régimen de la concesión si es turismo en agua pública", cit: "2.2.3.2.12.2", q: "La concesión se regirá por las normas previstas en las Secciones 7, 8 y 9 de este capítulo y la asociación se regirá por la legislación vigente sobre la materia.", ok: le2Ok(c, (c) => c.acto === "turismo"), nota: "Remite a las secciones de concesión de aguas: los requisitos son los del camino de concesión (pestaña Concesión de aguas)." }
+          ];
+        },
+        plazos(c) {
+          return [
+            { p: "El decreto no fija un procedimiento con días hábiles para la ocupación de cauce", d: null, who: "autoridad", cit: "2.2.3.2.12.1", q: "que se otorgará en las condiciones que establezca la Autoridad Ambiental competente.", nota: "Cualquier cronograma de esta autorización se construye con la resolución de tarifas y con el manual de procedimientos de tu autoridad, no con este portal." },
+            { p: "Si la obra va con licencia ambiental, el cronograma es el de la licencia", d: null, who: "tuyo", cit: "2.2.2.3.6.2", q: "el interesado en obtener licencia ambiental deberá radicar ante la autoridad ambiental competente, el estudio de impacto ambiental de que trata el artículo 21 del presente decreto y anexar la siguiente documentación", nota: "Revisa LE3 para el reloj de la licencia y recuerda que el permiso de vertimiento ya autoriza la ocupación de cauce para la infraestructura de entrega (art. 2.2.3.3.5.8 num. 14)." }
+          ];
+        },
+        vig(c) {
+          return [
+            { lab: "Vigencia", val: "la fije el acto administrativo", cit: "2.2.3.2.12.1", q: "que se otorgará en las condiciones que establezca la Autoridad Ambiental competente.", nota: "El capítulo 12 no fija término; se pacta en el acto de otorgamiento." },
+            { lab: "Si la ocupación la trae el permiso de vertimiento", val: "num. 14 de la resolución de vertimiento", cit: "2.2.3.3.5.8", q: "Autorización para la ocupación de cauce para la construcción de la infraestructura de entrega del vertimiento al cuerpo de agua.", nota: "Para el punto de descarga no siempre hay que abrir un trámite aparte: la misma resolución de vertimiento autoriza la ocupación." }
+          ];
+        },
+        avisos(c) {
+          const A = [{ t: "rojo", txt: "Esta es la autorización sobre la que más se inventa en los formularios de internet. El Decreto 1076 tiene el artículo 2.2.3.2.12.1 (ocupación), el 2.2.3.2.12.2 (turismo, recreación o deporte) y el 2.2.3.2.12.3, y nada más en ese capítulo: <strong>no existen un artículo 2.2.3.2.12.4 ni un 2.2.3.2.12.5</strong>, el decreto no menciona usos potencialmente conflictivos y no trae lista tasada de requisitos para el cauce. Si un formato o un asesor cita esos números, está citando algo que no existe." }];
+          if (c.mar) A.push({ t: "ambar", txt: "En área marítima el acto lo expide la <strong>Dimar</strong> bajo el Decreto-ley 2324 de 1984, pero la autoridad ambiental emite concepto previo: son dos ventanillas en serie, no una sola." });
+          if (!c.mar && c.acto === "cauce") A.push({ t: "azul", txt: "Ocupar el cauce no es lo mismo que intervenir el bosque o la ronda: revisa <strong>LE4</strong> para las restricciones del predio y la franja de ronda hídrica que haya fijado el instrumento de planeación municipal." });
+          return A;
+        }
+      },
+      {
+        k: "for", nom: "Aprovechamiento forestal o tala de árboles", g: "le2-g-for",
+        base: { cit: "2.2.1.1.7.1", q: "Toda persona natural o jurídica que pretenda realizar aprovechamiento de bosques naturales o productos de la flora silvestre ubicados en terrenos de dominio público o privado deberá presentar, a la Corporación competente, una solicitud que contenga:" },
+        campos: {
+          clase: ["sel", "le2-f-clase"], suelo: ["sel", "le2-f-suelo"], vol: ["num", "le2-f-vol"], ha: ["num", "le2-f-ha"], la: ["chk", "le2-f-la"]
+        },
+        decide(c) {
+          if (!c.clase) return { e: "PEND", tit: "Falta la clase de aprovechamiento", aut: "—", txt: "El artículo 2.2.1.1.3.1 reconoce tres clases (único, persistente y doméstico) y el resto del título regula los productos forestales no maderables y los árboles aislados. La clase cambia los requisitos y cambia la figura jurídica: permiso, autorización, concesión o asociación." };
+          if (c.suelo === "plantacion") return { e: "NO", aut: "sin permiso, con informe técnico previo cuando es plantación protectora o protectora-productora", tit: "En plantación propia, cerca viva o rompevientos no hay permiso forestal", txt: "El aprovechamiento de plantaciones forestales protectoras y protectoras-productoras no requiere permiso ni autorización; lo que sí exige es un informe técnico dos meses antes de la cosecha. Las cercas vivas y los rompevientos tampoco requieren permiso, pero si movilizas la madera necesitas SUNL.", q: "Para aprovechar las plantaciones forestales protectoras-productoras y protectoras no se requerirá de permiso o autorización.", cit: "2.2.1.1.12.9" };
+          if (c.la && c.clase === "aislado" && c.vol != null && c.vol <= 20) return { e: "NO", aut: "no se requiere ningún permiso, concesión o autorización", tit: "Con 20 m³ o menos dentro de un proyecto licenciado, no hay permiso forestal", txt: "Bastan las obligaciones y medidas de la licencia ambiental o del plan de manejo ambiental.", q: "Cuando para la ejecución de proyectos, obras o actividades sometidas al régimen de licencia ambiental o plan de manejo ambiental, se requiera de la remoción de árboles aislados en un volumen igual o menor a veinte metros cúbicos (20 m3), no se requerirá de ningún permiso, concesión o autorización, bastarán las obligaciones y medidas de prevención, corrección, compensación y mitigación, impuestas en la licencia ambiental, o contempladas en el plan de manejo ambiental.", cit: "2.2.1.1.9.6" };
+          if (c.clase === "domestico" && c.vol != null && c.vol > 20) return { e: "PEND", tit: "El volumen que digitas desborda el aprovechamiento doméstico", aut: "la Corporación, pero el permiso doméstico no te alcanza", txt: "El volumen del aprovechamiento forestal doméstico no puede exceder de veinte metros cúbicos anuales y sus productos no se pueden comercializar.", q: "El volumen del aprovechamiento forestal doméstico no podrá exceder de veinte metros cúbicos (20 m3) anuales y los productos que se obtengan no podrán comercializarse.", cit: "2.2.1.1.6.2" };
+          return { e: "SI", aut: "corporación autónoma regional o autoridad ambiental equivalente del lugar; en árboles aislados urbanos también puede ser la autoridad municipal", tit: "Sí necesitas permiso, autorización, concesión o asociación forestal", txt: "El acto varía según la clase y el régimen del terreno: revisa la tabla de abajo, que está tomada del decreto." };
+        },
+        reqs(c) {
+          const R = [
+            { t: "Nombre del solicitante", cit: "2.2.1.1.7.1 lit. a", q: "Toda persona natural o jurídica que pretenda realizar aprovechamiento de bosques naturales o productos de la flora silvestre … deberá presentar, a la Corporación competente, una solicitud que contenga: … a) Nombre del solicitante;" },
+            { t: "Ubicación del predio, jurisdicción, linderos y superficie", cit: "2.2.1.1.7.1 lit. b", q: "Ubicación del predio, jurisdicción, linderos y superficie;" },
+            { t: "Régimen de propiedad del área", cit: "2.2.1.1.7.1 lit. c", q: "Régimen de propiedad del área;" },
+            { t: "Especies, volumen, cantidad o peso y uso de los productos", cit: "2.2.1.1.7.1 lit. d", q: "Especies, volumen, cantidad o peso aproximado de lo que se pretende aprovechar y uso que se pretende dar a los productos;", val: c.vol },
+            { t: "Mapa del área a escala según la extensión del predio", cit: "2.2.1.1.7.1 lit. e", q: "Mapa del área a escala según la extensión del predio. El presente requisito no se exigirá para la solicitud de aprovechamientos forestales domésticos.", ok: le2Ok(c, (c) => c.clase !== "domestico"), nota: "El literal lo dice expreso: este requisito no se exigirá para la solicitud de aprovechamientos forestales domésticos (art. 2.2.1.1.7.1 lit. e)." },
+            { t: "Linderos con cartografía del IGAC, del Ideam o adoptada, y coordenadas con GPS", cit: "2.2.1.1.7.1 parágrafo", q: "Los linderos de las áreas solicitadas para aprovechamiento forestal serán establecidos con base en la cartografía básica del IGAC, cartografía temática del Ideam o por la adoptada por las Corporaciones, siempre y cuando sea compatible con las anteriores, determinando las coordenadas planas y geográficas.", nota: "Cuando no haya cartografía confiable, el GPS es obligatorio en la visita." },
+            { t: "Solicitud formal", cit: "2.2.1.1.4.3 lit. a", q: "Para adelantar aprovechamientos forestales persistentes de bosques naturales ubicados en terrenos de propiedad privada se requiere, por lo menos, que el interesado presente: … a) Solicitud formal;", ok: le2Ok(c, (c) => c.clase === "persistente"), nota: "Es la lista de requisitos del aprovechamiento persistente de bosque natural en predio privado (art. 2.2.1.1.4.3); las demás clases se rigen por su propio capítulo." },
+            { t: "Prueba de propiedad: escritura y certificado de libertad y tradición con menos de dos meses", cit: "2.2.1.1.4.3 lit. b", q: "Acreditar la calidad de propietario del predio, acompañando copia de la escritura pública y del certificado de libertad y tradición, este último con fecha de expedición no mayor a dos meses;", ok: le2Ok(c, (c) => c.suelo === "privado" && (c.clase === "persistente" || c.clase === "unico")), nota: "La prueba de propiedad se pide cuando el terreno es de propiedad privada y la clase es persistente o único; en dominio público no eres tú quien acredita el título." },
+            { t: "Plan de manejo forestal", cit: "2.2.1.1.4.3 lit. c", q: "Para adelantar aprovechamientos forestales persistentes de bosques naturales ubicados en terrenos de propiedad privada se requiere, por lo menos, que el interesado presente: … c) Plan de manejo forestal.", ok: le2Ok(c, (c) => c.clase === "persistente"), nota: "El plan de manejo forestal es el instrumento del aprovechamiento persistente; en la clase único el instrumento equivalente es el plan de aprovechamiento." },
+            { t: "Inventario estadístico desde 10 cm de DAP, error menor al 15 % con 95 % de probabilidad", cit: "2.2.1.1.4.5", q: "el interesado deberá presentar en el plan de manejo forestal un inventario estadístico para todas las especies a partir de diez centímetros (10 cm) de Diámetro a la Altura del Pecho (DAP), con una intensidad de muestreo de forma tal que el error no sea superior al quince por ciento (15%) con una probabilidad del noventa y cinco por ciento (95%).", ok: le2Ok(c, (c) => c.clase === "persistente"), nota: "El inventario estadístico del art. 2.2.1.1.4.5 va dentro del plan de manejo forestal, que es el del persistente; en las demás clases rige el inventario del plan de aprovechamiento o del estudio técnico." },
+            { t: "Inventario al 100 % si el área es menor a 20 ha", cit: "2.2.1.1.4.5", q: "Para los aprovechamientos menores de veinte (20) hectáreas, además de lo exigido en el presente artículo, el titular del aprovechamiento deberá presentar un inventario al ciento por ciento (100%) de las especies que se propone aprovechar, a partir de un DAP de diez centímetros (10 cm) para el área solicitada.", ok: le2Ok(c, (c) => c.clase === "persistente" && c.ha != null && c.ha < 20), val: c.ha, nota: "Se exige para aprovechamientos menores de veinte hectáreas; con el área que digitaste el inventario va unidad por unidad y noventa (90) días antes de iniciar." },
+            { t: "Inventario al 100 % de la primera unidad de corta, 90 días antes de iniciar", cit: "2.2.1.1.4.5", q: "Este inventario deberá presentarse noventa (90) días antes de iniciarse el aprovechamiento sobre la unidad respectiva.", ok: le2Ok(c, (c) => c.clase === "persistente" && c.ha != null && c.ha >= 20), nota: "Aplica a aprovechamientos iguales o superiores a veinte hectáreas, unidad por unidad." },
+            { t: "Estudio técnico que demuestre mejor aptitud de uso del suelo diferente al forestal", cit: "2.2.1.1.5.2 lit. b", q: "Estudio técnico que demuestre una mejor aptitud de uso del suelo diferente forestal;", ok: le2Ok(c, (c) => c.clase === "unico" && c.suelo === "publico"), nota: "El estudio de mejor aptitud está en la lista del aprovechamiento único en terreno de dominio público (art. 2.2.1.1.5.2); en predio privado el único se otorga como autorización." },
+            { t: "Plan de aprovechamiento forestal con destinación de los productos y medidas de compensación", cit: "2.2.1.1.5.2 lit. c", q: "Plan de aprovechamiento forestal, incluyendo la destinación de los productos forestales y las medidas de compensación.", ok: le2Ok(c, (c) => c.clase === "unico" && c.suelo === "publico"), nota: "El plan de aprovechamiento forestal es el de la clase único; en el persistente el instrumento es el plan de manejo forestal." },
+            { t: "Compensación mínima de igual cobertura y extensión, si es sustracción por utilidad pública", cit: "2.2.1.1.5.1 parágrafo 2o", q: "el área afectada deberá ser compensada, como mínimo, por otra de igual cobertura y extensión, en el lugar que determine la entidad administradora del recurso.", ok: le2Ok(c, (c) => c.clase === "unico" && c.suelo === "publico"), nota: "La compensación del parágrafo está escrita para la sustracción por utilidad pública; sin sustracción no hay área que compensar." },
+            { t: "Inventario estadístico en el plan de aprovechamiento (único)", cit: "2.2.1.1.5.7", q: "el interesado deberá presentar en el plan de aprovechamiento un inventario estadístico con error de muestreo no superior al quince por ciento (15%) y una probabilidad del noventa y cinco por ciento (95%).", ok: le2Ok(c, (c) => c.clase === "unico"), nota: "El art. 2.2.1.1.5.7 pide el inventario dentro del plan de aprovechamiento, instrumento propio de la clase único." },
+            { t: "Formato Único Nacional diligenciado", cit: "2.2.1.1.10.4.1", q: "El interesado en adquirir el derecho al manejo sostenible de la flora silvestre y de los productos forestales no maderables, deberá diligenciar el Formato Único Nacional, cuyas formalidades y contenido deberá establecer el Ministerio de Ambiente y Desarrollo Sostenible.", ok: le2Ok(c, (c) => c.clase === "pfmn"), nota: "Artículo sustituido por el Decreto 690 de 2021." },
+            { t: "Solicitud de autorización por escrito (tala de emergencia urbana)", cit: "2.2.1.1.9.3", q: "Cuando se requiera talar o podar árboles aislados localizados en centros urbanos que por razones de su ubicación, estado sanitario o daños mecánicos estén causando perjuicio a la estabilidad de los suelos, a canales de agua, andenes, calles, obras de infraestructura o edificaciones, se solicitará por escrito autorización, a la autoridad competente, la cual tramitará la solicitud de inmediato", ok: le2Ok(c, (c) => c.clase === "aislado"), nota: "La solicitud escrita del art. 2.2.1.1.9.3 es para árboles aislados en centros urbanos; en bosque natural el trámite va por clase de aprovechamiento." },
+            { t: "Visita con concepto técnico del funcionario (tala por obra pública o privada)", cit: "2.2.1.1.9.4", q: "se solicitará autorización ante la Corporación respectiva, ante las autoridades ambientales de los grandes centros urbanos o ante las autoridades municipales, según el caso, las cuales tramitarán la solicitud, previa visita realizada por un funcionario competente, quien verificará la necesidad de tala o reubicación aducida por el interesado, para lo cual emitirá concepto técnico.", ok: le2Ok(c, (c) => c.clase === "aislado"), nota: "La visita con concepto técnico del art. 2.2.1.1.9.4 corresponde a tala o reubicación de árboles aislados por obra pública o privada." },
+            { t: "Poder probar la obligación de reponer las especies taladas", cit: "2.2.1.1.9.4", q: "La autoridad competente podrá autorizar dichas actividades, consagrando la obligación de reponer las especies que se autoriza talar.", ok: le2Ok(c, (c) => c.clase === "aislado"), nota: "La obligación de reponer las especies la consagra el mismo artículo de los árboles aislados; en las demás clases la compensación sale del plan de manejo o de aprovechamiento." },
+            { t: "Informe técnico dos meses antes de la cosecha de plantación", cit: "2.2.1.1.12.9", q: "El interesado en ejecutar la cosecha de la plantación, deberá presentar un informe técnico, dos meses antes de iniciar las actividades de cosecha", ok: le2Ok(c, (c) => c.suelo === "plantacion"), nota: "El informe técnico de dos meses es carga de quien cosecha una plantación; en bosque natural no hay cosecha que informar, hay permiso, autorización o concesión." },
+            { t: "Autorización del propietario con menos de treinta días, si no eres el dueño de la plantación", cit: "2.2.1.1.12.9 lit. a", q: "Si el interesado en aprovechar la plantación no es el mismo propietario del predio, deberá allegar autorización no mayor a treinta (30) días otorgada por este;", ok: le2Ok(c, (c) => c.suelo === "plantacion"), nota: "Sólo se allega cuando el interesado no es el propietario de la plantación; si tú eres el dueño, no hay autorización de terceros que presentar." },
+            { t: "Salvoconducto Único Nacional en Línea (SUNL) para movilizar", cit: "2.2.1.1.12.9 parágrafo 1o", q: "En caso de requerir la movilización de los productos derivados sólo será necesaria la obtención del Salvoconducto Único Nacional en Línea SUNL", nota: "Apunta a las Resoluciones 1909 de 2017 y 081 de 2018 del Ministerio." }
+          ];
+          if (c.clase === "unico" && c.suelo === "publico") R.push({ t: "Verificar que el área no esté en PNN, área protectora ni reserva forestal", cit: "2.2.1.1.5.1 lit. c y parágrafo 1o", q: "Que el área no se encuentre al interior del Sistema de Parques Nacionales Naturales de las áreas forestales protectoras, productoras, productoras o protectoras-productoras ni al interior de las reservas forestales", nota: "El parágrafo 1o del mismo artículo es el que cierra la puerta: en esas zonas no se pueden otorgar aprovechamientos únicos, y si por utilidad pública hay que remover bosque, la zona debe ser sustraída antes de la reserva o del área de manejo especial. Sobre tu propio predio, eso se revisa cruzando la cartografía oficial de ecosistemas estratégicos antes de radicar." });
+          return R;
+        },
+        plazos(c) {
+          const L = [];
+          if (c.clase === "domestico") {
+            L.push({ p: "Apertura del expediente y programación de la visita", d: 5, who: "autoridad", cit: "2.2.1.1.10.4.2 num. 1 lit. a", q: "la autoridad ambiental dentro de los cinco (5) días siguientes procederá a la apertura del expediente y programará la visita de evaluación al predio o área objeto de la solicitud" });
+            L.push({ p: "Práctica de la visita de evaluación", d: 10, who: "autoridad", cit: "2.2.1.1.10.4.2 num. 1 lit. a", q: "la cual deberá llevarse a cabo dentro de los diez (10) días siguientes a la apertura del expediente y no tendrá costo" });
+            L.push({ p: "Concepto técnico y resolución que otorga o niega", d: 10, who: "autoridad", cit: "2.2.1.1.10.4.2 num. 1 lit. b", q: "Realizada la visita, y dentro de los diez (10) días siguientes, la autoridad ambiental competente emitirá concepto técnico y otorgará o negará mediante resolución motivada el manejo sostenible doméstico." });
+          } else if (c.clase === "persistente" || c.clase === "pfmn") {
+            L.push({ p: "Liquidar el costo de evaluación", d: 0, who: "autoridad", cit: "2.2.1.1.10.4.2 num. 2 lit. a", q: "la autoridad ambiental competente procederá a liquidar de inmediato el costo de evaluación acorde a lo establecido por el artículo 28 de la Ley 344 de 1996, modificado por el artículo 96 de la Ley 633 de 2000." });
+            L.push({ p: "Allegar la copia del pago", d: 5, who: "tuyo", cit: "2.2.1.1.10.4.2 num. 2 lit. b", q: "para lo cual, dispondrá de cinco (5) días a partir de efectuada la liquidación." });
+            L.push({ p: "Auto de inicio de trámite", d: 10, who: "autoridad", cit: "2.2.1.1.10.4.2 num. 2 lit. c", q: "Dentro de los diez (10) días siguientes al recibo del pago por concepto de los servicios de evaluación, la autoridad ambiental competente procederá a expedir el auto de inicio de trámite" });
+            L.push({ p: "Evaluación de la solicitud y del estudio técnico", d: 10, who: "autoridad", cit: "2.2.1.1.10.4.2 num. 2 lit. d", q: "Dentro de los diez (10) días siguientes a la notificación del auto de inicio de trámite, la autoridad ambiental competente evaluará la solicitud y el estudio técnico y programará la visita de evaluación" });
+            L.push({ p: "Visita de evaluación", d: 10, who: "autoridad", cit: "2.2.1.1.10.4.2 num. 2 lit. d", q: "La visita de evaluación deberá llevarse a cabo en un término no mayor a diez (10) días, una vez evaluada la solicitud y el estudio técnico." });
+            L.push({ p: "Concepto técnico", d: 5, who: "autoridad", cit: "2.2.1.1.10.4.2 num. 2 lit. e", q: "Realizada la visita, la autoridad ambiental competente dispondrá hasta de cinco (5) días para generar el Concepto Técnico correspondiente." });
+            L.push({ p: "Allegar la información adicional que te pidan", d: 30, who: "tuyo", cit: "2.2.1.1.10.4.2 num. 2 lit. f", q: "El solicitante contará con un término de un (1) mes para allegar la información requerida; este término podrá ser prorrogado por la autoridad ambiental competente por un término igual", nota: "Contamos el mes como 30 días para sumarlo; es prorrogable por otro término igual." });
+            L.push({ p: "Resolución motivada que otorga o niega", d: 20, who: "autoridad", cit: "2.2.1.1.10.4.2 num. 2 lit. h", q: "procederá en un término máximo de veinte (20) días a otorgar o negar el manejo sostenible persistente, mediante resolución motivada" });
+          } else {
+            L.push({ p: "El decreto fija los días sólo para el manejo sostenible doméstico y persistente", d: null, who: "autoridad", cit: "2.2.1.1.10.4.2", q: "Para obtener el permiso de manejo sostenible de la flora silvestre y de los productos forestales no maderables doméstico o persistente, se agotará el siguiente procedimiento:", nota: "Para aprovechamiento único y para árboles aislados el título 1 no trae un cronograma numerado: la autoridad lo fija en el auto de radicación." });
+          }
+          if (c.clase === "aislado") L.push({ p: "Tala de emergencia urbana", d: 0, who: "autoridad", cit: "2.2.1.1.9.3", q: "la cual tramitará la solicitud de inmediato, previa visita realizada por un funcionario competente técnicamente la necesidad de talar árboles." });
+          L.push({ p: "Estudios de aprovechamiento: máximo dos años", d: null, who: "autoridad", cit: "2.2.1.1.8.3", q: "El término de estos permisos no podrá ser superior a dos (2) años y será determinado por la Corporación con base en las características del área y del aprovechamiento proyectado." });
+          L.push({ p: "Iniciar los estudios dentro de los 60 días calendario", d: 60, who: "tuyo", cit: "2.2.1.1.8.4", q: "El interesado deberá iniciar los estudios dentro del término de sesenta (60) días calendario contados a partir de la fecha de la ejecutoria de la providencia que otorgó el permiso.", nota: "Son días calendario, no hábiles: si vencen sin iniciar los estudios, el permiso de estudios queda sin efecto." });
+          return L;
+        },
+        vig(c) {
+          const F = { unico: "permiso si el terreno es de dominio público (2.2.1.1.5.3); autorización si es privado (2.2.1.1.5.6)", persistente: "concesión, asociación o permiso en dominio público (2.2.1.1.4.2); autorización en propiedad privada (2.2.1.1.4.4)", domestico: "permiso en dominio público (2.2.1.1.6.1); autorización en dominio privado (2.2.1.1.6.3)", pfmn: "permiso de manejo sostenible por el Formato Único Nacional (2.2.1.1.10.4.1)", aislado: "permiso o autorización con trámite prioritario (2.2.1.1.9.1)" };
+          const V = [{ lab: "Figura jurídica que te toca", val: F[c.clase] || "define la clase", cit: "2.2.1.1.3.1", q: "Las clases de aprovechamiento forestal son:", nota: "El decreto reparte la figura entre permiso, autorización, concesión y asociación según la clase y el régimen del terreno. No es lo mismo pedir uno que otro." }];
+          V.push({ lab: "Vigencia del permiso de aprovechamiento", val: "la fija la Corporación según la clase y el recurso", cit: "2.2.1.1.7.12", q: "La vigencia de los permisos forestales será fijada de acuerdo con la clase de aprovechamiento solicitado, la naturaleza del recurso, la oferta disponible, la necesidad de establecer medidas para asegurar se renovabilidad, la cuantía y la clase de inversiones, sin exceder el plazo máximo y las condiciones establecidas en el artículo 55 del Decreto-ley 2811 de 1974.", nota: "El tope no lo pone este decreto: lo fija el artículo 55 del Decreto-ley 2811 de 1974, al que el propio 2.2.1.1.7.12 remite." });
+          if (c.clase === "domestico") V.push({ lab: "Tope anual del doméstico", val: "20 m³/año sin comercializar", cit: "2.2.1.1.6.2", q: "El volumen del aprovechamiento forestal doméstico no podrá exceder de veinte metros cúbicos (20 m3) anuales y los productos que se obtengan no podrán comercializarse." });
+          if (c.clase === "persistente") V.push({ lab: "Remanentes que debes garantizar", val: "individuos en las clases diamétricas", cit: "2.2.1.1.4.6", q: "garantizarán la presencia de individuos remanentes en las diferentes clases diamétricas del bosque objeto de aprovechamiento, con el propósito de contribuir a la sostenibilidad del recurso." });
+          if (c.clase === "pfmn") V.push({ lab: "No requiere estudio técnico", val: "el manejo sostenible doméstico", cit: "2.2.1.1.10.4.2 num. 1", q: "El manejo sostenible doméstico no requiere de la presentación del estudio técnico." });
+          return V;
+        },
+        avisos(c) {
+          const A = [{ t: "rojo", txt: "<strong>El arbolado urbano no tiene un régimen propio dentro de este decreto</strong>: los árboles aislados se rigen por el capítulo 9 del título 1 y, en muchos municipios, por el plan de arbolizado y por la licencia de urbanismo local. Verifica la ordenanza y el acuerdo municipal antes de radicar." },
+            { t: "azul", txt: "La movilización de la madera es un trámite aparte del permiso de corte: se ampara con el <strong>SUNL</strong>, y las sanciones por movilizar sin él son independientes de tener el permiso forestal." }];
+          if (c.clase === "unico") A.push({ t: "ambar", txt: "El aprovechamiento único se justifica por <strong>mejor aptitud del suelo o utilidad pública</strong>, no por conveniencia del proyecto. Si el predio está en reserva forestal o en área de manejo especial, primero es la sustracción (art. 2.2.1.1.5.1 parágrafo 1o)." });
+          if (c.la) A.push({ t: "verde", txt: "Si la remoción de árboles hace parte de un proyecto con licencia o plan de manejo, la autoridad puede imponer <strong>obligaciones adicionales</strong> aunque no exija permiso forestal (art. 2.2.1.1.9.6 in fine)." });
+          return A;
+        }
+      },
+      {
+        k: "em", nom: "Emisión atmosférica", g: "le2-g-em",
+        base: { cit: "2.2.5.1.7.2", q: "Requerirá permiso previo de emisión atmosférica la realización de alguna de las siguientes actividades, obras o servicios, públicos o privados:" },
+        campos: {
+          caso: ["sel", "le2-e-caso"], comb: ["sel", "le2-e-comb"], sector: ["sel", "le2-e-sector"],
+          la: ["chk", "le2-e-la"], colectivo: ["chk", "le2-e-colectivo"], emerg: ["chk", "le2-e-emerg"]
+        },
+        decide(c) {
+          if (!c.caso) return { e: "PEND", tit: "Falta el literal de la norma", aut: "—", txt: "El permiso se pide por <strong>caso taxativo</strong>: el artículo 2.2.5.1.7.2 enumera catorce literales. Si tu fuente no cae en ninguno, el párrafo 2o del artículo 2.2.5.1.7.1 dice que no se requiere permiso para emisiones que no sean objeto de prohibición, restricción o control." };
+          if (c.emerg) return { e: "NO", aut: "no requiere permiso de emisión atmosférica", tit: "Quema incidental por emergencia: sin permiso previo", txt: "La excepción está en el párrafo 3o del artículo que lista los casos.", q: "No requerirán permiso de emisión atmosférica las quemas incidentales en campos de explotación de gas o hidrocarburos, efectuadas para la atención de eventos o emergencias.", cit: "2.2.5.1.7.2 parágrafo 3o" };
+          if (c.comb === "gn" || c.comb === "glp") return { e: "PEND", aut: "revisa el literal: puede no requerir permiso", tit: "Con gas natural o GLP hay una exclusión que depende de tu caso", txt: "Las calderas u hornos que usen gas natural o GLP en un establecimiento industrial o comercial, o para operar plantas termoeléctricas con calderas, turbinas y motores, no requieren permiso de emisión atmosférica. Pero la exclusión no cubre los demás literales (quemas abiertas, emisiones fugitivas de minería, incineración, olores).", q: "Las calderas u hornos que utilicen como combustible gas natural o gas licuado del petróleo, en un establecimiento industrial o comercial o para la operación de plantas termoeléctricas con calderas, turbinas y motores, no requerirán permiso de emisión atmosférica.", cit: "2.2.5.1.7.2 parágrafo 5o" };
+          return { e: "SI", aut: "autoridad ambiental con jurisdicción; si el permiso va dentro de una licencia ambiental, la que la otorgue (ANLA o CAR)", tit: "Sí necesitas permiso de emisión atmosférica", txt: "Tu fuente está en uno de los literales del artículo 2.2.5.1.7.2." };
+        },
+        reqs(c) {
+          return [
+            { t: "Nombre o razón social del solicitante y su representante o apoderado", cit: "2.2.5.1.7.4 lit. a", q: "Nombre o razón social del solicitante y del representante legal o apoderado, si los hubiere, con indicación de su domicilio;" },
+            { t: "Localización de las instalaciones, del área o de la obra", cit: "2.2.5.1.7.4 lit. b", q: "Localización de las instalaciones, del área o de la obra;" },
+            { t: "Fechas de iniciación de actividades o de las obras", cit: "2.2.5.1.7.4 lit. c", q: "Fecha proyectada de iniciación de actividades, o fechas proyectadas de iniciación y terminación de las obras, trabajos o actividades, si se trata de emisiones transitorias;" },
+            { t: "Concepto de uso del suelo del municipio o prueba de compatibilidad", cit: "2.2.5.1.7.4 lit. d", q: "Concepto sobre uso del suelo del establecimiento, obra o actividad, expedido por la autoridad municipal o distrital competente, o en su defecto, los documentos públicos u oficiales contentivos de normas y planos, o las publicaciones oficiales, que sustenten y prueben la compatibilidad entre la actividad u obra proyectada y el uso permitido del suelo;" },
+            { t: "Información meteorológica básica del área afectada", cit: "2.2.5.1.7.4 lit. e", q: "Información meteorológica básica del área afectada por las emisiones;" },
+            { t: "Descripción de procesos, puntos de emisión, ductos y chimeneas con sus planos", cit: "2.2.5.1.7.4 lit. f", q: "Descripción de las obras, procesos y actividades de producción, mantenimiento, tratamiento, almacenamiento o disposición, que generen las emisiones y los planos que dichas descripciones requieran, flujograma con indicación y caracterización de los puntos de emisión al aire, ubicación y cantidad de los puntos de descarga al aire, descripción y planos de los ductos, chimeneas, o fuentes dispersas, e indicación de sus materiales, medidas y características técnicas;" },
+            { t: "Producción actual, proyectos de expansión y proyección a cinco años", cit: "2.2.5.1.7.4 lit. g", q: "Información técnica sobre producción prevista o actual, proyectos de expansión y proyecciones de producción a cinco (5) años;" },
+            { t: "Estudio técnico de evaluación de las emisiones y consumo de materias primas", cit: "2.2.5.1.7.4 lit. h", q: "Estudio técnico de evaluación de las emisiones de sus procesos de combustión o producción, se deberá anexar además información sobre consumo de materias primas combustibles u otros materiales utilizados." },
+            { t: "Diseño de los sistemas de control e informe de ingeniería", cit: "2.2.5.1.7.4 lit. i", q: "Diseño de los sistemas de control de emisiones atmosféricas existentes o proyectados, su ubicación e informe de ingeniería;" },
+            { t: "Declarar si usas controles al final del proceso o tecnologías limpias", cit: "2.2.5.1.7.4 lit. j", q: "Si utiliza controles al final del proceso para el control de emisiones atmosféricas, o tecnologías limpias, o ambos." },
+            { t: "Certificado de existencia y representación legal", cit: "2.2.5.1.7.4 parágrafo 1o lit. a", q: "Certificado de existencia y representación legal, si es persona jurídica;" },
+            { t: "Poder, si obran por apoderado", cit: "2.2.5.1.7.4 parágrafo 1o lit. b", q: "Poder debidamente otorgado, si se obra por intermedio de apoderado;" },
+            { t: "Constancia del pago de derechos de trámite y otorgamiento", cit: "2.2.5.1.7.4 parágrafo 1o lit. c", q: "Constancia del pago de los derechos de trámite y otorgamiento del permiso, en los términos y condiciones establecidas en el presente Decreto.", nota: "La escala tarifaria la fija el Ministerio y la liquida cada autoridad." },
+            { t: "Estudio técnico de dispersión", cit: "2.2.5.1.7.4 parágrafo 2o", q: "Requerirán, además, la presentación de estudios técnicos de dispersión, como información obligatoria, por la naturaleza o impacto de la obra o actividad proyectada, las solicitudes de permisos de emisión atmosférica para refinerías de petróleos, fábricas de cementos, plantas químicas y petroquímicas, siderúrgicas, quemas abiertas controladas en actividades agroindustriales y plantas termoeléctricas.", ok: le2Ok(c, (c) => ["refineria", "cemento", "quimica", "siderurgica", "quemaagro", "termo"].indexOf(c.sector) >= 0), nota: "El Ministerio debe fijar los criterios para que incineradores, minas y canteras también lo presenten." },
+            { t: "Informe de Estado de Emisiones (IE-1)", cit: "2.2.5.1.10.2", q: "Todas las fuentes fijas existentes en el territorio nacional que realicen emisiones contaminantes al aire o actividades capaces de generarlas, sometidas a control por los reglamentos, deberán presentar ante la autoridad ambiental competente, en los plazos que fije el Ministerio de Ambiente y Desarrollo Sostenible, una declaración que se denominará ", ok: le2Ok(c, (c) => !c.la), nota: "Se presenta bajo juramento; presentarlo oportunamente da derecho, por una sola vez, a una reducción del 50 % en las multas por falta de permiso." },
+            { t: "Que el solicitante sea el propietario de la obra o actividad", cit: "2.2.5.1.7.1", q: "El permiso sólo se otorgará al propietario de la obra, empresa, actividad, industria o establecimiento que origina las emisiones.", nota: "Si eres arrendatario u operador, el permiso se radica a nombre del propietario o se cede con aviso expreso a la autoridad (art. 2.2.5.1.7.10)." },
+            { t: "Requisitos comunes del permiso colectivo", cit: "2.2.5.1.7.3", q: "Que operen en una misma y determinada área geográfica, definida como área-fuente de contaminación, y produzcan conjuntamente un impacto ambiental acumulativo;", ok: le2Ok(c, (c) => c.colectivo), nota: "También exige la misma actividad o proceso y los mismos combustibles. Las obligaciones siguen siendo individuales." }
+          ];
+        },
+        plazos(c) {
+          const L = [
+            { p: "Auto de iniciación de trámite", d: 10, who: "autoridad", cit: "2.2.5.1.7.5 num. 1", q: "Recibida la solicitud, la autoridad ambiental competente, dentro de los diez (10) días hábiles siguientes, dictará un auto de iniciación de trámite que se notificará y publicará en los términos del artículo 70 de la Ley 99 de 1993." },
+            { p: "Subsanar o completar la solicitud", d: 10, who: "tuyo", cit: "2.2.5.1.7.5 num. 1", q: "se indicarán al interesado las correcciones o adiciones necesarias, para que las subsane o satisfaga en el término de diez (10) días hábiles, vencidos los cuales, si no se hubiere dado cumplimiento a lo establecido por la autoridad ambiental, se rechazará." },
+            { p: "Visita técnica de inspección, si la ordenan", d: 15, who: "autoridad", cit: "2.2.5.1.7.5 num. 2", q: "la ordenará para que se practique dentro de los quince (15) días hábiles siguientes y así lo indicará en el auto de iniciación de trámite", nota: "Contados desde el auto o desde que allegues la información solicitada." },
+            { p: "Pedir conceptos a otras autoridades", d: 5, who: "autoridad", cit: "2.2.5.1.7.5 num. 3", q: "esta dispondrá de cinco (5) días hábiles adicionales para solicitar a otras autoridades o entidades rendir dentro de los (15) días siguientes a la fecha de la comunicación que así lo solicite, los conceptos técnicos o informaciones que sean necesarios para la concesión del permiso." },
+            { p: "Que otras autoridades respondan", d: 15, who: "autoridad", cit: "2.2.5.1.7.5 num. 3", q: "Del término aquí previsto se prescindirá en caso de que no sean necesarios dichos conceptos o informaciones.", nota: "Se descuenta si no hacen falta conceptos de terceros." },
+            { p: "Decisión: otorgar o negar", d: 60, who: "autoridad", cit: "2.2.5.1.7.5 num. 4", q: "la autoridad ambiental competente decidirá si otorga o niega el permiso, en un término no mayor de sesenta (60) días hábiles." }
+          ];
+          if (c.la) return [{ p: "El permiso va como parte de la licencia ambiental", d: null, who: "autoridad", cit: "2.2.5.1.7.5 parágrafo 1o", q: "Cuando se solicite un permiso de emisión como parte de una licencia ambiental única, se seguirán los términos y procedimientos para el trámite y expedición de esta.", nota: "Se corre el reloj de la licencia, no el del permiso. Lo tienes en LE3." }];
+          return L;
+        },
+        vig(c) {
+          return [
+            { lab: "Vigencia máxima", val: "5 años, renovable indefinidamente", cit: "2.2.5.1.7.14", q: "El permiso de emisión atmosférica tendrá una vigencia máxima de cinco (5) años, siendo renovable indefinidamente por períodos iguales." },
+            { lab: "Emisiones transitorias por obra", val: "lo que dure la obra", cit: "2.2.5.1.7.14", q: "los de emisiones transitorias, ocasionadas por obras, trabajos o actividades temporales, cuya duración sea inferior a cinco (5) años, se concederán por el término de duración de dichas obras, trabajos o actividades" },
+            { lab: "Antelación para renovar", val: "60 días antes del vencimiento", cit: "2.2.5.1.7.14", q: "de un nuevo «Informe de Estado de Emisiones» (IE-1) a que se refiere el presente Decreto, ante la autoridad ambiental competente, con una antelación no inferior a sesenta (60) días de la fecha de vencimiento del término de su vigencia" },
+            { lab: "Silencio de la autoridad", val: "renovado a los 90 días", cit: "2.2.5.1.7.14", q: "Si transcurridos noventa (90) días de realizada la visita o allegada la información complementaria, un permiso cuya renovación haya sido oportunamente solicitada y la autoridad ambiental competente no hubiere notificado al solicitante ninguna decisión sobre su solicitud, el permiso se entenderá renovado por el mismo término y condiciones iguales al inicial" },
+            { lab: "Garantía que te pueden exigir", val: "póliza hasta el 30 % del costo de las obras de control", cit: "2.2.5.1.7.8", q: "el otorgamiento de una póliza de garantía de cumplimiento de las obligaciones derivadas del mismo, hasta por un valor equivalente al 30% de los costos de las obras y actividades de control de las emisiones al aire", nota: "Si la obra, industria o actividad requiere licencia ambiental, no es necesario constituir la póliza." },
+            { lab: "Si cambias de combustible", val: "estás obligado a pedir la modificación", cit: "2.2.5.1.7.13", q: "Cuando en un proceso industrial se introduzcan cambios en los combustibles utilizados que el permiso ampara o autoriza, es obligatorio para el titular del permiso solicitar su modificación, so pena de que sea suspendido o revocado por la autoridad ambiental competente." }
+          ];
+        },
+        avisos(c) {
+          const A = [{ t: "rojo", txt: "Los <strong>estándares de emisión</strong> de cada contaminante no están en el Decreto 1076: el artículo 2.2.5.1.3.1 remite al Ministerio para definir las listas de sustancias prohibidas y controladas y sus estándares. El portal arma el checklist, no te dice tu concentración permitida." },
+            { t: "azul", txt: "El permiso <strong>no crea derechos adquiridos</strong>: por razones de orden público se puede modificar o suspender, y los cambios en los estándares modifican las condiciones de los permisos vigentes (art. 2.2.5.1.7.1 y 2.2.5.1.7.14)." }];
+          if (c.caso === "a" || c.caso === "m") A.push({ t: "ambar", txt: "En quemas abiertas controladas y en olores ofensivos el Ministerio debe fijar los <strong>factores a partir de los cuales se exige el permiso</strong> (párrafo 1o del art. 2.2.5.1.7.2): puede que tu fuente esté por debajo del umbral y no requiera permiso. Verifícalo con la autoridad antes de gastar en el estudio." });
+          if (c.sector === "termo") A.push({ t: "rojo", txt: "Además del permiso de emisión con estudio de dispersión, una central de generación ≥100 MW es licenciable ante la <strong>ANLA</strong> y las térmicas usan agua: revisa LE1, la concesión de aguas y el permiso de vertimiento." });
+          if (c.comb === "solido") A.push({ t: "ambar", txt: "Combustible sólido: el permiso sí aplica y el estudio de dispersión depende del sector. Con carbón, coque o biomasa la autoridad suele pedir además el manejo de las cenizas y del material particulado en el informe de ingeniería." });
+          return A;
+        }
+      },
+      {
+        k: "rui", nom: "Ruido que supera el estándar o en horario restringido", g: "le2-g-rui",
+        base: { cit: "2.2.5.1.7.17", q: "Los permisos para la realización de actividades o la ejecución de obras y trabajos, generadores de ruido que supere los estándares de presión sonora vigentes, o que deban ejecutarse en horarios distintos de los establecidos por los reglamentos, serán otorgados por los alcaldes municipales o distritales, o por la autoridad de policía del lugar, de conformidad con las normas y procedimientos establecidos por el Código Nacional de Policía." },
+        campos: {
+          tipo: ["sel", "le2-r-tipo"], horario: ["sel", "le2-r-horario"], sector: ["sel", "le2-r-sector"],
+          supera: ["chk", "le2-r-supera"], emerg: ["chk", "le2-r-emerg"]
+        },
+        decide(c) {
+          if (!c.tipo) return { e: "PEND", tit: "Falta la fuente del ruido", aut: "—", txt: "El permiso de ruido no lo da la autoridad ambiental: lo dan el alcalde o la autoridad de policía. El caso cambia según si es obra, establecimiento, evento o altoparlantes." };
+          if (c.sector === "A" && !c.emerg) return { e: "PEND", aut: "alcaldía o autoridad de policía: pero el permiso está prohibido en Sector A salvo construcción de obras", tit: "En Sector A no se puede conceder este permiso", txt: "El artículo lo dice expresamente: no podrá concederse permiso para actividades que emitan ruido al medio ambiente en los Sectores A o de tranquilidad y silencio, salvo para la construcción de obras. Si tu caso no es una obra, el ruido no es permisible ahí.", q: "No podrá concederse permiso para la realización de actividades que emitan ruido al medio ambiente en los Sectores A, o de tranquilidad y silencio, de que trata el artículo 2.2.5.1.2.13 , salvo para la construcción de obras.", cit: "2.2.5.1.7.17" };
+          if (c.horario === "noche" && c.tipo !== "obra") return { e: "PEND", aut: "alcaldía o autoridad de policía", tit: "La restricción de 7:00 p. m. a 7:00 a. m. está redactada para equipos de construcción, demolición y reparación de vías", txt: "Ese horario restringido del artículo 2.2.5.1.5.15 no es un permiso general de ruido nocturno para establecimientos: se refiere a operación de equipos y herramientas de construcción, demolición o reparación de vías generadores de ruido ambiental en zonas residenciales. Para un establecimiento, la referencia son los estándares vigentes y el Código Nacional de Policía.", q: "La operación de equipos y herramientas de construcción, de demolición o de reparación de vías, generadores de ruido ambiental en zonas residenciales, en horarios comprendidos entre las 7:00 p. m. y las 7:00 a. m. de lunes a sábado, o en cualquier horario los días domingos y feriados, estará restringida y requerirá permiso especial del alcalde o de la autoridad de policía competente.", cit: "2.2.5.1.5.15" };
+          if (c.emerg) return { e: "PEND", aut: "alcaldía o autoridad de policía", tit: "Obra de emergencia declarada: la restricción horaria se exceptúa", txt: "El parágrafo del artículo de horarios exceptúa el uso de equipos para obras de emergencia, atención de desastres y trabajos públicos urgentes. Pero la excepción es del horario, no del estándar de presión sonora: si el ruido supera el nivel vigente, el permiso sigue siendo necesario.", q: "Se exceptúa de la restricción en el horario de que trata el inciso 10 de este artículo, el uso de equipos para la ejecución de obras de emergencia, la atención de desastres o la realización de obras comunitarias y de trabajos públicos urgentes.", cit: "2.2.5.1.5.15 parágrafo" };
+          if (!c.supera && c.horario === "hab") return { e: "NO", aut: "no se requiere permiso de ruido", tit: "Sin permiso de ruido", txt: "El permiso existe para el ruido que <strong>supera los estándares de presión sonora vigentes</strong> o para las actividades que deben ejecutarse <strong>en horarios distintos</strong> de los reglamentarios. Si no supera el estándar y opera en el horario ya autorizado, no hay permiso que pedir: lo que queda es la medición y el control de quejas.", q: "Los permisos para la realización de actividades o la ejecución de obras y trabajos, generadores de ruido que supere los estándares de presión sonora vigentes, o que deban ejecutarse en horarios distintos de los establecidos por los reglamentos", cit: "2.2.5.1.7.17" };
+          return { e: "SI", aut: "alcalde municipal o distrital, o autoridad de policía del lugar", tit: "Sí necesitas permiso de ruido", txt: "Lo otorga la alcaldía o la autoridad de policía, no la corporación autónoma. Y se concede en el mismo acto que autoriza la actividad generadora del ruido." };
+        },
+        reqs(c) {
+          return [
+            { t: "Identificar la actividad o la obra generadora", cit: "2.2.5.1.7.17", q: "El otorgamiento del permiso de que trata este artículo se hará en el mismo acto que autorice la actividad generadora del ruido y en él se establecerán las condiciones y términos en que el permiso se concede.", nota: "Traducción práctica: primero te autorizan la actividad (licencia de construcción, funcionamiento del establecimiento) y en ese mismo acto queda el permiso de ruido." },
+            { t: "Zonificación acústica del municipio", cit: "2.2.5.1.2.13", q: "Para la fijación de las normas de ruido ambiental el Ministerio de Ambiente y Desarrollo Sostenible atenderá a la siguiente sectorización:", ok: le2Ok(c, (c) => c.sector !== "nc"), nota: "Sin zonificación adoptada por el municipio no hay forma de demostrar en qué sector estás: pídelo en la secretaría de planeación. El decreto define Sectores A, B, C y D." },
+            { t: "Permiso previo para altoparlantes", cit: "2.2.5.1.5.3", q: "La utilización de los anteriores instrumentos o equipos en la realización de actos culturales, deportivos, religiosos o políticos requieren permiso previo de la autoridad competente.", ok: le2Ok(c, (c) => c.tipo === "altavoz"), nota: "El mismo artículo prohíbe su uso en zonas de uso público y en equipos instalados en zonas privadas cuyo ruido trascienda, salvo prevención de desastres, emergencias y campañas de salud." },
+            { t: "Medición que acredite el nivel de presión sonora", cit: "2.2.5.1.7.17", q: "generadores de ruido que supere los estándares de presión sonora vigentes", ok: le2Ok(c, (c) => c.supera), nota: "El estándar aplicable lo fija el Ministerio por resolución y lo mide un laboratorio o profesional con equipo calibrado: no sale del Decreto 1076." },
+            { t: "Autorización de la actividad que da origen al permiso", cit: "2.2.5.1.7.17", q: "procederá para la celebración de actos culturales, políticos o religiosos; la realización de espectáculos públicos o la ejecución de trabajos u obras que adelanten las entidades públicas o los particulares." }
+          ];
+        },
+        plazos(c) {
+          return [
+            { p: "El procedimiento y los días los fija el Código Nacional de Policía, no este decreto", d: null, who: "autoridad", cit: "2.2.5.1.7.17", q: "de conformidad con las normas y procedimientos establecidos por el Código Nacional de Policía.", nota: "Por eso el reloj de este permiso no se puede sumar en días hábiles desde el Decreto 1076: hay que mirar la Ley 1801 de 2016 y el acuerdo o resolución municipal." },
+            { p: "Vigencia del permiso", d: null, who: "autoridad", cit: "2.2.5.1.7.17", q: "El permiso de que trata este artículo, tendrá vigencia por el tiempo de duración de la actividad o trabajo correspondiente, su término se indicará en el acto de su otorgamiento", nota: "El decreto no numera los días: el término lo escribe la autoridad en el acto de otorgamiento, atado a la duración de la actividad que genera el ruido." },
+            { p: "Horario restringido de obras: 7:00 p. m. a 7:00 a. m. de lunes a sábado, y cualquier hora en domingos y feriados", d: null, who: "autoridad", cit: "2.2.5.1.5.15", q: "estará restringida y requerirá permiso especial del alcalde o de la autoridad de policía competente." }
+          ];
+        },
+        vig(c) {
+          return [
+            { lab: "Vigencia", val: "lo que dure la actividad o el trabajo", cit: "2.2.5.1.7.17", q: "El permiso de que trata este artículo, tendrá vigencia por el tiempo de duración de la actividad o trabajo correspondiente, su término se indicará en el acto de su otorgamiento" },
+            { lab: "Quién lo otorga", val: "alcalde municipal o distrital, o autoridad de policía", cit: "2.2.5.1.7.17", q: "serán otorgados por los alcaldes municipales o distritales, o por la autoridad de policía del lugar", nota: "Modificado por el artículo 24 del Decreto 703 de 2018: la corporación autónoma ya no otorga este permiso." },
+            { lab: "Restricción en Sector A", val: "no se concede, salvo obras", cit: "2.2.5.1.7.17", q: "No podrá concederse permiso para la realización de actividades que emitan ruido al medio ambiente en los Sectores A, o de tranquilidad y silencio", nota: "Sectores A: áreas urbanas donde estén situados hospitales, guarderías, bibliotecas, sanatorios y hogares geriátricos." },
+            { lab: "Suspensión por quejas", val: "con la queja de dos personas se suspende", cit: "2.2.5.1.5.15", q: "Aún si mediare permiso del alcalde para la emisión de ruido en horarios restringidos, este deberá suspenderlo cuando medie queja de al menos dos (2) personas.", nota: "No hace falta medición: la norma ordena suspender el permiso con dos quejas sobre la misma fuente de ruido en horario restringido." }
+          ];
+        },
+        avisos(c) {
+          const A = [{ t: "rojo", txt: "Los <strong>estándares de emisión de ruido</strong> (los decibeles por sector y horario) no están en el Decreto 1076: el propio decreto remite al Ministerio y, para el procedimiento, al Código Nacional de Policía. Este portal no te da el valor límite: te dice a qué ventanilla ir y qué no te pueden exigir." },
+            { t: "ambar", txt: "Cuidado con el error clásico: el permiso de ruido <strong>no se pide ante la CAR</strong> desde el Decreto 703 de 2018. Se pide ante el alcalde o la autoridad de policía, en el mismo acto que autoriza la actividad." }];
+          if (c.sector === "nc") A.push({ t: "rojo", txt: "Marcaste sin zonificación. Sin el sector asignado por el municipio no puedes demostrar que tu nivel cumple ni que lo superas: <strong>es el primer papel que hay que conseguir</strong> antes de gastar en la medición." });
+          if (c.tipo === "estab") A.push({ t: "azul", txt: "Un establecimiento también necesita la licencia de funcionamiento municipal y, si genera vertimientos o emisiones, los permisos ambientales correspondientes. El ruido es sólo una de las tres ventanillas." });
+          return A;
+        }
+      },
+      {
+        k: "fau", nom: "Fauna silvestre", g: "le2-g-fau",
+        base: { cit: "2.2.1.2.4.2", q: "El aprovechamiento de la fauna silvestre y de sus productos sólo podrá adelantarse mediante permiso, autorización o licencia que se podrán obtener en la forma prevista por este capítulo." },
+        campos: {
+          modo: ["sel", "le2-fa-modo"], ind: ["num", "le2-fa-ind"], cites: ["chk", "le2-fa-cites"], pnn: ["chk", "le2-fa-pnn"]
+        },
+        decide(c) {
+          if (!c.modo) return { e: "PEND", tit: "Falta el modo de aprovechamiento", aut: "—", txt: "El título 2 reparte el trámite por modo: la caza comercial se licencia, la deportiva se permite, el control y el fomento se autorizan y el zoocriadero y el zoológico van por licencia. Elige el modo." };
+          if (c.modo === "subsistencia") return { e: "NO", aut: "no requiere permiso", tit: "La caza de subsistencia no requiere permiso", txt: "Pero la exclusión no es un cheque en blanco: hay que practicarla de modo que no deteriore el recurso, y la entidad administradora organiza sistemas para supervisar su ejercicio.", q: "La caza de subsistencia no requiere permiso pero deberá practicarse en forma tal, que no se causen deterioros al recurso. La entidad administradora organizará sistemas para supervisar su ejercicio.", cit: "2.2.1.2.4.2" };
+          if (c.modo === "comercial") return { e: "SI", aut: "licencia ambiental ante la corporación autónoma regional del sitio donde se desarrolla la actividad", tit: "No es permiso: es licencia ambiental", txt: "El Decreto 703 de 2018 corrigió el artículo: quien quiera hacer caza comercial tramita y obtiene <strong>licencia ambiental</strong> ante la CAR, con el procedimiento del capítulo 3 del título 2 de la licencia.", q: "El interesado en realizar caza comercial deberá tramitar y obtener licencia ambiental ante la corporación autónoma regional con jurisdicción en el sitio donde se pretenda desarrollar la actividad.", cit: "2.2.1.2.7.3" };
+          if (c.modo === "transplante") return { e: "PEND", aut: "Ministerio de Ambiente y Desarrollo Sostenible, o la entidad regional con su concepto favorable", tit: "El trasplante lo realiza el Ministerio, no el particular", txt: "El trasplante de fauna silvestre es implantación de una especie en áreas donde no ha existido en condiciones naturales, y la norma lo asigna al Ministerio; si lo quiere adelantar una entidad regional, necesita concepto favorable previo y estudios ambientales.", q: "El trasplante de fauna silvestre deberá ser realizado por el Ministerio de Ambiente y Desarrollo Sostenible, previo su concepto favorable cuando se pretenda adelantar esta actividad por una entidad regional que tenga a su cargo la administración y manejo del recurso", cit: "2.2.1.2.13.2" };
+          if (c.modo === "zoocriadero") return { e: "SI", aut: c.cites ? "licencia ambiental ante la ANLA si el zoocriadero implica especies listadas en los apéndices CITES" : "entidad administradora del recurso (CAR) para la licencia de establecimiento en etapa de experimentación", tit: "Empieza por la etapa de experimentación", txt: "La licencia de establecimiento del zoocriadero se pide en su <strong>etapa de experimentación</strong>; surtida esa etapa y según sus resultados se obtiene la licencia de funcionamiento." + (c.cites ? " Y ojo: si el zoocriadero implica especies en apéndices CITES, el numeral 16 de la lista de la ANLA lo mueve a licencia ambiental." : ""), q: "Toda persona natural o jurídica o privada que pretenda establecer un zoocriadero, debe presentar a la entidad administradora del recurso, en cuya jurisdicción se encuentra el área en la cual establecerá el zoocriadero, una solicitud de licencia de establecimiento del zoocriadero en su etapa de experimentación.", cit: "2.2.1.2.15.2" };
+          if (c.modo === "zoológico") return { e: "SI", aut: "entidad administradora del recurso de la jurisdicción donde se establezca", tit: "Licencia de funcionamiento de zoológico", txt: "Se solicita por escrito con nueve datos y documentos, y el plan de manejo debe incluir el plan de cría.", q: "Toda persona natural o jurídica, pública o privada que pretenda establecer un zoológico deberá solicitar por escrito licencia de funcionamiento a la entidad administradora del recurso en cuya jurisdicción vaya a establecerse", cit: "2.2.1.2.21.2" };
+          return { e: "SI", aut: "entidad administradora del recurso (CAR) de la jurisdicción del área de caza", tit: "Sí necesitas permiso o autorización de caza", txt: c.modo === "deportiva" ? "La caza deportiva se practica como recreación y ejercicio sin fin lucrativo, y se ampara con permiso individual y carné." : "La caza de control se ajusta al plan que adelante la entidad administradora y la de fomento requiere tener ya autorizada la experimentación o el funcionamiento del zoocriadero o coto." };
+        },
+        reqs(c) {
+          const R = [
+            { t: "Que el permiso sea personal e intransferible", cit: "2.2.1.2.4.3", q: "Los permisos, autorizaciones o licencias para el aprovechamiento de ejemplares o productos de la fauna silvestre son personales e intransmisibles y no autorizan el ejercicio de actividades cuyo control corresponda a otras entidades o agencias del Estado" },
+            { t: "Especie, talla, número, áreas y temporadas autorizadas", cit: "2.2.1.2.4.4", q: "la entidad administradora determinará las especies de la fauna silvestre, así como el número, talla y demás características de los animales silvestres que pueden ser objeto de caza, las áreas y las temporadas en las cuales pueden practicarse la caza", ok: null, nota: "Por eso el portal no te dice qué especie ni cuántos individuos: ese listado lo publica la entidad administradora por región, y puede haber vedas (art. 2.2.1.2.3.7)." },
+            { t: "Solicitud con nombre, domicilio e identificación", cit: "2.2.1.2.9.4 num. 1", q: "Nombre, domicilio e identificación.", ok: le2Ok(c, (c) => c.modo === "deportiva"), nota: "Es el numeral 1 de la lista del permiso de caza deportiva (art. 2.2.1.2.9.4); cada modo de aprovechamiento de la fauna tiene su propia lista." },
+            { t: "Dos fotografías recientes", cit: "2.2.1.2.9.4 num. 2", q: "Dos (2) fotografías recientes.", ok: le2Ok(c, (c) => c.modo === "deportiva"), nota: "Numeral 2 de esa misma lista de caza deportiva: las dos fotografías recientes sólo se piden ahí." },
+            { t: "Especie o especies objeto de la caza", cit: "2.2.1.2.9.4 num. 3", q: "Especie o especies sobre las cuales pretende practicar la caza.", ok: le2Ok(c, (c) => c.modo === "deportiva"), nota: "Numeral 3 de la lista de caza deportiva; en los demás modos la especie se declara en el artículo del propio modo." },
+            { t: "Área donde se pretende practicar la caza", cit: "2.2.1.2.9.4 num. 4", q: "Área en donde pretende practicar la caza.", ok: le2Ok(c, (c) => c.modo === "deportiva"), nota: "Numeral 4 de la lista de caza deportiva; el área del control, del zoocriadero o del zoológico se acredita por la vía de su propio artículo." },
+            { t: "Armas, instrumentos, equipos y salvoconducto de porte", cit: "2.2.1.2.9.4 num. 5", q: "Armas, instrumentos o equipos que pretende utilizar y salvoconducto que ampare su porte.", ok: le2Ok(c, (c) => c.modo === "deportiva"), nota: "El salvoconducto de armas es de la autoridad de vigilancia y control, no ambiental: el permiso de fauna no lo reemplaza." },
+            { t: "Acreditar conocimiento de las normas y del manejo de armas", cit: "2.2.1.2.9.7", q: "El interesado en obtener permiso de caza deportiva deberá acreditar suficiente conocimiento de las normas que regulan el ejercicio de la caza deportiva y la protección del recurso, así como del empleo de las armas que va a utilizar.", ok: le2Ok(c, (c) => c.modo === "deportiva"), nota: "El art. 2.2.1.2.9.7 es exigencia del permiso de caza deportiva: acreditar conocimiento de las normas de caza y del manejo de armas." },
+            { t: "Solicitud de control con justificación y plan", cit: "2.2.1.2.10.4", q: "De acuerdo con el plan que se adelante en conformidad con el artículo anterior, los propietarios o poseedores de predios, que consideren necesario practicar el control, deberán presentar por escrito a la entidad administradora del recurso … solicitud por escrito, anexando los siguientes datos y documentos: … 4. Justificación del control.", ok: le2Ok(c, (c) => c.modo === "control"), nota: "El artículo enumera ocho datos: identificación, sistemas y armas, especies, justificación, área y cultivos a proteger, personas que ejecutan, período y destino final de los productos." },
+            { t: "Copia de la resolución que autoriza la experimentación o el funcionamiento", cit: "2.2.1.2.11.2 num. 2", q: "Copia de la resolución que autoriza la experimentación o el funcionamiento del zoocriadero o coto de caza.", ok: le2Ok(c, (c) => c.modo === "fomento"), nota: "El permiso de fomento está condicionado a tener previamente esa autorización y las instalaciones aprobadas (art. 2.2.1.2.11.3)." },
+            { t: "Constancia de la visita técnica de la entidad administradora", cit: "2.2.1.2.11.2 num. 3", q: "Constancia de la visita técnica practicada por técnicos de la entidad administradora del recurso en cuya jurisdicción se encuentre el área de experimentación", ok: le2Ok(c, (c) => c.modo === "fomento"), nota: "Numeral 3 de la solicitud del permiso de fomento (art. 2.2.1.2.11.2): la visita técnica la practica antes la entidad administradora." },
+            { t: "Prueba de propiedad o autorización del dueño del predio", cit: "2.2.1.2.15.3 num. 4", q: "Prueba de la propiedad del área en la cual se pretende establecer el zoocriadero o autorización escrita del dueño, o prueba adecuada de la posesión o tenencia del predio.", ok: le2Ok(c, (c) => c.modo === "zoocriadero"), nota: "Numeral de la lista del zoocriadero (art. 2.2.1.2.15.3); en los demás modos la propiedad o tenencia del predio se acredita en su propio artículo." },
+            { t: "Población parental y justificación de la cantidad", cit: "2.2.1.2.15.3 num. 8", q: "Número de individuos o especímenes que formarán la población parental para la etapa de experimentación y justificación de la cantidad.", ok: le2Ok(c, (c) => c.modo === "zoocriadero"), val: c.ind, nota: "La población parental y su justificación sólo se definen en la etapa de experimentación del zoocriadero." },
+            { t: "Sistema de marcaje de la población parental y su prole", cit: "2.2.1.2.15.3 num. 9", q: "Sistema de marcaje propuesto para identificar tanto los individuos de la población parental, como los que se produzcan con base en esta.", ok: le2Ok(c, (c) => c.modo === "zoocriadero"), nota: "El sistema de marcaje de la población parental y de su prole es del zoocriadero; en los demás modos no hay población marcada que registrar." },
+            { t: "Programa de investigación del período de experimentación", cit: "2.2.1.2.15.3 num. 11", q: "Programa de investigación para el período de experimentación.", ok: le2Ok(c, (c) => c.modo === "zoocriadero"), nota: "El programa de investigación del período de experimentación corresponde al zoocriadero, que primero funciona en etapa experimental." },
+            { t: "Solicitud del permiso de caza de fomento", cit: "2.2.1.2.15.3 num. 10", q: "Solicitud del respectivo permiso de caza de fomento.", ok: le2Ok(c, (c) => c.modo === "zoocriadero"), nota: "Es el permiso de caza de fomento que sirve de soporte al zoocriadero; los demás modos no lo adjuntan." },
+            { t: "Certificado reciente de registro del predio", cit: "2.2.1.2.21.2 num. 3", q: "Certificado reciente de registro de propiedad del área expedido por el registrador de instrumentos públicos y privados.", ok: le2Ok(c, (c) => c.modo === "zoológico"), nota: "Numeral de la lista del establecimiento de zoológico (art. 2.2.1.2.21.2); en los demás modos el predio se acredita por su propio artículo." },
+            { t: "Plan de manejo del zoológico con plan de cría", cit: "2.2.1.2.21.2 num. 9", q: "Plan de manejo del zoológico que incluirá el plan de cría con el fin de reabastecer el propio zoológico u otros, o para suministrar individuos a la entidad administradora con fines de repoblación.", ok: le2Ok(c, (c) => c.modo === "zoológico"), nota: "El plan de manejo con plan de cría es del zoológico, con el fin de reabastecerse o de suministrar individuos a la entidad administradora." },
+            { t: "Estudios ambientales del trasplante", cit: "2.2.1.2.13.2", q: "Exigencias ecológicas de la especie o subespecie a trasplantar y posibilidades que estas tienen de afectar la fauna silvestre propia del área en la cual se verificará el trasplante;", ok: le2Ok(c, (c) => c.modo === "transplante"), nota: "Los estudios ambientales del art. 2.2.1.2.13.2 se allegan sólo cuando se trasplanta fauna al área." },
+            { t: "Permiso CITES si la especie está en los apéndices de la Convención", cit: "2.2.2.3.2.2 num. 16", q: "Así como el establecimiento de zoocriaderos que implique el manejo de especies listadas en los Apéndices de la Convención sobre el Comercio Internacional de Especies Amenazadas de Fauna y Flora Silvestre (CITES).", ok: le2Ok(c, (c) => c.cites), nota: "Ese numeral es de la lista de la ANLA: si tu zoocriadero maneja especies CITES, el asunto no se decide en la CAR sino como licencia ambiental, y la certificación de importación o exportación la expide el Ministerio de Ambiente." },
+            { t: "Disposiciones especiales del sistema de parques, si es dentro de un PNN", cit: "2.2.1.2.3.6", q: "En toda actividad que se pretenda adelantar en áreas del Sistema de Parques Nacionales Naturales en relación con la fauna silvestre, incluida la investigación, se deberán cumplir además de las normas previstas por el Decreto-ley 2811 de 1974 y por este decreto sobre el recurso, las disposiciones especiales que rigen el manejo del sistema en general y del área en particular.", ok: le2Ok(c, (c) => c.pnn), nota: "Y si el área se incorpora al sistema o se declara veda, los permisos de caza vigentes pierden su vigencia (art. 2.2.1.2.6.1)." }
+          ];
+          return R;
+        },
+        plazos(c) {
+          return [
+            { p: "Autorización de excursión de caza: un año antes", d: null, who: "tuyo", cit: "2.2.1.2.9.11", q: "El interesado en organizar excursiones de caza deberá solicitar autorización un año antes de la fecha prevista para su realización", nota: "Son 365 días calendario, no hábiles: no los sumo con el resto." },
+            { p: "Término del permiso de caza de control", d: null, who: "autoridad", cit: "2.2.1.2.10.5", q: "El término del permiso será señalado en la resolución que lo otorgue y dependerá del plan a que se refiere el artículo anterior, pero en ningún caso podrá exceder de un año." },
+            { p: "Plazo de las faenas de caza comercial", d: null, who: "autoridad", cit: "2.2.1.2.7.7", q: "En todo caso, este no podrá ser superior a dos (2) meses en cada año.", nota: "La entidad administradora señala el plazo en la resolución, con el tope del artículo: dos (2) meses por año." },
+            { p: "Plazo de las faenas de caza de fomento", d: null, who: "autoridad", cit: "2.2.1.2.11.4", q: "así como el plazo para realizar las faenas de caza que no podrá ser superior a dos (2) meses.", nota: "El permiso de fomento fija el plazo de las faenas dentro del mismo tope de dos (2) meses del artículo." },
+            { p: "Permiso de caza deportiva", d: null, who: "autoridad", cit: "2.2.1.2.9.6", q: "se exprese el área en la cual se puede practicar la caza, el tiempo, que no podrá ser superior a un año ni exceder al establecido para la temporada respectiva", nota: "El permiso de caza deportiva se otorga por el tiempo que diga la resolución, con tope de un (1) año y sin exceder la temporada de la especie." },
+            { p: "Traspaso de expedientes de zoocriaderos CITES a la ANLA", d: null, who: "autoridad", cit: "2.2.2.3.11.1 parágrafo 3o", q: "deberán remitir en tiempo no superior a quince (15) días hábiles, contados a partir de la entrada en vigencia del presente decreto, los expedientes contentivos de los mismos con destino a la ANLA", nota: "Fue una regla de traspaso de expedientes en el régimen de transición, con plazo corrido en 2015: no lo sumo al reloj de tu trámite. Si hoy manejas especies CITES, quien decide es la ANLA." }
+          ];
+        },
+        vig(c) {
+          const V = [
+            { lab: "Caza de control", val: "no más de un año", cit: "2.2.1.2.10.5", q: "pero en ningún caso podrá exceder de un año." },
+            { lab: "Caza comercial", val: "faenas de máximo 2 meses por año", cit: "2.2.1.2.7.7", q: "En todo caso, este no podrá ser superior a dos (2) meses en cada año." },
+            { lab: "Caza de fomento", val: "faenas de máximo 2 meses", cit: "2.2.1.2.11.4", q: "el plazo para realizar las faenas de caza que no podrá ser superior a dos (2) meses." },
+            { lab: "Caza deportiva", val: "máximo un año y sin exceder la temporada", cit: "2.2.1.2.9.6", q: "el tiempo, que no podrá ser superior a un año ni exceder al establecido para la temporada respectiva" },
+            { lab: "Pérdida de vigencia", val: "con veda, prohibición o si el área entra a PNN", cit: "2.2.1.2.6.1", q: "Cuando se establezca una veda o prohibición o cuando se incorporen áreas al Sistema de Parques Nacionales Naturales, se creen territorios fáunicos o cuando se reserve el recurso conforme lo establece el artículo 47 del Decreto-ley 2811 de 1974, los permisos de caza otorgados pierden su vigencia", nota: "Es la regla que más sorprende a los titulares: un permiso vigente se cae sin acto en contra." }
+          ];
+          if (c.modo === "zoocriadero") V.push({ lab: "Durante la experimentación", val: "no puedes comercializar ni devolver al medio", cit: "2.2.1.2.15.4", q: "no podrá comercializar, disponer, distribuir ni devolver al medio natural los individuos, especímenes o productos objeto de la experimentación y sólo desarrollará con respecto a ellos las actividades previstas en el programa de investigación." });
+          return V;
+        },
+        avisos(c) {
+          const A = [{ t: "rojo", txt: "El decreto <strong>no contiene un procedimiento numerado con días hábiles</strong> para los permisos de fauna, como sí lo tiene para vertimientos y emisiones. Lo que trae son los contenidos de la solicitud, las condiciones de fondo y los términos máximos del permiso. Cualquier cronograma de fauna se construye con la ventanilla de tu autoridad." },
+            { t: "ambar", txt: "El portal <strong>no te dice qué especie se puede cazar ni cuántos individuos</strong>: eso lo fija la entidad administradora por región y temporada (art. 2.2.1.2.4.4) y puede estar en veda (art. 2.2.1.2.3.7). Ese dato no se infiere: se consulta." }];
+          if (c.cites) A.push({ t: "rojo", txt: "Con especies en apéndices CITES el asunto sube de nivel: la certificación la expide el Ministerio y el establecimiento de zoocriaderos con esas especies aparece en el numeral 16 de la lista de la <strong>ANLA</strong> (art. 2.2.2.3.2.2). Revisa LE1 antes de radicar en la CAR." });
+          if (c.pnn) A.push({ t: "rojo", txt: "Dentro del Sistema de Parques Nacionales Naturales rigen las <strong>disposiciones especiales del sistema y del área en particular</strong>, y si el área se incorpora al sistema los permisos de caza vigentes pierden su vigencia. La ANLA además es privativa cuando el proyecto se ejecuta al interior del PNN (LE1)." });
+          if (c.modo === "comercial") A.push({ t: "azul", txt: "Si además procesas o comercializas los especímenes, hay que anexar cinco informaciones más al estudio de impacto (párrafo 1o del art. 2.2.1.2.7.3), y si la transformación ocurre en otra jurisdicción se aplican las reglas de actividades conexas." });
+          return A;
+        }
+      }
+    ];
+
+    function le2DeHallar(k) { const f = LE_PERMISOS.filter(x => x.k === k); return f.length ? f[0] : null; }
+    function le2Chip(txt, cls) {
+      return '<span class="inline-block shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded border ' + cls + '">' + txt + "</span>";
+    }
+    function le2Ctx(P) {
+      const c = {};
+      Object.keys(P.campos).forEach(k => {
+        const d = P.campos[k];
+        c[k] = d[0] === "num" ? LE.v(d[1]) : d[0] === "chk" ? LE.chk(d[1]) : LE.val(d[1]);
+      });
+      return c;
+    }
+
+    // Un requisito no se puede marcar NO APLICA mientras el dato que lo condiciona
+    // esté en blanco: lo honesto en ese caso es VERIFICA. El proxy registra qué
+    // campos leyó la condición y, si alguno está vacío, devuelve null.
+    function le2Ok(C, fn) {
+      let vacio = false;
+      const c = new Proxy(C, {
+        get(t, k) {
+          const v = t[k];
+          if (typeof k === "string" && Object.prototype.hasOwnProperty.call(t, k) && (v === "" || v === null || v === undefined)) vacio = true;
+          return v;
+        }
+      });
+      let r;
+      try { r = fn(c); } catch (e) { return null; }
+      return vacio ? null : (r ? true : false);
+    }
+
+    function le2Refrescar() {
+      const tr = LE.val("le2-tr");
+      LE_PERMISOS.forEach(P => {
+        const el = document.getElementById(P.g);
+        if (el) el.classList.toggle("hidden", P.k !== tr);
+      });
+    }
+
+    function le2Calcular() {
+      const out = document.getElementById("le2-res");
+      if (!out) return;
+      const P = le2DeHallar(LE.val("le2-tr"));
+      if (!P) {
+        out.innerHTML = LE.caja("No has elegido permiso. El checklist no se puede armar a ciegas: <strong>cada permiso tiene su propia lista de requisitos</strong> y hasta cuatro de los siete se otorgan ante una entidad distinta. Elige el trámite en la casilla 1.", "ambar");
+        return;
+      }
+      const c = le2Ctx(P);
+      const d = P.decide(c);
+      const estado = d.e || "PEND";
+      const reqs = P.reqs(c);
+      let nAplica = 0, nVerifica = 0;
+      reqs.forEach(rq => { if (rq.ok === true) nAplica++; else if (rq.ok !== false) nVerifica++; });
+      const pla = P.plazos(c);
+      let relojA = 0, relojT = 0;
+      pla.forEach(x => { if (typeof x.d === "number") { if (x.who === "autoridad") relojA += x.d; else relojT += x.d; } });
+      const fd = { permiso: P.nom, estado: estado, autoridad: d.aut || "", requisitos: nAplica, pendientes: nVerifica, reloj: relojA };
+      let h = "";
+      const tono = estado === "SI" ? "ambar" : estado === "NO" ? "verde" : "rojo";
+      h += LE.caja((estado === "SI" ? "SÍ, hay que tramitarlo · " : estado === "NO" ? "NO APLICA este permiso · " : "PENDIENTE, falta un dato · ") + d.tit, tono);
+      h += LE.tit("1 · Ante quién se tramita");
+      h += LE.tabla([
+        LE.fila("Autoridad", LE._esc2(d.aut || "—"), "Salió de la norma citada, no de un formulario genérico."),
+        LE.fila("Permiso o figura", LE._esc2(P.nom), "", "text-white"),
+        LE.fila("Artículo que lo exige", "Decreto 1076 de 2015, art. " + LE._esc2((d.cit || P.base.cit)), "", "text-sky-300")
+      ]);
+      if (d.q) h += '<p class="text-[11px] text-slate-400 mt-2 leading-relaxed border border-slate-800 rounded-xl p-2.5 bg-slate-950"><span class="text-slate-500">Texto de la norma:</span> “' + LE._esc2(d.q) + "”</p>";
+      if (d.txt) h += '<p class="text-[11px] text-slate-300 mt-2 leading-relaxed">' + d.txt + "</p>";
+      h += '<p class="text-[11px] text-slate-400 mt-2 leading-relaxed border border-slate-800 rounded-xl p-2.5 bg-slate-950"><span class="text-slate-500">Base del requisito:</span> art. ' + LE._esc2(P.base.cit) + " · “" + LE._esc2(P.base.q) + "”</p>";
+      h += LE.tit("2 · Checklist de la solicitud: " + nAplica + " aplican, " + nVerifica + " para verificar");
+      h += reqs.map(rq => {
+        const cls = rq.ok === true ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40"
+          : rq.ok === false ? "bg-slate-800 text-slate-500 border-slate-700"
+            : "bg-amber-500/15 text-amber-300 border-amber-500/40";
+        const chip = le2Chip(rq.ok === true ? "APLICA" : rq.ok === false ? "NO APLICA" : "VERIFICA", cls);
+        const valor = rq.val != null ? ' <span class="text-white font-bold">· digitaste ' + LE.n(rq.val, 1) + "</span>" : "";
+        const op = rq.ok === false ? " opacity-50" : "";
+        return '<div class="flex items-start gap-2 border-b border-slate-800 py-1.5' + op + '">' + chip +
+          '<div class="min-w-0">' +
+          '<div class="text-slate-200 font-bold">' + LE._esc2(rq.t) + ' <span class="text-sky-300 font-normal">· art. ' + LE._esc2(rq.cit) + "</span>" + valor + "</div>" +
+          '<p class="text-[11px] text-slate-400 leading-relaxed mt-0.5">“' + LE._esc2(rq.q) + "”</p>" +
+          (rq.nota ? '<p class="text-[11px] text-amber-300 mt-0.5">' + rq.nota + "</p>" : "") +
+          "</div></div>";
+      }).join("");
+      h += LE.tit("3 · El reloj que fija el decreto");
+      h += LE.tabla(pla.map(x => {
+        const dias = x.d == null ? "lo fija la autoridad" : x.d === 0 ? "de inmediato" : x.d + " días";
+        return LE.fila(LE._esc2(x.p) + (x.nota ? "" : ""), dias, LE._esc2(x.cit) + " · " + (x.who === "tuyo" ? "reloj tuyo" : "reloj de la autoridad"), x.who === "tuyo" ? "text-amber-300" : "text-white");
+      }));
+      h += pla.map(x => x.nota ? '<p class="text-[11px] text-amber-300 mt-1 leading-relaxed">· ' + LE._esc2(x.p) + ": " + x.nota + "</p>" : "").join("");
+      h += LE.tabla([
+        LE.fila("Suma del reloj de la autoridad", relojA ? LE.n(relojA, 0) + " días hábiles" : "no se puede sumar", relojA ? "Equivale a unas " + LE.f(relojA / 5, 0) + " semanas hábiles de escritorio, sin contar lo que tú tardas en subsanar." : "El decreto no numera los días de este trámite o remite a otra norma.", relojA ? "text-emerald-300" : "text-amber-300"),
+        LE.fila("Suma de los plazos que corren por tu cuenta", relojT ? LE.n(relojT, 0) + " días" : "—", "Subsanas, pagas o allegas pruebas en estos términos; si te duermes, se rechaza o se archiva la solicitud.")
+      ]);
+      h += LE.tit("4 · Vigencia, renovación y garantías");
+      h += LE.tabla(P.vig(c).map(v => LE.fila(LE._esc2(v.lab), LE._esc2(String(v.val)), "art. " + LE._esc2(v.cit) + (v.nota ? " · " + v.nota : ""), "text-white")));
+      h += P.vig(c).filter(v => v.q).map(v => '<p class="text-[11px] text-slate-400 leading-relaxed mt-1">“' + LE._esc2(v.q) + "”</p>").join("");
+      h += LE.tit("5 · Advertencias del caso");
+      P.avisos(c).forEach(a => { h += LE.caja(a.txt, a.t); });
+      h += LE.pie("Motor de permisos construido sobre el texto vigente del Decreto 1076 de 2015 en su espejo oficial, con las modificaciones del Decreto 50 de 2018, del Decreto 703 de 2018, del Decreto 690 de 2021 y del Decreto 875 de 2026 que aparecen señaladas en el propio texto. Los numerales marcados VERIFICA son los que la norma condiciona a un dato que el portal no tiene o que otra norma desarrolla: no se inventan. Tampoco se inventan los plazos: sólo se suman los días hábiles que el decreto escribe en cifras.");
+      out.innerHTML = h;
+      if (window.Ficha) Ficha.set("le2", fd);
+    }
+
+    function le2Limpiar() {
+      LE_PERMISOS.forEach(P => {
+        Object.keys(P.campos).forEach(k => {
+          const el = document.getElementById(P.campos[k][1]);
+          if (el) { if (el.type === "checkbox") el.checked = false; else el.value = ""; }
+        });
+      });
+      const out = document.getElementById("le2-res");
+      if (out) out.innerHTML = "";
+      const s = document.getElementById("le2-tr");
+      if (s) s.value = "";
+      le2Refrescar();
+    }
+
     // ==========================================================================
     // MODO PRÁCTICA: CASOS GUIADOS + AUTOEVALUACIÓN
     // ==========================================================================
@@ -11063,6 +11933,20 @@
           { d: "Usa la relación especie-área solo como orden de magnitud de perder hábitat, con tu z declarada y su fuente. Contrástala con el dPC: perder 20 % de área no es lo mismo que perder 20 % de conectancia.", mod: "tab-bi4", lab: "BI4 especie-área" },
           { d: "Cruza el resultado con la restauración (B23) y con los ecosistemas estratégicos (B28): un lote con βSNE alto y fragmento clave aislado es candidato a conectividad, no a más árboles. Guarda BI1-BI4 en la ficha para que el informe y el CSV salgan con todo.", mod: "tab-ficha", lab: "Informe" }
         ]
+      },
+      {
+        t: "Caso 7 · Qué trámite toca: de la licencia al papel con que llegas a la ventanilla",
+        meta: "Usa: LE1 · LE2 · Ficha · Metodología",
+        pasos: [
+          { d: "En LE1 declara la actividad y digitas la magnitud que tu proyecto tiene de verdad (t/año, MW, m³, ha, habitantes servidos). El motor te devuelve ANLA, CAR o «no requiere licencia» con el umbral literal y el artículo. No aceptes el resultado si no revisaste el texto: el artículo está citado en la pantalla.", mod: "tab-le1", lab: "LE1 licencia" },
+          { d: "Aunque LE1 diga que no necesitas licencia, baja al LE2: la licencia y los permisos específicos son ventanillas distintas. Un predio sin licencia puede requerir permiso de vertimiento, concesión de aguas y aprovechamiento forestal a la vez.", mod: "tab-le2", lab: "LE2 permisos" },
+          { d: "En LE2 escoge el permiso que te aplica y llena solo los campos que tu caso tiene. Deja vacíos los que no sepas: la herramienta los marca VERIFICA en vez de inventarlos, y esa lista es exactamente la que tienes que resolver antes de radicar.", mod: "tab-le2", lab: "LE2 llenar" },
+          { d: "Revisa el §2 de LE2 numeral por numeral. Los requisitos salen del artículo que enumera la solicitud, así que el trabajo es tuyo: anota qué papel ya tienes, cuál te lo dan terceros (registrador, alcalde, bomberos, operador del acueducto) y cuál todavía no existe.", mod: "tab-le2", lab: "LE2 checklist" },
+          { d: "Lee el §3 de LE2 como reloj, no como pronóstico: sólo se suman los días hábiles que el decreto escribe en cifras, y se separan los de la autoridad de los que corren por tu cuenta (subsanar, pagar, allegar garantías). Esos tuyos son los que realmente vencen tu trámite.", mod: "tab-le2", lab: "LE2 plazos" },
+          { d: "En el §4 mira la vigencia y la renovación. Un permiso de vertimiento dura 10 años y se renueva en el primer trimestre del último año: si esperas a que venza, empiezas de cero con los 22 numerales otra vez.", mod: "tab-le2", lab: "LE2 vigencia" },
+          { d: "Si LE1 te dio ANLA o CAR y LE2 te dio varios permisos, arma el cronograma real: ¿qué se radica primero, qué depende de qué, qué necesitas de un tercero antes de radicar? La metodología de la pestaña Metodología explica por qué el orden importa.", mod: "tab-metodo", lab: "Metodología" },
+          { d: "Guarda LE1 y LE2 en la Ficha del predio: el informe consolidado sale con la actividad, el artículo invocado, el permiso, los requisitos que aplican y los que te faltan, para que el documento no sea solo números de suelo.", mod: "tab-ficha", lab: "Informe" }
+        ]
       }
     ];
     const QUIZ = [
@@ -11101,7 +11985,13 @@
       { q: "Siguiendo la restauración de un lote: dos años después, βSIM es alto y βSNE casi cero. Interpretación correcta:", r: ["Se recuperaron exactamente las especies originales", "El ensamble cambió: se fueron unas especies y llegaron otras; no es la misma comunidad, aunque la riqueza se parezca", "No pasó nada", "La muestra está saturada"], ok: 1, why: "βSIM mide recambio puro: especies que entran y salen. Si manda βSIM, la restauración está armando otro ensamble (a veces con generalistas de borde o invasoras: de ahí el valor de listar las exclusivas de cada lado). Para devolver el bosque original querrías βSNE cayendo con el tiempo.", mod: "tab-bi2" },
       { q: "En BI4, un fragmento de 1 ha tiene dPC = 14 % y uno de 20 ha tiene dPC = 9 %. ¿Qué significa?", r: ["El grande es más importante: el área manda", "Ese parche chico vale más para la conectancia: está en la posición que une dos grupos. Protegerlo o restaurarlo cuesta poco y sostiene mucho flujo", "Los dos números están mal: dPC debe seguir al área", "dPC mide calidad de hábitat"], ok: 1, why: "PC = ΣΣ aᵢaⱼp*ᵢⱼ/A_L² y dPC mide cuánto cae PC si ese nodo desaparece. Puede caer por área o por posición. Ojo con el supuesto: es distancia en línea recta, con una sola L para toda la especie foco y sin matriz ni barreras.", mod: "tab-bi4" },
       { q: "La relación especie-área con z = 0,25 predice que perder 40 % del hábitat elimina ≈ 12 % de las especies. ¿Hasta dónde puedes llevar esa cifra?", r: ["Es una predicción de extinción: hay que listar 12 % de especies perdidas", "Es un orden de magnitud bajo el supuesto de equilibrio; la respuesta real llega tarde (deuda de especies) y depende de dónde se concentró la pérdida", "Es exacta si la z la elegiste bien", "No sirve para nada"], ok: 1, why: "S = cA^z relaciona área y riqueza en equilibrio: con z = 0,25 queda S₂/S₁ = 0,60^0,25 = 0,88, o sea un 12 % menos de especies esperadas. Las extinciones por fragmentación tienen rezago de décadas y la curva no distingue si perdiste el hábitat rico o el pobre. Se usa para argumentar orden de magnitud, acompañada de PC y de una línea base real.", mod: "tab-bi4" },
-      { q: "El predio A es bosque continuo (una sola clase de cobertura); el predio B es mosaico de potrero, cultivo y casa de labor. BI4 da SHDI más alto en B. ¿Qué significa eso?", r: ["Que B es más biodiverso que A", "Que B tiene el área más repartida entre más clases: mide heterogeneidad del mapa, no vida. Un mosaico agrícola puede superar holgadamente a un bosque maduro continuo", "Que A está degradado porque no varía", "Que la tipología está mal: el bosque debería dar más"], ok: 1, why: "SHDI = −Σ pᵢ ln pᵢ sobre las proporciones de área de cada clase: sube con el número de clases y con el reparto parejo, y es máximo cuando todas ocupan lo mismo. Un bosque continuo tiene p = 1 y SHDI = 0 aunque sea el mejor hábitat de la cuenca. Por eso BI4 lo reporta junto al % natural que tú declaras y al techo ln m: para describir el paisaje, y para decidir conectancia, no para jerarquizar calidad ecológica.", mod: "tab-bi4" }
+      { q: "El predio A es bosque continuo (una sola clase de cobertura); el predio B es mosaico de potrero, cultivo y casa de labor. BI4 da SHDI más alto en B. ¿Qué significa eso?", r: ["Que B es más biodiverso que A", "Que B tiene el área más repartida entre más clases: mide heterogeneidad del mapa, no vida. Un mosaico agrícola puede superar holgadamente a un bosque maduro continuo", "Que A está degradado porque no varía", "Que la tipología está mal: el bosque debería dar más"], ok: 1, why: "SHDI = −Σ pᵢ ln pᵢ sobre las proporciones de área de cada clase: sube con el número de clases y con el reparto parejo, y es máximo cuando todas ocupan lo mismo. Un bosque continuo tiene p = 1 y SHDI = 0 aunque sea el mejor hábitat de la cuenca. Por eso BI4 lo reporta junto al % natural que tú declaras y al techo ln m: para describir el paisaje, y para decidir conectancia, no para jerarquizar calidad ecológica.", mod: "tab-bi4" },
+      { q: "Vas a descargar aguas residuales tratadas de una PTAR en un cuerpo de agua que el estudio oficial clasifica como Clase I. ¿Qué te responde LE2?", r: ["Que el permiso se otorga con condiciones especiales de monitoreo", "Que no es admisible: la Clase I no admite vertimientos, así que el caso se cierra por el cuerpo de agua y no por el tratamiento", "Que basta con cumplir los límites de DBO y sólidos", "Que la autoridad decide según el caudal de la descarga"], ok: 1, why: "El artículo 2.2.3.2.20.1 define «Clase I. Cuerpos de agua que no admiten vertimientos». Con esa clasificación el permiso no procede por más tratamiento que lleves: la alternativa es reutilizar la descarga o cambiar el punto, no radicar la solicitud.", mod: "tab-le2" },
+      { q: "Una panadería conecta sus aguas residuales al alcantarillado público del casco urbano y el sistema termina en una PTAR. ¿Le corresponde permiso de vertimiento ante la autoridad ambiental?", r: ["Sí, quien genere aguas residuales tramita permiso de vertimiento", "No ante esa ventanilla: el permiso del art. 2.2.3.3.5.1 se pide por verter a aguas superficiales, marinas o al suelo, y la entrega al alcantarillado se acuerda con el prestador; si eres industria además cumples la norma de vertimientos puntuales a esos sistemas (art. 2.2.3.2.23.3)", "Sí, pero con un listado simplificado", "Depende de si el municipio tiene PTAR o solo emisario"], ok: 1, why: "El permiso está amarrado al cuerpo receptor, no a la existencia de aguas residuales. El que sí necesita permiso ante la autoridad es el operador de la PTAR, por el efluente que devuelve al cauce. La confusión cuesta meses: se radica una solicitud de 22 numerales que la CAR debe rechazar por falta de objeto. LE2 marca el caso y lo explica en vez de inventarte un trámite.", mod: "tab-le2" },
+      { q: "Un proyecto con licencia ambiental requiere remover árboles aislados por 18 m³. ¿Qué dice el decreto?", r: ["Que además de la licencia tramita permiso forestal", "Que no se requiere ningún permiso, concesión ni autorización: bastan las obligaciones y medidas de prevención, corrección, compensación y mitigación impuestas en la licencia o previstas en el plan de manejo", "Que se requiere autorización de la CAR y siembra compensatoria", "Que la tala queda prohibida por ser bosque natural"], ok: 1, why: "Es el texto del art. 2.2.1.1.9.6 y una de las exenciones que más se pasa por alto: no se montonea un permiso forestal sobre la licencia cuando el volumen de árboles aislados es igual o menor a 20 m³. No lo confundas con el aprovechamiento forestal doméstico de bosque natural, que sí se solicita formalmente ante la Corporación con tope de 20 m³ anuales y sin comercialización de los productos (art. 2.2.1.1.6.2). Mismo número, supuestos distintos: por eso LE2 pregunta primero en cuál de los dos estás.", mod: "tab-le2" },
+      { q: "El permiso de emisión atmosférica de una caldera: ¿cómo se renueva?", r: ["Es indefinido mientras no cambie el combustible", "Con vigencia máxima de 5 años, presentando el formulario IE-1 con al menos 60 días de anticipación al vencimiento; si la autoridad no notifica decisión a los 90 días de la visita o de la información complementaria, se entiende renovado", "Se renueva cada año con solo pagar la tasa", "Se prorroga automáticamente sin ningún informe"], ok: 1, why: "El art. 2.2.5.1.7.14 fija la vigencia máxima de cinco (5) años, exige el «Informe de Estado de Emisiones» (IE-1) con una antelación no inferior a sesenta (60) días y reconoce el silencio administrativo positivo a los noventa (90) días. La presentación extemporánea da lugar a multa. Es el único silencio positivo que LE2 reporta como renovación, y por eso lo cita aparte.", mod: "tab-le2" },
+      { q: "Unos trabajos de demolición empiezan a las 6:00 p. m. en un barrio. ¿Qué exige el decreto sobre ruido?", r: ["Nada: el horario nocturno empieza a las 10:00 p. m.", "Requiere permiso especial del alcalde o de la autoridad de policía entre las 7:00 p. m. y las 7:00 a. m. de lunes a sábado, y en cualquier horario los domingos y feriados; aun con permiso se suspende si se quejan al menos dos personas", "Solo se sanciona si el medidor supera 65 dB", "Aplica únicamente a obras del Estado"], ok: 1, why: "El art. 2.2.5.1.5.15 fija esa franja horaria y la suspensión por dos quejas; el parágrafo exceptúa obras de emergencia, atención de desastres y trabajos públicos urgentes. La regla es de horario y permiso, no de decibelios medidos, y por eso LE2 la marca como restricción aun si tu nivel sonoro está dentro del estándar.", mod: "tab-le2" },
+      { q: "¿En cuál de estos trámites el decreto SÍ entrega una lista cerrada de documentos?", r: ["En la ocupación de cauce, porque el art. 2.2.3.2.12.1 enumera los anexos", "En el permiso de vertimiento, porque el art. 2.2.3.3.5.2 enumera 22 numerales; la ocupación de cauce remite a «las condiciones que establezca la Autoridad Ambiental competente» y no lista nada", "En los dos, con 16 requisitos cada uno", "En ninguno: siempre depende del manual de cada CAR"], ok: 1, why: "El contraste es la lección: vertimiento y concesión de aguas tienen listado taxativo en el decreto, mientras la ocupación de cauce y playas no trae procedimiento numerado. LE2 marca VERIFICA en las listas abiertas en vez de inventar papeles, y te dice que bajes el formulario de tu autoridad.", mod: "tab-le2" }
     ];
     function renderizarPractica() {
       const cont = document.getElementById("pr-casos");
@@ -11860,8 +12750,8 @@
       renderizarHub();
       renderizarMetodo();
       buscarNormas();
-      renderizarB27(); c29Construir(); c31Construir(); poblarDeptosOrdenes(); renderizarPractica(); le1Pintar();
-      ["ficha-secciones", "metodo-grid", "hub-grid", "b26-lista", "b27-pasos", "a12-res", "a13-sim", "b16-sintesis", "b19-res-ap", "b19-res-ae", "b19-res-ie", "b19-res-t", "c29-res", "c30-res", "c31-res", "c32-res", "c33-res", "w1-res", "w2-res", "w2-thio-res", "w3-res", "w4-res", "ar1-res", "ar2-res", "ar2-est", "ar3-res", "bi1-res", "bi2-res", "bi3-res", "bi4-res", "le1-res", "pr-quiz-res"]
+      renderizarB27(); c29Construir(); c31Construir(); poblarDeptosOrdenes(); renderizarPractica(); le1Pintar(); le2Refrescar();
+      ["ficha-secciones", "metodo-grid", "hub-grid", "b26-lista", "b27-pasos", "a12-res", "a13-sim", "b16-sintesis", "b19-res-ap", "b19-res-ae", "b19-res-ie", "b19-res-t", "c29-res", "c30-res", "c31-res", "c32-res", "c33-res", "w1-res", "w2-res", "w2-thio-res", "w3-res", "w4-res", "ar1-res", "ar2-res", "ar2-est", "ar3-res", "bi1-res", "bi2-res", "bi3-res", "bi4-res", "le1-res", "le2-res", "pr-quiz-res"]
         .forEach(id => { const el = document.getElementById(id); if (el) el.setAttribute("aria-live", "polite"); });
       Ficha.badge();
       Ficha.llenarFormulario();
