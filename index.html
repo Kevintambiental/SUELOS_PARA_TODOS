@@ -229,8 +229,8 @@
       <button onclick="cambiarPestana('tab-fertilidad')" id="btn-tab-fertilidad" class="tab-btn px-3 py-2 font-bold border-b-2 border-emerald-500 text-emerald-400 flex items-center gap-1 whitespace-nowrap transition cursor-pointer">
         <span>🧪</span> 1. Fertilidad IGAC
       </button>
-      <button onclick="cambiarPestana('tab-contaminantes')" id="btn-tab-contaminantes" class="tab-btn px-3 py-2 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1 whitespace-nowrap transition cursor-pointer">
-        <span>🛡️</span> 2. Dispersión & Contaminación
+      <button onclick="cambiarPestana('tab-cl')" id="btn-tab-cl" class="tab-btn px-3 py-2 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1 whitespace-nowrap transition cursor-pointer">
+        <span>🧬</span> 2. Simulación de dispersión (CL)
       </button>
       <button onclick="cambiarPestana('tab-textura')" id="btn-tab-textura" class="tab-btn px-3 py-2 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-1 whitespace-nowrap transition cursor-pointer">
         <span>📐</span> 3. Triángulo Textural
@@ -410,7 +410,7 @@
             <p class="text-xs text-slate-400">Accede directamente a los <strong class="text-emerald-400" id="hub-total-n">57</strong> módulos con sus calculadoras, sustentos normativos y diagnósticos oficiales.</p>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-xs text-slate-400">Total: <strong class="text-emerald-400" id="hub-total-txt">64 Módulos Especializados de 5 áreas + 3 utilidades del portal</strong></span>
+            <span class="text-xs text-slate-400">Total: <strong class="text-emerald-400" id="hub-total-txt">63 Módulos Especializados de 5 áreas + 3 utilidades del portal</strong></span>
           </div>
         </div>
 
@@ -655,7 +655,7 @@
         </div>
         <div class="flex flex-wrap gap-2">
           <button onclick="calcularDrastic()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">🛢️ Calcular índice DRASTIC</button>
-          <button onclick="cambiarPestana('tab-contaminantes')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Ver transporte de solutos (Módulo 2)</button>
+          <button onclick="cambiarPestana('tab-cl')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs cursor-pointer">Ver transporte de solutos en el panel CL (advección, dispersión y pluma 3D)</button>
         </div>
         <div id="c31-res" class="text-xs"></div>
       </div>
@@ -3661,283 +3661,6 @@
     </div>
 
     <!-- =================================================================== -->
-    <!-- PESTAÑA 2: DISPERSIÓN & CONTAMINANTES (AMPLIADA CON BIOMARCADORES Y NORMATIVA) -->
-    <!-- =================================================================== -->
-    <div id="tab-contaminantes" class="tab-content hidden space-y-6">
-      
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-6">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-4">
-          <div>
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="badge-norma badge-minambiente">Decreto 1076 de 2015 MinAmbiente</span>
-              <span class="badge-norma badge-ideam">Guía Técnica Suelos Contaminados</span>
-              <span class="badge-norma badge-igac">Modelo Advección-Dispersión IDEAM/IGAC</span>
-            </div>
-            <h2 class="text-lg md:text-xl font-extrabold text-white tracking-tight mt-1 flex items-center gap-2">
-              <span>🛡️</span> Dispersión, Transporte Hidrodinámico y Monitoreo Ecotoxicológico
-            </h2>
-            <div class="mt-2 p-2.5 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-200 text-[11px] leading-relaxed">Este módulo es la versión corta. El bloque <b>CL</b> es una sola hoja de simulación con la ecuación convectivo-dispersiva completa: catálogo IGAC de unidades cartográficas, hidráulica y partición CT, curvas de arribo por tramos con una familia por UCS y registro a tres decimales, la pluma en tres dimensiones con su frente de avance y su cerradura de masa con los días avanzando solos, y 45 contaminantes de referencia con su cita. <button type="button" onclick="cambiarPestana('tab-cl')" class="underline font-bold cursor-pointer">Ir al panel CL</button></div>
-            <p class="text-xs text-slate-400">
-              Evaluación cuantitativa de solutos (advección, dispersión y adsorción), bioindicadores edáficos y biomarcadores ocupacionales.
-            </p>
-          </div>
-
-          <button onclick="importarParametrosFertilidad()" class="px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold shadow-lg shadow-purple-900/30 transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
-            <span>📥</span> Importar Datos desde Fertilidad
-          </button>
-        </div>
-
-        <!-- CONTROLES DEL MODELO -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          
-          <!-- PANEL IZQUIERDO -->
-          <div class="lg:col-span-5 space-y-4">
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
-              <h3 class="text-xs font-bold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
-                <span>☣️</span> 1. Sustancia Contaminante & Lixiviabilidad
-              </h3>
-              
-              <div>
-                <label class="text-slate-400 text-xs block mb-1">Compuesto Químico / Soluto:</label>
-                <select id="sim-contaminante" onchange="seleccionarContaminante()" class="w-full bg-slate-900 border border-purple-500/40 rounded-lg p-2 text-white font-bold text-xs">
-                  <option value="glifosato" selected>Glifosato (Herbicida órgano-fosforado, alta retención)</option>
-                  <option value="atrazina">Atrazina (Herbicida triazina, altamente lixiviable)</option>
-                  <option value="clorpirifos">Clorpirifos (Insecticida organofosforado, moderado)</option>
-                  <option value="nitratos">Nitratos (NO3- fertilizantes solubles, transporte libre)</option>
-                  <option value="cadmio">Cadmio (Cd²⁺ metal pesado tóxico en cacao/arroz)</option>
-                  <option value="plomo">Plomo (Pb²⁺ fijado fuertemente por arcillas/MO)</option>
-                  <option value="tolueno">Tolueno (COV hidrocarburo en derrames de crudo)</option>
-                  <option value="personalizado">Personalizado (Ingreso manual de Koc y Vida Media)</option>
-                </select>
-              </div>
-
-              <div class="grid grid-cols-2 gap-3 text-xs pt-1">
-                <div>
-                  <label class="text-slate-400 block mb-0.5">Koc (mL/g):</label>
-                  <input type="number" id="sim-koc" value="24000" oninput="calcularModeloContaminacion()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-purple-300 font-bold">
-                  <span class="text-[10px] text-slate-500">Adsorción C-Orgánico</span>
-                </div>
-                <div>
-                  <label class="text-slate-400 block mb-0.5">Vida Media t½ (días):</label>
-                  <input type="number" id="sim-dt50" value="47" oninput="calcularModeloContaminacion()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-purple-300 font-bold">
-                  <span class="text-[10px] text-slate-500">Degradación microbiológica</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- PARÁMETROS EDÁFICOS -->
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 text-xs">
-              <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                <span>🌱</span> 2. Parámetros Edáficos & Acuífero (IGAC)
-              </h3>
-
-              <div class="space-y-2.5">
-                <div>
-                  <div class="flex justify-between text-slate-300">
-                    <span>pH del Suelo:</span>
-                    <span id="txt-sim-ph" class="font-bold text-white">4.80</span>
-                  </div>
-                  <input type="range" id="sim-ph" min="3.5" max="8.5" step="0.1" value="4.8" oninput="calcularModeloContaminacion()" class="w-full accent-emerald-500 cursor-pointer">
-                </div>
-
-                <div>
-                  <div class="flex justify-between text-slate-300">
-                    <span>Carbono Orgánico (% CO):</span>
-                    <span id="txt-sim-co" class="font-bold text-white">2.40%</span>
-                  </div>
-                  <input type="range" id="sim-co" min="0.1" max="8.0" step="0.1" value="2.4" oninput="calcularModeloContaminacion()" class="w-full accent-emerald-500 cursor-pointer">
-                </div>
-
-                <div>
-                  <div class="flex justify-between text-slate-300">
-                    <span>CIC Total (cmol/kg):</span>
-                    <span id="txt-sim-cic" class="font-bold text-white">15.0</span>
-                  </div>
-                  <input type="range" id="sim-cic" min="2" max="45" step="0.5" value="15.0" oninput="calcularModeloContaminacion()" class="w-full accent-emerald-500 cursor-pointer">
-                </div>
-
-                <div>
-                  <div class="flex justify-between text-slate-300">
-                    <span>Profundidad Manto Freático (Z en m):</span>
-                    <span id="txt-sim-prof" class="font-bold text-white">1.8 m</span>
-                  </div>
-                  <input type="range" id="sim-prof" min="0.5" max="15" step="0.1" value="1.8" oninput="calcularModeloContaminacion()" class="w-full accent-blue-500 cursor-pointer">
-                </div>
-
-                <div>
-                  <div class="flex justify-between text-slate-300">
-                    <span>Recarga Neta / Lixiviación Anual (q):</span>
-                    <span id="txt-sim-recarga" class="font-bold text-white">450 mm/año</span>
-                  </div>
-                  <input type="range" id="sim-recarga" min="50" max="1500" step="25" value="450" oninput="calcularModeloContaminacion()" class="w-full accent-blue-500 cursor-pointer">
-                </div>
-              </div>
-            </div>
-
-            <!-- ECUACIÓN MATEMÁTICA VISIBLE -->
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs space-y-2">
-              <span class="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Fórmulas Oficiales de Transporte:</span>
-              <div class="formula-math text-[11px] leading-relaxed">
-                Rf = 1 + (ρb / θ) · Kd<br>
-                Kd = Koc · (%CO / 100)<br>
-                GUS = log₁₀(t½) · (4 − log₁₀(Koc))
-              </div>
-              <span class="text-[10px] text-slate-500">ρb = 1.30 g/cm³, θ = 0.35 cm³/cm³ (Suelo franco medio).</span>
-            </div>
-
-          </div>
-
-          <!-- PANEL DERECHO -->
-          <div class="lg:col-span-7 space-y-4">
-            
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 shadow text-center">
-                <span class="text-[10px] uppercase font-bold text-slate-400 block">Coef. Partición (Kd)</span>
-                <span id="res-sim-kd" class="text-xl font-black text-purple-400 block my-1">576 L/kg</span>
-                <span class="text-[9px] text-slate-500 font-mono">Kd = Koc × (%CO/100)</span>
-              </div>
-
-              <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 shadow text-center">
-                <span class="text-[10px] uppercase font-bold text-slate-400 block">Factor Retardo (Rf)</span>
-                <span id="res-sim-rf" class="text-xl font-black text-emerald-400 block my-1">2,305 ×</span>
-                <span class="text-[9px] text-slate-500 font-mono">Rf = 1 + (ρb/θ)·Kd</span>
-              </div>
-
-              <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 shadow text-center">
-                <span class="text-[10px] uppercase font-bold text-slate-400 block">Índice GUS (Lixiviabilidad)</span>
-                <span id="res-sim-gus" class="text-xl font-black text-blue-400 block my-1">-0.64</span>
-                <span id="res-sim-gus-badge" class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">NO LIXIVIABLE</span>
-              </div>
-            </div>
-
-            <!-- TIEMPO DE TRÁNSITO & ATENUACIÓN -->
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs space-y-3">
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
-                <div>
-                  <span class="text-slate-400 block text-[11px]">Tiempo Estimado de Llegada al Nivel Freático:</span>
-                  <div id="res-sim-tiempo" class="text-2xl font-black text-white mt-0.5">
-                    > 100 años (Completamente Retenido)
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="text-slate-400 block text-[11px]">Masa que Alcanza el Acuífero (AF):</span>
-                  <div id="res-sim-af" class="text-sm font-bold text-emerald-400 mt-0.5">
-                    &lt; 0.0001% (Atenuación Total)
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="flex justify-between text-[11px] mb-1">
-                  <span class="font-bold text-slate-300">Poder de Filtración y Amortiguación del Perfil:</span>
-                  <span id="res-sim-filtro-txt" class="font-bold text-emerald-400">98.5% (Protección Alta)</span>
-                </div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden border border-slate-800">
-                  <div id="res-sim-filtro-bar" class="bg-emerald-500 h-2.5 rounded-full transition-all duration-500" style="width: 98.5%"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- SIMULADOR VISUAL DEL PERFIL EN CANVAS -->
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-                  <span>🔬</span> Simulación del Frente de Infiltración en el Perfil
-                </span>
-                <span id="sim-status-pill" class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                  Acuífero Protegido
-                </span>
-              </div>
-
-              <div class="flex justify-center bg-slate-900/60 rounded-xl p-3 border border-slate-800/80">
-                <canvas id="perfilCanvas" width="480" height="200" class="w-full max-w-[480px] h-auto"></canvas>
-              </div>
-
-              <div class="grid grid-cols-4 text-[10px] text-center text-slate-400 font-semibold mt-2 pt-2 border-t border-slate-800">
-                <div>🟫 Horiz. A (0–25 cm)<br><span class="text-emerald-400">Filtro Orgánico</span></div>
-                <div>🟧 Horiz. B (25–50 cm)<br><span class="text-amber-400">Filtro Mineral</span></div>
-                <div>🟨 Zona Vadosa (&gt;50 cm)<br><span class="text-slate-300">Tránsito</span></div>
-                <div>🟦 Manto Freático<br><span class="text-blue-400">Acuífero</span></div>
-              </div>
-            </div>
-
-            <!-- DICTAMEN AMBIENTAL -->
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs text-slate-300 space-y-1">
-              <span class="font-bold text-white flex items-center gap-1.5">
-                <span>📑</span> Dictamen Agronómico & Medidas Preventivas:
-              </span>
-              <p id="sim-dictamen-texto" class="text-slate-400 leading-relaxed pt-1">
-                El suelo evaluado posee alta capacidad amortiguadora...
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- SECCIÓN DE BIOINDICADORES & BIOMARCADORES AMBIENTALES -->
-        <div class="border-t border-slate-800 pt-5 space-y-4">
-          <div class="flex items-center gap-2">
-            <span class="text-lg">🔬</span>
-            <h3 class="text-sm font-extrabold text-white tracking-wide uppercase">
-              Bioindicadores y Biomarcadores en Suelos y Ecosistemas Afectados (Colombia)
-            </h3>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2.5">
-              <div class="flex items-center justify-between">
-                <h4 class="font-bold text-emerald-400 flex items-center gap-1.5">
-                  <span>🌿</span> Bioindicadores de Calidad y Toxicidad
-                </h4>
-                <span class="badge-norma badge-ideam">NTC-ISO 6341 / OECD</span>
-              </div>
-              <ul class="space-y-2 text-slate-300">
-                <li class="p-2 rounded-lg bg-slate-900 border border-slate-800/80">
-                  <strong class="text-white">Líquenes epífitos (Parmelia, Usnea):</strong>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Bioacumuladores de metales pesados (Pb, Cd) y $SO_2$ atmosférico depositado en suelos andinos. Su desaparición señala lluvia ácida y degradación química.</p>
-                </li>
-                <li class="p-2 rounded-lg bg-slate-900 border border-slate-800/80">
-                  <strong class="text-white">Daphnia magna (Pulga de agua):</strong>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Ensayo ecotoxicológico estándar en lixiviados de suelos contaminados. Determina la Concentración Letal Media ($CL_{50}$) a 24 y 48 horas bajo protocolo oficial IDEAM.</p>
-                </li>
-                <li class="p-2 rounded-lg bg-slate-900 border border-slate-800/80">
-                  <strong class="text-white">Gambusia affinis (Pez mosquito):</strong>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Bioindicador acuático en humedales y canales receptores de escorrentía agrícola. Sensible a plaguicidas organofosforados y piretroides.</p>
-                </li>
-              </ul>
-            </div>
-
-            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-2.5">
-              <div class="flex items-center justify-between">
-                <h4 class="font-bold text-purple-400 flex items-center gap-1.5">
-                  <span>🧬</span> Biomarcadores de Exposición a Suelos Contaminados
-                </h4>
-                <span class="badge-norma badge-minambiente">MinSalud / INS Colombia</span>
-              </div>
-              <ul class="space-y-2 text-slate-300">
-                <li class="p-2 rounded-lg bg-slate-900 border border-slate-800/80">
-                  <strong class="text-white">Ácido Hipúrico y o-Cresol (en orina):</strong>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Biomarcadores específicos de metabolización de <em>Tolueno</em> y solventes hidrocarburados en comunidades expuestas a pasivos petroleros.</p>
-                </li>
-                <li class="p-2 rounded-lg bg-slate-900 border border-slate-800/80">
-                  <strong class="text-white">Enzima ALA-D y Plumbemia:</strong>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Inhibición de la ácido delta-aminolevulínico dehidratasa por Plomo ($Pb^{2+}$) en sangre; biomarcador clínico de intoxicación en suelos mineros de Marmato o Segovia.</p>
-                </li>
-                <li class="p-2 rounded-lg bg-slate-900 border border-slate-800/80">
-                  <strong class="text-white">Acetilcolinesterasa eritrocitaria (AChE):</strong>
-                  <p class="text-[11px] text-slate-400 mt-0.5">Inhibición por exposición a insecticidas organofosforados (clorpirifos) retenidos en polvo o lixiviados del suelo.</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- =================================================================== -->
     <!-- BLOQUE CL: CONTAMINACIÓN Y REMEDIACIÓN DE SUELOS — PANEL ÚNICO        -->
     <!-- =================================================================== -->
 
@@ -3954,6 +3677,8 @@
           <div class="flex flex-wrap items-center gap-1.5 xl:ml-auto">
             <button type="button" id="cl-run" onclick="clIniciar()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold uppercase tracking-wider shadow-lg shadow-emerald-900/40 cursor-pointer">▶ Iniciar simulación</button>
             <button type="button" id="cl-play" onclick="clReproducir()" disabled class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">Reproducir</button>
+            <button type="button" id="cl-demo" onclick="clDemo()" class="px-3 py-2 rounded-xl bg-sky-700 hover:bg-sky-600 text-white text-[11px] font-bold cursor-pointer">Ver el ejemplo (demo)</button>
+            <button type="button" id="cl-vaciar-todo" onclick="clVaciarTodo()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-red-900/40 text-slate-300 text-[11px] font-bold cursor-pointer">Vaciar todo y poner mis datos</button>
             <label class="flex items-center gap-1.5 text-[10px] text-slate-400">velocidad
               <select id="cl-vel" onchange="clVel(this.value)" class="bg-slate-950 border border-slate-700 rounded-lg px-1.5 py-1 text-white text-[11px]">
                 <option value="0,5">0,5×</option>
@@ -3986,6 +3711,10 @@
           <div class="bg-slate-950 border border-slate-800 rounded-lg px-2 py-1.5"><p class="text-[9px] uppercase tracking-wider text-slate-500">cerradura de masa</p><p id="cl-m-cerra" class="font-mono text-[13px] font-bold text-slate-200 tabular-nums">—</p></div>
           <div class="bg-slate-950 border border-slate-800 rounded-lg px-2 py-1.5"><p class="text-[9px] uppercase tracking-wider text-slate-500">Courant / difusión</p><p id="cl-m-cour" class="font-mono text-[13px] font-bold text-slate-200 tabular-nums">—</p></div>
         </div>
+
+        <p id="cl-nota-demo" class="hidden text-[10px] leading-relaxed text-sky-200 bg-sky-500/10 border border-sky-500/40 rounded-xl px-2.5 py-2">
+          <b>Ejemplo cargado: esto no es tu predio.</b> Las dos unidades cartográficas (DEM-1 y DEM-2) con sus trece cifras, el DM, las dispersividades y el espesor del dominio son <b>números de muestra que puso el portal</b> para que se vea la simulación moverse: no salen de ninguna norma ni de ningún análisis de laboratorio. Lo único respaldado del ejemplo es la <b>Atrazina</b> (Koc 100 mL/g, DT½ de campo 29 d, solubilidad 35 mg/L y masa molar 215,68 g/mol, del archivo del PPDB descargado en disco), esa misma solubilidad usada como concentración de la fuente, y su <b>umbral de 2,4 mg/kg</b> (EPA/ORNL RSL otoño de 2024, hoja «Res Soil 1124», fila 46, columna U). Para trabajar con tu caso pulsa <b>«Vaciar todo y poner mis datos»</b>: deja las tarjetas en blanco.
+        </p>
 
         <div id="cl-estado" class="space-y-1.5"></div>
       </div>
@@ -6648,8 +6377,6 @@
 
       if (tabId === "tab-fertilidad") {
         dibujarRadar();
-      } else if (tabId === "tab-contaminantes") {
-        calcularModeloContaminacion();
       } else if (tabId === "tab-textura") {
         dibujarTrianguloTextural();
       } else if (tabId === "tab-ordenes") {
@@ -6731,8 +6458,7 @@
       { id: "tab-metodo", num: "★", tit: "Metodología y Fuentes", bloq: "Utilidad del portal", norm: "IGAC · IDEAM · USDA · FAO · IPCC · APHA/AWWA/WEF · MinAmbiente", desc: "Fórmula, autor, rango de validez y enlace de cada cálculo del portal en las cinco áreas: RUSLE (R, K, LS, C, P, T, Se), fertilidad IGAC, CIC, textural, encalado, yeso y carbono del suelo; Langelier, cloración, riego, Streeter-Phelps y la línea de agua de la PTAR; ICA y pluma gaussiana; índices de diversidad; y los artículos de los decretos que usa el bloque Legal." },
       { id: "tab-practica", num: "★", tit: "Modo Práctica y Autoevaluación", bloq: "Transversal", norm: "Casos integradores · autoevaluación con retroalimentación", desc: "Siete casos reales paso a paso (erosión en lote cafetero, riego y costos, fosa y acuífero, el agua del predio de punta a punta, el aire: índice, pluma y GEI, la biodiversidad del predio: alfa, beta, esfuerzo de muestreo y paisaje, y el trámite ambiental: licencia, permisos y franjas del predio) que te llevan por los módulos en el orden en que se resuelven en campo y en oficina, más una autoevaluación con retroalimentación y módulos de repaso." },
       { id: "tab-fertilidad", num: "1", tit: "Fertilidad del Suelo IGAC", bloq: "Principal", norm: "IGAC IN-GAG-PC05-02", desc: "Cálculo en 2 profundidades (0-25 y 25-50 cm), radar nutricional y diagnóstico oficial." },
-      { id: "tab-contaminantes", num: "2", tit: "Dispersión & Contaminación", bloq: "Principal", norm: "Decreto 1076/2015 MinAmbiente", desc: "Transporte de solutos, advección, dispersión, bioindicadores y biomarcadores." },
-      { id: "tab-cl", num: "CL", tit: "Simulación de dispersión de contaminantes en el suelo (panel único)", bloq: "Bloque CL: Contaminación y remediación de suelos", norm: "Freeze & Cherry (1979) ecs. 2.3, 3.44, 3.47, 9.5, 9.14 y A10.1 · USGS OFR 82-166 · IGAC Cundinamarca 2001 · PPDB (AERU) y ATSDR · Decreto 1076 de 2015", desc: "Todo en una sola hoja, sin pestañas que saltar: un botón Iniciar simulación corre el bloque entero y los días avanzan solos sobre la malla ya resuelta. Catálogo de las 82 unidades cartográficas (UCS) y sus 216 perfiles modales del IGAC con búsqueda por símbolo, municipio, paisaje, agrupación o taxón y su página impresa; hidráulica y CT por unidad (vd=K·i, V=vd/Me, D*=DM·Me^c, DL y DT, Kd, R, λ, CT=C_sólido+C_líquido+C_gas y J=Me·C·V); curvas de llegada con tramos automáticos y UNA FAMILIA POR CADA UCS marcada, registro a tres decimales y topes de eje salidos del cálculo; pluma en 3D rotable en voxeles con frente de avance, volumen y masa a remediar, cortes animados y cerradura de masa; y 45 contaminantes de referencia con su cita más el umbral que tú declaras." },
+      { id: "tab-cl", num: "CL", tit: "Simulación de dispersión de contaminantes en el suelo (panel único)", bloq: "Bloque CL: Contaminación y remediación de suelos", norm: "Freeze & Cherry (1979) ecs. 2.3, 3.44, 3.47, 9.5, 9.14 y A10.1 · USGS OFR 82-166 · IGAC Cundinamarca 2001 · PPDB (AERU) y ATSDR · Decreto 1076 de 2015", desc: "Todo en una sola hoja, sin pestañas que saltar: un botón Iniciar simulación corre el bloque entero y los días avanzan solos sobre la malla ya resuelta; «Ver el ejemplo (demo)» carga un caso completo con números de muestra para ver cómo se mueve todo y «Vaciar todo y poner mis datos» deja las tarjetas en blanco — el portal nunca arranca prellenado. Catálogo de las 82 unidades cartográficas (UCS) y sus 216 perfiles modales del IGAC con búsqueda por símbolo, municipio, paisaje, agrupación o taxón y su página impresa; hidráulica y CT por unidad (vd=K·i, V=vd/Me, D*=DM·Me^c, DL y DT, Kd, R, λ, CT=C_sólido+C_líquido+C_gas y J=Me·C·V); curvas de llegada con tramos automáticos y UNA FAMILIA POR CADA UCS marcada, registro a tres decimales y topes de eje salidos del cálculo; pluma en 3D rotable en voxeles con frente de avance, volumen y masa a remediar, cortes animados y cerradura de masa; y 45 contaminantes de referencia con su cita más el umbral que tú declaras." },
 
       { id: "tab-textura", num: "3", tit: "Triángulo Textural USDA/IGAC", bloq: "Principal", norm: "IGAC Tablas 16 y 17", desc: "12 clases texturales, retención de agua disponible, conductividad y laboreo." },
       { id: "tab-ordenes", num: "4", tit: "12 Órdenes Taxonómicos", bloq: "Principal", norm: "Soil Taxonomy USDA / IGAC 2012", desc: "Filtro interactivo por departamento: órdenes presentes, dominante y limitante principal." },
@@ -6811,7 +6537,6 @@
     // Ningún id de pestaña cambia: #tab-b19 y los enlaces que ya compartiste siguen vivos.
     const AREA_DE = {
       "tab-fertilidad": "suelo",
-      "tab-contaminantes": "suelo",
       "tab-cl": "suelo",
       "tab-textura": "suelo",
       "tab-ordenes": "suelo",
@@ -6879,11 +6604,11 @@
     const AREAS = [
       { k: "todas", nom: "Todas", ico: "🗂️", hex: "#94a3b8",
         sub: "las 5 áreas en una sola lista, sin filtro",
-        ya: "Vista sin filtro: los 64 módulos de las cinco áreas aparecen juntos y cada tarjeta lleva el sello del área a la que pertenece. Es la única pantalla donde se ven mezcladas; al entrar a un panel solo quedan sus propias herramientas.",
+        ya: "Vista sin filtro: los 63 módulos de las cinco áreas aparecen juntos y cada tarjeta lleva el sello del área a la que pertenece. Es la única pantalla donde se ven mezcladas; al entrar a un panel solo quedan sus propias herramientas.",
         faltan: [] },
       { k: "suelo", nom: "Suelos", ico: "🟤", hex: "#10b981",
         sub: "edafología, manejo y conservación de suelos",
-        ya: "Área base del portal y 38 calculadoras exclusivas del suelo: edafología completa A1–A13 (formación, mineralogía, textura, densidad y porosidad, agua de retención pF, salinidad y sodicidad, biología del perfil, ciclos de N-P-K-C, labranza), manejo y conservación B14–B25 y B27–B28 (capacidad de uso, conflictos, oferta nutricional, erosión RUSLE con motor real, conservación, restauración, carbono orgánico del perfil SOC), más C30 fertilización con costos en COP y C32 traficabilidad. Cada número de este panel es un parámetro del suelo: la lluvia que lo golpea, la textura, el carbono almacenado en el perfil. Y el bloque CL (CL1 a CL4) modela la remediación con esos mismos parámetros: una gráfica por unidad cartográfica, las curvas de llegada por sección con registro a tres decimales, la pluma en tres dimensiones con su frente de avance y los contaminantes con su Koc, su vida media y su umbral declarado.",
+        ya: "Área base del portal y 37 calculadoras exclusivas del suelo: edafología completa A1–A13 (formación, mineralogía, textura, densidad y porosidad, agua de retención pF, salinidad y sodicidad, biología del perfil, ciclos de N-P-K-C, labranza), manejo y conservación B14–B25 y B27–B28 (capacidad de uso, conflictos, oferta nutricional, erosión RUSLE con motor real, conservación, restauración, carbono orgánico del perfil SOC), más C30 fertilización con costos en COP y C32 traficabilidad. Cada número de este panel es un parámetro del suelo: la lluvia que lo golpea, la textura, el carbono almacenado en el perfil. Y el bloque CL (CL1 a CL4) modela la remediación con esos mismos parámetros: una gráfica por unidad cartográfica, las curvas de llegada por sección con registro a tres decimales, la pluma en tres dimensiones con su frente de avance y los contaminantes con su Koc, su vida media y su umbral declarado.",
         faltan: [] },
       { k: "agua", nom: "Agua", ico: "💧", hex: "#38bdf8",
         sub: "calidad y tratamiento del agua: potable (PTAP), residual (PTAR), riego y cuerpo receptor",
@@ -7297,7 +7022,7 @@
       { mod: "CL1 · Catálogo de unidades cartográficas del IGAC (selector de UCS)", f: ["símbolo de 3-4 letras + fase: MEF trae MEFe, MEFf, MEFg — la fase es la unidad que se modela", "agrupación (Complejo / Asociación / Consociación / Grupo) + paisaje geomorfológico (montaña, lomerío, piedemonte, planicie, valle)", "perfil modal = la ficha de campo con horizontes, textura y pH por horizonte", "«usar esta UCS» escribe la fila del motor con el símbolo y el resto de campos VACÍOS"], autor: "IGAC — Estudio General de Suelos y Zonificación de Tierras del Departamento de Cundinamarca: capítulo 3.2 (unidades y fases) y el anexo «Descripción de los perfiles modales e inclusiones» (página impresa 617 en adelante)", validez: "Las 82 unidades, sus 175 fases y los 216 perfiles están copiados del texto del informe, cada entrada con la página impresa en la que aparece; nada se interpoló ni se sacó de otro mapa. Lo que el texto NO trae: densidad aparente, porosidad, granulometría, carbono orgánico y conductividad hidráulica por perfil están en el anexo en CD del IGAC, que no hace parte del archivo volcado — por eso el selector no prellena ningún número del motor, te deja el símbolo y tú digitas el resto desde tu análisis de laboratorio o tu estudio de detalle. Las columnas numéricas de la Tabla 13 (leyenda de suelos) salieron del PDF en columnas sueltas, sin alineación de filas: sus áreas y porcentajes no se usan porque no se pueden citar con seguridad. Del OCR sólo se repararon las vocales que salieron como signos de puntuación y se quitaron las costuras de página (80 casos); las descripciones van textuales.", fuente: { t: "IGAC, Estudio General de Suelos y Zonificación de Tierras de Cundinamarca — texto volcado en _work/_refs_suelo/estudio_cundinamarca_2001.txt (marcas @@PAG n/896@@) y catálogo generado en _work/catalogo_ucs.js", u: "PDF local: C:\\Users\\kevin\\OneDrive\\Documents\\ESTUDIO_GENERAL_CUNDINAMARCA_100K_2001.pdf (31,0 MB, 896 p.)" } },
       { mod: "CL4 · Catálogo de umbrales en suelo (864 analitos)", f: ["columna U de la hoja = nivel de screening derivado con riesgo cancerígeno 1×10⁻⁶; columna Y = nivel derivado con índice de peligro 1; las dos en mg/kg de suelo seco", "hoja Res Soil = escenario residencial (jardín, niño expuesto); hoja Ind Soil = escenario industrial (adulto expuesto): son supuestos de exposición del EPA, no el uso de tu predio", "el botón fija el MENOR de los dos números del escenario, porque ése es el que gobierna, y la cita dice de qué columna salió", "cada fila lleva el número de fila real del Excel: archivo + hoja + fila + columna, para que el número sea verificable"], autor: "EPA / ORNL — Regional Screening Levels (RSL) Fall 2024, publicados con DOI 10.5281/zenodo.14527682", validez: "Son NIVELES DE SCREENING, no estándares de ley: el propio EPA los define para decidir si un sitio se investiga más, con supuestos residenciales o industriales que pueden no ser los de tu predio. Y no son norma colombiana: en este proyecto no hay descargada ninguna resolución colombiana de concentraciones máximas permisibles en suelo, así que ningún número de esta tabla sirve como límite legal — sirve como guía de comparación y así queda etiquetada en pantalla. Los valores se copiaron del Excel sin recalcular nada: de las 890 filas, 864 traen al menos un número y las 26 sin número (Diesel engine exhaust, Lead compounds, Mercury compounds y las entradas que remiten a una guía aparte) se descartaron al generar, no se rellenaron con cero. El número que se fija es exactamente el publicado (el EPA da dos cifras significativas, a veces 0,0063 mg/kg) y no se redondea a tres decimales al escribirlo en el campo, porque ése es el umbral contra el que CL3 cuenta el volumen a remediar. Ojo con los combustibles: la hoja no tiene fila «gasolina» ni «diésel»; tiene las fracciones de TPH por rango de carbono (filas 818 a 822) y los componentes sueltos (benceno fila 58, tolueno 809, etilbenceno 324, xilenos 886 a 889). A qué fracción cae tu combustible se decide con la composición que reportan los perfiles ATSDR en disco —gasolina C4-C5 y C4-C8, diésel C10-C19, fuel oil no. 2 C11-C20— y esa elección la haces tú: ningún botón la hace por ti.", fuente: { t: "EPA/ORNL RSL Fall 2024 · hojas Res Soil 1124 e Ind Soil 1124 · tabla generada en _work/cl_umbral.js con python _work/gen_cl_umbral.py", u: "https://doi.org/10.5281/zenodo.14527682" } },
       { mod: "CL2 · Soluciones por secciones: erfc, Ogata-Banks y pulso momentáneo", f: ["C(x,t) = C0·erfc( x / (2·√(D*·t)) )  (medio seminfinito, primera especie, C0 mantenida en x=0)", "Ogata-Banks (continua): C(x,t) = (C0/2)·erfc( (x − V·t) / (2·√(DL·t)) )  · el dictado conserva sólo el primer término", "Momentánea: campana gaussiana M/(·(4π·t)^..)·exp(−(x−V·t)²/(4·DL·t)) por tramos", "erf(x) = SIGNO(x)·√(1 − EXP(−x²·(4/π + 0,147·x²)/(1 + 0,147·x²)))"], autor: "Freeze & Cherry (1979) ec. (3.47) pág. 104 y (9.5) pág. 391; aproximación de erf: forma corta de la ec. 7.1.26 del Handbook de Abramowitz & Stegun con p = 0,147, tal como la dictó el profesor", validez: "La erfc del medio seminfinito y la Ogata-Banks están verificadas en el libro con página y línea. Los tramos no son una lista fija: digitas la longitud y cada cuántos metros, o tu propia lista de secciones, y el portal arma una gráfica por tramo con el día en que se toma registro. Cada UCS marcada se modela aparte (su propia Me, su DL y su R) y la meseta sale del cálculo, nunca de un máximo fijo del portal. Los topes de los ejes tampoco son fijos: el Y llega al pico calculado de esa UCS (si el contaminante da 0,312 mg/L el eje corta en 0,4, no en 1000) y el X cierra en la ventana de días digitada, con pasos redondos —1, 2, 2,5 o 5— y tantas decimales como el paso pida. En la gráfica normalizada el tope sí es 1,000 porque ahí la concentración ya viene dividida por su propia meseta. Dos advertencias: una, (9.5) tiene DOS términos y el dictado se queda con el primero, así que cerca de la frontera de entrada el resultado se aleja del libro (el portal lo avisa y muestra el término despreciado); dos, la aproximación de erf del dictado se desvía en la cuarta decimal, y como el registro de este módulo es a la tercera, el portal la audita contra la integral real y te dice en qué tramos el decimal se mueve. No hay decaimiento en las paredes ni absorción en la zona no saturada: C0 o la masa son constantes en el tiempo.", fuente: { t: "Abramowitz & Stegun 7.1.26 · NO descargado en el proyecto: se usa la forma escrita por el dictado", u: "https://fc79.gw-project.org" } },
-      { mod: "CL3 · Malla 3D de la pluma (ADE resuelta por volúmenes finitos)", f: ["R·∂C/∂t = DL·∂²C/∂x² + DT·∂²C/∂y² + DT·∂²C/∂z² − V·∂C/∂x − λ·C", "esquema explícito hacia arriba (FTBS) con paso limitado por Courant ≤ 0,5 y difusión ≤ 0,5", "fantasma de advección en i=0 = 0 (agua limpia) frente a fantasma de difusión en espejo", "balance de masa cerrado sobre el agua móvil Me con multiplicador R · fase gas informativa", "dispersión numérica del upwind = V·dx/2·(1−Courant), avisada si supera el 25 % de DL", "vista 3D: cada cubo es un bloque de paso×paso×paso celdas y vale el MÁXIMO de sus celdas; proyección ortográfica con giro yaw/pitch y pintado de lejos a cerca", "si hay demasiados bloques se pinta 1 de cada N, y el CSV de la corrida trae la malla completa sin submuestrear", "Iniciar simulación encadena en un solo clic la hidráulica con su CT, la lista de contaminantes y el umbral que declaraste, las curvas de arribo por tramos y la malla 3D; Reproducir avanza los días corte por corte sobre la malla ya resuelta, sin volver a resolverla, y la vista puede girar sola. Si faltó un dato, el aviso dice cuántas cadenas cerraron de verdad y copia la razón que dio el motor, en vez de contar filas leídas como si estuvieran resueltas."], autor: "Ecuación convectivo-dispersiva de Freeze & Cherry (1979) cap. 9, con el término de decaimiento de primer orden pedido por el dictado", validez: "Es un solucionador didáctico de estado transitorio con Δx y Δt que fija el portal según la estabilidad, no un MODFLOW/MT3D calibrado: flujo horizontal forzado en x, medios homogéneos por capa, sin pozo, sin derivación doble ni flujo variable en el tiempo. El término −λ·C de degradación de primer orden NO tiene ecuación numerada en el capítulo de transporte del libro (usa el de decaimiento radiactivo pág. 134 para fechado de aguas); se aplica porque el dictado lo pide y sale marcado. La cerradura de masa se reporta con su desvío real: si no cierra, el panel lo dice en vez de redondearlo. La vista 3D no calcula nada nuevo: pinta la misma malla del corte que está a la vista, con su día, su frente y su volumen sobre el umbral declarados en la línea de abajo. Se toma el máximo del bloque y no el promedio porque una pluma se delimita por lo que supera el umbral, y promediar redondearía y achicaría el frente; el precio es que un cubo pintado puede tener por debajo del umbral buena parte de su volumen, y por eso el volumen real se lee de las celdas, no de los cubos.", fuente: { t: "Freeze & Cherry (1979) cap. 9 · USGS OFR 82-166", u: "https://pubs.usgs.gov/of/1982/0166/report.pdf" } },
+      { mod: "CL3 · Malla 3D de la pluma (ADE resuelta por volúmenes finitos)", f: ["R·∂C/∂t = DL·∂²C/∂x² + DT·∂²C/∂y² + DT·∂²C/∂z² − V·∂C/∂x − λ·C", "esquema explícito hacia arriba (FTBS) con paso limitado por Courant ≤ 0,5 y difusión ≤ 0,5", "fantasma de advección en i=0 = 0 (agua limpia) frente a fantasma de difusión en espejo", "balance de masa cerrado sobre el agua móvil Me con multiplicador R · fase gas informativa", "dispersión numérica del upwind = V·dx/2·(1−Courant), avisada si supera el 25 % de DL", "vista 3D: cada cubo es un bloque de paso×paso×paso celdas y vale el MÁXIMO de sus celdas; proyección ortográfica con giro yaw/pitch y pintado de lejos a cerca", "si hay demasiados bloques se pinta 1 de cada N, y el CSV de la corrida trae la malla completa sin submuestrear", "Iniciar simulación encadena en un solo clic la hidráulica con su CT, la lista de contaminantes y el umbral que declaraste, las curvas de arribo por tramos y la malla 3D; Reproducir avanza los días corte por corte sobre la malla ya resuelta, sin volver a resolverla, y la vista puede girar sola. Si faltó un dato, el aviso dice cuántas cadenas cerraron de verdad y copia la razón que dio el motor, en vez de contar filas leídas como si estuvieran resueltas. «Ver el ejemplo (demo)» carga un caso completo para que se vea la simulación moverse: sus dos unidades cartográficas con las trece cifras, el DM, las dispersividades y el tamaño del dominio son NÚMEROS DE MUESTRA puestos por el portal, no salida de norma ni de laboratorio, y la pantalla lo dice en cada corrida; lo único respaldado del ejemplo es la Atrazina (PPDB en disco) y su umbral (EPA RSL otoño 2024, hoja Res Soil 1124, fila 46, columna U). «Vaciar todo y poner mis datos» revierte el ejemplo, corta la animación y deja todas las tarjetas en blanco. El portal no arranca con ningún dato puesto."], autor: "Ecuación convectivo-dispersiva de Freeze & Cherry (1979) cap. 9, con el término de decaimiento de primer orden pedido por el dictado", validez: "Es un solucionador didáctico de estado transitorio con Δx y Δt que fija el portal según la estabilidad, no un MODFLOW/MT3D calibrado: flujo horizontal forzado en x, medios homogéneos por capa, sin pozo, sin derivación doble ni flujo variable en el tiempo. El término −λ·C de degradación de primer orden NO tiene ecuación numerada en el capítulo de transporte del libro (usa el de decaimiento radiactivo pág. 134 para fechado de aguas); se aplica porque el dictado lo pide y sale marcado. La cerradura de masa se reporta con su desvío real: si no cierra, el panel lo dice en vez de redondearlo. La vista 3D no calcula nada nuevo: pinta la misma malla del corte que está a la vista, con su día, su frente y su volumen sobre el umbral declarados en la línea de abajo. Se toma el máximo del bloque y no el promedio porque una pluma se delimita por lo que supera el umbral, y promediar redondearía y achicaría el frente; el precio es que un cubo pintado puede tener por debajo del umbral buena parte de su volumen, y por eso el volumen real se lee de las celdas, no de los cubos.", fuente: { t: "Freeze & Cherry (1979) cap. 9 · USGS OFR 82-166", u: "https://pubs.usgs.gov/of/1982/0166/report.pdf" } },
       { mod: "CL4 · Lista de contaminantes y umbral mínimo permitido en suelo", f: ["Kd = Koc·foc/1000 · R = 1 + (ρb/Me)·Kd · λ = ln2/DT50", "clasificación reactivo / inerte por el R de la unidad activa", "fracción de masa en sólido, agua y gas con Henry adimensional", "umbral en mg/kg declarado con su fuente, convertido a mg/L dividiendo por el Kd de la unidad"], autor: "PPDB (Pesticide Properties Database, AERU-Universidad de Hertfordshire) y perfiles toxicológicos ATSDR/CDC, descargados en disco con archivo, URL y número de línea; umbral normativo: dato declarado por el usuario", validez: "De los 45 compuestos de referencia, 24 traen un Koc como número único y 18 una vida media: un rango («60-85 mL/g»), un log K o un «no aplica» NO se promedia ni se convierte, se muestra tal cual y el campo queda vacío. Henry y DM nunca se cargan desde la tabla: las fuentes reportan Henry en Pa·m³·mol⁻¹ o atm·m³/mol (el motor lo pide adimensional) y ninguna de las dos bases tabula el coeficiente de difusión en agua. Los metales no tienen Koc ni vida media porque son elementos nativos: se modelan como inertes. El umbral no viene de una tabla del portal porque la norma colombiana de concentraciones en suelo aún no está descargada como tabla de valores (la Resolución 405 de 2007 que hay en disco resuelve un recurso y no fija límites): lo declaras tú con su cita y queda etiquetado como dato aportado.", fuente: { t: "PPDB (AERU) / ATSDR ToxProfiles", u: "https://sitem.herts.ac.uk/aeru/ppdb/en/index.htm" } },
     ];
 
@@ -7834,226 +7559,6 @@
         }
       }
       recalcularTodo();
-    }
-
-    // =========================================================================
-    // 5. PESTAÑA 2: MODELO DE DISPERSIÓN DE CONTAMINANTES
-    // =========================================================================
-    const catalogoQuimicos = {
-      glifosato: { koc: 24000, dt50: 47, nombre: "Glifosato", tipo: "Herbicida", riesgoBase: "Bajo en Acuífero (Fuerte adsorción a coloides)" },
-      atrazina: { koc: 100, dt50: 60, nombre: "Atrazina", tipo: "Herbicida", riesgoBase: "Alto lixiviable hacia pozos y aguas subterráneas" },
-      clorpirifos: { koc: 8500, dt50: 30, nombre: "Clorpirifos", tipo: "Insecticida", riesgoBase: "Moderado / Retención en materia orgánica" },
-      nitratos: { koc: 0.1, dt50: 365, nombre: "Nitratos (NO3-)", tipo: "Fertilizante", riesgoBase: "Crítico / Anión no retenido por coloides negativos" },
-      cadmio: { koc: 2500, dt50: 3650, nombre: "Cadmio (Cd²⁺)", tipo: "Metal Pesado", riesgoBase: "Móvil a pH ácido (<5.5), absorbido por cacao" },
-      plomo: { koc: 15000, dt50: 5000, nombre: "Plomo (Pb²⁺)", tipo: "Metal Pesado", riesgoBase: "Fijado fuertemente por materia orgánica y arcillas" },
-      tolueno: { koc: 380, dt50: 18, nombre: "Tolueno (COV)", tipo: "Hidrocarburo", riesgoBase: "Volátil y móvil en derrames de crudo" },
-      personalizado: { koc: 500, dt50: 60, nombre: "Compuesto Custom", tipo: "Genérico", riesgoBase: "Evaluación según datos ingresados" }
-    };
-
-    function seleccionarContaminante() {
-      const key = document.getElementById("sim-contaminante").value;
-      const comp = catalogoQuimicos[key];
-      if (comp && key !== "personalizado") {
-        document.getElementById("sim-koc").value = comp.koc;
-        document.getElementById("sim-dt50").value = comp.dt50;
-      }
-      calcularModeloContaminacion();
-    }
-
-    function importarParametrosFertilidad() {
-      const ph = getNum("res-ph-0") || 4.8;
-      const co = getNum("res-co-0") || 2.4;
-      const cic = getNum("res-cic-0") || 15.0;
-
-      document.getElementById("sim-ph").value = ph;
-      document.getElementById("sim-co").value = co;
-      document.getElementById("sim-cic").value = cic;
-
-      calcularModeloContaminacion();
-      cambiarPestana("tab-contaminantes");
-    }
-
-    function calcularModeloContaminacion() {
-      const ph = parseFloat(document.getElementById("sim-ph").value);
-      const co = parseFloat(document.getElementById("sim-co").value);
-      const cic = parseFloat(document.getElementById("sim-cic").value);
-      const profZ = parseFloat(document.getElementById("sim-prof").value);
-      const recarga = parseFloat(document.getElementById("sim-recarga").value);
-      const koc = parseFloat(document.getElementById("sim-koc").value) || 0.1;
-      const dt50 = parseFloat(document.getElementById("sim-dt50").value) || 1;
-
-      document.getElementById("txt-sim-ph").innerText = ph.toFixed(2);
-      document.getElementById("txt-sim-co").innerText = `${co.toFixed(2)}%`;
-      document.getElementById("txt-sim-cic").innerText = cic.toFixed(1);
-      document.getElementById("txt-sim-prof").innerText = `${profZ.toFixed(1)} m`;
-      document.getElementById("txt-sim-recarga").innerText = `${recarga} mm/año`;
-
-      let kd = koc * (co / 100);
-      const keyComp = document.getElementById("sim-contaminante").value;
-      if (keyComp === "cadmio") {
-        const logKd = -1.15 + (0.58 * ph) + (0.32 * Math.log10(Math.max(1, cic))) + (0.25 * Math.log10(Math.max(0.1, co)));
-        kd = Math.pow(10, logKd);
-      }
-
-      const rhoB = 1.30;
-      const theta = 0.35;
-      const rf = 1 + ((rhoB / theta) * kd);
-      const q_m = recarga / 1000;
-      const v_agua = q_m / theta;
-      const v_contaminante = v_agua / rf;
-      const tiempoAnos = profZ / v_contaminante;
-
-      const logKoc = Math.log10(Math.max(0.1, koc));
-      const gus = Math.log10(Math.max(1, dt50)) * (4 - logKoc);
-
-      const expTerm = (0.693 * profZ * theta * rf) / (q_m * (dt50 / 365));
-      const af = expTerm > 70 ? 0 : Math.exp(-expTerm);
-
-      document.getElementById("res-sim-kd").innerText = `${kd.toFixed(1)} L/kg`;
-      document.getElementById("res-sim-rf").innerText = `${rf >= 10000 ? '>10,000' : Math.round(rf).toLocaleString()} ×`;
-      document.getElementById("res-sim-gus").innerText = gus.toFixed(2);
-
-      const gusBadge = document.getElementById("res-sim-gus-badge");
-      const statusPill = document.getElementById("sim-status-pill");
-      if (gus < 1.8) {
-        gusBadge.innerText = "NO LIXIVIABLE";
-        gusBadge.className = "text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300";
-        statusPill.innerText = "Acuífero Protegido";
-        statusPill.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
-      } else if (gus <= 2.8) {
-        gusBadge.innerText = "LIXIV. MODERADA";
-        gusBadge.className = "text-[9px] font-bold px-1.5 py-0.5 rounded bg-yellow-500/20 text-yellow-300";
-        statusPill.innerText = "Vulnerabilidad Moderada";
-        statusPill.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 border border-yellow-500/30";
-      } else {
-        gusBadge.innerText = "ALTO RIESGO LIXIVIABLE";
-        gusBadge.className = "text-[9px] font-bold px-1.5 py-0.5 rounded bg-red-500/20 text-red-300";
-        statusPill.innerText = "Alerta: Acuífero Vulnerable";
-        statusPill.className = "text-[10px] font-bold px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/30";
-      }
-
-      const tiempoEl = document.getElementById("res-sim-tiempo");
-      if (tiempoAnos >= 100) {
-        tiempoEl.innerText = "> 100 años (Inmovilizado)";
-        tiempoEl.className = "text-2xl font-black text-emerald-400 mt-0.5";
-      } else if (tiempoAnos >= 5) {
-        tiempoEl.innerText = `${tiempoAnos.toFixed(1)} años`;
-        tiempoEl.className = "text-2xl font-black text-teal-300 mt-0.5";
-      } else if (tiempoAnos >= 1) {
-        tiempoEl.innerText = `${tiempoAnos.toFixed(1)} años (${Math.round(tiempoAnos * 365)} días)`;
-        tiempoEl.className = "text-2xl font-black text-amber-400 mt-0.5";
-      } else {
-        const dias = Math.max(1, Math.round(tiempoAnos * 365));
-        tiempoEl.innerText = `¡Crítico! ${dias} días`;
-        tiempoEl.className = "text-2xl font-black text-red-400 mt-0.5";
-      }
-
-      const afPorc = (af * 100);
-      const afEl = document.getElementById("res-sim-af");
-      if (afPorc < 0.001) {
-        afEl.innerText = "< 0.001% (Atenuación Total en Suelo)";
-        afEl.className = "text-sm font-bold text-emerald-400 mt-0.5";
-      } else if (afPorc < 1.0) {
-        afEl.innerText = `${afPorc.toFixed(3)}% (Retención Alta)`;
-        afEl.className = "text-sm font-bold text-teal-300 mt-0.5";
-      } else {
-        afEl.innerText = `⚠️ ${afPorc.toFixed(1)}% Alcanza el Acuífero`;
-        afEl.className = "text-sm font-bold text-red-400 mt-0.5";
-      }
-
-      const filtroCap = Math.max(0, Math.min(100, (1 - af) * 100));
-      document.getElementById("res-sim-filtro-txt").innerText = `${filtroCap.toFixed(1)}% (${filtroCap >= 80 ? 'Protección Alta' : (filtroCap >= 50 ? 'Protección Media' : 'Protección Crítica')})`;
-      const bar = document.getElementById("res-sim-filtro-bar");
-      bar.style.width = `${filtroCap}%`;
-      bar.className = filtroCap >= 80 ? "bg-emerald-500 h-2.5 rounded-full transition-all duration-500" : (filtroCap >= 50 ? "bg-yellow-500 h-2.5 rounded-full transition-all duration-500" : "bg-red-500 h-2.5 rounded-full transition-all duration-500");
-
-      let dictamen = `Análisis para [ ${catalogoQuimicos[keyComp].nombre} ]: Con Carbono Orgánico de ${co.toFixed(1)}% y factor de retardo Rf de ${Math.round(rf).toLocaleString()}, `;
-      if (keyComp === "nitratos") {
-        dictamen += `los nitratos NO son adsorbidos por la fracción coloidal negativa y avanzan junto con el agua freática. Se exige fraccionamiento estricto de fertilizantes nitrogenados según Decreto 1076.`;
-      } else if (keyComp === "cadmio") {
-        dictamen += `la movilidad del Cadmio es crítica a pH < 5.5. Con el pH actual (${ph.toFixed(1)}), ${ph < 5.5 ? 'el Cd está libre (Cd²⁺) y altamente biodisponible para cacao/arroz. Se requiere plan urgente de encalado para elevar pH > 6.0.' : 'el Cd se encuentra precipitado e inmovilizado en la fracción mineral.'}`;
-      } else if (keyComp === "tolueno") {
-        dictamen += `el Tolueno requiere monitoreo de bioindicadores en cuerpos de agua superficiales y monitoreo de ácido hipúrico/o-cresol en trabajadores.`;
-      } else {
-        if (rf > 500) {
-          dictamen += `el suelo actúa como barrera natural y reactor biológico eficiente, reteniendo el contaminante en los primeros 25 cm para biodegradación antes de amenazar acuíferos.`;
-        } else {
-          dictamen += `retención coloidal moderada o baja. En temporadas de alta pluviosidad (${recarga} mm), existe riesgo de alcanzar el acuífero a ${profZ.toFixed(1)} m.`;
-        }
-      }
-      document.getElementById("sim-dictamen-texto").innerText = dictamen;
-
-      dibujarPerfilCanvas(rf, profZ, keyComp);
-    }
-
-    function dibujarPerfilCanvas(rf, profZ, keyComp) {
-      const canvas = document.getElementById("perfilCanvas");
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-      const w = canvas.width, h = canvas.height;
-      ctx.clearRect(0, 0, w, h);
-
-      const ySup = 20;
-      const yA = 60;
-      const yB = 105;
-      const yFre = 160;
-
-      ctx.fillStyle = "#3B2F2F";
-      ctx.fillRect(40, ySup, w - 80, yA - ySup);
-
-      ctx.fillStyle = "#6B4226";
-      ctx.fillRect(40, yA, w - 80, yB - yA);
-
-      ctx.fillStyle = "#8B7355";
-      ctx.fillRect(40, yB, w - 80, yFre - yB);
-
-      ctx.fillStyle = "#1E3A8A";
-      ctx.fillRect(40, yFre, w - 80, h - yFre);
-
-      ctx.font = "bold 9px sans-serif";
-      ctx.fillStyle = "#CBD5E1";
-      ctx.textAlign = "left";
-      ctx.fillText("0 cm (Sup.)", w - 35, ySup + 5);
-      ctx.fillText("25 cm (A)", w - 35, yA);
-      ctx.fillText("50 cm (B)", w - 35, yB);
-      ctx.fillText(`${profZ} m (Freát.)`, w - 35, yFre);
-
-      let profundidadPluma = yA;
-      if (rf < 2) profundidadPluma = yFre + 15;
-      else if (rf < 20) profundidadPluma = yB + 30;
-      else if (rf < 100) profundidadPluma = yB - 10;
-      else profundidadPluma = ySup + 20;
-
-      const grad = ctx.createLinearGradient(0, ySup, 0, profundidadPluma);
-      if (rf < 5) {
-        grad.addColorStop(0, "rgba(239, 68, 68, 0.95)");
-        grad.addColorStop(1, "rgba(239, 68, 68, 0.2)");
-      } else {
-        grad.addColorStop(0, "rgba(168, 85, 247, 0.9)");
-        grad.addColorStop(1, "rgba(168, 85, 247, 0.05)");
-      }
-
-      ctx.beginPath();
-      ctx.moveTo(w / 2 - 40, ySup);
-      ctx.bezierCurveTo(w / 2 - 70, ySup + (profundidadPluma - ySup) * 0.5, w / 2 - 30, profundidadPluma, w / 2, profundidadPluma);
-      ctx.bezierCurveTo(w / 2 + 30, profundidadPluma, w / 2 + 70, ySup + (profundidadPluma - ySup) * 0.5, w / 2 + 40, ySup);
-      ctx.closePath();
-      ctx.fillStyle = grad;
-      ctx.fill();
-
-      ctx.strokeStyle = "rgba(147, 197, 253, 0.6)";
-      ctx.lineWidth = 1.5;
-      for (let x = 70; x <= w - 70; x += 55) {
-        ctx.beginPath();
-        ctx.moveTo(x, ySup + 5);
-        ctx.lineTo(x, yFre - 5);
-        ctx.stroke();
-      }
-
-      ctx.fillStyle = "#FFFFFF";
-      ctx.font = "bold 10px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(`Frente [${catalogoQuimicos[keyComp].nombre}]`, w / 2, ySup - 6);
     }
 
     // =========================================================================
@@ -8596,7 +8101,6 @@
 
       calcularCationes();
       recalcularTodo();
-      calcularModeloContaminacion();
     }
 
     function limpiarTodo() {
@@ -8607,7 +8111,6 @@
       document.getElementById("calc-sbt-txt").innerText = "--";
       document.getElementById("calc-camg-txt").innerText = "--";
       recalcularTodo();
-      calcularModeloContaminacion();
     }
 
     // =========================================================================
@@ -19084,7 +18587,7 @@
           { d: "Abre perfil: profundidad efectiva, textura y drenaje del sitio propuesto. Una fosa en suelo somero o encharcado contamina.", mod: "tab-b17", lab: "B17 Muestreo" },
           { d: "Revisa la capacidad de uso B14: subclase w señala limitante por drenaje y excluye el sitio para disposición de excretas.", mod: "tab-b14", lab: "B14 Capacidad" },
           { d: "Antes de meter maquinaria, evalúa en C32 la traficabilidad del día previsto; excavaciones en suelo húmedo arruinan la estructura.", mod: "tab-c32", lab: "C32 Tráfico" },
-          { d: "Estima distancia a la ronda y transporte de nitratos en el módulo de contaminantes (advección y dispersión).", mod: "tab-contaminantes", lab: "Módulo 2" },
+          { d: "Estima distancia a la ronda y transporte de nitratos en el panel CL (advección, dispersión, pluma 3D y umbral declarado).", mod: "tab-cl", lab: "Panel CL" },
           { d: "Cierra con el informe consolidado y deja las referencias normativas citadas en Metodología.", mod: "tab-ficha", lab: "Informe" }
         ]
       },
@@ -23930,6 +23433,100 @@ const IGAC_UCS = {"fuente":{"titulo":"IGAC — Estudio General de Suelos y Zonif
 
     // 5b · la cadena: leer la tabla, hidráulica y CT, curvas por tramos y malla 3D
     let clANIM_T0 = 0;
+    // ---------- 0d · ejemplo (demo) y vaciado total ----------
+    // El demo existe para que la simulación se vea correr sin tener que digitar
+    // treinta campos. No es un dato de predio: las dos filas de unidades, el DM y las
+    // dispersividades son cifras de muestra del portal, y la nota de la barra lo dice
+    // en pantalla. Lo único que sí tiene fuente en disco en este ejemplo es la
+    // Atrazina (el archivo del PPDB que se bajó al proyecto) y su umbral (la guía del
+    // EPA con su hoja, fila y columna), que se fija desde el catálogo, no digitado.
+    const CL_DEMO = {
+      ucs: "DEM-1;arena franca;3;0,42;0,15;0,20;1600;8;0,01;0,8;0,58;2;0,15\n" +
+           "DEM-2;arcillo limoso;2,5;0,48;0,22;0,31;1350;0,9;0,008;2,1;0,58;1,5;0,25",
+      par: { "cl-dm": "0,000088", "cl-al": "0,5", "cl-at": "0,1", "cl-koc": "100", "cl-t12": "29", "cl-cw": "35" },
+      contam: "Atrazina;triazina;100;29;;0,000088;35;215,68;PPDB (atrazine.html, descargado en el proyecto): Koc 100 mL/g, DT50 de campo 29 d, solubilidad 35 mg/L, masa molar 215,68 g/mol",
+      analisis: "Atrazine",
+      c2: { "cl2-modo": "ogata", "cl2-c0": "35", "cl2-largo": "20", "cl2-paso": "2", "cl2-hasta": "730", "cl2-np": "7" },
+      c3: { "cl3-lx": "20", "cl3-ly": "10", "cl3-lz": "3", "cl3-nx": "40", "cl3-ny": "20", "cl3-nz": "12",
+        "cl3-fx0": "0", "cl3-fx1": "2", "cl3-fy0": "4", "cl3-fy1": "6", "cl3-fz0": "0", "cl3-fz1": "1",
+        "cl3-modo": "continua", "cl3-cantidad": "35", "cl3-tfin": "730", "cl3-tfuente": "120",
+        "cl3-umbral": "0,001", "cl3-planta": "0,5" }
+    };
+    // Los campos que son datos del predio. Los desplegables de la tabla de referencia
+    // (cl4-filtra, cl4-ufiltra) y los buscadores del catálogo IGAC no se vacían: no
+    // son datos de tu caso, son filtros de las tablas que el portal ya tiene en disco.
+    const CL_CAMPOS = ["cl-ucs", "cl-dm", "cl-cexp-man", "cl-al", "cl-at", "cl-koc", "cl-t12", "cl-kh", "cl-cw",
+      "cl-lluvia", "cl4-tabla", "cl4-cp", "cl4-unidad-cp", "cl4-cp-fuente", "cl4-uso",
+      "cl2-c0", "cl2-masa", "cl2-largo", "cl2-paso", "cl2-hasta", "cl2-np", "cl2-xs", "cl2-ts",
+      "cl3-lx", "cl3-ly", "cl3-lz", "cl3-nx", "cl3-ny", "cl3-nz", "cl3-fx0", "cl3-fx1", "cl3-fy0", "cl3-fy1",
+      "cl3-fz0", "cl3-fz1", "cl3-cantidad", "cl3-tfin", "cl3-tfuente", "cl3-umbral", "cl3-planta"];
+    const CL_SELECTS = ["cl-cexp", "cl2-modo", "cl3-modo"];
+    const CL_CHEQUES = ["cl2-retardo", "cl2-lam", "cl2-audit", "cl3-noretardo", "cl-mismo-vals"];
+    function clEscribe(id, v) {
+      const e = clEl(id);
+      if (!e) return;
+      if (e.type === "checkbox") e.checked = !!v; else e.value = v == null ? "" : String(v);
+    }
+    function clNotaDemo(ver) {
+      const n = clEl("cl-nota-demo");
+      if (n && n.classList) n.classList.toggle("hidden", !ver);
+      const d = clEl("cl-demo");
+      if (d) d.className = "px-3 py-2 rounded-xl text-[11px] font-bold cursor-pointer " +
+        (ver ? "bg-sky-900/60 text-sky-200 border border-sky-500/40" : "bg-sky-700 hover:bg-sky-600 text-white");
+      const v = clEl("cl-vaciar-todo");
+      if (v) v.className = "px-3 py-2 rounded-xl text-[11px] font-bold cursor-pointer " +
+        (ver ? "bg-red-700 hover:bg-red-600 text-white" : "bg-slate-800 hover:bg-red-900/40 text-slate-300");
+    }
+    // Deja el bloque como viene de fábrica: sin unidades, sin lista, sin umbral, sin
+    // curvas y sin malla. Se usa solo (para poner tus datos) o desde clDemo antes de
+    // escribir el ejemplo, para que el demo nunca se monte sobre una corrida vieja.
+    function clVaciarTodo(sinAviso) {
+      clPausar();
+      CL_CAMPOS.forEach(id => clEscribe(id, ""));
+      CL_SELECTS.forEach(id => clEscribe(id, ""));
+      CL_CHEQUES.forEach(id => clEscribe(id, false));
+      CL_EST.ucs = []; CL_EST.rech = []; CL_EST.parUC = {}; CL_EST.cwUC = {};
+      CL_EST.activa = null; CL_EST.origenUC = {};
+      CL_EST.contam = []; CL_EST.contamRech = []; CL_EST.cp = null;
+      CL_EST.l2 = null; CL_EST.r3 = null; CL_EST.corte = 0; CL_ANIM.k = 0;
+      ["cl-c1", "cl-c2", "cl-c3", "cl-c4", "cl-estado"].forEach(id => { const e = clEl(id); if (e) e.innerHTML = ""; });
+      const vis = clEl("cl3-vis"); if (vis) vis.innerHTML = "";
+      const sl = clEl("cl3-slider"); if (sl) { sl.max = "0"; sl.value = "0"; }
+      const lab = clEl("cl3-slider-t"); if (lab) lab.textContent = "sin corrida";
+      const pre = clEl("cl-presets"); if (pre) pre.innerHTML = "";
+      const sn = clEl("cl3-sin"); if (sn && sn.classList) sn.classList.remove("hidden");
+      clNotaDemo(false);
+      clLive(); clMarcaDia(null); clPlayBtn();
+      if (sinAviso) return;
+      // las tarjetas vuelven a decir qué hace falta, que es lo que estaban diciendo
+      // antes de que nadie tocara nada
+      try { clLeerUCs(); } catch (e) { /* la tarjeta ya quedó en blanco */ }
+      try { clCalc2(); } catch (e) { /* idem */ }
+      try { clLeerContam(); } catch (e) { /* idem */ }
+      clEstado(clCaja("<b>Tarjetas vacías:</b> los cuatro pasos del panel se corren con lo que tú digites. Pega la tabla de unidades cartográficas (trece campos por línea), los parámetros del soluto, tu lista de contaminantes con su fuente y el umbral con la norma, artículo o guía de donde salió. Si quieres ver primero cómo corre una simulación completa, pulsa <b>«Ver el ejemplo (demo)»</b>.", "azul"));
+    }
+    function clDemo() {
+      clVaciarTodo(true);
+      clEscribe("cl-ucs", CL_DEMO.ucs);
+      Object.keys(CL_DEMO.par).forEach(id => clEscribe(id, CL_DEMO.par[id]));
+      clEscribe("cl-cexp", "1.8");                 // consolidado: el rango 1,8-2,0 del dictado
+      clEscribe("cl4-tabla", CL_DEMO.contam);
+      Object.keys(CL_DEMO.c2).forEach(id => clEscribe(id, CL_DEMO.c2[id]));
+      Object.keys(CL_DEMO.c3).forEach(id => clEscribe(id, CL_DEMO.c3[id]));
+      clEscribe("cl2-retardo", true);
+      clEscribe("cl2-lam", true);
+      clLeerUCs();                                  // pinta la tabla y las casillas por UCS
+      CL_EST.ucs.forEach(u => { const e = clEl("cl2-uc-" + clSlug(u.cod)); if (e) e.checked = true; });
+      // el umbral no se digita a mano en el demo: se fija desde el catálogo del EPA, así
+      // que entra con su hoja, su fila, su columna y su DOI escritos en la fuente
+      const tabla = (typeof CL_REF_UMBRAL !== "undefined" ? CL_REF_UMBRAL : []);
+      const iA = tabla.findIndex(r => r[0] === CL_DEMO.analisis);
+      if (iA >= 0) { try { clUmbFijar(iA, "res"); } catch (e) { /* sin catálogo no hay umbral de demo */ } }
+      clNotaDemo(true);
+      clIr("sec-sim");
+      clIniciar();
+    }
+
     function clIniciar() {
       clPausar();
       clANIM_T0 = Date.now();
@@ -24200,7 +23797,6 @@ const IGAC_UCS = {"fuente":{"titulo":"IGAC — Estudio General de Suelos y Zonif
       dibujarTrianguloTextural();
       renderizarOrdenesSuelo("todos");
       calcularCIC_Avanzado();
-      calcularModeloContaminacion();
       renderizarHub();
       renderizarMetodo();
       buscarNormas();
